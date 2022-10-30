@@ -11,7 +11,8 @@ class CustomText extends StatelessWidget {
   final FontWeight fontWeight;
 
   const CustomText(
-      {required this.title,
+      {super.key,
+      required this.title,
       required this.fontSize,
       this.maxLins = 1,
       this.textOverflow = TextOverflow.ellipsis,

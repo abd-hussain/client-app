@@ -27,7 +27,7 @@ class _HeaderHomePageState extends State<HeaderHomePage> {
           IconButton(
             onPressed: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.notificationsScreen),
             icon: const Icon(
-              Icons.notifications,
+              Icons.notifications_none,
               color: Color(0xff034061),
               size: 30,
             ),

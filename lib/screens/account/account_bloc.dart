@@ -5,11 +5,6 @@ class AccountBloc {
   BuildContext? mainContext;
   List<ProfileOptions> listOfSettingsOptions = [
     ProfileOptions(
-      icon: Icons.menu_book_rounded,
-      name: "User Tutorials",
-      buttonType: AccountButtonType.tutorials,
-    ),
-    ProfileOptions(
       icon: Icons.translate,
       name: "Language",
       selectedItem: "English",
@@ -22,15 +17,31 @@ class AccountBloc {
       buttonType: AccountButtonType.country,
     ),
     ProfileOptions(
-      icon: Icons.notifications_none,
-      name: "Notifications Setting",
-      buttonType: AccountButtonType.notificationSetting,
+      icon: Icons.card_giftcard,
+      name: "Cards",
+      buttonType: AccountButtonType.country,
+    ),
+    ProfileOptions(
+      icon: Icons.loyalty,
+      name: "Loyality Points",
+      buttonType: AccountButtonType.country,
+    ),
+    ProfileOptions(
+      icon: Icons.menu_book_rounded,
+      name: "User Tutorials",
+      buttonType: AccountButtonType.tutorials,
     ),
     ProfileOptions(
       icon: Icons.vibration,
       name: "Shake To Report",
       switchIcn: true,
       buttonType: AccountButtonType.shakeSetting,
+    ),
+    ProfileOptions(
+      icon: Icons.notifications_none,
+      name: "Allow/Disallow Notifications",
+      switchIcn: true,
+      buttonType: AccountButtonType.notificationSetting,
     ),
   ];
 

@@ -1,15 +1,15 @@
 // import 'package:client_app/utils/addsHelper.dart';
-// import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-// class AddMobBanner extends StatefulWidget {
-//   const AddMobBanner({Key? key}) : super(key: key);
+class AddMobBanner extends StatefulWidget {
+  const AddMobBanner({Key? key}) : super(key: key);
 
-//   @override
-//   State<AddMobBanner> createState() => _AddMobBannerState();
-// }
+  @override
+  State<AddMobBanner> createState() => _AddMobBannerState();
+}
 
-// class _AddMobBannerState extends State<AddMobBanner> {
+class _AddMobBannerState extends State<AddMobBanner> {
 //   late BannerAd _bannerAd;
 //   bool _isBannerAdReady = false;
 
@@ -38,8 +38,9 @@
 //   }
 
 //   @override
-//   Widget build(BuildContext context) {
-//     return _isBannerAdReady
+  Widget build(BuildContext context) {
+    return
+// _isBannerAdReady
 //         ? Align(
 //             alignment: Alignment.topCenter,
 //             child: SizedBox(
@@ -48,6 +49,7 @@
 //               child: AdWidget(ad: _bannerAd),
 //             ),
 //           )
-//         : Container();
-//   }
-// }
+//         :
+        Container();
+  }
+}
