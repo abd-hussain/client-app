@@ -20,15 +20,15 @@ dependencies:
   dio: ^4.0.4
   logger: ^1.1.0
   google_fonts: ^3.0.1
-  # rxdart: ^0.27.3
+  rxdart: ^0.27.3
   cupertino_icons: ^1.0.2
   material_segmented_control: ^3.1.2
   connectivity_plus: ^2.3.0
   hive: ^2.0.4
   hive_flutter: ^1.1.0
-  # convex_bottom_bar: ^3.0.0
+  convex_bottom_bar: ^3.0.0
   # banner_carousel: ^1.2.1
-  google_mobile_ads: ^2.0.0
+  # google_mobile_ads: ^2.0.0
   package_info_plus: ^1.4.3
   # url_launcher: ^6.1.5
   # flutter_contacts: ^1.1.5
@@ -48,5 +48,5 @@ dev_dependencies:
 flutter:
   generate: true
   uses-material-design: true
-  # assets:
-  # - assets/images/
+  assets:
+  - assets/images/

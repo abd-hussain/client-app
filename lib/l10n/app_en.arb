@@ -1,9 +1,9 @@
 {
-    "appTitle": "Rental",
+    "appTitle": "HelpEra",
     "selectCountry" : "Select Country",
     "containerHomeIconTitle" : "Home",
-    "containerMyPostIconTitle" : "My Posts",
-    "containerMessagesIconTitle" : "Messages",
+    "containerCategoriesIconTitle" : "Categories",
+    "containerCalenderIconTitle" : "Calender",
     "containerAccountIconTitle" : "Account",
     "reportFooterText" : "We read all of the feedback carefully, but we may not respond to each submission individually.",
     "notifications" : "Notifications",   

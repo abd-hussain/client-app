@@ -5,7 +5,7 @@ import 'package:client_app/utils/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+// import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 void main() async {
   logDebugMessage(message: 'Application Started ...');
@@ -13,7 +13,7 @@ void main() async {
   await setupLocator();
 
   await Hive.initFlutter();
-  MobileAds.instance.initialize();
+  // MobileAds.instance.initialize();
   await Hive.openBox(DatabaseBoxConstant.userInfo);
 
   await SystemChrome.setPreferredOrientations([

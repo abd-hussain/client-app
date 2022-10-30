@@ -14,9 +14,9 @@ class HttpInterceptor extends InterceptorsWrapper {
     // }
     var box = Hive.box(DatabaseBoxConstant.userInfo);
 
-    options.headers.putIfAbsent("user_id", () => "123");
-    options.headers.putIfAbsent("language", () => box.get(DatabaseFieldConstant.language));
-    options.headers.putIfAbsent("apikey", () => "123");
+    // options.headers.putIfAbsent("user_id", () => "123");
+    options.headers.putIfAbsent("lang", () => box.get(DatabaseFieldConstant.language));
+    // options.headers.putIfAbsent("apikey", () => "123");
 
     return handler.next(options);
   }

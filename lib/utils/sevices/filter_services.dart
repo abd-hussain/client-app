@@ -9,9 +9,6 @@ class FilterService with Service {
       requestType: RequestType.get,
       methodName: MethodNameConstant.countries,
     );
-    print("response");
-
-    print(response);
     return CountriesModel.fromJson(response);
   }
 }

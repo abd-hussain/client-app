@@ -14,13 +14,13 @@ class SetupBloc extends Bloc<FilterService> {
     var box = await Hive.openBox(DatabaseBoxConstant.userInfo);
     final String? savedLanguage = box.get(DatabaseFieldConstant.language);
     if (savedLanguage == null) {
-      _setLanguageFromTheSystem(context, box);
+      _setLanguageFromTheSystem(context: context, box: box);
     } else {
-      _setLanguageFromTheSavedData(context, savedLanguage);
+      _setLanguageFromTheSavedData(context: context, savedLanguage: savedLanguage);
     }
   }
 
-  void _setLanguageFromTheSystem(BuildContext context, Box<dynamic> box) {
+  void _setLanguageFromTheSystem({required BuildContext context, required Box<dynamic> box}) {
     Locale activeLocale = Localizations.localeOf(context);
 
     selectedLanguageNotifier.value = 0;
@@ -31,7 +31,7 @@ class SetupBloc extends Bloc<FilterService> {
     }
   }
 
-  void _setLanguageFromTheSavedData(BuildContext context, String savedLanguage) {
+  void _setLanguageFromTheSavedData({required BuildContext context, required String savedLanguage}) {
     if (savedLanguage == "ar") {
       selectedLanguageNotifier.value = 1;
       _refreshAppWithLanguageCode(context, 'ar');
@@ -43,7 +43,7 @@ class SetupBloc extends Bloc<FilterService> {
 
   void listOfCountries() {
     service.countries().then((value) {
-      countriesListNotifier.value = value.data!;
+      countriesListNotifier.value = value.data!..sort((a, b) => a.id!.compareTo(b.id!));
     });
   }
 

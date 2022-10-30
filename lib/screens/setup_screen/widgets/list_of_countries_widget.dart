@@ -52,7 +52,7 @@ class ListOfCountriesWidget extends StatelessWidget {
                     width: 40,
                     height: 40,
                     child: FadeInImage(
-                        placeholder: const AssetImage("assets/images/flag_placeholder.png"),
+                        placeholder: const AssetImage("assets/images/flagPlaceHolderImg.png"),
                         image: NetworkImage(item.flagImage!, scale: 1))),
                 const SizedBox(width: 8),
                 Expanded(

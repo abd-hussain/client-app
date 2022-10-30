@@ -16,7 +16,6 @@ class HttpRepository {
       String contentType = Headers.jsonContentType}) async {
     Response response;
     const baseUrl = 'https://www.helpera.app/';
-
     if (await locator<NetworkInfoService>().isConnected()) {
       final dioClient = locator<Dio>()
         ..options = BaseOptions(

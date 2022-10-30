@@ -1,9 +1,9 @@
 {
-    "appTitle": "رينتال",
+    "appTitle": "هيلب ايرا",
     "selectCountry" : "اختر البلد",
     "containerHomeIconTitle" : "الرئيسية",
-    "containerMyPostIconTitle" : "اعلاناتي",
-    "containerMessagesIconTitle" : "رسائل",
+    "containerCategoriesIconTitle" : "التصنيفات",
+    "containerCalenderIconTitle" : "التقويم",
     "containerAccountIconTitle" : "حسابي",
     "reportFooterText" : "نحن حريصين على قرائة جميع التبليغات بعناية ، ولكن قد لا نرد على كل تبليغ على حدة.",
     "notifications" : "التنبيهات",   
