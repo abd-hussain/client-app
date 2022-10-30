@@ -1,0 +1,17 @@
+{
+    "appTitle": "Rental",
+    "selectCountry" : "Select Country",
+    "containerHomeIconTitle" : "Home",
+    "containerMyPostIconTitle" : "My Posts",
+    "containerMessagesIconTitle" : "Messages",
+    "containerAccountIconTitle" : "Account",
+    "reportFooterText" : "We read all of the feedback carefully, but we may not respond to each submission individually.",
+    "notifications" : "Notifications",   
+    "viewd_title" : "Viewed Items",
+    "favorite_title" : "Favorite Items",
+    "login_first_step_title": "THE LATEST RENTING TECHNOLOGY",
+    "login_first_step_desc" : "Direct connections between Renter and Renter",
+    "change_country" : "Change Country",
+    "invite_friends" : "Invite Friends",
+    "permision_denied" : "Permission Denied"
+}

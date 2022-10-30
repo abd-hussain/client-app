@@ -1,0 +1,269 @@
+// import 'package:client_app/shared_widgets/admob_banner.dart';
+// import 'package:client_app/shared_widgets/custom_text.dart';
+// import 'package:client_app/utils/constants/constant.dart';
+// import 'package:client_app/utils/models/profile_options.dart';
+// import 'package:client_app/utils/routes.dart';
+// import 'package:client_app/utils/version.dart';
+// import 'package:flutter/cupertino.dart';
+// import 'package:flutter/material.dart';
+// import 'package:rate_my_app/rate_my_app.dart';
+// import 'package:url_launcher/url_launcher.dart';
+
+// class ListOfOptions extends StatelessWidget {
+//   final List<ProfileOptions> listOfSettingsOptions;
+//   final List<ProfileOptions> listOfReachOutUsOptions;
+//   final List<ProfileOptions> listOfSupportOptions;
+
+//   const ListOfOptions(
+//       {required this.listOfSettingsOptions,
+//       required this.listOfReachOutUsOptions,
+//       required this.listOfSupportOptions,
+//       Key? key})
+//       : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Expanded(
+//       child: SingleChildScrollView(
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             const AddMobBanner(),
+//             titleOptionCollection(title: "Settings"),
+//             optionCollectionItem(listOfSettingsOptions, onTap: (value) {}),
+//             titleOptionCollection(title: "Reach out to us"),
+//             optionCollectionItem(listOfReachOutUsOptions, onTap: (value) {}),
+//             titleOptionCollection(title: "Support APP."),
+//             optionCollectionItem(listOfSupportOptions,
+//                 onTap: (value) =>
+//                     value == AccountButtonType.aboutUs ? openAboutUs(context) : openInviteFriends(context)),
+//             const SizedBox(height: 8),
+//             const AddMobBanner(),
+//             footerView(context),
+//             const SizedBox(height: 8),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+
+//   Widget titleOptionCollection({required String title}) {
+//     return Padding(
+//       padding: const EdgeInsets.only(left: 8, top: 16, right: 8, bottom: 16),
+//       child: CustomText(
+//         title: title,
+//         fontSize: 14,
+//         textColor: const Color(0xff444444),
+//         fontWeight: FontWeight.w600,
+//       ),
+//     );
+//   }
+
+//   void openAboutUs(BuildContext context) {
+//     Navigator.of(context, rootNavigator: true)
+//         .pushNamed(RoutesConstants.webViewScreen, arguments: {AppConstant.webViewPageUrl: "https://talabay.net/"});
+//   }
+
+//   void openInviteFriends(BuildContext context) {
+//     Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.inviteFriendScreen);
+//   }
+
+//   Widget optionCollectionItem(List<ProfileOptions> listOfSettingsOptions,
+//       {required Function(AccountButtonType) onTap}) {
+//     final ValueNotifier<bool> switchStatusNotifier = ValueNotifier<bool>(false);
+
+//     return Container(
+//       height: listOfSettingsOptions.length * 65,
+//       decoration: BoxDecoration(
+//         color: Colors.white,
+//         boxShadow: [
+//           BoxShadow(
+//             color: Colors.grey.withOpacity(0.5),
+//             spreadRadius: 0.5,
+//             blurRadius: 5,
+//             offset: const Offset(0, 0.1),
+//           ),
+//         ],
+//       ),
+//       child: ListView.separated(
+//           physics: const NeverScrollableScrollPhysics(),
+//           itemCount: listOfSettingsOptions.length,
+//           separatorBuilder: (BuildContext context, int index) => const Padding(
+//                 padding: EdgeInsets.only(left: 30, right: 30),
+//                 child: Divider(),
+//               ),
+//           itemBuilder: (ctx, index) {
+//             return InkWell(
+//               onTap: () => onTap(listOfSettingsOptions[index].buttonType),
+//               child: Padding(
+//                 padding: const EdgeInsets.all(16),
+//                 child: Row(
+//                   children: [
+//                     Icon(
+//                       listOfSettingsOptions[index].icon,
+//                       size: 20,
+//                       color: const Color(0xff034061),
+//                     ),
+//                     const SizedBox(width: 8),
+//                     CustomText(
+//                         title: listOfSettingsOptions[index].name,
+//                         fontSize: 16,
+//                         textColor: const Color(0xff034061),
+//                         fontWeight: FontWeight.w500),
+//                     Expanded(child: Container()),
+//                     CustomText(
+//                       title: listOfSettingsOptions[index].selectedItem,
+//                       fontSize: 14,
+//                       textColor: const Color(0xffFFA200),
+//                     ),
+//                     const SizedBox(width: 8),
+//                     listOfSettingsOptions[index].switchIcn
+//                         ? SizedBox(
+//                             height: 20,
+//                             child: ValueListenableBuilder<bool>(
+//                                 valueListenable: switchStatusNotifier,
+//                                 builder: (context, data, child) {
+//                                   return CupertinoSwitch(
+//                                     activeColor: const Color(0xff4CB6EA),
+//                                     value: switchStatusNotifier.value,
+//                                     //TODO
+//                                     onChanged: (value) => switchStatusNotifier.value = value,
+//                                   );
+//                                 }),
+//                           )
+//                         : const Icon(
+//                             Icons.arrow_forward_ios_outlined,
+//                             size: 12,
+//                             color: Color(0xffBFBFBF),
+//                           )
+//                   ],
+//                 ),
+//               ),
+//             );
+//           }),
+//     );
+//   }
+
+//   Widget footerView(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.only(left: 8, right: 8),
+//       child: Column(
+//         children: [
+//           const SizedBox(height: 8),
+//           Row(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: [
+//               TextButton(
+//                 //TODO: Fix facebook URL
+//                 onPressed: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen,
+//                     arguments: {AppConstant.webViewPageUrl: "https://www.facebook.com/"}),
+//                 child: const Icon(
+//                   Icons.facebook,
+//                   color: Color(0xff444444),
+//                 ),
+//               ),
+//               const CustomText(
+//                 title: "|",
+//                 fontSize: 16,
+//                 textColor: Color(0xff444444),
+//                 fontWeight: FontWeight.bold,
+//               ),
+//               TextButton(
+//                 onPressed: () => _launchWhatsapp(context),
+//                 child: const Icon(
+//                   Icons.whatsapp,
+//                   color: Color(0xff444444),
+//                 ),
+//               ),
+//               const CustomText(
+//                 title: "|",
+//                 fontSize: 16,
+//                 textColor: Color(0xff444444),
+//                 fontWeight: FontWeight.bold,
+//               ),
+//               TextButton(
+//                 //TODO: Fix Linkedin URL
+//                 onPressed: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen,
+//                     arguments: {AppConstant.webViewPageUrl: "https://www.linkedin.com/"}),
+//                 child: Image.asset(
+//                   "assets/images/profile/linkedinLogo.png",
+//                 ),
+//               ),
+//             ],
+//           ),
+//           TextButton(
+//             //TODO: Fix Privacy Policy URL
+//             onPressed: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen,
+//                 arguments: {AppConstant.webViewPageUrl: "https://www.talabat.com/jordan/privacy"}),
+//             child: _footerTextWidget("Privacy Policy"),
+//           ),
+//           TextButton(
+//             onPressed: () {
+//               WidgetsBinding.instance.addPostFrameCallback((_) async {
+//                 RateMyApp().showRateDialog(context);
+//               });
+//             },
+//             child: _footerTextWidget("Rate Application"),
+//           ),
+//           TextButton(
+//             //TODO: Fix Terms Conditions URL
+//             onPressed: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen,
+//                 arguments: {AppConstant.webViewPageUrl: "https://www.talabat.com/jordan/privacy"}),
+//             child: _footerTextWidget("Terms And Conditions"),
+//           ),
+//           const SizedBox(height: 16),
+//           FutureBuilder<String>(
+//               initialData: "",
+//               future: Version().getApplicationVersion(),
+//               builder: (context, snapshot) {
+//                 return CustomText(
+//                   title: "Version ${snapshot.data}",
+//                   fontSize: 12,
+//                   textColor: const Color(0xffBFBFBF),
+//                 );
+//               }),
+//           const SizedBox(height: 20),
+//           const CustomText(
+//             title: "@ 2022 Rental.com. All rights reserved.",
+//             fontSize: 10,
+//             textColor: Color(0xff707070),
+//           ),
+//           const SizedBox(height: 20),
+//         ],
+//       ),
+//     );
+//   }
+
+//   Widget _footerTextWidget(String title) {
+//     return Row(
+//       mainAxisAlignment: MainAxisAlignment.center,
+//       children: [
+//         CustomText(
+//           title: title,
+//           fontSize: 10,
+//           textColor: const Color(0xff444444),
+//         ),
+//         const Icon(
+//           Icons.arrow_forward_rounded,
+//           size: 10,
+//           color: Color(0xff444444),
+//         )
+//       ],
+//     );
+//   }
+
+//   void _launchWhatsapp(BuildContext context) async {
+//     //TODO: Fix Whatsapp Number Policy URL
+//     var whatsapp = "+962795190663";
+//     var whatsappAndroid = Uri.parse("whatsapp://send?phone=$whatsapp&text=hello");
+//     if (await canLaunchUrl(whatsappAndroid)) {
+//       await launchUrl(whatsappAndroid);
+//     } else {
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         const SnackBar(
+//           content: Text("WhatsApp is not installed on the device"),
+//         ),
+//       );
+//     }
+//   }
+// }

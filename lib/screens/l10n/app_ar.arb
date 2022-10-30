@@ -1,0 +1,17 @@
+{
+    "appTitle": "رينتال",
+    "selectCountry" : "اختر البلد",
+    "containerHomeIconTitle" : "الرئيسية",
+    "containerMyPostIconTitle" : "اعلاناتي",
+    "containerMessagesIconTitle" : "رسائل",
+    "containerAccountIconTitle" : "حسابي",
+    "reportFooterText" : "نحن حريصين على قرائة جميع التبليغات بعناية ، ولكن قد لا نرد على كل تبليغ على حدة.",
+    "notifications" : "التنبيهات",   
+    "viewd_title" : "عناصر شوهدة",
+    "favorite_title" : "عناصر مفضلة",
+    "login_first_step_title": "اخر تكنولوجيا التاجير",
+    "login_first_step_desc" : "اتصال مباشر بين المؤجر و المستاجر",
+    "change_country" : "تغيير البلد",
+    "invite_friends" : "دعوة الاصدقاء",
+    "permision_denied" : "تم رفض الإذن بالوصول للاسماء"
+}
