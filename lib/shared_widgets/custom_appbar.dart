@@ -5,6 +5,7 @@ PreferredSizeWidget customAppBar({required String title}) {
   return AppBar(
     backgroundColor: const Color(0xff034061),
     title: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const CustomText(
           title: "HelpEra",
@@ -15,7 +16,7 @@ PreferredSizeWidget customAppBar({required String title}) {
           title: title,
           fontSize: 12,
           textColor: Colors.white,
-        ),
+        )
       ],
     ),
   );

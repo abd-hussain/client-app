@@ -1,33 +1,32 @@
-class UploadContact {
-  List<MyContact> data;
+import 'package:client_app/utils/mixins.dart';
 
-  UploadContact({required this.data});
+class UploadContact implements Model {
+  List<MyContact> list;
 
+  UploadContact({required this.list});
+
+  @override
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['data'] = this.data.map((v) => v.toJson()).toList();
+    Map<String, dynamic> data = {};
+    data['list'] = list.map((v) => v.toJson()).toList();
     return data;
   }
 }
 
 class MyContact {
-  String? name;
-  String? phone;
+  String? full_name;
+  String? mobileNumber;
   String? email;
+  int? clientownerid;
 
-  MyContact({this.name, this.phone, this.email});
-
-  MyContact.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    phone = json['phone'];
-    email = json['email'];
-  }
+  MyContact({this.full_name, this.mobileNumber, this.email, this.clientownerid});
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['phone'] = this.phone;
-    data['email'] = this.email;
+    Map<String, dynamic> data = {};
+    data['full_name'] = full_name ?? "";
+    data['mobile_number'] = mobileNumber ?? "";
+    data['email'] = email ?? "";
+    data['client_owner_id'] = clientownerid ?? 0;
     return data;
   }
 }

@@ -38,7 +38,7 @@ class ListOfOptions extends StatelessWidget {
             titleOptionCollection(title: "Account"),
             optionCollectionItem(listOfAccountOptions, containerHight: 123, onTap: (value) {}),
             isItLoggedIn ? const SizedBox(height: 16) : Container(),
-            isItLoggedIn ? logoutView() : Container(),
+            isItLoggedIn ? logoutView(context) : Container(),
             titleOptionCollection(title: "Settings"),
             optionCollectionItem(listOfSettingsOptions, containerHight: 330, onTap: (value) {}),
             titleOptionCollection(title: "Reach out to us"),
@@ -58,7 +58,7 @@ class ListOfOptions extends StatelessWidget {
     );
   }
 
-  Widget logoutView() {
+  Widget logoutView(BuildContext context) {
     return Container(
       height: 65,
       decoration: BoxDecoration(
@@ -86,8 +86,11 @@ class ListOfOptions extends StatelessWidget {
                 color: Color(0xff034061),
               ),
               const SizedBox(width: 8),
-              const CustomText(
-                  title: "Logout", fontSize: 16, textColor: Color(0xff034061), fontWeight: FontWeight.w500),
+              CustomText(
+                  title: AppLocalizations.of(context)!.logout,
+                  fontSize: 16,
+                  textColor: const Color(0xff034061),
+                  fontWeight: FontWeight.w500),
               Expanded(child: Container()),
               const SizedBox(width: 8),
               const Icon(
@@ -255,7 +258,7 @@ class ListOfOptions extends StatelessWidget {
           TextButton(
             onPressed: () {
               WidgetsBinding.instance.addPostFrameCallback((_) async {
-                RateMyApp().showRateDialog(context);
+                RateMyApp().showRateDialog(context, noButton: "test");
               });
             },
             child: _footerTextWidget(AppLocalizations.of(context)!.rateapp),

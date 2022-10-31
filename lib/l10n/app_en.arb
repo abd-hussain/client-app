@@ -32,5 +32,6 @@
     "privacypolicy" : "Privacy Policy",
     "whatsappnotinstalled" : "WhatsApp is not installed on the device",
     "linkedin" : "LinkedIn",
-    "facebook" : "Facebook"
+    "facebook" : "Facebook",
+    "logout" : "Logout"
 }

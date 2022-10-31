@@ -32,6 +32,7 @@
     "privacypolicy" : "سياسة الخصوصية",
     "whatsappnotinstalled" : "واتساب غير مثبت على الجهاز",
     "linkedin" : "لينكد ان",
-    "facebook" : "فيس بوك"
+    "facebook" : "فيس بوك",
+    "logout" : "تسجيل الخروج"
 
 }

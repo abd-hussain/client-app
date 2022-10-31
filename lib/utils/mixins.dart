@@ -11,6 +11,5 @@ mixin Service {
 
 abstract class Model<T> {
   Map<String, dynamic> toJson();
-  Map<String, dynamic> toDatabaseRow();
   Model();
 }
