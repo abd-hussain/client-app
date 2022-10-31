@@ -1,5 +1,6 @@
 import 'package:client_app/utils/models/profile_options.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AccountBloc {
   BuildContext? mainContext;
@@ -62,16 +63,18 @@ class AccountBloc {
     )
   ];
 
-  List<ProfileOptions> listOfSupportOptions = [
-    ProfileOptions(
-      icon: Icons.info,
-      name: "About Us",
-      buttonType: AccountButtonType.aboutUs,
-    ),
-    ProfileOptions(
-      icon: Icons.group_add,
-      name: "Invite Friends",
-      buttonType: AccountButtonType.inviteFriends,
-    ),
-  ];
+  List<ProfileOptions> listOfSupportOptions(BuildContext context) {
+    return [
+      ProfileOptions(
+        icon: Icons.info,
+        name: AppLocalizations.of(context)!.aboutus,
+        buttonType: AccountButtonType.aboutUs,
+      ),
+      ProfileOptions(
+        icon: Icons.group_add,
+        name: AppLocalizations.of(context)!.invite_friends,
+        buttonType: AccountButtonType.inviteFriends,
+      ),
+    ];
+  }
 }

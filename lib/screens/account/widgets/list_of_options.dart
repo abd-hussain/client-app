@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ListOfOptions extends StatelessWidget {
   final List<ProfileOptions> listOfSettingsOptions;
@@ -114,8 +115,10 @@ class ListOfOptions extends StatelessWidget {
   }
 
   void openAboutUs(BuildContext context) {
-    Navigator.of(context, rootNavigator: true)
-        .pushNamed(RoutesConstants.webViewScreen, arguments: {AppConstant.webViewPageUrl: "https://talabay.net/"});
+    Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen, arguments: {
+      AppConstant.webViewPageUrl: AppConstant.aboutusLink,
+      AppConstant.pageTitle: AppLocalizations.of(context)!.aboutus
+    });
   }
 
   void openInviteFriends(BuildContext context) {

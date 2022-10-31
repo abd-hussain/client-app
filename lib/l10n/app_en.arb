@@ -15,5 +15,14 @@
     "invite_friends" : "Invite Friends",
     "permision_denied" : "Permission Denied",
     "login_first_step_button" : "SIGN IN / REGESTER",
-    "skip" : "Skip"
+    "skip" : "Skip",
+    "termsandconditions" : "Terms & Conditions",
+    "titletermsandconditions" : "By clicking \"SIGN IN / REGISTER\" you will be agreed to the",
+    "startandlogin" : "Start Now and Login",
+    "welcomeback" : "Welcome Back",
+    "hello" : "Hello",
+    "anonymous" : "Anonymous",
+    "messages" : "Messages",
+    "reports" : "Reports",
+    "aboutus" : "About Us"
 }

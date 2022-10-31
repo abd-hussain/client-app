@@ -15,5 +15,15 @@
     "invite_friends" : "دعوة الاصدقاء",
     "permision_denied" : "تم رفض الإذن بالوصول للاسماء",
     "login_first_step_button" : "تسجيل دخول / جديد",
-    "skip" : "تخطى"
+    "skip" : "تخطى",
+    "termsandconditions" : "الشروط و الاحكام",
+    "titletermsandconditions" : "بالضعط على تسجيل دخول / جديد فانت توافق على",
+    "startandlogin" : "ابدا الان و قم بتسجيل الدخول",
+    "welcomeback" : "اهلا بعودتك",
+    "hello" : "مرحبا",
+    "anonymous" : "بالغريب",
+    "messages" : "الرسائل",
+    "reports" : "التقارير",
+    "aboutus" : "من نحن"
+
 }

@@ -36,7 +36,7 @@ class _AccountScreenState extends State<AccountScreen> {
           ListOfOptions(
             listOfSettingsOptions: bloc.listOfSettingsOptions,
             listOfReachOutUsOptions: bloc.listOfReachOutUsOptions,
-            listOfSupportOptions: bloc.listOfSupportOptions,
+            listOfSupportOptions: bloc.listOfSupportOptions(context),
             listOfAccountOptions: bloc.listOfAccountOptions,
             isItLoggedIn: false, //TODO: handle passing name if user loged in
           ),

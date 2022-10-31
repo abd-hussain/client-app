@@ -38,21 +38,21 @@ class LoginFirstStepScreen extends StatelessWidget {
             const SizedBox(height: 20),
             CustomButton(
                 buttonTitle: AppLocalizations.of(context)!.login_first_step_button, enableButton: true, onTap: () {}),
-            const CustomText(
-              title: "By clicking \"SIGN IN / REGISTER\" you will be agreed to the",
+            CustomText(
+              title: AppLocalizations.of(context)!.titletermsandconditions,
               fontSize: 10,
-              textColor: Color(0xff444444),
+              textColor: const Color(0xff444444),
             ),
             TextButton(
-              onPressed: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen,
-                  arguments: {
-                    AppConstant.webViewPageUrl: AppConstant.termsLink,
-                    AppConstant.pageTitle: "Terms & Conditions"
-                  }),
-              child: const CustomText(
-                title: "HelpEra Terms & Conditions",
+              onPressed: () =>
+                  Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen, arguments: {
+                AppConstant.webViewPageUrl: AppConstant.termsLink,
+                AppConstant.pageTitle: AppLocalizations.of(context)!.termsandconditions
+              }),
+              child: CustomText(
+                title: AppLocalizations.of(context)!.termsandconditions,
                 fontSize: 10,
-                textColor: Color(0xff4CB6EA),
+                textColor: const Color(0xff4CB6EA),
               ),
             ),
             Row(

@@ -3,6 +3,7 @@ import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/utils/day_time.dart';
 import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileHeader extends StatelessWidget {
   final String firstName;
@@ -26,13 +27,17 @@ class ProfileHeader extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomText(
-                    title: "Hello $firstName",
+                    title: firstName == "Anonymous"
+                        ? AppLocalizations.of(context)!.hello + " " + AppLocalizations.of(context)!.anonymous
+                        : AppLocalizations.of(context)!.hello + " $firstName",
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                   const SizedBox(height: 2),
                   CustomText(
-                    title: firstName == "Anonymous" ? "Start Now and Login" : "Welcome Back",
+                    title: firstName == "Anonymous"
+                        ? AppLocalizations.of(context)!.startandlogin
+                        : AppLocalizations.of(context)!.welcomeback,
                     fontSize: 12,
                     textOverflow: TextOverflow.fade,
                   ),

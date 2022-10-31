@@ -9,11 +9,11 @@ class NotificationsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(title: "Notifications"),
+      appBar: customAppBar(title: AppLocalizations.of(context)!.notifications),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // SubPageHeaderName(title: AppLocalizations.of(context)!.notifications),
+          SubPageHeaderName(title: AppLocalizations.of(context)!.notifications),
           //TODO : Handle Notifications
         ],
       ),

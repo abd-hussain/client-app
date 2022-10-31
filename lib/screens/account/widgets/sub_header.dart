@@ -1,6 +1,7 @@
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileSubHeader extends StatelessWidget {
   const ProfileSubHeader({Key? key}) : super(key: key);
@@ -26,17 +27,17 @@ class ProfileSubHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             optionButton(
-              buttonTitle: "Messages",
+              buttonTitle: AppLocalizations.of(context)!.messages,
               icon: Icons.message,
               onTap: () => null,
             ),
             optionButton(
-              buttonTitle: "Sign in / Sign up",
+              buttonTitle: AppLocalizations.of(context)!.login_first_step_button,
               icon: Icons.account_circle_outlined,
               onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.loginFirstStepRoute),
             ),
             optionButton(
-              buttonTitle: "Reports",
+              buttonTitle: AppLocalizations.of(context)!.reports,
               icon: Icons.archive,
               onTap: () => null,
             ),
