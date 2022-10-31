@@ -3,6 +3,20 @@ import 'package:flutter/material.dart';
 
 class AccountBloc {
   BuildContext? mainContext;
+
+  List<ProfileOptions> listOfAccountOptions = [
+    ProfileOptions(
+      icon: Icons.card_giftcard,
+      name: "Cards",
+      buttonType: AccountButtonType.country,
+    ),
+    ProfileOptions(
+      icon: Icons.loyalty,
+      name: "Loyality Points",
+      buttonType: AccountButtonType.country,
+    ),
+  ];
+
   List<ProfileOptions> listOfSettingsOptions = [
     ProfileOptions(
       icon: Icons.translate,
@@ -14,16 +28,6 @@ class AccountBloc {
       icon: Icons.flag,
       name: "Country",
       selectedItem: "Jordan",
-      buttonType: AccountButtonType.country,
-    ),
-    ProfileOptions(
-      icon: Icons.card_giftcard,
-      name: "Cards",
-      buttonType: AccountButtonType.country,
-    ),
-    ProfileOptions(
-      icon: Icons.loyalty,
-      name: "Loyality Points",
       buttonType: AccountButtonType.country,
     ),
     ProfileOptions(

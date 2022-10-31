@@ -9,9 +9,11 @@
     "notifications" : "Notifications",   
     "viewd_title" : "Viewed Items",
     "favorite_title" : "Favorite Items",
-    "login_first_step_title": "THE LATEST RENTING TECHNOLOGY",
-    "login_first_step_desc" : "Direct connections between Renter and Renter",
+    "login_first_step_title": "THE LATEST CONSULTATIONS TECHNOLOGY",
+    "login_first_step_desc" : "Direct connections between Adviser and who need Help",
     "change_country" : "Change Country",
     "invite_friends" : "Invite Friends",
-    "permision_denied" : "Permission Denied"
+    "permision_denied" : "Permission Denied",
+    "login_first_step_button" : "SIGN IN / REGESTER",
+    "skip" : "Skip"
 }

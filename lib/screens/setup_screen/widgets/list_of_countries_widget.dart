@@ -1,5 +1,5 @@
 import 'package:client_app/shared_widgets/custom_text.dart';
-import 'package:client_app/shared_widgets/shimmer.dart';
+import 'package:client_app/shared_widgets/shimmer_list.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/models/https/countries_model.dart';
 import 'package:client_app/utils/routes.dart';
@@ -17,7 +17,7 @@ class ListOfCountriesWidget extends StatelessWidget {
           valueListenable: countriesListNotifier,
           builder: (context, data, child) {
             return data.isEmpty
-                ? const ShimmerListView(count: 15)
+                ? const ShimmerListView(count: 10)
                 : ListView.builder(
                     itemCount: data.length,
                     itemBuilder: (context, index) {

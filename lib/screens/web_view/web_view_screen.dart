@@ -13,7 +13,7 @@ class WebViewScreen extends StatelessWidget {
     _bloc.extractArguments(context);
 
     return Scaffold(
-      appBar: customAppBar(),
+      appBar: customAppBar(title: _bloc.pageTitle),
       body: ValueListenableBuilder<LoadingStatus>(
           valueListenable: _bloc.loadingStatus,
           builder: (context, loadingsnapshot, child) {

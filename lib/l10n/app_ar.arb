@@ -9,9 +9,11 @@
     "notifications" : "التنبيهات",   
     "viewd_title" : "عناصر شوهدة",
     "favorite_title" : "عناصر مفضلة",
-    "login_first_step_title": "اخر تكنولوجيا التاجير",
-    "login_first_step_desc" : "اتصال مباشر بين المؤجر و المستاجر",
+    "login_first_step_title": "أحدث تقنيات الاستشارات",
+    "login_first_step_desc" : "اتصال مباشرة بين المستشار والذين يحتاجون إلى المساعدة",
     "change_country" : "تغيير البلد",
     "invite_friends" : "دعوة الاصدقاء",
-    "permision_denied" : "تم رفض الإذن بالوصول للاسماء"
+    "permision_denied" : "تم رفض الإذن بالوصول للاسماء",
+    "login_first_step_button" : "تسجيل دخول / جديد",
+    "skip" : "تخطى"
 }

@@ -9,7 +9,7 @@ class NotificationsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(),
+      appBar: customAppBar(title: "Notifications"),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -5,6 +5,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewBloc {
   String webViewUrl = "";
+  String pageTitle = "";
   ValueNotifier<LoadingStatus> loadingStatus = ValueNotifier<LoadingStatus>(LoadingStatus.idle);
   WebViewController? webViewController;
 
@@ -13,6 +14,7 @@ class WebViewBloc {
     final arguments = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
     if (arguments != null) {
       webViewUrl = arguments[AppConstant.webViewPageUrl];
+      pageTitle = arguments[AppConstant.pageTitle];
       loadingStatus.value = LoadingStatus.finish;
     }
   }

@@ -3,6 +3,7 @@ import 'package:client_app/screens/categories/categories_screen.dart';
 import 'package:client_app/screens/change_country/change_country_screen.dart';
 import 'package:client_app/screens/home/home_screen.dart';
 import 'package:client_app/screens/invite_friends/invite_friends_screen.dart';
+import 'package:client_app/screens/login/first_step/login_first_step_screen.dart';
 import 'package:client_app/screens/main_contaner/main_container.dart';
 import 'package:client_app/screens/mycalender/mycalender_screen.dart';
 import 'package:client_app/screens/notifications/notifications_screen.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/material.dart';
 
 class RoutesConstants {
   static const String initialRoute = 'initScreen';
+  static const String loginFirstStepRoute = 'loginFirstStepRoute';
   static const String mainContainer = 'mainContainer';
   static const String homeScreen = 'homeScreen';
   static const String categoriesScreen = 'categoriesScreen';
@@ -25,6 +27,7 @@ class RoutesConstants {
 
 final Map<String, Widget> routes = {
   RoutesConstants.initialRoute: const SetupScreen(),
+  RoutesConstants.loginFirstStepRoute: const LoginFirstStepScreen(),
   RoutesConstants.mainContainer: const MainContainer(),
   RoutesConstants.homeScreen: const HomeScreen(),
   RoutesConstants.categoriesScreen: const CategoriesScreen(),

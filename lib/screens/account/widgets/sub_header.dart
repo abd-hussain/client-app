@@ -1,4 +1,5 @@
 import 'package:client_app/shared_widgets/custom_text.dart';
+import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
 
 class ProfileSubHeader extends StatelessWidget {
@@ -32,7 +33,7 @@ class ProfileSubHeader extends StatelessWidget {
             optionButton(
               buttonTitle: "Sign in / Sign up",
               icon: Icons.account_circle_outlined,
-              onTap: () => null,
+              onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.loginFirstStepRoute),
             ),
             optionButton(
               buttonTitle: "Reports",

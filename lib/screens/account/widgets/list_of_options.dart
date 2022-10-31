@@ -13,34 +13,40 @@ class ListOfOptions extends StatelessWidget {
   final List<ProfileOptions> listOfSettingsOptions;
   final List<ProfileOptions> listOfReachOutUsOptions;
   final List<ProfileOptions> listOfSupportOptions;
-  final bool isItLoggedIn;
+  final List<ProfileOptions> listOfAccountOptions;
+  bool isItLoggedIn;
 
-  const ListOfOptions(
+  ListOfOptions(
       {required this.listOfSettingsOptions,
       required this.listOfReachOutUsOptions,
       required this.listOfSupportOptions,
+      required this.listOfAccountOptions,
       required this.isItLoggedIn,
       Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    isItLoggedIn = false;
     return Expanded(
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const AddMobBanner(),
+            titleOptionCollection(title: "Account"),
+            optionCollectionItem(listOfAccountOptions, containerHight: 123, onTap: (value) {}),
+            isItLoggedIn ? const SizedBox(height: 16) : Container(),
+            isItLoggedIn ? logoutView() : Container(),
             titleOptionCollection(title: "Settings"),
-            optionCollectionItem(listOfSettingsOptions, onTap: (value) {}),
+            optionCollectionItem(listOfSettingsOptions, containerHight: 330, onTap: (value) {}),
             titleOptionCollection(title: "Reach out to us"),
-            optionCollectionItem(listOfReachOutUsOptions, onTap: (value) {}),
+            optionCollectionItem(listOfReachOutUsOptions, containerHight: 123, onTap: (value) {}),
             titleOptionCollection(title: "Support APP."),
             optionCollectionItem(listOfSupportOptions,
+                containerHight: 123,
                 onTap: (value) =>
                     value == AccountButtonType.aboutUs ? openAboutUs(context) : openInviteFriends(context)),
-            const SizedBox(height: 16),
-            isItLoggedIn ? logoutView() : Container(),
             const SizedBox(height: 8),
             const AddMobBanner(),
             footerView(context),
@@ -116,12 +122,12 @@ class ListOfOptions extends StatelessWidget {
     Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.inviteFriendScreen);
   }
 
-  Widget optionCollectionItem(List<ProfileOptions> listOfSettingsOptions,
-      {required Function(AccountButtonType) onTap}) {
+  Widget optionCollectionItem(List<ProfileOptions> listOfOptions,
+      {required Function(AccountButtonType) onTap, required double containerHight}) {
     final ValueNotifier<bool> switchStatusNotifier = ValueNotifier<bool>(false);
 
     return Container(
-      height: listOfSettingsOptions.length * 65,
+      height: containerHight,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -135,37 +141,37 @@ class ListOfOptions extends StatelessWidget {
       ),
       child: ListView.separated(
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: listOfSettingsOptions.length,
+          itemCount: listOfOptions.length,
           separatorBuilder: (BuildContext context, int index) => const Padding(
                 padding: EdgeInsets.only(left: 30, right: 30),
                 child: Divider(),
               ),
           itemBuilder: (ctx, index) {
             return InkWell(
-              onTap: () => onTap(listOfSettingsOptions[index].buttonType),
+              onTap: () => onTap(listOfOptions[index].buttonType),
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Row(
                   children: [
                     Icon(
-                      listOfSettingsOptions[index].icon,
+                      listOfOptions[index].icon,
                       size: 20,
                       color: const Color(0xff034061),
                     ),
                     const SizedBox(width: 8),
                     CustomText(
-                        title: listOfSettingsOptions[index].name,
+                        title: listOfOptions[index].name,
                         fontSize: 16,
                         textColor: const Color(0xff034061),
                         fontWeight: FontWeight.w500),
                     Expanded(child: Container()),
                     CustomText(
-                      title: listOfSettingsOptions[index].selectedItem,
+                      title: listOfOptions[index].selectedItem,
                       fontSize: 14,
                       textColor: const Color(0xffFFA200),
                     ),
                     const SizedBox(width: 8),
-                    listOfSettingsOptions[index].switchIcn
+                    listOfOptions[index].switchIcn
                         ? SizedBox(
                             height: 20,
                             child: ValueListenableBuilder<bool>(
@@ -204,7 +210,10 @@ class ListOfOptions extends StatelessWidget {
               TextButton(
                 //TODO: Fix facebook URL
                 onPressed: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen,
-                    arguments: {AppConstant.webViewPageUrl: "https://www.facebook.com/"}),
+                    arguments: {
+                      AppConstant.webViewPageUrl: "https://www.facebook.com/",
+                      AppConstant.pageTitle: "Facebook"
+                    }),
                 child: const Icon(
                   Icons.facebook,
                   color: Color(0xff444444),
@@ -232,7 +241,10 @@ class ListOfOptions extends StatelessWidget {
               TextButton(
                 //TODO: Fix Linkedin URL
                 onPressed: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen,
-                    arguments: {AppConstant.webViewPageUrl: "https://www.linkedin.com/"}),
+                    arguments: {
+                      AppConstant.webViewPageUrl: "https://www.linkedin.com/",
+                      AppConstant.pageTitle: "LinkedIn"
+                    }),
                 child: Image.asset(
                   "assets/images/linkedinLogo.png",
                 ),
@@ -242,7 +254,10 @@ class ListOfOptions extends StatelessWidget {
           TextButton(
             //TODO: Fix Privacy Policy URL
             onPressed: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen,
-                arguments: {AppConstant.webViewPageUrl: "https://www.talabat.com/jordan/privacy"}),
+                arguments: {
+                  AppConstant.webViewPageUrl: "https://www.talabat.com/jordan/privacy",
+                  AppConstant.pageTitle: "Policy"
+                }),
             child: _footerTextWidget("Privacy Policy"),
           ),
           TextButton(
@@ -256,7 +271,10 @@ class ListOfOptions extends StatelessWidget {
           TextButton(
             //TODO: Fix Terms Conditions URL
             onPressed: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen,
-                arguments: {AppConstant.webViewPageUrl: "https://www.talabat.com/jordan/privacy"}),
+                arguments: {
+                  AppConstant.webViewPageUrl: "https://www.talabat.com/jordan/privacy",
+                  AppConstant.pageTitle: "Terms And Conditions"
+                }),
             child: _footerTextWidget("Terms And Conditions"),
           ),
           const SizedBox(height: 16),
@@ -272,7 +290,7 @@ class ListOfOptions extends StatelessWidget {
               }),
           const SizedBox(height: 20),
           const CustomText(
-            title: "@ 2022 Rental.com. All rights reserved.",
+            title: "@ 2022 HelpEra.app. All rights reserved.",
             fontSize: 10,
             textColor: Color(0xff707070),
           ),
