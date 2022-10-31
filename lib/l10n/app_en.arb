@@ -24,5 +24,13 @@
     "anonymous" : "Anonymous",
     "messages" : "Messages",
     "reports" : "Reports",
-    "aboutus" : "About Us"
+    "aboutus" : "About Us",
+    "support" : "Support",
+    "version" : "Version",
+    "rightsreserved" : "@ 2022 HelpEra.app. All right reserved.",
+    "rateapp" : "Rate Application",
+    "privacypolicy" : "Privacy Policy",
+    "whatsappnotinstalled" : "WhatsApp is not installed on the device",
+    "linkedin" : "LinkedIn",
+    "facebook" : "Facebook"
 }

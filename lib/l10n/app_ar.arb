@@ -24,6 +24,14 @@
     "anonymous" : "بالغريب",
     "messages" : "الرسائل",
     "reports" : "التقارير",
-    "aboutus" : "من نحن"
+    "aboutus" : "من نحن",
+    "support" : "الدعم",
+    "version" : "الاصدار",
+    "rightsreserved" : "@ 2022 HelpEra.app. جميع الحقوق محفوظة.",
+    "rateapp" : "تقييم التطبيق",
+    "privacypolicy" : "سياسة الخصوصية",
+    "whatsappnotinstalled" : "واتساب غير مثبت على الجهاز",
+    "linkedin" : "لينكد ان",
+    "facebook" : "فيس بوك"
 
 }

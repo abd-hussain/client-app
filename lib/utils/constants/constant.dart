@@ -5,4 +5,8 @@ class AppConstant {
   /// LINKS //TODO: Review This Links
   static const String termsLink = "https://talabay.net/";
   static const String aboutusLink = "https://talabay.net/";
+  static const String privacypolicyLink = "https://www.talabat.com/jordan/privacy";
+  static const String whatsappNumber = "+962795190663";
+  static const String linkedinLink = "https://www.linkedin.com/";
+  static const String facebookLink = "https://www.facebook.com/";
 }

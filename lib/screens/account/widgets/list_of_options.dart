@@ -43,7 +43,7 @@ class ListOfOptions extends StatelessWidget {
             optionCollectionItem(listOfSettingsOptions, containerHight: 330, onTap: (value) {}),
             titleOptionCollection(title: "Reach out to us"),
             optionCollectionItem(listOfReachOutUsOptions, containerHight: 123, onTap: (value) {}),
-            titleOptionCollection(title: "Support APP."),
+            titleOptionCollection(title: AppLocalizations.of(context)!.support),
             optionCollectionItem(listOfSupportOptions,
                 containerHight: 123,
                 onTap: (value) =>
@@ -211,11 +211,10 @@ class ListOfOptions extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextButton(
-                //TODO: Fix facebook URL
                 onPressed: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen,
                     arguments: {
-                      AppConstant.webViewPageUrl: "https://www.facebook.com/",
-                      AppConstant.pageTitle: "Facebook"
+                      AppConstant.webViewPageUrl: AppConstant.facebookLink,
+                      AppConstant.pageTitle: AppLocalizations.of(context)!.facebook
                     }),
                 child: const Icon(
                   Icons.facebook,
@@ -242,11 +241,10 @@ class ListOfOptions extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
               TextButton(
-                //TODO: Fix Linkedin URL
                 onPressed: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen,
                     arguments: {
-                      AppConstant.webViewPageUrl: "https://www.linkedin.com/",
-                      AppConstant.pageTitle: "LinkedIn"
+                      AppConstant.webViewPageUrl: AppConstant.linkedinLink,
+                      AppConstant.pageTitle: AppLocalizations.of(context)!.linkedin
                     }),
                 child: Image.asset(
                   "assets/images/linkedinLogo.png",
@@ -255,30 +253,28 @@ class ListOfOptions extends StatelessWidget {
             ],
           ),
           TextButton(
-            //TODO: Fix Privacy Policy URL
-            onPressed: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen,
-                arguments: {
-                  AppConstant.webViewPageUrl: "https://www.talabat.com/jordan/privacy",
-                  AppConstant.pageTitle: "Policy"
-                }),
-            child: _footerTextWidget("Privacy Policy"),
-          ),
-          TextButton(
             onPressed: () {
               WidgetsBinding.instance.addPostFrameCallback((_) async {
                 RateMyApp().showRateDialog(context);
               });
             },
-            child: _footerTextWidget("Rate Application"),
+            child: _footerTextWidget(AppLocalizations.of(context)!.rateapp),
           ),
           TextButton(
-            //TODO: Fix Terms Conditions URL
-            onPressed: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen,
-                arguments: {
-                  AppConstant.webViewPageUrl: "https://www.talabat.com/jordan/privacy",
-                  AppConstant.pageTitle: "Terms And Conditions"
-                }),
-            child: _footerTextWidget("Terms And Conditions"),
+            onPressed: () =>
+                Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen, arguments: {
+              AppConstant.webViewPageUrl: AppConstant.termsLink,
+              AppConstant.pageTitle: AppLocalizations.of(context)!.termsandconditions
+            }),
+            child: _footerTextWidget(AppLocalizations.of(context)!.termsandconditions),
+          ),
+          TextButton(
+            onPressed: () =>
+                Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen, arguments: {
+              AppConstant.webViewPageUrl: AppConstant.privacypolicyLink,
+              AppConstant.pageTitle: AppLocalizations.of(context)!.privacypolicy
+            }),
+            child: _footerTextWidget(AppLocalizations.of(context)!.privacypolicy),
           ),
           const SizedBox(height: 16),
           FutureBuilder<String>(
@@ -286,16 +282,16 @@ class ListOfOptions extends StatelessWidget {
               future: Version().getApplicationVersion(),
               builder: (context, snapshot) {
                 return CustomText(
-                  title: "Version ${snapshot.data}",
+                  title: "${AppLocalizations.of(context)!.version} ${snapshot.data}",
                   fontSize: 12,
                   textColor: const Color(0xffBFBFBF),
                 );
               }),
           const SizedBox(height: 20),
-          const CustomText(
-            title: "@ 2022 HelpEra.app. All rights reserved.",
+          CustomText(
+            title: AppLocalizations.of(context)!.rightsreserved,
             fontSize: 10,
-            textColor: Color(0xff707070),
+            textColor: const Color(0xff707070),
           ),
           const SizedBox(height: 20),
         ],
@@ -322,15 +318,14 @@ class ListOfOptions extends StatelessWidget {
   }
 
   void _launchWhatsapp(BuildContext context) async {
-    //TODO: Fix Whatsapp Number Policy URL
-    var whatsapp = "+962795190663";
+    var whatsapp = AppConstant.whatsappNumber;
     var whatsappAndroid = Uri.parse("whatsapp://send?phone=$whatsapp&text=hello");
     if (await canLaunchUrl(whatsappAndroid)) {
       await launchUrl(whatsappAndroid);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("WhatsApp is not installed on the device"),
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.whatsappnotinstalled),
         ),
       );
     }
