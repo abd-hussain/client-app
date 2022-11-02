@@ -33,5 +33,12 @@
     "whatsappnotinstalled" : "WhatsApp is not installed on the device",
     "linkedin" : "LinkedIn",
     "facebook" : "Facebook",
-    "logout" : "Logout"
+    "logout" : "Logout",
+    "entermobilenumber" : "Enter Mobile Number",
+    "verify" : "Verify",
+    "enteryourphonenumber" : "Enter your phone Number in the field below",
+    "enteryourphonenumberexample" : "Example on the acceptable numbers 795190663",
+    "enteryourotpnumber" : "Enter your pin code Number in the field below",
+    "enteryourotpnumberexample" : "Example on the acceptable numbers 123456"
+
 }

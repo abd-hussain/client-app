@@ -20,5 +20,9 @@ class ProfileOptions {
   final AccountButtonType buttonType;
 
   ProfileOptions(
-      {required this.icon, required this.name, this.selectedItem = "", required this.buttonType, this.switchIcn = false});
+      {required this.icon,
+      required this.name,
+      this.selectedItem = "",
+      required this.buttonType,
+      this.switchIcn = false});
 }

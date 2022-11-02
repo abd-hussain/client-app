@@ -1,6 +1,10 @@
 class AppConstant {
   static const String webViewPageUrl = "webViewPageUrl";
   static const String pageTitle = "pageTitle";
+  static const String countryCode = "countryCode";
+  static const String mobileNumber = "mobileNumber";
+  static const String userid = "userid";
+  static const String apikey = "apikey";
 
   /// LINKS //TODO: Review This Links
   static const String termsLink = "https://talabay.net/";

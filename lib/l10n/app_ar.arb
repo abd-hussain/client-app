@@ -33,6 +33,14 @@
     "whatsappnotinstalled" : "واتساب غير مثبت على الجهاز",
     "linkedin" : "لينكد ان",
     "facebook" : "فيس بوك",
-    "logout" : "تسجيل الخروج"
+    "logout" : "تسجيل الخروج",
+    "entermobilenumber" : "أدخل رقم الهاتف",
+    "verify" : "التحقق",
+    "enteryourphonenumber" : "أدخل رقم هاتفك في الحقل أدناه",
+    "enteryourphonenumberexample" : "مثال على الارقام المقبوله 795190663",
+    "enteryourotpnumber" : "أدخل رمز التحقق في الحقل أدناه",
+    "enteryourotpnumberexample" : "مثال على الارقام المقبوله 123456"
+
+
 
 }

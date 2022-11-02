@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:client_app/utils/constants/database_constant.dart';
+import 'package:client_app/utils/errors/exceptions.dart';
 import 'package:client_app/utils/mixins.dart';
 import 'package:dio/dio.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -23,8 +24,12 @@ class HttpInterceptor extends InterceptorsWrapper {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) async {
-    if (await validateResponse(response)) {
-      super.onResponse(response, handler);
+    try {
+      if (await validateResponse(response)) {
+        return handler.next(response);
+      }
+    } catch (error) {
+      handler.reject(error as DioError);
     }
   }
 
@@ -32,31 +37,15 @@ class HttpInterceptor extends InterceptorsWrapper {
     switch (response.statusCode) {
       case 200:
         return true;
-      case 401:
-        return false;
-      // case 403:
-      //   FirebaseCrashlytics.instance.recordError(HttpException(response.statusCode, 'Unauthorized Request'), StackTrace.current);
-      //   logger.d("------------------ Token Expired with status code 401 or 403");
-      //   throw DioError(error: HttpException(response.statusCode, 'Unauthorized Request'), requestOptions: response.requestOptions);
-      // case 400:
-      //   var error;
-      //   if (response.requestOptions.path == 'token') {
-      //     error = AuthBadRequestException.fromJson(response.data, response.statusCode);
-      //     FirebaseCrashlytics.instance.recordError(HttpException(response.statusCode, (error as AuthBadRequestException).errorDescription), StackTrace.current);
-      //   } else if (response.requestOptions.path == 'account/forgot-password') {
-      //     error = ResetPasswordRequestException.fromJson(response.data);
-      //   } else {
-      //     error = BadRequestException.fromJson(response.data, response.statusCode);
-      //     FirebaseCrashlytics.instance.recordError(HttpException(response.statusCode, (error as BadRequestException).invalidRequest.first), StackTrace.current);
-      //   }
-      //   throw DioError(error: error, requestOptions: response.requestOptions);
-      //   break;
+      case 201:
+        return true;
       default:
-        return false;
-
-      // var error = HttpException(response.statusCode, '${response.requestOptions.path.split('?').first}- ${response.statusCode} - Error occured while Communication with Server with StatusCode');
-      // FirebaseCrashlytics.instance.recordError(HttpException(response.statusCode, error.message), StackTrace.current);
-      // throw DioError(error: error, requestOptions: response.requestOptions);
+        throw DioError(
+            error: HttpException(
+                status: response.statusCode!,
+                message: response.data["detail"]["message"],
+                requestId: response.data["detail"]["request_id"]),
+            requestOptions: response.requestOptions);
     }
   }
 }

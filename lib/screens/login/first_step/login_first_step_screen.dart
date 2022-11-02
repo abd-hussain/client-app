@@ -5,6 +5,8 @@ import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../widget/top_bar.dart';
+
 class LoginFirstStepScreen extends StatelessWidget {
   const LoginFirstStepScreen({Key? key}) : super(key: key);
 
@@ -15,16 +17,10 @@ class LoginFirstStepScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const TopBarWidget(),
             const SizedBox(height: 20),
-            const CustomText(
-              title: "HelpEra",
-              fontSize: 30,
-              textColor: Color(0xff444444),
-              fontWeight: FontWeight.bold,
-            ),
-            const SizedBox(height: 80),
             Image.asset("assets/images/login_1.png"),
-            Expanded(child: Container()),
+            const SizedBox(height: 20),
             CustomText(
               title: AppLocalizations.of(context)!.login_first_step_title,
               fontSize: 14,
@@ -37,7 +33,11 @@ class LoginFirstStepScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             CustomButton(
-                buttonTitle: AppLocalizations.of(context)!.login_first_step_button, enableButton: true, onTap: () {}),
+              buttonTitle: AppLocalizations.of(context)!.login_first_step_button,
+              enableButton: true,
+              onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.loginSecoundStepRoute),
+            ),
+            const SizedBox(height: 20),
             CustomText(
               title: AppLocalizations.of(context)!.titletermsandconditions,
               fontSize: 10,
@@ -55,6 +55,7 @@ class LoginFirstStepScreen extends StatelessWidget {
                 textColor: const Color(0xff4CB6EA),
               ),
             ),
+            Expanded(child: Container()),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
