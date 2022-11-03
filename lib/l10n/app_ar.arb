@@ -39,7 +39,23 @@
     "enteryourphonenumber" : "أدخل رقم هاتفك في الحقل أدناه",
     "enteryourphonenumberexample" : "مثال على الارقام المقبوله 795190663",
     "enteryourotpnumber" : "أدخل رمز التحقق في الحقل أدناه",
-    "enteryourotpnumberexample" : "مثال على الارقام المقبوله 123456"
+    "enteryourotpnumberexample" : "مثال على الارقام المقبوله 123456",
+    "firstnameprofile" : "الاسم الاول",
+    "lastnameprofile" : "اسم العائلة",
+    "emailprofile" : "البريد الالكتروني",
+    "genderprofile" : "اختر الجنس",
+    "referalcodeprofile" : "الرمز الترويجي",
+    "picprofile" : "الصورة الشخصية",
+    "dbprofile" : "تاريخ الميلاد",
+    "countryprofile" : "البلد",
+    "submit" : "ارسال",
+    "pickimagefromstudio" : "اختيار من الاستديو",
+    "pickimagefromcamera" : "اختيار من الكاميرا",
+    "pickimageremoveimage" : "حذف الصورة",
+    "gendermale" : "ذكر",
+    "genderfemale" : "انثى",
+    "genderother" : "اخرى",
+    "gender" : "الجنس"
 
 
 

@@ -39,6 +39,26 @@
     "enteryourphonenumber" : "Enter your phone Number in the field below",
     "enteryourphonenumberexample" : "Example on the acceptable numbers 795190663",
     "enteryourotpnumber" : "Enter your pin code Number in the field below",
-    "enteryourotpnumberexample" : "Example on the acceptable numbers 123456"
+    "enteryourotpnumberexample" : "Example on the acceptable numbers 123456",
+    "firstnameprofile" : "First Name",
+    "lastnameprofile" : "Last Name",
+    "emailprofile" : "Email",
+    "genderprofile" : "Select Gender",
+    "referalcodeprofile" : "Referal Code",
+    "picprofile" : "Profile Picture",
+    "dbprofile" : "When’s your birthday?",
+    "countryprofile" : "Country",
+    "submit" : "Submit",
+    "pickimagefromstudio" : "Choose from Library",
+    "pickimagefromcamera" : "Choose from Camera",
+    "pickimageremoveimage" : "Remove image",
+    "gendermale" : "Male",
+    "genderfemale" : "Female",
+    "genderother" : "Other",
+    "gender" : "Gender"
+
+
+
+
 
 }

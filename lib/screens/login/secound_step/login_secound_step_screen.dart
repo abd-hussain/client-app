@@ -29,9 +29,7 @@ class LoginSecoundStepScreen extends StatelessWidget {
               const TopBarWidget(),
               const SizedBox(height: 20),
               Image.asset("assets/images/login_2.png"),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               CustomText(
                 title: AppLocalizations.of(context)!.enteryourphonenumber,
                 fontSize: 12,

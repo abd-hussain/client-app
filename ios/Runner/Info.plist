@@ -62,8 +62,6 @@
 		<key>NSAllowsArbitraryLoadsInWebContent</key>
 		<true/>
 	</dict>
-	<key>NSCameraUsageDescription</key>
-	<string>Please allow access to camera to use the app in authentication</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Please authorize to use the app</string>
 	<key>UIBackgroundModes</key>
@@ -79,5 +77,9 @@
 	<true/>
 	<key>NSContactsUsageDescription</key>
      <string>We need to access your contact list to allow you invite your friends</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Please allow access to camera in order to register your profile pictures</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Please allow access to gallery in order to register your profile pictures</string>
 </dict>
 </plist>

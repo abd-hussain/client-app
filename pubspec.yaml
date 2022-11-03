@@ -38,6 +38,8 @@ dependencies:
   webview_flutter: ^3.0.4
   device_info_plus: ^4.0.0
   country_pickers: ^2.0.0
+  flutter_holo_date_picker: ^1.0.6
+  image_picker: ^0.8.5+3
 
 dev_dependencies:
   flutter_test:

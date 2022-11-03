@@ -4,10 +4,8 @@ import 'package:client_app/screens/login/third_step/login_third_step_bloc.dart';
 import 'package:client_app/screens/login/widget/top_bar.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
-import 'package:client_app/utils/errors/exceptions.dart';
 import 'package:client_app/utils/logger.dart';
 import 'package:client_app/utils/routes.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -85,9 +83,7 @@ class _LoginThirdStepScreenState extends State<LoginThirdStepScreen> {
                 const TopBarWidget(),
                 const SizedBox(height: 20),
                 Image.asset("assets/images/login_3.png"),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CustomText(
                   title: AppLocalizations.of(context)!.enteryourotpnumber,
                   fontSize: 12,
