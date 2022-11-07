@@ -4,4 +4,6 @@ class MethodNameConstant {
   static const String auth = "client-auth";
   static const String authDebuging = "client-auth-debug";
   static const String authVerify = "client-auth-verify";
+  static const String account = "client-account/";
+  static const String updateAccount = "client-account/update";
 }

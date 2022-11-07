@@ -1,8 +1,8 @@
 import 'package:client_app/myApp.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/mixins.dart';
-import 'package:client_app/utils/models/https/countries_model.dart';
-import 'package:client_app/utils/sevices/filter_services.dart';
+import 'package:client_app/models/https/countries_model.dart';
+import 'package:client_app/sevices/filter_services.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 

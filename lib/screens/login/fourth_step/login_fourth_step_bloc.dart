@@ -1,32 +1,127 @@
+import 'dart:async';
 import 'dart:io';
 
+import 'package:client_app/locator.dart';
+import 'package:client_app/models/https/account_info_response.dart';
+import 'package:client_app/models/https/update_account_request.dart';
+import 'package:client_app/sevices/filter_services.dart';
+import 'package:client_app/utils/constants/constant.dart';
+import 'package:client_app/utils/constants/database_constant.dart';
+import 'package:client_app/utils/enums/loading_status.dart';
+import 'package:client_app/utils/gender_format.dart';
 import 'package:client_app/utils/mixins.dart';
-import 'package:client_app/utils/sevices/auth_services.dart';
+import 'package:client_app/models/gender_model.dart';
+import 'package:client_app/models/https/countries_model.dart';
+import 'package:client_app/sevices/account_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-class LoginFourthStepBloc extends Bloc<AuthService> {
+class LoginFourthStepBloc extends Bloc<AccountService> {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController genderController = TextEditingController();
-  ValueNotifier<String> genderValue = ValueNotifier<String>("");
-
-  TextEditingController referalCodeController = TextEditingController();
-  DateTime dateOfbirth = DateTime.now();
   TextEditingController countryController = TextEditingController();
+  Country? selectedCountry;
+  TextEditingController genderController = TextEditingController();
+  TextEditingController referalCodeController = TextEditingController();
+  ValueNotifier<LoadingStatus> loadingStatus = ValueNotifier<LoadingStatus>(LoadingStatus.idle);
+
+  ValueNotifier<bool> enableReferalCode = ValueNotifier<bool>(true);
+
+  String? selectedDate;
+
   File? profileImage;
 
-  ValueNotifier<bool> enableNextBtn = ValueNotifier<bool>(false);
+  ValueNotifier<bool> enableNextBtn = ValueNotifier<bool>(true);
+
+  List<Country> listOfCountries = [];
+  List<Gender> listOfGenders = [];
+
+  String argumentToken = "";
+  final box = Hive.box(DatabaseBoxConstant.userInfo);
 
   void extractArguments(BuildContext context) {
+    listOfGenders = [
+      Gender(
+          name: AppLocalizations.of(context)!.gendermale,
+          icon: const Icon(
+            Icons.male,
+            color: Color(0xff444444),
+          )),
+      Gender(name: AppLocalizations.of(context)!.genderfemale, icon: const Icon(Icons.female)),
+      Gender(name: AppLocalizations.of(context)!.genderother, icon: const Icon(Icons.align_horizontal_center))
+    ];
+
     final arguments = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
     if (arguments != null) {
-      // countryCode = arguments[AppConstant.countryCode];
-      // mobileNumber = arguments[AppConstant.mobileNumber];
-      // apikey = arguments[AppConstant.apikey];
-      // userId = arguments[AppConstant.userid];
+      argumentToken = arguments[AppConstant.token];
     }
+
+    getAccountInformation(context);
+    getListOfCountries();
   }
 
-  Future<void> callRequest() async {}
+  validateFields() {
+    //Nothing is requierd
+  }
+
+  void getListOfCountries() {
+    locator<FilterService>().countries().then((value) {
+      listOfCountries = value.data!..sort((a, b) => a.id!.compareTo(b.id!));
+    });
+  }
+
+  getAccountInformation(BuildContext context) {
+    box.put(DatabaseFieldConstant.token, argumentToken);
+
+    AccountService().getAccountInfo().then((value) {
+      if (value.data != null) {
+        firstNameController.text = value.data!.firstName ?? "";
+        lastNameController.text = value.data!.lastName ?? "";
+        if (value.data!.gender != null) {
+          genderController.text = GenderFormat().convertIndexToString(context, value.data!.gender!);
+        }
+        emailController.text = value.data!.email ?? "";
+
+        if (value.data!.referalCode != null) {
+          enableReferalCode.value = false;
+          referalCodeController.text = value.data!.referalCode!;
+        }
+
+        if (value.data!.countryId != null) {
+          Iterable<Country> country = listOfCountries.where((element) => element.id! == value.data!.countryId!);
+          countryController.text = country.first.name!;
+          selectedCountry = country.first;
+        }
+
+        if (value.data!.dateOfBirth != null) {
+          selectedDate = value.data!.dateOfBirth!;
+        }
+
+        if (value.data!.profileImg != null) {
+          //TODO
+        }
+
+        loadingStatus.value = LoadingStatus.finish;
+      }
+    });
+  }
+
+  Future<AccountInfo> callRequest(BuildContext context) async {
+    loadingStatus.value = LoadingStatus.inprogress;
+
+    //TODO
+    return await service.updateAccount(
+      account: UpdateAccountRequest(
+        firstName: firstNameController.text,
+        lastName: lastNameController.text,
+        email: emailController.text,
+        referalCode: referalCodeController.text,
+        gender: GenderFormat().convertStringToIndex(context, genderController.text),
+        countryId: selectedCountry!.id,
+        dateOfBirth: selectedDate,
+      ),
+    );
+  }
 }

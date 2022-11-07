@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:client_app/utils/constants/constant.dart';
 import 'package:client_app/utils/mixins.dart';
-import 'package:client_app/utils/models/https/auth_debug_response.dart';
-import 'package:client_app/utils/sevices/auth_services.dart';
+import 'package:client_app/models/https/auth_debug_response.dart';
+import 'package:client_app/sevices/auth_services.dart';
 import 'package:flutter/material.dart';
 
 class LoginThirdStepBloc extends Bloc<AuthService> {

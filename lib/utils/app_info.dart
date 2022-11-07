@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:client_app/utils/constants/database_constant.dart';
-import 'package:client_app/utils/models/app_info_model.dart';
+import 'package:client_app/models/app_info_model.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';

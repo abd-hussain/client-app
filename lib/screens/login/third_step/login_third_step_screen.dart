@@ -4,6 +4,7 @@ import 'package:client_app/screens/login/third_step/login_third_step_bloc.dart';
 import 'package:client_app/screens/login/widget/top_bar.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
+import 'package:client_app/utils/constants/constant.dart';
 import 'package:client_app/utils/logger.dart';
 import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,11 @@ class _LoginThirdStepScreenState extends State<LoginThirdStepScreen> {
         bloc.callVerifyRequset().then((value) {
           if (value.data != null) {
             bloc.otpNotValid.value = false;
-            Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.loginFourthStepRoute);
+            print(value.data!.token);
+            Navigator.of(context, rootNavigator: true).pushNamed(
+              RoutesConstants.loginFourthStepRoute,
+              arguments: {AppConstant.token: value.data!.token},
+            );
           } else {
             bloc.otpNotValid.value = true;
           }

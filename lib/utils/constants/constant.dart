@@ -5,6 +5,7 @@ class AppConstant {
   static const String mobileNumber = "mobileNumber";
   static const String userid = "userid";
   static const String apikey = "apikey";
+  static const String token = "token";
 
   /// LINKS //TODO: Review This Links
   static const String termsLink = "https://talabay.net/";

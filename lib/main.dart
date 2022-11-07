@@ -28,10 +28,13 @@ void main() {
     ]);
     runApp(const MyApp());
   }, (error, stackTrace) {
-    if (error is HttpException) {
-      Logger().wtf(error.status);
-      Logger().wtf(error.message);
-      Logger().wtf(error.requestId);
+    if (error is DioError) {
+      final exception = error.error;
+      if (exception is HttpException) {
+        Logger().wtf(exception.status);
+        Logger().wtf(exception.message);
+        Logger().wtf(exception.requestId);
+      }
     }
   });
 }

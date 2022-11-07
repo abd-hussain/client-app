@@ -1,11 +1,12 @@
 import 'package:client_app/utils/app_info.dart';
-import 'package:client_app/utils/models/app_info_model.dart';
-import 'package:client_app/utils/models/https/auth_debug_request.dart';
-import 'package:client_app/utils/models/https/auth_debug_response.dart';
+import 'package:client_app/utils/mixins.dart';
+import 'package:client_app/models/app_info_model.dart';
+import 'package:client_app/models/https/auth_debug_request.dart';
+import 'package:client_app/models/https/auth_debug_response.dart';
 import 'package:client_app/utils/repository/http_repository.dart';
 import 'package:client_app/utils/repository/method_name_constractor.dart';
 
-class AuthService {
+class AuthService with Service {
   Future<AuthDebugResponse> auth({required String countryCode, required String mobileNumber}) async {
     AppinfoModel appInfo = await AppInfo().get();
 
@@ -17,8 +18,8 @@ class AuthService {
         appVersion: appInfo.appVersion,
         countryId: appInfo.countryId);
 
-    final response = await HttpRepository()
-        .callRequest(requestType: RequestType.post, methodName: MethodNameConstant.authDebuging, postBody: body);
+    final response = await repository.callRequest(
+        requestType: RequestType.post, methodName: MethodNameConstant.authDebuging, postBody: body);
 
     return AuthDebugResponse.fromJson(response);
   }
@@ -43,8 +44,8 @@ class AuthService {
         userId: userId);
 
     try {
-      final response = await HttpRepository()
-          .callRequest(requestType: RequestType.post, methodName: MethodNameConstant.authVerify, postBody: body);
+      final response = await repository.callRequest(
+          requestType: RequestType.post, methodName: MethodNameConstant.authVerify, postBody: body);
       return VerifyOTPresponse.fromJson(response);
     } catch (error) {
       return VerifyOTPresponse();

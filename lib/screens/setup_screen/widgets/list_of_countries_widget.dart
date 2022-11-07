@@ -1,7 +1,7 @@
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/shared_widgets/shimmer_list.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
-import 'package:client_app/utils/models/https/countries_model.dart';
+import 'package:client_app/models/https/countries_model.dart';
 import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';

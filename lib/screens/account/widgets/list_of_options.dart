@@ -1,7 +1,7 @@
 import 'package:client_app/shared_widgets/admob_banner.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/utils/constants/constant.dart';
-import 'package:client_app/utils/models/profile_options.dart';
+import 'package:client_app/models/profile_options.dart';
 import 'package:client_app/utils/routes.dart';
 import 'package:client_app/utils/version.dart';
 import 'package:flutter/cupertino.dart';
