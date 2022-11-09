@@ -32,7 +32,6 @@ class BottomSheetsUtil {
                       const SizedBox(height: 27.0),
                       TextButton(
                         onPressed: () {
-                          Navigator.of(context).pop();
                           deleteCallBack();
                         },
                         child: Row(

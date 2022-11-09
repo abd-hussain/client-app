@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:client_app/utils/mixins.dart';
 
 class UpdateAccountRequest implements Model {
@@ -8,7 +10,7 @@ class UpdateAccountRequest implements Model {
   int? gender;
   int? countryId;
   String? dateOfBirth;
-  String? profileImage;
+  File? profileImage;
 
   UpdateAccountRequest(
       {this.firstName,
@@ -30,7 +32,7 @@ class UpdateAccountRequest implements Model {
     data['gender'] = gender;
     data['country_id'] = countryId;
     data['date_of_birth'] = dateOfBirth;
-    data['profile_img'] = profileImage;
+    data['profile_picture'] = profileImage;
 
     return data;
   }

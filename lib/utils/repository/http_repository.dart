@@ -5,7 +5,7 @@ import 'package:client_app/utils/repository/http_interceptor.dart';
 import 'package:client_app/sevices/general/network_info_service.dart';
 import 'package:dio/dio.dart';
 
-enum RequestType { get, post, put, delete }
+enum RequestType { get, post, delete, multiPartPut }
 
 class HttpRepository {
   Future<dynamic> callRequest(
@@ -13,6 +13,7 @@ class HttpRepository {
       required String methodName,
       Map<String, dynamic> queryParam = const {},
       Model? postBody,
+      FormData? formData,
       String contentType = Headers.jsonContentType}) async {
     Response response;
     const baseUrl = 'https://www.helpera.app/';
@@ -51,10 +52,10 @@ class HttpRepository {
             options: Options(contentType: contentType),
           );
           break;
-        case RequestType.put:
+        case RequestType.multiPartPut:
           response = await dioClient.put(
             methodName,
-            data: postBody?.toJson(),
+            data: formData,
             queryParameters: queryParam,
             options: Options(contentType: contentType),
           );

@@ -1,3 +1,5 @@
+import 'package:client_app/utils/constants/constant.dart';
+
 class CountriesModel {
   List<Country>? data;
   String? message;
@@ -26,7 +28,7 @@ class Country {
 
   Country.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    flagImage = json['flag_image'];
+    flagImage = AppConstant.imagesBaseURLForCountries + json['flag_image'];
     name = json['name'];
     currency = json['currency'];
     prefixNumber = json['prefix_number'];

@@ -6,6 +6,8 @@ class AppConstant {
   static const String userid = "userid";
   static const String apikey = "apikey";
   static const String token = "token";
+  static const String imagesBaseURLForCountries = "https://www.helpera.app/static/countries/";
+  static const String imagesBaseURLForProfileImages = "https://www.helpera.app/";
 
   /// LINKS //TODO: Review This Links
   static const String termsLink = "https://talabay.net/";

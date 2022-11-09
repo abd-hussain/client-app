@@ -32,6 +32,7 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
   String? selectedDate;
 
   File? profileImage;
+  String? profileImageUrl;
 
   ValueNotifier<bool> enableNextBtn = ValueNotifier<bool>(true);
 
@@ -64,6 +65,9 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
 
   validateFields() {
     //Nothing is requierd
+    loadingStatus.value = LoadingStatus.inprogress;
+
+    loadingStatus.value = LoadingStatus.finish;
   }
 
   void getListOfCountries() {
@@ -100,7 +104,7 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
         }
 
         if (value.data!.profileImg != null) {
-          //TODO
+          profileImageUrl = value.data!.profileImg;
         }
 
         loadingStatus.value = LoadingStatus.finish;
@@ -111,7 +115,6 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
   Future<AccountInfo> callRequest(BuildContext context) async {
     loadingStatus.value = LoadingStatus.inprogress;
 
-    //TODO
     return await service.updateAccount(
       account: UpdateAccountRequest(
         firstName: firstNameController.text,
@@ -121,6 +124,7 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
         gender: GenderFormat().convertStringToIndex(context, genderController.text),
         countryId: selectedCountry!.id,
         dateOfBirth: selectedDate,
+        profileImage: profileImage,
       ),
     );
   }

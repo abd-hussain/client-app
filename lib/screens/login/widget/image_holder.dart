@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:client_app/shared_widgets/bottom_sheet_util.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
+import 'package:client_app/utils/constants/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -36,10 +37,12 @@ class ImageHolder extends StatelessWidget {
           image?.path.isNotEmpty ?? false || urlImage != null,
           deleteCallBack: () {
             deleteImageCallBack();
-            if (!isFromNetwork) {
-              image = null;
-              imageController.value = image;
-            }
+            // if (!isFromNetwork) {
+            image = null;
+
+            imageController.value = image;
+
+            // }
             Navigator.pop(context);
           },
           cameraCallBack: () async {
@@ -79,7 +82,7 @@ class ImageHolder extends StatelessWidget {
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Image.network(
-                          urlImage!,
+                          AppConstant.imagesBaseURLForProfileImages + urlImage!,
                           width: 100,
                           height: 115,
                           fit: BoxFit.cover,

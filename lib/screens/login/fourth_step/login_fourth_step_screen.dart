@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 
 class LoginFourthStepScreen extends StatefulWidget {
@@ -38,7 +37,7 @@ class _LoginFourthStepScreenState extends State<LoginFourthStepScreen> {
         child: ValueListenableBuilder<LoadingStatus>(
             valueListenable: bloc.loadingStatus,
             builder: (context, loadingsnapshot, child) {
-              if (loadingsnapshot == LoadingStatus.finish) {
+              if (loadingsnapshot != LoadingStatus.inprogress) {
                 return SafeArea(
                   child: SingleChildScrollView(
                     child: Column(
@@ -53,13 +52,18 @@ class _LoginFourthStepScreenState extends State<LoginFourthStepScreen> {
                               : const EdgeInsets.only(left: 16),
                           child: Row(
                             children: [
-                              ImageHolder(addImageCallBack: (file) {
-                                bloc.profileImage = file;
-                                bloc.validateFields();
-                              }, deleteImageCallBack: () {
-                                bloc.profileImage = null;
-                                bloc.validateFields();
-                              }),
+                              ImageHolder(
+                                  isFromNetwork: bloc.profileImageUrl != null,
+                                  urlImage: bloc.profileImageUrl,
+                                  addImageCallBack: (file) {
+                                    bloc.profileImage = file;
+                                    bloc.validateFields();
+                                  },
+                                  deleteImageCallBack: () {
+                                    bloc.profileImage = null;
+                                    bloc.profileImageUrl = null;
+                                    bloc.validateFields();
+                                  }),
                               Expanded(
                                 child: Column(
                                   children: [
@@ -140,6 +144,7 @@ class _LoginFourthStepScreenState extends State<LoginFourthStepScreen> {
                                   enableButton: snapshot,
                                   onTap: () {
                                     bloc.callRequest(context).then((value) {
+                                      print("goooood");
                                       bloc.loadingStatus.value = LoadingStatus.finish;
                                     });
                                   });
