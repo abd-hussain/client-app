@@ -32,12 +32,13 @@ class LoginSecoundStepScreen extends StatelessWidget {
               const SizedBox(height: 20),
               CustomText(
                 title: AppLocalizations.of(context)!.enteryourphonenumber,
-                fontSize: 12,
+                fontSize: 14,
                 textColor: Colors.black,
               ),
+              const SizedBox(height: 8),
               CustomText(
                 title: AppLocalizations.of(context)!.enteryourphonenumberexample,
-                fontSize: 8,
+                fontSize: 10,
                 textColor: Colors.grey,
               ),
               const SizedBox(height: 20),
@@ -102,8 +103,8 @@ class LoginSecoundStepScreen extends StatelessWidget {
                                 .pushNamed(RoutesConstants.loginThirdStepRoute, arguments: {
                               AppConstant.countryCode: bloc.countryCode,
                               AppConstant.mobileNumber: bloc.controller.text,
-                              AppConstant.userid: value.data!.id!,
-                              AppConstant.apikey: value.data!.apiKey!
+                              AppConstant.useridToPass: value.data!.id!,
+                              AppConstant.apikeyToPass: value.data!.apiKey!
                             });
                           });
                         });

@@ -56,7 +56,7 @@ class _LoginThirdStepScreenState extends State<LoginThirdStepScreen> {
             print(value.data!.token);
             Navigator.of(context, rootNavigator: true).pushNamed(
               RoutesConstants.loginFourthStepRoute,
-              arguments: {AppConstant.token: value.data!.token},
+              arguments: {AppConstant.tokenToPass: value.data!.token},
             );
           } else {
             bloc.otpNotValid.value = true;

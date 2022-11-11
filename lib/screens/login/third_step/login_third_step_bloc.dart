@@ -24,8 +24,8 @@ class LoginThirdStepBloc extends Bloc<AuthService> {
     if (arguments != null) {
       countryCode = arguments[AppConstant.countryCode];
       mobileNumber = arguments[AppConstant.mobileNumber];
-      apikey = arguments[AppConstant.apikey];
-      userId = arguments[AppConstant.userid];
+      apikey = arguments[AppConstant.apikeyToPass];
+      userId = arguments[AppConstant.useridToPass];
     }
   }
 

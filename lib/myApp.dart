@@ -35,6 +35,10 @@ class MyAppState extends State<MyApp> {
     super.initState();
   }
 
+  void rebuild() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

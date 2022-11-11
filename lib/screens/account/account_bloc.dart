@@ -1,16 +1,14 @@
 import 'package:client_app/models/profile_options.dart';
+import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class AccountBloc {
   BuildContext? mainContext;
+  final box = Hive.box(DatabaseBoxConstant.userInfo);
 
   List<ProfileOptions> listOfAccountOptions = [
-    ProfileOptions(
-      icon: Icons.card_giftcard,
-      name: "Cards",
-      buttonType: AccountButtonType.country,
-    ),
     ProfileOptions(
       icon: Icons.loyalty,
       name: "Loyality Points",
@@ -76,5 +74,15 @@ class AccountBloc {
         buttonType: AccountButtonType.inviteFriends,
       ),
     ];
+  }
+
+  bool checkIfUserIsLoggedIn() {
+    bool isItLoggedIn = false;
+
+    if (box.get(DatabaseFieldConstant.isUserLoggedIn) != null) {
+      isItLoggedIn = box.get(DatabaseFieldConstant.isUserLoggedIn);
+    }
+
+    return isItLoggedIn;
   }
 }

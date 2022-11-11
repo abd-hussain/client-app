@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileSubHeader extends StatelessWidget {
-  const ProfileSubHeader({Key? key}) : super(key: key);
+  final bool isUserLoggedIn;
+  const ProfileSubHeader({required this.isUserLoggedIn, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +33,13 @@ class ProfileSubHeader extends StatelessWidget {
               onTap: () => null,
             ),
             optionButton(
-              buttonTitle: AppLocalizations.of(context)!.login_first_step_button,
+              buttonTitle: isUserLoggedIn
+                  ? AppLocalizations.of(context)!.profile
+                  : AppLocalizations.of(context)!.login_first_step_button,
               icon: Icons.account_circle_outlined,
-              onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.loginFirstStepRoute),
+              onTap: () => isUserLoggedIn
+                  ? Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.editProfileScreen)
+                  : Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.loginFirstStepRoute),
             ),
             optionButton(
               buttonTitle: AppLocalizations.of(context)!.reports,

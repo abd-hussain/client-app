@@ -3,9 +3,9 @@ class AppConstant {
   static const String pageTitle = "pageTitle";
   static const String countryCode = "countryCode";
   static const String mobileNumber = "mobileNumber";
-  static const String userid = "userid";
-  static const String apikey = "apikey";
-  static const String token = "token";
+  static const String useridToPass = "useridToPass";
+  static const String apikeyToPass = "apikeyToPass";
+  static const String tokenToPass = "tokenToPass";
   static const String imagesBaseURLForCountries = "https://www.helpera.app/static/countries/";
   static const String imagesBaseURLForProfileImages = "https://www.helpera.app/";
 

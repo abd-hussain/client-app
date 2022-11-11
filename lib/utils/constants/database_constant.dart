@@ -10,4 +10,5 @@ class DatabaseFieldConstant {
   static const String countryId = "country_id";
   static const String countryFlag = "country_flag";
   static const String isUserLoggedIn = "isUserLoggedIn";
+  static const String userFirstName = "userFirstName";
 }

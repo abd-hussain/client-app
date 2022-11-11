@@ -36,7 +36,7 @@ class ListOfOptions extends StatelessWidget {
           children: [
             const AddMobBanner(),
             titleOptionCollection(title: "Account"),
-            optionCollectionItem(listOfAccountOptions, containerHight: 123, onTap: (value) {}),
+            optionCollectionItem(listOfAccountOptions, containerHight: 50, onTap: (value) {}),
             isItLoggedIn ? const SizedBox(height: 16) : Container(),
             isItLoggedIn ? logoutView(context) : Container(),
             titleOptionCollection(title: "Settings"),
@@ -45,7 +45,7 @@ class ListOfOptions extends StatelessWidget {
             optionCollectionItem(listOfReachOutUsOptions, containerHight: 123, onTap: (value) {}),
             titleOptionCollection(title: AppLocalizations.of(context)!.support),
             optionCollectionItem(listOfSupportOptions,
-                containerHight: 123,
+                containerHight: 122,
                 onTap: (value) =>
                     value == AccountButtonType.aboutUs ? openAboutUs(context) : openInviteFriends(context)),
             const SizedBox(height: 8),

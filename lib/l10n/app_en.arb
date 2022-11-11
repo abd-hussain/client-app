@@ -54,8 +54,10 @@
     "pickimageremoveimage" : "Remove image",
     "gendermale" : "Male",
     "genderfemale" : "Female",
-    "genderother" : "Other",
-    "gender" : "Gender"
+    "genderother" : "Prefer Not To Say",
+    "gender" : "Gender",
+    "profile" : "Profile"
+
 
 
 

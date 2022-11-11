@@ -1,6 +1,7 @@
 import 'package:client_app/screens/account/account_screen.dart';
 import 'package:client_app/screens/categories/categories_screen.dart';
 import 'package:client_app/screens/change_country/change_country_screen.dart';
+import 'package:client_app/screens/edit_profile/edit_profile_screen.dart';
 import 'package:client_app/screens/home/home_screen.dart';
 import 'package:client_app/screens/invite_friends/invite_friends_screen.dart';
 import 'package:client_app/screens/login/first_step/login_first_step_screen.dart';
@@ -30,6 +31,7 @@ class RoutesConstants {
   static const String webViewScreen = 'webViewScreen';
   static const String inviteFriendScreen = 'inviteFriendScreen';
   static const String changeCountryScreen = 'changeCountryScreen';
+  static const String editProfileScreen = 'editProfileScreen';
 }
 
 final Map<String, Widget> routes = {
@@ -47,4 +49,5 @@ final Map<String, Widget> routes = {
   RoutesConstants.webViewScreen: WebViewScreen(),
   RoutesConstants.inviteFriendScreen: const InviteFriendsScreen(),
   RoutesConstants.changeCountryScreen: const ChangeCountryScreen(),
+  RoutesConstants.editProfileScreen: const EditProfileScreen(),
 };

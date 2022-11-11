@@ -2,8 +2,10 @@ import 'package:client_app/screens/account/account_bloc.dart';
 import 'package:client_app/screens/account/widgets/header.dart';
 import 'package:client_app/screens/account/widgets/list_of_options.dart';
 import 'package:client_app/screens/account/widgets/sub_header.dart';
+import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/logger.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({Key? key}) : super(key: key);
@@ -28,10 +30,12 @@ class _AccountScreenState extends State<AccountScreen> {
       backgroundColor: const Color(0xffFBFBFB),
       body: Column(
         children: [
-          const ProfileHeader(//TODO: handle passing name if user loged in
-              // firstName: "abedalrahman",
-              ),
-          const ProfileSubHeader(),
+          ProfileHeader(
+            firstName: bloc.checkIfUserIsLoggedIn()
+                ? bloc.box.get(DatabaseFieldConstant.userFirstName)
+                : AppLocalizations.of(context)!.anonymous,
+          ),
+          ProfileSubHeader(isUserLoggedIn: bloc.checkIfUserIsLoggedIn()),
           const SizedBox(height: 8),
           ListOfOptions(
             listOfSettingsOptions: bloc.listOfSettingsOptions,

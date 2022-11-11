@@ -7,6 +7,7 @@ import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/shared_widgets/custom_textfield.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/enums/loading_status.dart';
+import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -143,9 +144,16 @@ class _LoginFourthStepScreenState extends State<LoginFourthStepScreen> {
                                   buttonTitle: AppLocalizations.of(context)!.submit,
                                   enableButton: snapshot,
                                   onTap: () {
-                                    bloc.callRequest(context).then((value) {
-                                      print("goooood");
+                                    final navigator = Navigator.of(context);
+                                    bloc.callRequest(context).then((value) async {
                                       bloc.loadingStatus.value = LoadingStatus.finish;
+                                      await bloc.box.put(DatabaseFieldConstant.isUserLoggedIn, true);
+                                      await bloc.box
+                                          .put(DatabaseFieldConstant.userFirstName, bloc.firstNameController.text);
+
+                                      // ignore: use_build_context_synchronously
+                                      await navigator.pushNamedAndRemoveUntil(
+                                          RoutesConstants.mainContainer, (route) => false);
                                     });
                                   });
                             }),

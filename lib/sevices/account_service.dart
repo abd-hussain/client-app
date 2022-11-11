@@ -14,30 +14,23 @@ class AccountService with Service {
 
   Future<AccountInfo> updateAccount({required UpdateAccountRequest account}) async {
     FormData? formData;
+    String fileName = "";
     if (account.profileImage != null) {
-      String fileName = account.profileImage!.path.split('/').last;
-
-      formData = FormData.fromMap({
-        "profile_picture": await MultipartFile.fromFile(account.profileImage!.path, filename: fileName),
-        "first_name": MultipartFile.fromString(account.firstName!),
-        "last_name": MultipartFile.fromString(account.lastName!),
-        "email": MultipartFile.fromString(account.email!),
-        "referal_code": MultipartFile.fromString(account.referalCode!),
-        "date_of_birth": MultipartFile.fromString(account.dateOfBirth!),
-        "country_id": MultipartFile.fromString(account.countryId!.toString()),
-        "gender": MultipartFile.fromString(account.gender!.toString()),
-      });
-    } else {
-      formData = FormData.fromMap({
-        "first_name": MultipartFile.fromString(account.firstName!),
-        "last_name": MultipartFile.fromString(account.lastName!),
-        "email": MultipartFile.fromString(account.email!),
-        "referal_code": MultipartFile.fromString(account.referalCode!),
-        "date_of_birth": MultipartFile.fromString(account.dateOfBirth!),
-        "country_id": MultipartFile.fromString(account.countryId!.toString()),
-        "gender": MultipartFile.fromString(account.gender!.toString()),
-      });
+      fileName = account.profileImage!.path.split('/').last;
     }
+
+    formData = FormData.fromMap({
+      "profile_picture": account.profileImage != null
+          ? await MultipartFile.fromFile(account.profileImage!.path, filename: fileName)
+          : MultipartFile.fromString(""),
+      "first_name": MultipartFile.fromString(account.firstName ?? ""),
+      "last_name": MultipartFile.fromString(account.lastName ?? ""),
+      "email": MultipartFile.fromString(account.email ?? ""),
+      "referal_code": MultipartFile.fromString(account.referalCode ?? ""),
+      "date_of_birth": MultipartFile.fromString(account.dateOfBirth ?? ""),
+      "country_id": MultipartFile.fromString(account.countryId!.toString()),
+      "gender": MultipartFile.fromString(account.gender!.toString()),
+    });
 
     final response = await repository.callRequest(
         requestType: RequestType.multiPartPut, methodName: MethodNameConstant.updateAccount, formData: formData);

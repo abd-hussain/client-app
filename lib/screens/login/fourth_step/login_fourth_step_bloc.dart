@@ -56,7 +56,7 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
 
     final arguments = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
     if (arguments != null) {
-      argumentToken = arguments[AppConstant.token];
+      argumentToken = arguments[AppConstant.tokenToPass];
     }
 
     getAccountInformation(context);
@@ -114,7 +114,6 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
 
   Future<AccountInfo> callRequest(BuildContext context) async {
     loadingStatus.value = LoadingStatus.inprogress;
-
     return await service.updateAccount(
       account: UpdateAccountRequest(
         firstName: firstNameController.text,

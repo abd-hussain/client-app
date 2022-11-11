@@ -40,7 +40,7 @@ class LoginFirstStepScreen extends StatelessWidget {
             const SizedBox(height: 20),
             CustomText(
               title: AppLocalizations.of(context)!.titletermsandconditions,
-              fontSize: 10,
+              fontSize: 12,
               textColor: const Color(0xff444444),
             ),
             TextButton(
@@ -51,7 +51,7 @@ class LoginFirstStepScreen extends StatelessWidget {
               }),
               child: CustomText(
                 title: AppLocalizations.of(context)!.termsandconditions,
-                fontSize: 10,
+                fontSize: 12,
                 textColor: const Color(0xff4CB6EA),
               ),
             ),
