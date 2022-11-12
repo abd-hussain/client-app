@@ -28,8 +28,8 @@ class ProfileHeader extends StatelessWidget {
                 children: [
                   CustomText(
                     title: firstName == "Anonymous"
-                        ? AppLocalizations.of(context)!.hello + " " + AppLocalizations.of(context)!.anonymous
-                        : AppLocalizations.of(context)!.hello + " $firstName",
+                        ? "${AppLocalizations.of(context)!.hello} ${AppLocalizations.of(context)!.anonymous}"
+                        : "${AppLocalizations.of(context)!.hello} $firstName",
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),

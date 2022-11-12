@@ -56,7 +56,24 @@
     "genderfemale" : "انثى",
     "genderother" : "افضل عدم الافصاح",
     "gender" : "الجنس",
-    "profile" : "حسابي"
+    "profile" : "حسابي",
+    "language" : "اللغة",
+    "sure" : "متاكد",
+    "areyousure" : "هل انت متاكد",
+    "cancel" : "رجوع",
+    "setprofilephoto" : "تحديد صورة شخصية",
+    "profilephotosetting" : "اعدادات الصورة الشخصية",
+    "loyalitypoints" : "نقاط الولاء",
+    "usertutorials" : "شرح التطبيق",
+    "shaketoreport" : "رج الهاتف للابلاغ عن مشكلة",
+    "allowdisallownotifications" : "السماح/عدم السماح للتنبيهات",
+    "allowdisallowbiometric" : "السماح / عدم السماح للدخول بالبصمة",
+    "reportproblem" : "ابلاغ عن مشكلة",
+    "reportsuggestion" : "ابلاغ عن اقتراح",
+    "changelanguagemessage" : "هل تريد تغيير اللغة",
+    "settings" : "اعدادات",
+    "reachouttous" : "ابعث لنا"
+
 
 
 

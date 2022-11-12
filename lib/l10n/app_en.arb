@@ -56,7 +56,23 @@
     "genderfemale" : "Female",
     "genderother" : "Prefer Not To Say",
     "gender" : "Gender",
-    "profile" : "Profile"
+    "profile" : "Profile",
+    "language" : "Language",
+    "sure" : "Sure",
+    "areyousure" : "Are You Sure",
+    "cancel" : "cancel",
+    "setprofilephoto" : "Set Profile Photo",
+    "profilephotosetting" : "Profile Photo Setting",
+    "loyalitypoints" : "Loyality Points",
+    "usertutorials" : "User Tutorials",
+    "shaketoreport" : "Shake To Report",
+    "allowdisallownotifications" : "Allow/Disallow Notifications",
+    "allowdisallowbiometric" : "Allow/Disallow Biometric",
+    "reportproblem" : "Report Problem",
+    "reportsuggestion" : "Report Suggestion",
+    "changelanguagemessage" : "Do You Want To Change The Language",
+    "settings" : "Settings",
+    "reachouttous" : "Reach out to us"
 
 
 

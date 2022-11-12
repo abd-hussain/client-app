@@ -9,7 +9,9 @@ enum AccountButtonType {
   country,
   language,
   tutorials,
-  shakeSetting
+  shakeSetting,
+  logout,
+  loyality
 }
 
 class ProfileOptions {
@@ -17,12 +19,8 @@ class ProfileOptions {
   final String name;
   final String selectedItem;
   final bool switchIcn;
-  final AccountButtonType buttonType;
+  final VoidCallback onTap;
 
   ProfileOptions(
-      {required this.icon,
-      required this.name,
-      this.selectedItem = "",
-      required this.buttonType,
-      this.switchIcn = false});
+      {required this.icon, required this.name, this.selectedItem = "", this.switchIcn = false, required this.onTap});
 }

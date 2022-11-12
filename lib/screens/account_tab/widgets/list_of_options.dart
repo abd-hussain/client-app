@@ -15,9 +15,9 @@ class ListOfOptions extends StatelessWidget {
   final List<ProfileOptions> listOfReachOutUsOptions;
   final List<ProfileOptions> listOfSupportOptions;
   final List<ProfileOptions> listOfAccountOptions;
-  bool isItLoggedIn;
+  final bool isItLoggedIn;
 
-  ListOfOptions(
+  const ListOfOptions(
       {required this.listOfSettingsOptions,
       required this.listOfReachOutUsOptions,
       required this.listOfSupportOptions,
@@ -28,26 +28,27 @@ class ListOfOptions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    isItLoggedIn = false;
     return Expanded(
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const AddMobBanner(),
-            titleOptionCollection(title: "Account"),
-            optionCollectionItem(listOfAccountOptions, containerHight: 50, onTap: (value) {}),
-            isItLoggedIn ? const SizedBox(height: 16) : Container(),
-            isItLoggedIn ? logoutView(context) : Container(),
-            titleOptionCollection(title: "Settings"),
-            optionCollectionItem(listOfSettingsOptions, containerHight: 330, onTap: (value) {}),
-            titleOptionCollection(title: "Reach out to us"),
-            optionCollectionItem(listOfReachOutUsOptions, containerHight: 123, onTap: (value) {}),
+            isItLoggedIn
+                ? titleOptionCollection(title: AppLocalizations.of(context)!.containerAccountIconTitle)
+                : Container(),
+            isItLoggedIn ? optionCollectionItem(listOfAccountOptions, containerHight: 120) : Container(),
+            titleOptionCollection(title: AppLocalizations.of(context)!.settings),
+            optionCollectionItem(listOfSettingsOptions, containerHight: 330),
+            titleOptionCollection(title: AppLocalizations.of(context)!.reachouttous),
+            optionCollectionItem(listOfReachOutUsOptions, containerHight: 123),
             titleOptionCollection(title: AppLocalizations.of(context)!.support),
-            optionCollectionItem(listOfSupportOptions,
-                containerHight: 122,
-                onTap: (value) =>
-                    value == AccountButtonType.aboutUs ? openAboutUs(context) : openInviteFriends(context)),
+            optionCollectionItem(
+              listOfSupportOptions,
+              containerHight: 122,
+              // onTap: (value) =>
+              //     value == AccountButtonType.aboutUs ? openAboutUs(context) : openInviteFriends(context)
+            ),
             const SizedBox(height: 8),
             const AddMobBanner(),
             footerView(context),
@@ -58,52 +59,52 @@ class ListOfOptions extends StatelessWidget {
     );
   }
 
-  Widget logoutView(BuildContext context) {
-    return Container(
-      height: 65,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 0.5,
-            blurRadius: 5,
-            offset: const Offset(0, 0.1),
-          ),
-        ],
-      ),
-      child: InkWell(
-        onTap: () {
-          //TODO
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              const Icon(
-                Icons.logout,
-                size: 20,
-                color: Color(0xff034061),
-              ),
-              const SizedBox(width: 8),
-              CustomText(
-                  title: AppLocalizations.of(context)!.logout,
-                  fontSize: 16,
-                  textColor: const Color(0xff034061),
-                  fontWeight: FontWeight.w500),
-              Expanded(child: Container()),
-              const SizedBox(width: 8),
-              const Icon(
-                Icons.arrow_forward_ios_outlined,
-                size: 12,
-                color: Color(0xffBFBFBF),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget logoutView(BuildContext context) {
+  //   return Container(
+  //     height: 65,
+  //     decoration: BoxDecoration(
+  //       color: Colors.white,
+  //       boxShadow: [
+  //         BoxShadow(
+  //           color: Colors.grey.withOpacity(0.5),
+  //           spreadRadius: 0.5,
+  //           blurRadius: 5,
+  //           offset: const Offset(0, 0.1),
+  //         ),
+  //       ],
+  //     ),
+  //     child: InkWell(
+  //       onTap: () {
+  //         //TODO
+  //       },
+  //       child: Padding(
+  //         padding: const EdgeInsets.all(16),
+  //         child: Row(
+  //           children: [
+  //             const Icon(
+  //               Icons.logout,
+  //               size: 20,
+  //               color: Color(0xff034061),
+  //             ),
+  //             const SizedBox(width: 8),
+  //             CustomText(
+  //                 title: AppLocalizations.of(context)!.logout,
+  //                 fontSize: 16,
+  //                 textColor: const Color(0xff034061),
+  //                 fontWeight: FontWeight.w500),
+  //             Expanded(child: Container()),
+  //             const SizedBox(width: 8),
+  //             const Icon(
+  //               Icons.arrow_forward_ios_outlined,
+  //               size: 12,
+  //               color: Color(0xffBFBFBF),
+  //             )
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget titleOptionCollection({required String title}) {
     return Padding(
@@ -117,19 +118,7 @@ class ListOfOptions extends StatelessWidget {
     );
   }
 
-  void openAboutUs(BuildContext context) {
-    Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen, arguments: {
-      AppConstant.webViewPageUrl: AppConstant.aboutusLink,
-      AppConstant.pageTitle: AppLocalizations.of(context)!.aboutus
-    });
-  }
-
-  void openInviteFriends(BuildContext context) {
-    Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.inviteFriendScreen);
-  }
-
-  Widget optionCollectionItem(List<ProfileOptions> listOfOptions,
-      {required Function(AccountButtonType) onTap, required double containerHight}) {
+  Widget optionCollectionItem(List<ProfileOptions> listOfOptions, {required double containerHight}) {
     final ValueNotifier<bool> switchStatusNotifier = ValueNotifier<bool>(false);
 
     return Container(
@@ -154,7 +143,7 @@ class ListOfOptions extends StatelessWidget {
               ),
           itemBuilder: (ctx, index) {
             return InkWell(
-              onTap: () => onTap(listOfOptions[index].buttonType),
+              onTap: () => listOfOptions[index].onTap(),
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Row(

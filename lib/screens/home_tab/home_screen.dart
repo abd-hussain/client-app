@@ -1,10 +1,10 @@
-import 'package:client_app/screens/home/home_bloc.dart';
+import 'package:client_app/screens/home_tab/home_bloc.dart';
 // import 'package:client_app/screens/home/widgets/categories.dart';
 // import 'package:client_app/screens/home/widgets/favorite.dart';
-import 'package:client_app/screens/home/widgets/header.dart';
+import 'package:client_app/screens/home_tab/widgets/header.dart';
 // import 'package:client_app/screens/home/widgets/last_seen.dart';
 // import 'package:client_app/screens/home/widgets/main_banner.dart';
-import 'package:client_app/screens/home/widgets/search_section.dart';
+import 'package:client_app/screens/home_tab/widgets/search_section.dart';
 // import 'package:client_app/screens/home/widgets/top_rated.dart';
 // import 'package:client_app/screens/home/widgets/tutorials_banner.dart';
 // import 'package:client_app/shared_widgets/admob_banner.dart';

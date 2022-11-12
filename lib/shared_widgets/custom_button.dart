@@ -4,7 +4,10 @@ class CustomButton extends StatelessWidget {
   final String buttonTitle;
   final bool enableButton;
   final Function() onTap;
-  const CustomButton({this.buttonTitle = "Submit", required this.enableButton, required this.onTap, Key? key}) : super(key: key);
+  final double? width;
+  const CustomButton(
+      {this.buttonTitle = "Submit", required this.enableButton, this.width, required this.onTap, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,10 +15,12 @@ class CustomButton extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: ElevatedButton(
         style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(enableButton ? const Color(0xff4CB6EA) : const Color(0xffB1B1B1))),
+            backgroundColor:
+                MaterialStateProperty.all(enableButton ? const Color(0xff4CB6EA) : const Color(0xffB1B1B1))),
         onPressed: () => enableButton ? onTap() : null,
         child: SizedBox(
           height: 45,
+          width: width,
           child: Center(
             child: Text(buttonTitle),
           ),

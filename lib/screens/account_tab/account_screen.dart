@@ -1,7 +1,7 @@
-import 'package:client_app/screens/account/account_bloc.dart';
-import 'package:client_app/screens/account/widgets/header.dart';
-import 'package:client_app/screens/account/widgets/list_of_options.dart';
-import 'package:client_app/screens/account/widgets/sub_header.dart';
+import 'package:client_app/screens/account_tab/account_bloc.dart';
+import 'package:client_app/screens/account_tab/widgets/header.dart';
+import 'package:client_app/screens/account_tab/widgets/list_of_options.dart';
+import 'package:client_app/screens/account_tab/widgets/sub_header.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/logger.dart';
 import 'package:flutter/material.dart';
@@ -38,11 +38,11 @@ class _AccountScreenState extends State<AccountScreen> {
           ProfileSubHeader(isUserLoggedIn: bloc.checkIfUserIsLoggedIn()),
           const SizedBox(height: 8),
           ListOfOptions(
-            listOfSettingsOptions: bloc.listOfSettingsOptions,
-            listOfReachOutUsOptions: bloc.listOfReachOutUsOptions,
+            listOfSettingsOptions: bloc.listOfSettingsOptions(context),
+            listOfReachOutUsOptions: bloc.listOfReachOutUsOptions(context),
             listOfSupportOptions: bloc.listOfSupportOptions(context),
-            listOfAccountOptions: bloc.listOfAccountOptions,
-            isItLoggedIn: false, //TODO: handle passing name if user loged in
+            listOfAccountOptions: bloc.listOfAccountOptions(context),
+            isItLoggedIn: bloc.checkIfUserIsLoggedIn(),
           ),
         ],
       ),
