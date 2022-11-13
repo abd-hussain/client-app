@@ -3,6 +3,7 @@ import 'package:client_app/screens/account_tab/widgets/header.dart';
 import 'package:client_app/screens/account_tab/widgets/list_of_options.dart';
 import 'package:client_app/screens/account_tab/widgets/sub_header.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
+import 'package:client_app/utils/enums/loading_status.dart';
 import 'package:client_app/utils/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -37,13 +38,17 @@ class _AccountScreenState extends State<AccountScreen> {
           ),
           ProfileSubHeader(isUserLoggedIn: bloc.checkIfUserIsLoggedIn()),
           const SizedBox(height: 8),
-          ListOfOptions(
-            listOfSettingsOptions: bloc.listOfSettingsOptions(context),
-            listOfReachOutUsOptions: bloc.listOfReachOutUsOptions(context),
-            listOfSupportOptions: bloc.listOfSupportOptions(context),
-            listOfAccountOptions: bloc.listOfAccountOptions(context),
-            isItLoggedIn: bloc.checkIfUserIsLoggedIn(),
-          ),
+          ValueListenableBuilder<LoadingStatus>(
+              valueListenable: bloc.loadingStatus,
+              builder: (context, snapshot, child) {
+                return ListOfOptions(
+                  listOfSettingsOptions: bloc.listOfSettingsOptions(context),
+                  listOfReachOutUsOptions: bloc.listOfReachOutUsOptions(context),
+                  listOfSupportOptions: bloc.listOfSupportOptions(context),
+                  listOfAccountOptions: bloc.listOfAccountOptions(context),
+                  isItLoggedIn: bloc.checkIfUserIsLoggedIn(),
+                );
+              }),
         ],
       ),
     );

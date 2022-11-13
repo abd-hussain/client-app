@@ -34,21 +34,14 @@ class ListOfOptions extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const AddMobBanner(),
-            isItLoggedIn
-                ? titleOptionCollection(title: AppLocalizations.of(context)!.containerAccountIconTitle)
-                : Container(),
-            isItLoggedIn ? optionCollectionItem(listOfAccountOptions, containerHight: 120) : Container(),
-            titleOptionCollection(title: AppLocalizations.of(context)!.settings),
-            optionCollectionItem(listOfSettingsOptions, containerHight: 330),
+            isItLoggedIn ? titleOptionCollection(title: AppLocalizations.of(context)!.accountsettings) : Container(),
+            isItLoggedIn ? optionCollectionItem(listOfAccountOptions, containerHight: 400) : Container(),
+            titleOptionCollection(title: AppLocalizations.of(context)!.generalsettings),
+            optionCollectionItem(listOfSettingsOptions, containerHight: 205),
             titleOptionCollection(title: AppLocalizations.of(context)!.reachouttous),
-            optionCollectionItem(listOfReachOutUsOptions, containerHight: 123),
+            optionCollectionItem(listOfReachOutUsOptions, containerHight: 125),
             titleOptionCollection(title: AppLocalizations.of(context)!.support),
-            optionCollectionItem(
-              listOfSupportOptions,
-              containerHight: 122,
-              // onTap: (value) =>
-              //     value == AccountButtonType.aboutUs ? openAboutUs(context) : openInviteFriends(context)
-            ),
+            optionCollectionItem(listOfSupportOptions, containerHight: 125),
             const SizedBox(height: 8),
             const AddMobBanner(),
             footerView(context),
@@ -58,53 +51,6 @@ class ListOfOptions extends StatelessWidget {
       ),
     );
   }
-
-  // Widget logoutView(BuildContext context) {
-  //   return Container(
-  //     height: 65,
-  //     decoration: BoxDecoration(
-  //       color: Colors.white,
-  //       boxShadow: [
-  //         BoxShadow(
-  //           color: Colors.grey.withOpacity(0.5),
-  //           spreadRadius: 0.5,
-  //           blurRadius: 5,
-  //           offset: const Offset(0, 0.1),
-  //         ),
-  //       ],
-  //     ),
-  //     child: InkWell(
-  //       onTap: () {
-  //         //TODO
-  //       },
-  //       child: Padding(
-  //         padding: const EdgeInsets.all(16),
-  //         child: Row(
-  //           children: [
-  //             const Icon(
-  //               Icons.logout,
-  //               size: 20,
-  //               color: Color(0xff034061),
-  //             ),
-  //             const SizedBox(width: 8),
-  //             CustomText(
-  //                 title: AppLocalizations.of(context)!.logout,
-  //                 fontSize: 16,
-  //                 textColor: const Color(0xff034061),
-  //                 fontWeight: FontWeight.w500),
-  //             Expanded(child: Container()),
-  //             const SizedBox(width: 8),
-  //             const Icon(
-  //               Icons.arrow_forward_ios_outlined,
-  //               size: 12,
-  //               color: Color(0xffBFBFBF),
-  //             )
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget titleOptionCollection({required String title}) {
     return Padding(
@@ -160,11 +106,16 @@ class ListOfOptions extends StatelessWidget {
                         textColor: const Color(0xff034061),
                         fontWeight: FontWeight.w500),
                     Expanded(child: Container()),
-                    CustomText(
-                      title: listOfOptions[index].selectedItem,
-                      fontSize: 14,
-                      textColor: const Color(0xffFFA200),
-                    ),
+                    listOfOptions[index].selectedItem != ""
+                        ? CustomText(
+                            title: listOfOptions[index].selectedItem,
+                            fontSize: 14,
+                            textColor: const Color(0xffFFA200),
+                          )
+                        : Container(),
+                    listOfOptions[index].selectedItemImage != null
+                        ? listOfOptions[index].selectedItemImage!
+                        : Container(),
                     const SizedBox(width: 8),
                     listOfOptions[index].switchIcn
                         ? SizedBox(

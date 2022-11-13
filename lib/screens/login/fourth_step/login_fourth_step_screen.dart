@@ -151,6 +151,13 @@ class _LoginFourthStepScreenState extends State<LoginFourthStepScreen> {
                                       await bloc.box
                                           .put(DatabaseFieldConstant.userFirstName, bloc.firstNameController.text);
 
+                                      if (bloc.selectedCountry != null) {
+                                        await bloc.box
+                                            .put(DatabaseFieldConstant.countryId, bloc.selectedCountry!.id.toString());
+                                        await bloc.box
+                                            .put(DatabaseFieldConstant.countryFlag, bloc.selectedCountry!.flagImage);
+                                      }
+
                                       // ignore: use_build_context_synchronously
                                       await navigator.pushNamedAndRemoveUntil(
                                           RoutesConstants.mainContainer, (route) => false);

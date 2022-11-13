@@ -32,15 +32,34 @@ class ProfileSubHeader extends StatelessWidget {
               icon: Icons.message,
               onTap: () => null,
             ),
-            optionButton(
-              buttonTitle: isUserLoggedIn
-                  ? AppLocalizations.of(context)!.profile
-                  : AppLocalizations.of(context)!.login_first_step_button,
-              icon: Icons.account_circle_outlined,
-              onTap: () => isUserLoggedIn
-                  ? Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.editProfileScreen)
-                  : Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.loginFirstStepRoute),
-            ),
+            isUserLoggedIn
+                ? Row(
+                    children: [
+                      Container(
+                        decoration:
+                            BoxDecoration(color: const Color(0xff4CB6EA), borderRadius: BorderRadius.circular(5)),
+                        height: 10,
+                        width: 10,
+                      ),
+                      Container(
+                        color: const Color(0xff4CB6EA),
+                        height: 3,
+                        width: 50,
+                      ),
+                      Container(
+                        decoration:
+                            BoxDecoration(color: const Color(0xff4CB6EA), borderRadius: BorderRadius.circular(5)),
+                        height: 10,
+                        width: 10,
+                      ),
+                    ],
+                  )
+                : optionButton(
+                    buttonTitle: AppLocalizations.of(context)!.login_first_step_button,
+                    icon: Icons.account_circle_outlined,
+                    onTap: () =>
+                        Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.loginFirstStepRoute),
+                  ),
             optionButton(
               buttonTitle: AppLocalizations.of(context)!.reports,
               icon: Icons.archive,

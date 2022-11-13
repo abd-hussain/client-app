@@ -1,12 +1,12 @@
 import 'package:client_app/screens/login/widget/top_bar.dart';
 import 'package:flutter/material.dart';
 
-class EditProfileScreen extends StatelessWidget {
-  const EditProfileScreen({super.key});
+class LoyalityScreen extends StatelessWidget {
+  const LoyalityScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    //TODO : EditProfileScreen
+    //TODO : LoyalityScreen
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -16,7 +16,7 @@ class EditProfileScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Expanded(child: Container()),
             const Center(
-              child: Text("EditProfileScreen"),
+              child: Text("LoyalityScreen"),
             ),
             Expanded(child: Container()),
           ],

@@ -2,13 +2,11 @@ import 'package:client_app/screens/login/secound_step/login_secound_step_bloc.da
 import 'package:client_app/screens/login/widget/top_bar.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
+import 'package:client_app/shared_widgets/mobile_number_widget.dart';
 import 'package:client_app/utils/constants/constant.dart';
 import 'package:client_app/utils/logger.dart';
 import 'package:client_app/utils/routes.dart';
-import 'package:country_pickers/country.dart';
-import 'package:country_pickers/country_pickers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -42,48 +40,11 @@ class LoginSecoundStepScreen extends StatelessWidget {
                 textColor: Colors.grey,
               ),
               const SizedBox(height: 20),
-              Directionality(
-                textDirection: TextDirection.ltr,
-                child: Container(
-                  height: 50,
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    border: Border.all(color: Colors.grey),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CountryPickerDropdown(
-                        iconSize: 16,
-                        initialValue: 'JO',
-                        itemFilter: (c) => bloc.countryCodeFiltered.contains(c.isoCode),
-                        itemBuilder: _buildDropdownItem,
-                        sortComparator: (Country a, Country b) => a.isoCode.compareTo(b.isoCode),
-                        onValuePicked: (Country country) {
-                          bloc.countryCode = country.phoneCode;
-                        },
-                      ),
-                      VerticalDivider(color: Colors.grey[900]),
-                      Expanded(
-                        child: TextField(
-                          maxLength: 17,
-                          keyboardType: TextInputType.number,
-                          controller: bloc.controller,
-                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.only(top: 20),
-                            border: InputBorder.none,
-                            counterText: "",
-                            hintStyle: const TextStyle(color: Colors.black54, fontSize: 20),
-                            hintText: AppLocalizations.of(context)!.entermobilenumber,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+              MobileNumberField(
+                controller: bloc.controller,
+                selectedCountry: (selectedCode) {
+                  bloc.countryCode = selectedCode;
+                },
               ),
               const SizedBox(height: 20),
               ValueListenableBuilder<bool>(
@@ -115,17 +76,4 @@ class LoginSecoundStepScreen extends StatelessWidget {
       ),
     );
   }
-
-  Widget _buildDropdownItem(Country country) => Directionality(
-        textDirection: TextDirection.ltr,
-        child: Row(
-          children: <Widget>[
-            CountryPickerUtils.getDefaultFlagImage(country),
-            const SizedBox(
-              width: 8.0,
-            ),
-            Text("+${country.phoneCode}"),
-          ],
-        ),
-      );
 }

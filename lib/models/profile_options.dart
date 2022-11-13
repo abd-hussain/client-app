@@ -18,9 +18,15 @@ class ProfileOptions {
   final IconData icon;
   final String name;
   final String selectedItem;
+  final Widget? selectedItemImage;
   final bool switchIcn;
   final VoidCallback onTap;
 
   ProfileOptions(
-      {required this.icon, required this.name, this.selectedItem = "", this.switchIcn = false, required this.onTap});
+      {required this.icon,
+      required this.name,
+      this.selectedItem = "",
+      this.selectedItemImage,
+      this.switchIcn = false,
+      required this.onTap});
 }

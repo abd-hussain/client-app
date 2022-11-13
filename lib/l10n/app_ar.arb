@@ -70,9 +70,13 @@
     "allowdisallowbiometric" : "السماح / عدم السماح للدخول بالبصمة",
     "reportproblem" : "ابلاغ عن مشكلة",
     "reportsuggestion" : "ابلاغ عن اقتراح",
-    "changelanguagemessage" : "هل تريد تغيير اللغة",
+    "changelanguagemessage" : "هل تريد تغيير اللغة ؟",
+    "changecountrymessage" : "هل تريد تغيير البلد ؟",
     "settings" : "اعدادات",
-    "reachouttous" : "ابعث لنا"
+    "generalsettings" : "اعدادات عامة",
+    "reachouttous" : "ابعث لنا",
+    "accountsettings" : "اعدادات الحساب",
+    "editprofileinformations" : "تعديل معلومات الملف الشخصي"
 
 
 

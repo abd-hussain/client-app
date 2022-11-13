@@ -70,9 +70,12 @@
     "allowdisallowbiometric" : "Allow/Disallow Biometric",
     "reportproblem" : "Report Problem",
     "reportsuggestion" : "Report Suggestion",
-    "changelanguagemessage" : "Do You Want To Change The Language",
-    "settings" : "Settings",
-    "reachouttous" : "Reach out to us"
+    "changelanguagemessage" : "Do You Want To Change The Language ?",
+    "changecountrymessage" : "Do You Want To Change The Country ?",
+    "generalsettings" : "General Settings",
+    "reachouttous" : "Reach out to us",
+    "accountsettings" : "Account Settings",
+    "editprofileinformations" : "Edit profile Informations"
 
 
 
