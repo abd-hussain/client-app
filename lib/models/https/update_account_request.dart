@@ -12,15 +12,16 @@ class UpdateAccountRequest implements Model {
   String? dateOfBirth;
   File? profileImage;
 
-  UpdateAccountRequest(
-      {this.firstName,
-      this.lastName,
-      this.email,
-      this.referalCode,
-      this.gender,
-      this.countryId,
-      this.dateOfBirth,
-      this.profileImage});
+  UpdateAccountRequest({
+    this.firstName,
+    this.lastName,
+    this.email,
+    this.referalCode,
+    this.gender,
+    this.countryId,
+    this.dateOfBirth,
+    this.profileImage,
+  });
 
   @override
   Map<String, dynamic> toJson() {
@@ -33,7 +34,6 @@ class UpdateAccountRequest implements Model {
     data['country_id'] = countryId;
     data['date_of_birth'] = dateOfBirth;
     data['profile_picture'] = profileImage;
-
     return data;
   }
 }

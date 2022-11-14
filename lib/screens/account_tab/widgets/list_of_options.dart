@@ -4,7 +4,6 @@ import 'package:client_app/utils/constants/constant.dart';
 import 'package:client_app/models/profile_options.dart';
 import 'package:client_app/utils/routes.dart';
 import 'package:client_app/utils/version.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -35,9 +34,9 @@ class ListOfOptions extends StatelessWidget {
           children: [
             const AddMobBanner(),
             isItLoggedIn ? titleOptionCollection(title: AppLocalizations.of(context)!.accountsettings) : Container(),
-            isItLoggedIn ? optionCollectionItem(listOfAccountOptions, containerHight: 400) : Container(),
+            isItLoggedIn ? optionCollectionItem(listOfAccountOptions, containerHight: 195) : Container(),
             titleOptionCollection(title: AppLocalizations.of(context)!.generalsettings),
-            optionCollectionItem(listOfSettingsOptions, containerHight: 205),
+            optionCollectionItem(listOfSettingsOptions, containerHight: 200),
             titleOptionCollection(title: AppLocalizations.of(context)!.reachouttous),
             optionCollectionItem(listOfReachOutUsOptions, containerHight: 125),
             titleOptionCollection(title: AppLocalizations.of(context)!.support),
@@ -65,8 +64,6 @@ class ListOfOptions extends StatelessWidget {
   }
 
   Widget optionCollectionItem(List<ProfileOptions> listOfOptions, {required double containerHight}) {
-    final ValueNotifier<bool> switchStatusNotifier = ValueNotifier<bool>(false);
-
     return Container(
       height: containerHight,
       decoration: BoxDecoration(
@@ -117,25 +114,11 @@ class ListOfOptions extends StatelessWidget {
                         ? listOfOptions[index].selectedItemImage!
                         : Container(),
                     const SizedBox(width: 8),
-                    listOfOptions[index].switchIcn
-                        ? SizedBox(
-                            height: 20,
-                            child: ValueListenableBuilder<bool>(
-                                valueListenable: switchStatusNotifier,
-                                builder: (context, data, child) {
-                                  return CupertinoSwitch(
-                                    activeColor: const Color(0xff4CB6EA),
-                                    value: switchStatusNotifier.value,
-                                    //TODO
-                                    onChanged: (value) => switchStatusNotifier.value = value,
-                                  );
-                                }),
-                          )
-                        : const Icon(
-                            Icons.arrow_forward_ios_outlined,
-                            size: 12,
-                            color: Color(0xffBFBFBF),
-                          )
+                    const Icon(
+                      Icons.arrow_forward_ios_outlined,
+                      size: 12,
+                      color: Color(0xffBFBFBF),
+                    )
                   ],
                 ),
               ),

@@ -30,7 +30,7 @@ class ProfileSubHeader extends StatelessWidget {
             optionButton(
               buttonTitle: AppLocalizations.of(context)!.messages,
               icon: Icons.message,
-              onTap: () => null,
+              onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.messagesScreen),
             ),
             isUserLoggedIn
                 ? Row(
@@ -61,9 +61,9 @@ class ProfileSubHeader extends StatelessWidget {
                         Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.loginFirstStepRoute),
                   ),
             optionButton(
-              buttonTitle: AppLocalizations.of(context)!.reports,
+              buttonTitle: AppLocalizations.of(context)!.archive,
               icon: Icons.archive,
-              onTap: () => null,
+              onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.archiveScreen),
             ),
           ],
         ),
