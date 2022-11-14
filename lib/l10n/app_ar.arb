@@ -77,7 +77,10 @@
     "reachouttous" : "ابعث لنا",
     "accountsettings" : "اعدادات الحساب",
     "editprofileinformations" : "تعديل معلومات الملف الشخصي",
-    "archive" : "أرشيف"
+    "archive" : "أرشيف",
+    "reportanproblem" : "الإبلاغ عن مشكلة",
+    "reportansuggestion" : "الإبلاغ عن اقتراح",
+    "feedbackmessage" : "ملاحظاتك مهمة بالنسبة لنا ، يرجى وصف مشكلتك هنا"
 
 
 

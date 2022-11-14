@@ -76,7 +76,10 @@
     "reachouttous" : "Reach out to us",
     "accountsettings" : "Account Settings",
     "editprofileinformations" : "Edit profile Informations",
-    "archive" : "Archive"
+    "archive" : "Archive",
+    "reportanproblem" : "Report a Problem",
+    "reportansuggestion" : "Report a Suggestion",
+    "feedbackmessage" : "Your feedback is important to us, Please describe your issue here"
 
 
 

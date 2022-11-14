@@ -4,10 +4,8 @@ import 'package:client_app/screens/report/widget/attachments.dart';
 import 'package:client_app/screens/report/widget/footer.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
 import 'package:client_app/shared_widgets/sub_page_app_bar.dart';
-// import 'package:client_app/shared_widgets/custom_appbar.dart';
-// import 'package:client_app/shared_widgets/custom_button.dart';
-// import 'package:client_app/shared_widgets/sub_page_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum ReportPageType { issue, suggestion }
 
@@ -29,7 +27,9 @@ class ReportScreen extends StatelessWidget {
             children: [
               const TopBarWidget(),
               SubPageHeaderName(
-                  title: _bloc.pageType == ReportPageType.issue ? "Report an Problem" : "Report an Suggestion"),
+                  title: _bloc.pageType == ReportPageType.issue
+                      ? AppLocalizations.of(context)!.reportanproblem
+                      : AppLocalizations.of(context)!.reportansuggestion),
               Expanded(
                   child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -39,10 +39,10 @@ class ReportScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
                       controller: _bloc.textController,
-                      decoration: const InputDecoration(
-                        hintText: "Your feedback is important to us, Please describe your bug issue here",
+                      decoration: InputDecoration(
+                        hintText: AppLocalizations.of(context)!.feedbackmessage,
                         hintMaxLines: 2,
-                        hintStyle: TextStyle(fontSize: 15),
+                        hintStyle: const TextStyle(fontSize: 15),
                         enabledBorder: InputBorder.none,
                         focusedBorder: InputBorder.none,
                       ),

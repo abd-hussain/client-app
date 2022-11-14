@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomButton extends StatelessWidget {
   final String buttonTitle;
@@ -22,7 +23,7 @@ class CustomButton extends StatelessWidget {
           height: 45,
           width: width,
           child: Center(
-            child: Text(buttonTitle),
+            child: Text(buttonTitle == "Submit" ? AppLocalizations.of(context)!.submit : buttonTitle),
           ),
         ),
       ),

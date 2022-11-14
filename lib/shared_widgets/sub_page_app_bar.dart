@@ -7,17 +7,20 @@ class SubPageHeaderName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 35,
-      width: MediaQuery.of(context).size.width,
-      color: Colors.white,
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: CustomText(
-          title: title,
-          fontSize: 16,
-          textColor: const Color(0xff444444),
-          fontWeight: FontWeight.bold,
+    return Padding(
+      padding: const EdgeInsets.only(left: 8, right: 8),
+      child: Container(
+        height: 35,
+        width: MediaQuery.of(context).size.width,
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: CustomText(
+            title: title,
+            fontSize: 16,
+            textColor: const Color(0xff444444),
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );
