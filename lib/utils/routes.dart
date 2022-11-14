@@ -11,6 +11,7 @@ import 'package:client_app/screens/loyality/loyality_screen.dart';
 import 'package:client_app/screens/main_contaner/main_container.dart';
 import 'package:client_app/screens/mycalender_tab/mycalender_screen.dart';
 import 'package:client_app/screens/notifications/notifications_screen.dart';
+import 'package:client_app/screens/report/report_screen.dart';
 import 'package:client_app/screens/setup_screen/setup_screen.dart';
 import 'package:client_app/screens/tutorials/tutorials_screen.dart';
 import 'package:client_app/screens/web_view/web_view_screen.dart';
@@ -34,6 +35,7 @@ class RoutesConstants {
   static const String tutorialsScreen = 'tutorialsScreen';
   static const String loyalityScreen = 'loyalityScreen';
   static const String editProfileScreen = 'editProfileScreen';
+  static const String reportScreen = 'reportScreen';
 }
 
 final Map<String, Widget> routes = {
@@ -53,4 +55,5 @@ final Map<String, Widget> routes = {
   RoutesConstants.tutorialsScreen: const TutorialsScreen(),
   RoutesConstants.loyalityScreen: const LoyalityScreen(),
   RoutesConstants.editProfileScreen: const EditProfileScreen(),
+  RoutesConstants.reportScreen: ReportScreen(),
 };

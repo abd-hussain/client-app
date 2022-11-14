@@ -1,6 +1,7 @@
 import 'package:client_app/locator.dart';
 import 'package:client_app/models/profile_options.dart';
 import 'package:client_app/myApp.dart';
+import 'package:client_app/screens/report/report_screen.dart';
 import 'package:client_app/sevices/filter_services.dart';
 import 'package:client_app/shared_widgets/bottom_sheet_util.dart';
 import 'package:client_app/utils/constants/constant.dart';
@@ -94,12 +95,14 @@ class AccountBloc {
       ProfileOptions(
         icon: Icons.bug_report,
         name: AppLocalizations.of(context)!.reportproblem,
-        onTap: () {},
+        onTap: () => Navigator.of(context, rootNavigator: true)
+            .pushNamed(RoutesConstants.reportScreen, arguments: {AppConstant.argument1: ReportPageType.issue}),
       ),
       ProfileOptions(
         icon: Icons.auto_fix_high,
         name: AppLocalizations.of(context)!.reportsuggestion,
-        onTap: () {},
+        onTap: () => Navigator.of(context, rootNavigator: true)
+            .pushNamed(RoutesConstants.reportScreen, arguments: {AppConstant.argument1: ReportPageType.suggestion}),
       )
     ];
   }
