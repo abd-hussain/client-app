@@ -10,14 +10,18 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 enum ReportPageType { issue, suggestion }
 
 class ReportScreen extends StatelessWidget {
-  ReportScreen({Key? key}) : super(key: key);
-
-  final _bloc = ReportBloc();
+  const ReportScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final _bloc = ReportBloc();
+
     _bloc.handleReadingArguments(arguments: ModalRoute.of(context)!.settings.arguments);
-    //TODO : ReportScreen
+
+    _bloc.textController.addListener(() {
+      _bloc.validationFields();
+    });
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -53,10 +57,16 @@ class ReportScreen extends StatelessWidget {
                 ),
               )),
               const ReportAttatchment(),
-              CustomButton(
-                enableButton: _bloc.validationFields(),
-                onTap: () {},
-              ),
+              ValueListenableBuilder<bool>(
+                  valueListenable: _bloc.enableSubmitBtn,
+                  builder: (context, snapshot, child) {
+                    return CustomButton(
+                      enableButton: snapshot,
+                      onTap: () {
+                        //TODO : ReportScreen
+                      },
+                    );
+                  }),
               const ReportFooterView(),
               const SizedBox(height: 50),
             ],

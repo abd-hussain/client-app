@@ -5,8 +5,14 @@ import 'package:flutter/material.dart';
 class ReportBloc {
   TextEditingController textController = TextEditingController();
   ReportPageType? pageType;
-  bool validationFields() {
-    return textController.text.isNotEmpty;
+  ValueNotifier<bool> enableSubmitBtn = ValueNotifier<bool>(false);
+
+  void validationFields() {
+    enableSubmitBtn.value = false;
+
+    if (textController.text.isNotEmpty) {
+      enableSubmitBtn.value = true;
+    }
   }
 
   void handleReadingArguments({required Object? arguments}) {

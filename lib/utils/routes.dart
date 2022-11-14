@@ -59,7 +59,7 @@ final Map<String, Widget> routes = {
   RoutesConstants.tutorialsScreen: const TutorialsScreen(),
   RoutesConstants.loyalityScreen: const LoyalityScreen(),
   RoutesConstants.editProfileScreen: const EditProfileScreen(),
-  RoutesConstants.reportScreen: ReportScreen(),
+  RoutesConstants.reportScreen: const ReportScreen(),
   RoutesConstants.messagesScreen: const MessagesScreen(),
   RoutesConstants.archiveScreen: const ArchiveScreen(),
 };
