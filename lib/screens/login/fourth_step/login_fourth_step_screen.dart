@@ -150,7 +150,7 @@ class _LoginFourthStepScreenState extends State<LoginFourthStepScreen> {
                                       await bloc.box.put(DatabaseFieldConstant.isUserLoggedIn, true);
                                       await bloc.box
                                           .put(DatabaseFieldConstant.userFirstName, bloc.firstNameController.text);
-
+                                      await bloc.box.put(DatabaseFieldConstant.userid, bloc.userId.toString());
                                       if (bloc.selectedCountry != null) {
                                         await bloc.box
                                             .put(DatabaseFieldConstant.countryId, bloc.selectedCountry!.id.toString());

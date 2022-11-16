@@ -53,10 +53,12 @@ class _LoginThirdStepScreenState extends State<LoginThirdStepScreen> {
         bloc.callVerifyRequset().then((value) {
           if (value.data != null) {
             bloc.otpNotValid.value = false;
-            print(value.data!.token);
             Navigator.of(context, rootNavigator: true).pushNamed(
               RoutesConstants.loginFourthStepRoute,
-              arguments: {AppConstant.tokenToPass: value.data!.token},
+              arguments: {
+                AppConstant.tokenToPass: value.data!.token,
+                AppConstant.useridToPass: bloc.userId,
+              },
             );
           } else {
             bloc.otpNotValid.value = true;

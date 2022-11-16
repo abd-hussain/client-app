@@ -1,3 +1,4 @@
+import 'package:client_app/sevices/report_service.dart';
 import 'package:client_app/utils/day_time.dart';
 import 'package:client_app/utils/repository/http_interceptor.dart';
 import 'package:client_app/utils/repository/http_repository.dart';
@@ -15,6 +16,7 @@ Future<void> setupLocator() async {
   locator.registerFactory<FilterService>(() => FilterService());
   locator.registerFactory<AccountService>(() => AccountService());
   locator.registerFactory<AuthService>(() => AuthService());
+  locator.registerFactory<ReportService>(() => ReportService());
 
   locator.registerFactory<Dio>(() => Dio());
   locator.registerFactory<HttpInterceptor>(() => HttpInterceptor());

@@ -38,6 +38,7 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
 
   List<Country> listOfCountries = [];
   List<Gender> listOfGenders = [];
+  int userId = 0;
 
   String argumentToken = "";
   final box = Hive.box(DatabaseBoxConstant.userInfo);
@@ -57,6 +58,7 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
     final arguments = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
     if (arguments != null) {
       argumentToken = arguments[AppConstant.tokenToPass];
+      userId = arguments[AppConstant.useridToPass];
     }
 
     getAccountInformation(context);

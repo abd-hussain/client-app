@@ -33,25 +33,25 @@ class AuthDebugResponseData {
   }
 }
 
-class VerifyOTPresponse {
-  Data? data;
+class VerifyOTPResponse {
+  VerifyOTPResponseData? data;
   String? message;
 
-  VerifyOTPresponse({this.data, this.message});
+  VerifyOTPResponse({this.data, this.message});
 
-  VerifyOTPresponse.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+  VerifyOTPResponse.fromJson(Map<String, dynamic> json) {
+    data = json['data'] != null ? VerifyOTPResponseData.fromJson(json['data']) : null;
     message = json['message'];
   }
 }
 
-class Data {
+class VerifyOTPResponseData {
   String? token;
   String? tokenType;
 
-  Data({this.token, this.tokenType});
+  VerifyOTPResponseData({this.token, this.tokenType});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  VerifyOTPResponseData.fromJson(Map<String, dynamic> json) {
     token = json['token'];
     tokenType = json['token_type'];
   }

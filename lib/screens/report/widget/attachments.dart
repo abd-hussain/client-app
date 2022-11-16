@@ -4,7 +4,12 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
 class ReportAttatchment extends StatelessWidget {
-  const ReportAttatchment({Key? key}) : super(key: key);
+  final Function(File?) attach1;
+  final Function(File?) attach2;
+  final Function(File?) attach3;
+
+  const ReportAttatchment({required this.attach1, required this.attach2, required this.attach3, Key? key})
+      : super(key: key);
 
   Future<File> pickImage(ImageSource source) async {
     final image = await ImagePicker().pickImage(source: source);
@@ -29,6 +34,7 @@ class ReportAttatchment extends StatelessWidget {
                   false,
                   deleteCallBack: () {
                     image1Controller.value = null;
+                    attach1(null);
                     Navigator.pop(context);
                   },
                   cameraCallBack: () async {
@@ -37,6 +43,7 @@ class ReportAttatchment extends StatelessWidget {
                       return;
                     }
                     image1Controller.value = image;
+                    attach1(image);
                   },
                   galleryCallBack: () async {
                     File image = await pickImage(ImageSource.gallery);
@@ -44,6 +51,7 @@ class ReportAttatchment extends StatelessWidget {
                       return;
                     }
                     image1Controller.value = image;
+                    attach1(image);
                   },
                 );
               },
@@ -84,6 +92,8 @@ class ReportAttatchment extends StatelessWidget {
                   false,
                   deleteCallBack: () {
                     image2Controller.value = null;
+                    attach2(null);
+
                     Navigator.pop(context);
                   },
                   cameraCallBack: () async {
@@ -92,6 +102,7 @@ class ReportAttatchment extends StatelessWidget {
                       return;
                     }
                     image2Controller.value = image;
+                    attach2(image);
                   },
                   galleryCallBack: () async {
                     File image = await pickImage(ImageSource.gallery);
@@ -99,6 +110,7 @@ class ReportAttatchment extends StatelessWidget {
                       return;
                     }
                     image2Controller.value = image;
+                    attach2(image);
                   },
                 );
               },
@@ -138,6 +150,8 @@ class ReportAttatchment extends StatelessWidget {
                 false,
                 deleteCallBack: () {
                   image3Controller.value = null;
+                  attach3(null);
+
                   Navigator.pop(context);
                 },
                 cameraCallBack: () async {
@@ -146,6 +160,7 @@ class ReportAttatchment extends StatelessWidget {
                     return;
                   }
                   image3Controller.value = image;
+                  attach3(image);
                 },
                 galleryCallBack: () async {
                   File image = await pickImage(ImageSource.gallery);
@@ -153,6 +168,7 @@ class ReportAttatchment extends StatelessWidget {
                     return;
                   }
                   image3Controller.value = image;
+                  attach3(image);
                 },
               );
             },

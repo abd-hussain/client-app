@@ -42,10 +42,9 @@ class HttpInterceptor extends InterceptorsWrapper {
         return true;
       case 201:
         return true;
-      case 307:
-        return true;
 
       default:
+        print(response.data.toString());
         throw DioError(
             error: HttpException(
                 status: response.statusCode!,

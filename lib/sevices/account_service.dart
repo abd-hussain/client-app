@@ -33,7 +33,7 @@ class AccountService with Service {
     });
 
     final response = await repository.callRequest(
-        requestType: RequestType.multiPartPut, methodName: MethodNameConstant.updateAccount, formData: formData);
+        requestType: RequestType.put, methodName: MethodNameConstant.updateAccount, formData: formData);
     return AccountInfo.fromJson(response);
   }
 

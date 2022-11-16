@@ -5,7 +5,7 @@ import 'package:client_app/utils/repository/http_interceptor.dart';
 import 'package:client_app/sevices/general/network_info_service.dart';
 import 'package:dio/dio.dart';
 
-enum RequestType { get, post, delete, multiPartPut }
+enum RequestType { get, post, delete, put }
 
 class HttpRepository {
   Future<dynamic> callRequest(
@@ -39,7 +39,7 @@ class HttpRepository {
         case RequestType.post:
           response = await dioClient.post(
             methodName,
-            data: postBody?.toJson(),
+            data: formData ?? postBody?.toJson(),
             queryParameters: queryParam,
             options: Options(contentType: contentType),
           );
@@ -52,10 +52,10 @@ class HttpRepository {
             options: Options(contentType: contentType),
           );
           break;
-        case RequestType.multiPartPut:
+        case RequestType.put:
           response = await dioClient.put(
             methodName,
-            data: formData,
+            data: formData ?? postBody?.toJson(),
             queryParameters: queryParam,
             options: Options(contentType: contentType),
           );

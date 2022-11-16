@@ -34,7 +34,7 @@ class LoginThirdStepBloc extends Bloc<AuthService> {
     timerStartNumberMin = 2;
   }
 
-  Future<VerifyOTPresponse> callVerifyRequset() async {
+  Future<VerifyOTPResponse> callVerifyRequset() async {
     return await service.verifyOTP(
         countryCode: countryCode, mobileNumber: mobileNumber, otp: controller.text, apiKey: apikey, userId: userId);
   }

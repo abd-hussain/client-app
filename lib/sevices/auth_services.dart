@@ -24,7 +24,7 @@ class AuthService with Service {
     return AuthDebugResponse.fromJson(response);
   }
 
-  Future<VerifyOTPresponse> verifyOTP(
+  Future<VerifyOTPResponse> verifyOTP(
       {required String countryCode,
       required String mobileNumber,
       required String otp,
@@ -46,9 +46,9 @@ class AuthService with Service {
     try {
       final response = await repository.callRequest(
           requestType: RequestType.post, methodName: MethodNameConstant.authVerify, postBody: body);
-      return VerifyOTPresponse.fromJson(response);
+      return VerifyOTPResponse.fromJson(response);
     } catch (error) {
-      return VerifyOTPresponse();
+      return VerifyOTPResponse();
     }
   }
 }
