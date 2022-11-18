@@ -2,7 +2,7 @@ import 'package:client_app/screens/invite_friends/invite_friends_bloc.dart';
 import 'package:client_app/screens/invite_friends/widgets/list_of_contacts_widget.dart';
 import 'package:client_app/shared_widgets/custom_appbar.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
-import 'package:client_app/shared_widgets/shimmer_list.dart';
+import 'package:client_app/shared_widgets/shimmers/shimmer_list.dart';
 import 'package:client_app/shared_widgets/sub_page_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
