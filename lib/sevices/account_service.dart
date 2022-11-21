@@ -13,13 +13,14 @@ class AccountService with Service {
   }
 
   Future<AccountInfo> updateAccount({required UpdateAccountRequest account}) async {
-    FormData? formData;
     String fileName = "";
     if (account.profileImage != null) {
       fileName = account.profileImage!.path.split('/').last;
     }
 
-    formData = FormData.fromMap({
+    //TODO there is something wrong here
+
+    FormData formData = FormData.fromMap({
       "profile_picture": account.profileImage != null
           ? await MultipartFile.fromFile(account.profileImage!.path, filename: fileName)
           : MultipartFile.fromString(""),

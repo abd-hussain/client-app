@@ -61,14 +61,14 @@ class LoginSecoundStepScreen extends StatelessWidget {
                                     buttonTitle: AppLocalizations.of(context)!.verify,
                                     enableButton: snapshot,
                                     onTap: () {
-                                      bloc.callRequest().then((value) {
-                                        logger.wtf("value.data!.lastOtp");
+                                      final navigator = Navigator.of(context, rootNavigator: true);
+                                      bloc.callRequest().then((value) async {
+                                        bloc.loadingStatus.value = LoadingStatus.finish;
                                         logger.wtf(value.data!.lastOtp);
                                         if (bloc.controller.text[0] == "0") {
                                           bloc.controller.text = bloc.controller.text.substring(1);
                                         }
-                                        Navigator.of(context, rootNavigator: true)
-                                            .pushNamed(RoutesConstants.loginThirdStepRoute, arguments: {
+                                        await navigator.pushNamed(RoutesConstants.loginThirdStepRoute, arguments: {
                                           AppConstant.countryCode: bloc.countryCode,
                                           AppConstant.mobileNumber: bloc.controller.text,
                                           AppConstant.useridToPass: value.data!.id!,

@@ -78,7 +78,7 @@ class AccountInfoData {
     invitationCode = json['invitation_code'];
     lastOtp = json['last_otp'];
     lastName = json['last_name'];
-    profileImg = AppConstant.imagesBaseURLForMentors + json['profile_img'];
+    profileImg = json['profile_img'] == "" ? "" : AppConstant.imagesBaseURLForMentors + json['profile_img'];
     apiKey = json['api_key'];
   }
 }

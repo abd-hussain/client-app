@@ -1,3 +1,4 @@
+import 'package:client_app/screens/home_tab/widgets/header.dart';
 import 'package:flutter/material.dart';
 
 class MyCalenderScreen extends StatelessWidget {
@@ -5,6 +6,13 @@ class MyCalenderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Column(
+        children: [
+          const HeaderHomePage(),
+          const SizedBox(height: 8),
+        ],
+      ),
+    );
   }
 }

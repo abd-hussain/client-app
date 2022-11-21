@@ -55,7 +55,7 @@ class _LoginFourthStepScreenState extends State<LoginFourthStepScreen> {
                             children: [
                               ImageHolder(
                                   isFromNetwork: bloc.profileImageUrl != null,
-                                  urlImage: bloc.profileImageUrl,
+                                  urlImage: bloc.profileImageUrl == "" ? null : bloc.profileImageUrl,
                                   addImageCallBack: (file) {
                                     bloc.profileImage = file;
                                     bloc.validateFields();
@@ -145,8 +145,9 @@ class _LoginFourthStepScreenState extends State<LoginFourthStepScreen> {
                                   enableButton: snapshot,
                                   onTap: () {
                                     final navigator = Navigator.of(context);
+                                    bloc.loadingStatus.value = LoadingStatus.finish;
+
                                     bloc.callRequest(context).then((value) async {
-                                      bloc.loadingStatus.value = LoadingStatus.finish;
                                       await bloc.box.put(DatabaseFieldConstant.isUserLoggedIn, true);
                                       await bloc.box
                                           .put(DatabaseFieldConstant.userFirstName, bloc.firstNameController.text);
@@ -158,7 +159,6 @@ class _LoginFourthStepScreenState extends State<LoginFourthStepScreen> {
                                             .put(DatabaseFieldConstant.countryFlag, bloc.selectedCountry!.flagImage);
                                       }
 
-                                      // ignore: use_build_context_synchronously
                                       await navigator.pushNamedAndRemoveUntil(
                                           RoutesConstants.mainContainer, (route) => false);
                                     });
