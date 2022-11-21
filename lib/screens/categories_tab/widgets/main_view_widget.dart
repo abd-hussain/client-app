@@ -1,11 +1,13 @@
 import 'package:client_app/models/https/categories_model.dart';
 import 'package:client_app/models/https/mentors_model.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
+import 'package:client_app/shared_widgets/shimmers/shimmer_cards_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CategoryMainView extends StatelessWidget {
   final Category selectedCategory;
-  final List<MentorsModelData> mentorsListNotifier;
+  final List<MentorsModelData>? mentorsListNotifier;
 
   const CategoryMainView({required this.selectedCategory, required this.mentorsListNotifier, super.key});
 
@@ -31,16 +33,32 @@ class CategoryMainView extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: ListView.builder(
-                  itemCount: mentorsListNotifier.length,
-                  itemBuilder: (context, index) {
-                    return _item(index, mentorsListNotifier.length);
-                  },
-                ),
+                child: mentorsListNotifier == null
+                    ? const ShimmerCardListView(count: 5)
+                    : mentorsListNotifier!.isEmpty
+                        ? noMentorToShow(context)
+                        : ListView.builder(
+                            itemCount: mentorsListNotifier!.length,
+                            itemBuilder: (context, index) {
+                              return _item(index, mentorsListNotifier!.length);
+                            },
+                          ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget noMentorToShow(BuildContext context) {
+    return Center(
+      child: CustomText(
+        title: AppLocalizations.of(context)!.noitem,
+        fontSize: 14,
+        textColor: const Color(0xff444444),
+        maxLins: 4,
+        textAlign: TextAlign.center,
       ),
     );
   }
@@ -50,7 +68,7 @@ class CategoryMainView extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       child: Column(
         children: [
-          _card(mentorsListNotifier[index]),
+          _card(mentorsListNotifier![index]),
           listLenght - 1 == index
               ? const SizedBox(
                   height: 16,

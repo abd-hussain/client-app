@@ -51,7 +51,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                       valueListenable: _bloc.selectedCategoryNotifier,
                       builder: (context, snapshot1, chuld) {
                         if (snapshot1 != null) {
-                          return ValueListenableBuilder<List<MentorsModelData>>(
+                          return ValueListenableBuilder<List<MentorsModelData>?>(
                               valueListenable: _bloc.mentorsListNotifier,
                               builder: (context, snapshot2, child) {
                                 return CategoryMainView(

@@ -9,13 +9,13 @@ import 'package:flutter/material.dart';
 class CategoriesBloc extends Bloc<FilterService> {
   final ValueNotifier<List<Category>> categoriesListNotifier = ValueNotifier<List<Category>>([]);
   final ValueNotifier<Category?> selectedCategoryNotifier = ValueNotifier<Category?>(null);
-  final ValueNotifier<List<MentorsModelData>> mentorsListNotifier = ValueNotifier<List<MentorsModelData>>([]);
+  final ValueNotifier<List<MentorsModelData>?> mentorsListNotifier = ValueNotifier<List<MentorsModelData>?>(null);
 
   void listOfCategories() {
     service.categories().then((value) {
       categoriesListNotifier.value = value.data!..sort((a, b) => a.id!.compareTo(b.id!));
-      selectedCategoryNotifier.value = categoriesListNotifier.value![0];
-      listOfMentors(categoryID: categoriesListNotifier.value![0].id!);
+      selectedCategoryNotifier.value = categoriesListNotifier.value[0];
+      listOfMentors(categoryID: categoriesListNotifier.value[0].id!);
     });
   }
 
