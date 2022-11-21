@@ -17,24 +17,22 @@ class AccountService with Service {
     if (account.profileImage != null) {
       fileName = account.profileImage!.path.split('/').last;
     }
-
-    //TODO there is something wrong here
-
     FormData formData = FormData.fromMap({
       "profile_picture": account.profileImage != null
           ? await MultipartFile.fromFile(account.profileImage!.path, filename: fileName)
           : MultipartFile.fromString(""),
-      "first_name": MultipartFile.fromString(account.firstName ?? ""),
-      "last_name": MultipartFile.fromString(account.lastName ?? ""),
-      "email": MultipartFile.fromString(account.email ?? ""),
+      "first_name": MultipartFile.fromString(account.firstName),
+      "last_name": MultipartFile.fromString(account.lastName),
+      "email": MultipartFile.fromString(account.email ?? ""), //TODO there is an issue with email
       "referal_code": MultipartFile.fromString(account.referalCode ?? ""),
       "date_of_birth": MultipartFile.fromString(account.dateOfBirth ?? ""),
-      "country_id": MultipartFile.fromString(account.countryId!.toString()),
-      "gender": MultipartFile.fromString(account.gender!.toString()),
+      "country_id": MultipartFile.fromString(account.countryId.toString()),
+      "gender": MultipartFile.fromString(account.gender.toString()),
     });
 
     final response = await repository.callRequest(
         requestType: RequestType.put, methodName: MethodNameConstant.updateAccount, formData: formData);
+
     return AccountInfo.fromJson(response);
   }
 

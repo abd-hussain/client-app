@@ -13,6 +13,9 @@ class AccountInfo {
 }
 
 class AccountInfoData {
+  String? lastName;
+  String? profileImg;
+  String? apiKey;
   String? mobileNumber;
   String? osType;
   int? countryId;
@@ -23,17 +26,14 @@ class AccountInfoData {
   String? osVersion;
   bool? allowNotifications;
   String? appVersion;
+  String? firstName;
   bool? blocked;
   String? dateOfBirth;
-  String? firstName;
+  int? id;
   String? referalCode;
   String? lastUsage;
-  int? id;
   String? invitationCode;
   String? lastOtp;
-  String? lastName;
-  String? profileImg;
-  String? apiKey;
 
   AccountInfoData(
       {mobileNumber,
@@ -78,7 +78,7 @@ class AccountInfoData {
     invitationCode = json['invitation_code'];
     lastOtp = json['last_otp'];
     lastName = json['last_name'];
-    profileImg = json['profile_img'] == "" ? "" : AppConstant.imagesBaseURLForMentors + json['profile_img'];
+    profileImg = json['profile_img'];
     apiKey = json['api_key'];
   }
 }

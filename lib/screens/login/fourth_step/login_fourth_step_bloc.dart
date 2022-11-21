@@ -34,7 +34,7 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
   File? profileImage;
   String? profileImageUrl;
 
-  ValueNotifier<bool> enableNextBtn = ValueNotifier<bool>(true);
+  ValueNotifier<bool> enableNextBtn = ValueNotifier<bool>(false);
 
   List<Country> listOfCountries = [];
   List<Gender> listOfGenders = [];
@@ -65,7 +65,19 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
     getListOfCountries();
   }
 
+  controllersHandler() {
+    firstNameController.addListener(() => validateFields());
+    lastNameController.addListener(() => validateFields());
+  }
+
   validateFields() {
+    if (firstNameController.text.isEmpty) {
+      enableNextBtn.value = false;
+    } else if (lastNameController.text.isEmpty) {
+      enableNextBtn.value = false;
+    } else {
+      enableNextBtn.value = true;
+    }
     //Nothing is requierd
     loadingStatus.value = LoadingStatus.inprogress;
 
@@ -116,6 +128,7 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
 
   Future<AccountInfo> callRequest(BuildContext context) async {
     loadingStatus.value = LoadingStatus.inprogress;
+
     return await service.updateAccount(
       account: UpdateAccountRequest(
         firstName: firstNameController.text,
@@ -123,7 +136,7 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
         email: emailController.text,
         referalCode: referalCodeController.text,
         gender: GenderFormat().convertStringToIndex(context, genderController.text),
-        countryId: selectedCountry!.id,
+        countryId: selectedCountry != null ? selectedCountry!.id! : int.parse(box.get(DatabaseFieldConstant.countryId)),
         dateOfBirth: selectedDate,
         profileImage: profileImage,
       ),

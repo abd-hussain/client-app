@@ -12,6 +12,8 @@ class ImageHolder extends StatelessWidget {
   final Function() deleteImageCallBack;
   final bool isFromNetwork;
   final String? urlImage;
+  final double hight;
+  final double width;
 
   const ImageHolder({
     super.key,
@@ -19,6 +21,8 @@ class ImageHolder extends StatelessWidget {
     required this.deleteImageCallBack,
     this.isFromNetwork = false,
     this.urlImage,
+    this.hight = 116,
+    this.width = 100,
   });
 
   Future<File> pickImage(ImageSource source) async {
@@ -68,8 +72,8 @@ class ImageHolder extends StatelessWidget {
         );
       },
       child: Container(
-        height: 116,
-        width: 100,
+        height: hight,
+        width: width,
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(8),

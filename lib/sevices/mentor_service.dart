@@ -5,7 +5,6 @@ import 'package:client_app/utils/repository/method_name_constractor.dart';
 
 class MentorService with Service {
   Future<MentorsModel> mentors(int categoryID) async {
-    print(categoryID);
     final response = await repository.callRequest(
       requestType: RequestType.get,
       methodName: MethodNameConstant.mentors,

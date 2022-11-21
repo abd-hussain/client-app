@@ -28,6 +28,7 @@ class _LoginFourthStepScreenState extends State<LoginFourthStepScreen> {
   Widget build(BuildContext context) {
     bloc.extractArguments(context);
     final String savedLanguage = bloc.box.get(DatabaseFieldConstant.language);
+    bloc.controllersHandler();
 
     return Scaffold(
       body: GestureDetector(
@@ -92,11 +93,14 @@ class _LoginFourthStepScreenState extends State<LoginFourthStepScreen> {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        Row(
-                          children: [
-                            countryField(context),
-                            genderField(),
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8, right: 8),
+                          child: Row(
+                            children: [
+                              countryField(context),
+                              genderField(),
+                            ],
+                          ),
                         ),
                         const SizedBox(height: 10),
                         Padding(
@@ -145,7 +149,6 @@ class _LoginFourthStepScreenState extends State<LoginFourthStepScreen> {
                                   enableButton: snapshot,
                                   onTap: () {
                                     final navigator = Navigator.of(context);
-                                    bloc.loadingStatus.value = LoadingStatus.finish;
 
                                     bloc.callRequest(context).then((value) async {
                                       await bloc.box.put(DatabaseFieldConstant.isUserLoggedIn, true);
@@ -158,6 +161,7 @@ class _LoginFourthStepScreenState extends State<LoginFourthStepScreen> {
                                         await bloc.box
                                             .put(DatabaseFieldConstant.countryFlag, bloc.selectedCountry!.flagImage);
                                       }
+                                      bloc.loadingStatus.value = LoadingStatus.finish;
 
                                       await navigator.pushNamedAndRemoveUntil(
                                           RoutesConstants.mainContainer, (route) => false);
