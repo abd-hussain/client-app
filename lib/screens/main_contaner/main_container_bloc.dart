@@ -2,7 +2,7 @@ import 'package:client_app/screens/main_contaner/widgets/tab_navigator.dart';
 import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
 
-enum SelectedTab { home, categories, calender, account }
+enum SelectedTab { home, categories, call, calender, account }
 
 class MainContainerBloc {
   final ValueNotifier<SelectedTab> currentTabIndexNotifier = ValueNotifier<SelectedTab>(SelectedTab.home);
@@ -10,6 +10,7 @@ class MainContainerBloc {
   List<TabNavigator> navTabs = const [
     TabNavigator(initialRoute: RoutesConstants.homeScreen),
     TabNavigator(initialRoute: RoutesConstants.categoriesScreen),
+    TabNavigator(initialRoute: RoutesConstants.callScreen),
     TabNavigator(initialRoute: RoutesConstants.calenderScreen),
     TabNavigator(initialRoute: RoutesConstants.accountScreen)
   ];
@@ -21,6 +22,8 @@ class MainContainerBloc {
       case 1:
         return SelectedTab.categories;
       case 2:
+        return SelectedTab.call;
+      case 3:
         return SelectedTab.calender;
       default:
         return SelectedTab.account;
@@ -33,10 +36,12 @@ class MainContainerBloc {
         return 0;
       case SelectedTab.categories:
         return 1;
-      case SelectedTab.calender:
+      case SelectedTab.call:
         return 2;
-      case SelectedTab.account:
+      case SelectedTab.calender:
         return 3;
+      case SelectedTab.account:
+        return 4;
       default:
         return 0;
     }

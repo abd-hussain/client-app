@@ -1,5 +1,6 @@
 import 'package:client_app/screens/account_tab/account_screen.dart';
 import 'package:client_app/screens/archive/archive_screen.dart';
+import 'package:client_app/screens/call_tab/call_screen.dart';
 import 'package:client_app/screens/categories_tab/categories_screen.dart';
 import 'package:client_app/screens/edit_profile/edit_profile_screen.dart';
 import 'package:client_app/screens/home_tab/home_screen.dart';
@@ -40,6 +41,7 @@ class RoutesConstants {
   static const String reportScreen = 'reportScreen';
   static const String messagesScreen = 'messagesScreen';
   static const String archiveScreen = 'archiveScreen';
+  static const String callScreen = 'callScreen';
 }
 
 final Map<String, Widget> routes = {
@@ -62,4 +64,5 @@ final Map<String, Widget> routes = {
   RoutesConstants.reportScreen: const ReportScreen(),
   RoutesConstants.messagesScreen: const MessagesScreen(),
   RoutesConstants.archiveScreen: const ArchiveScreen(),
+  RoutesConstants.callScreen: const CallScreen(),
 };

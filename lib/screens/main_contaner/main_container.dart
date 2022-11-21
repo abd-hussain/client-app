@@ -36,7 +36,7 @@ class _MainContainerState extends State<MainContainer> {
         items: [
           TabItem(icon: Icons.home, title: AppLocalizations.of(context)!.containerHomeIconTitle),
           TabItem(icon: Icons.category_rounded, title: AppLocalizations.of(context)!.containerCategoriesIconTitle),
-          const TabItem(icon: Icons.start),
+          const TabItem(icon: Icons.call),
           TabItem(icon: Icons.calendar_month, title: AppLocalizations.of(context)!.containerCalenderIconTitle),
           TabItem(icon: Icons.person, title: AppLocalizations.of(context)!.containerAccountIconTitle),
         ],
