@@ -23,14 +23,14 @@ class AccountBloc extends Bloc<AccountService> {
   List<ProfileOptions> listOfAccountOptions(BuildContext context) {
     return [
       ProfileOptions(
-        icon: Icons.loyalty,
-        name: AppLocalizations.of(context)!.loyalitypoints,
-        onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.loyalityScreen),
-      ),
-      ProfileOptions(
         icon: Icons.account_box,
         name: AppLocalizations.of(context)!.editprofileinformations,
         onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.editProfileScreen),
+      ),
+      ProfileOptions(
+        icon: Icons.loyalty,
+        name: AppLocalizations.of(context)!.loyalitypoints,
+        onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.loyalityScreen),
       ),
       ProfileOptions(
         icon: Icons.logout,
@@ -44,6 +44,11 @@ class AccountBloc extends Bloc<AccountService> {
 
   List<ProfileOptions> listOfSettingsOptions(BuildContext context) {
     return [
+      ProfileOptions(
+        icon: Icons.menu_book_rounded,
+        name: AppLocalizations.of(context)!.usertutorials,
+        onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.tutorialsScreen),
+      ),
       ProfileOptions(
         icon: Icons.translate,
         name: AppLocalizations.of(context)!.language,
@@ -66,11 +71,6 @@ class AccountBloc extends Bloc<AccountService> {
         onTap: () {
           _getListOfCountries(context);
         },
-      ),
-      ProfileOptions(
-        icon: Icons.menu_book_rounded,
-        name: AppLocalizations.of(context)!.usertutorials,
-        onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.tutorialsScreen),
       ),
     ];
   }
@@ -160,8 +160,9 @@ class AccountBloc extends Bloc<AccountService> {
             sure: () async {
               loadingStatus.value = LoadingStatus.inprogress;
               await box.put(DatabaseFieldConstant.countryFlag, p0.flagImage);
-              await box.put(DatabaseFieldConstant.countryId, p0.id);
-              loadingStatus.value = LoadingStatus.finish;
+              await box
+                  .put(DatabaseFieldConstant.countryId, p0.id)
+                  .then((value) => updateProfileCountry(context, p0.id!));
             });
       });
     });
@@ -193,5 +194,14 @@ class AccountBloc extends Bloc<AccountService> {
                 .pushNamedAndRemoveUntil(RoutesConstants.initialRoute, (Route<dynamic> route) => true);
           });
         });
+  }
+
+  void updateProfileCountry(BuildContext context, int countryID) async {
+    await service.updateAccount(
+      account: UpdateAccountRequest(
+        countryId: countryID,
+      ),
+    );
+    loadingStatus.value = LoadingStatus.finish;
   }
 }

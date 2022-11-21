@@ -21,13 +21,13 @@ class AccountService with Service {
       "profile_picture": account.profileImage != null
           ? await MultipartFile.fromFile(account.profileImage!.path, filename: fileName)
           : MultipartFile.fromString(""),
-      "first_name": MultipartFile.fromString(account.firstName),
-      "last_name": MultipartFile.fromString(account.lastName),
+      "first_name": MultipartFile.fromString(account.firstName ?? ""),
+      "last_name": MultipartFile.fromString(account.lastName ?? ""),
       "email": MultipartFile.fromString(account.email ?? ""), //TODO there is an issue with email
       "referal_code": MultipartFile.fromString(account.referalCode ?? ""),
       "date_of_birth": MultipartFile.fromString(account.dateOfBirth ?? ""),
       "country_id": MultipartFile.fromString(account.countryId.toString()),
-      "gender": MultipartFile.fromString(account.gender.toString()),
+      "gender": MultipartFile.fromString(account.gender != null ? account.gender.toString() : ""),
     });
 
     final response = await repository.callRequest(
