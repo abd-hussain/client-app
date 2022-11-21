@@ -14,23 +14,23 @@ class ReportScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _bloc = ReportBloc();
+    final bloc = ReportBloc();
 
-    _bloc.handleReadingArguments(arguments: ModalRoute.of(context)!.settings.arguments);
+    bloc.handleReadingArguments(arguments: ModalRoute.of(context)!.settings.arguments);
 
-    _bloc.textController.addListener(() {
-      _bloc.validationFields();
+    bloc.textController.addListener(() {
+      bloc.validationFields();
     });
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: customAppBar(
-            title: _bloc.pageType == ReportPageType.issue
+            title: bloc.pageType == ReportPageType.issue
                 ? AppLocalizations.of(context)!.reportanproblem
                 : AppLocalizations.of(context)!.reportansuggestion),
         body: ValueListenableBuilder<LoadingStatus>(
-            valueListenable: _bloc.loadingStatus,
+            valueListenable: bloc.loadingStatus,
             builder: (context, loadingsnapshot, child) {
               if (loadingsnapshot != LoadingStatus.inprogress) {
                 return SafeArea(
@@ -45,7 +45,7 @@ class ReportScreen extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: TextField(
-                              controller: _bloc.textController,
+                              controller: bloc.textController,
                               decoration: InputDecoration(
                                 hintText: AppLocalizations.of(context)!.feedbackmessage,
                                 hintMaxLines: 2,
@@ -60,19 +60,19 @@ class ReportScreen extends StatelessWidget {
                         ),
                       )),
                       ReportAttatchment(
-                        attach1: (file) => _bloc.attach1 = file,
-                        attach2: (file) => _bloc.attach2 = file,
-                        attach3: (file) => _bloc.attach3 = file,
+                        attach1: (file) => bloc.attach1 = file,
+                        attach2: (file) => bloc.attach2 = file,
+                        attach3: (file) => bloc.attach3 = file,
                       ),
                       ValueListenableBuilder<bool>(
-                          valueListenable: _bloc.enableSubmitBtn,
+                          valueListenable: bloc.enableSubmitBtn,
                           builder: (context, snapshot, child) {
                             return CustomButton(
                               enableButton: snapshot,
                               onTap: () {
                                 final navigator = Navigator.of(context);
-                                _bloc.callRequest(context).then((value) async {
-                                  _bloc.loadingStatus.value = LoadingStatus.finish;
+                                bloc.callRequest(context).then((value) async {
+                                  bloc.loadingStatus.value = LoadingStatus.finish;
                                   navigator.pop();
                                 });
                               },
