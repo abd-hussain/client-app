@@ -2,10 +2,7 @@ import 'package:client_app/shared_widgets/custom_button.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/models/gender_model.dart';
 import 'package:client_app/models/https/countries_model.dart';
-import 'package:client_app/shared_widgets/mobile_number_widget.dart';
-import 'package:client_app/utils/global_variables.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BottomSheetsUtil {
@@ -280,60 +277,91 @@ class BottomSheetsUtil {
     );
   }
 
-  Future areYouShoureButtomSheet(
-      {required BuildContext context, required String message, required VoidCallback yes, VoidCallback? no}) {
+  Future areYouShoureButtomSheet({required BuildContext context, required String message, required VoidCallback sure}) {
     return showModalBottomSheet(
-      isScrollControlled: true,
-      backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(25),
-        ),
-      ),
+      enableDrag: false,
+      useRootNavigator: true,
       context: context,
+      backgroundColor: Colors.transparent,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
       builder: (context) {
-        return Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              CustomText(
-                title: AppLocalizations.of(context)!.areyousure,
-                textColor: Colors.black,
-                fontSize: 20,
-              ),
-              const SizedBox(height: 8),
-              CustomText(
-                title: message,
-                textColor: Colors.black,
-                fontSize: 18,
-                maxLins: 2,
-              ),
-              const SizedBox(height: 27.0),
-              SizedBox(
-                height: 100,
-                child: Row(
-                  children: [
-                    CustomButton(
-                        buttonTitle: AppLocalizations.of(context)!.cancel,
-                        enableButton: true,
-                        width: MediaQuery.of(context).size.width / 4,
+        return SafeArea(
+          child: SizedBox(
+            height: 175,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: Column(
+                children: [
+                  Container(
+                    color: Colors.white,
+                    height: 120,
+                    width: double.infinity,
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 20),
+                        CustomText(
+                          title: message,
+                          textColor: const Color(0xff191C1F),
+                          fontSize: 16,
+                        ),
+                        const SizedBox(height: 20),
+                        const Divider(
+                          height: 1,
+                          color: Color(0xffEBEBEB),
+                        ),
+                        Flexible(
+                          fit: FlexFit.tight,
+                          child: Material(
+                            borderRadius: BorderRadius.circular(8),
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(8),
+                              onTap: () {
+                                Navigator.pop(context);
+                                sure();
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                width: double.infinity,
+                                child: CustomText(
+                                  title: AppLocalizations.of(context)!.sure,
+                                  textColor: const Color(0xffE74C4C),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Flexible(
+                    child: Material(
+                      borderRadius: BorderRadius.circular(8),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(8),
                         onTap: () {
-                          Navigator.of(context).pop();
-                        }),
-                    Expanded(child: Container()),
-                    CustomButton(
-                        buttonTitle: AppLocalizations.of(context)!.sure,
-                        enableButton: true,
-                        width: MediaQuery.of(context).size.width / 4,
-                        onTap: () => yes()),
-                  ],
-                ),
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          color: Colors.white,
+                          height: 50,
+                          width: double.infinity,
+                          child: CustomText(
+                            title: AppLocalizations.of(context)!.cancel,
+                            textColor: const Color(0xff1A59B9),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               ),
-              const SizedBox(height: 16),
-            ],
+            ),
           ),
         );
       },

@@ -1,3 +1,5 @@
+import 'package:client_app/utils/constants/constant.dart';
+
 class AccountInfo {
   AccountInfoData? data;
   String? message;
@@ -7,13 +9,6 @@ class AccountInfo {
   AccountInfo.fromJson(Map<String, dynamic> json) {
     data = json['data'] != null ? AccountInfoData.fromJson(json['data']) : null;
     message = json['message'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
-    data['data'] = this.data!.toJson();
-    data['message'] = message;
-    return data;
   }
 }
 
@@ -83,33 +78,7 @@ class AccountInfoData {
     invitationCode = json['invitation_code'];
     lastOtp = json['last_otp'];
     lastName = json['last_name'];
-    profileImg = json['profile_img'];
+    profileImg = AppConstant.imagesBaseURLForMentors + json['profile_img'];
     apiKey = json['api_key'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['mobile_number'] = mobileNumber;
-    data['os_type'] = osType;
-    data['country_id'] = countryId;
-    data['email'] = email;
-    data['device_type_name'] = deviceTypeName;
-    data['created_at'] = createdAt;
-    data['gender'] = gender;
-    data['os_version'] = osVersion;
-    data['allow_notifications'] = allowNotifications;
-    data['app_version'] = appVersion;
-    data['blocked'] = blocked;
-    data['date_of_birth'] = dateOfBirth;
-    data['first_name'] = firstName;
-    data['referal_code'] = referalCode;
-    data['last_usage'] = lastUsage;
-    data['id'] = id;
-    data['invitation_code'] = invitationCode;
-    data['last_otp'] = lastOtp;
-    data['last_name'] = lastName;
-    data['profile_img'] = profileImg;
-    data['api_key'] = apiKey;
-    return data;
   }
 }

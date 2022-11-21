@@ -1,5 +1,8 @@
+import 'package:client_app/models/https/categories_model.dart';
+import 'package:client_app/models/https/mentors_model.dart';
 import 'package:client_app/screens/categories_tab/categories_bloc.dart';
 import 'package:client_app/screens/categories_tab/widgets/list_categories_widget.dart';
+import 'package:client_app/screens/categories_tab/widgets/main_view_widget.dart';
 import 'package:client_app/screens/home_tab/widgets/header.dart';
 import 'package:client_app/utils/logger.dart';
 import 'package:flutter/material.dart';
@@ -22,8 +25,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     super.initState();
   }
 
-  //TODO: Handle Home Page
   //TODO: Handle Search Page
+  //TODO: Handle Mentors
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +42,27 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 children: [
                   CategoriesList(
                     categoriesListNotifier: _bloc.categoriesListNotifier,
-                    onTap: (category) {},
+                    onTap: (category) {
+                      _bloc.selectedCategoryNotifier.value = category;
+                      _bloc.listOfMentors(categoryID: category.id!);
+                    },
                   ),
-                  Container(
-                    color: Colors.white,
-                    width: MediaQuery.of(context).size.width - 110,
-                  ),
+                  ValueListenableBuilder<Category?>(
+                      valueListenable: _bloc.selectedCategoryNotifier,
+                      builder: (context, snapshot1, chuld) {
+                        if (snapshot1 != null) {
+                          return ValueListenableBuilder<List<MentorsModelData>>(
+                              valueListenable: _bloc.mentorsListNotifier,
+                              builder: (context, snapshot2, child) {
+                                return CategoryMainView(
+                                  selectedCategory: snapshot1,
+                                  mentorsListNotifier: snapshot2,
+                                );
+                              });
+                        } else {
+                          return Container();
+                        }
+                      }),
                 ],
               ),
             ),

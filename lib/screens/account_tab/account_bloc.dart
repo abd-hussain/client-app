@@ -136,7 +136,7 @@ class AccountBloc extends Bloc<AccountService> {
     await BottomSheetsUtil().areYouShoureButtomSheet(
         context: context,
         message: AppLocalizations.of(context)!.changelanguagemessage,
-        yes: () {
+        sure: () {
           if (box.get(DatabaseFieldConstant.language) == "en") {
             box.put(DatabaseFieldConstant.language, "ar");
             _refreshAppWithLanguageCode(context, "ar");
@@ -144,9 +144,7 @@ class AccountBloc extends Bloc<AccountService> {
             box.put(DatabaseFieldConstant.language, "en");
             _refreshAppWithLanguageCode(context, "en");
           }
-          Navigator.of(context).pop();
-        },
-        no: () {});
+        });
   }
 
   void _getListOfCountries(BuildContext context) {
@@ -159,15 +157,12 @@ class AccountBloc extends Bloc<AccountService> {
         await BottomSheetsUtil().areYouShoureButtomSheet(
             context: context,
             message: AppLocalizations.of(context)!.changecountrymessage,
-            yes: () async {
+            sure: () async {
               loadingStatus.value = LoadingStatus.inprogress;
               await box.put(DatabaseFieldConstant.countryFlag, p0.flagImage);
               await box.put(DatabaseFieldConstant.countryId, p0.id);
               loadingStatus.value = LoadingStatus.finish;
-              // ignore: use_build_context_synchronously
-              Navigator.of(context).pop();
-            },
-            no: () {});
+            });
       });
     });
   }
@@ -176,50 +171,27 @@ class AccountBloc extends Bloc<AccountService> {
     MyApp.of(context)!.setLocale(Locale.fromSubtags(languageCode: code));
   }
 
-  Widget _logoutView(BuildContext context) {
-    return Container(
-        //     height: 65,
-        //     decoration: BoxDecoration(
-        //       color: Colors.white,
-        //       boxShadow: [
-        //         BoxShadow(
-        //           color: Colors.grey.withOpacity(0.5),
-        //           spreadRadius: 0.5,
-        //           blurRadius: 5,
-        //           offset: const Offset(0, 0.1),
-        //         ),
-        //       ],
-        //     ),
-        //     child: InkWell(
-        //       onTap: () {
-        //         //TODO
-        //       },
-        //       child: Padding(
-        //         padding: const EdgeInsets.all(16),
-        //         child: Row(
-        //           children: [
-        //             const Icon(
-        //               Icons.logout,
-        //               size: 20,
-        //               color: Color(0xff034061),
-        //             ),
-        //             const SizedBox(width: 8),
-        //             CustomText(
-        //                 title: AppLocalizations.of(context)!.logout,
-        //                 fontSize: 16,
-        //                 textColor: const Color(0xff034061),
-        //                 fontWeight: FontWeight.w500),
-        //             Expanded(child: Container()),
-        //             const SizedBox(width: 8),
-        //             const Icon(
-        //               Icons.arrow_forward_ios_outlined,
-        //               size: 12,
-        //               color: Color(0xffBFBFBF),
-        //             )
-        //           ],
-        //         ),
-        //       ),
-        //     ),
-        );
+  void _logoutView(BuildContext context) {
+    BottomSheetsUtil().areYouShoureButtomSheet(
+        context: context,
+        message: AppLocalizations.of(context)!.areyousurelogout,
+        sure: () async {
+          final box = await Hive.openBox(DatabaseBoxConstant.userInfo);
+          box.deleteAll([
+            DatabaseFieldConstant.apikey,
+            DatabaseFieldConstant.token,
+            DatabaseFieldConstant.language,
+            DatabaseFieldConstant.userid,
+            DatabaseFieldConstant.countryId,
+            DatabaseFieldConstant.countryFlag,
+            DatabaseFieldConstant.isUserLoggedIn,
+            DatabaseFieldConstant.userFirstName,
+          ]);
+          await locator.popScope().then((value) async {
+            MyApp.of(context)!.rebuild();
+            await Navigator.of(context, rootNavigator: true)
+                .pushNamedAndRemoveUntil(RoutesConstants.initialRoute, (Route<dynamic> route) => true);
+          });
+        });
   }
 }

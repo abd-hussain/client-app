@@ -80,7 +80,9 @@
     "archive" : "أرشيف",
     "reportanproblem" : "الإبلاغ عن مشكلة",
     "reportansuggestion" : "الإبلاغ عن اقتراح",
-    "feedbackmessage" : "ملاحظاتك مهمة بالنسبة لنا ، يرجى وصف مشكلتك هنا"
+    "feedbackmessage" : "ملاحظاتك مهمة بالنسبة لنا ، يرجى وصف مشكلتك هنا",
+    "areyousurelogout" : "هل أنت متأكد من أنك تريد تسجيل الخروج ؟"
+
 
 
 
