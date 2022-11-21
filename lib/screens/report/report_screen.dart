@@ -1,11 +1,8 @@
-import 'dart:io';
-
-import 'package:client_app/screens/login/widget/top_bar.dart';
 import 'package:client_app/screens/report/report_bloc.dart';
 import 'package:client_app/screens/report/widget/attachments.dart';
 import 'package:client_app/screens/report/widget/footer.dart';
+import 'package:client_app/shared_widgets/custom_appbar.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
-import 'package:client_app/shared_widgets/sub_page_app_bar.dart';
 import 'package:client_app/utils/enums/loading_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -28,6 +25,10 @@ class ReportScreen extends StatelessWidget {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+        appBar: customAppBar(
+            title: _bloc.pageType == ReportPageType.issue
+                ? AppLocalizations.of(context)!.reportanproblem
+                : AppLocalizations.of(context)!.reportansuggestion),
         body: ValueListenableBuilder<LoadingStatus>(
             valueListenable: _bloc.loadingStatus,
             builder: (context, loadingsnapshot, child) {
@@ -36,11 +37,6 @@ class ReportScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const TopBarWidget(),
-                      SubPageHeaderName(
-                          title: _bloc.pageType == ReportPageType.issue
-                              ? AppLocalizations.of(context)!.reportanproblem
-                              : AppLocalizations.of(context)!.reportansuggestion),
                       Expanded(
                           child: Padding(
                         padding: const EdgeInsets.all(8.0),

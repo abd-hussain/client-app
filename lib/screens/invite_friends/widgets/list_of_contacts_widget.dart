@@ -50,7 +50,6 @@ class _ListOfContactsWidgetState extends State<ListOfContactsWidget> {
                       onTap: null);
                 }),
           ),
-          Expanded(child: Container()),
           CustomButton(
             buttonTitle: "Send",
             enableButton: listOfCheckboxInContact.contains(true) ? true : false,
