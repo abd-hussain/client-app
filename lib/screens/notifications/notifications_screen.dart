@@ -18,6 +18,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   @override
   void initState() {
     logDebugMessage(message: 'Notifications init Called ...');
+    bloc.markNotificationReaded();
     bloc.listOfNotifications();
     super.initState();
   }
@@ -28,8 +29,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       appBar: customAppBar(title: AppLocalizations.of(context)!.notifications),
       body: NotificationsList(
         notificationsListNotifier: bloc.notificationsListNotifier,
-        onTap: (category) {
-          //TODO
+        onDelete: (p0) {
+          bloc.notificationsListNotifier.value!.remove(p0);
+          bloc.deleteNotification(p0.id!);
         },
       ),
     );

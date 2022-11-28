@@ -1,25 +1,39 @@
 import 'package:client_app/models/https/notifications_response.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
-import 'package:client_app/shared_widgets/shimmers/shimmer_categories.dart';
+import 'package:client_app/shared_widgets/shimmers/shimmer_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class NotificationsList extends StatelessWidget {
-  final ValueNotifier<List<NotificationsResponseData>> notificationsListNotifier;
-  final Function(NotificationsResponseData) onTap;
-  const NotificationsList({super.key, required this.notificationsListNotifier, required this.onTap});
+class NotificationsList extends StatefulWidget {
+  final ValueNotifier<List<NotificationsResponseData>?> notificationsListNotifier;
+  final Function(NotificationsResponseData) onDelete;
+  const NotificationsList({super.key, required this.notificationsListNotifier, required this.onDelete});
 
   @override
+  State<NotificationsList> createState() => _NotificationsListState();
+}
+
+class _NotificationsListState extends State<NotificationsList> {
+  @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<List<NotificationsResponseData>>(
-        valueListenable: notificationsListNotifier,
+    return ValueListenableBuilder<List<NotificationsResponseData>?>(
+        valueListenable: widget.notificationsListNotifier,
         builder: (context, data, child) {
-          return data.isEmpty
-              ? const ShimmerCategoriesView()
-              : ListView.builder(
-                  itemCount: data.length,
-                  itemBuilder: (ctx, index) {
-                    return notificationTile(context, data[index], index);
-                  });
+          return data == null
+              ? const ShimmerNotificationsView()
+              : widget.notificationsListNotifier.value!.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: data.length,
+                      itemBuilder: (ctx, index) {
+                        return notificationTile(context, data[index], index);
+                      })
+                  : Center(
+                      child: CustomText(
+                        title: AppLocalizations.of(context)!.noitem,
+                        fontSize: 16,
+                        textColor: const Color(0xff444444),
+                      ),
+                    );
         });
   }
 
@@ -29,15 +43,27 @@ class NotificationsList extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.all(8),
-      child: InkWell(
-        onTap: () {
-          onTap(item);
+      child: Dismissible(
+        key: Key(item.title!),
+        direction: DismissDirection.endToStart,
+        onDismissed: (direction) {
+          widget.onDelete(item);
         },
+        background: Container(
+          alignment: AlignmentDirectional.centerEnd,
+          color: Colors.red,
+          child: const Padding(
+            padding: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
+            child: Icon(
+              Icons.delete,
+              color: Colors.white,
+            ),
+          ),
+        ),
         child: Container(
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(5),
-            border: Border.all(width: 5, color: item.readed! ? const Color(0xff4CB6EA) : Colors.white),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.2),

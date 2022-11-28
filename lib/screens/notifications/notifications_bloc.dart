@@ -4,12 +4,20 @@ import 'package:client_app/utils/mixins.dart';
 import 'package:flutter/material.dart';
 
 class NotificationsBloc extends Bloc<NotificationsService> {
-  final ValueNotifier<List<NotificationsResponseData>> notificationsListNotifier =
-      ValueNotifier<List<NotificationsResponseData>>([]);
+  final ValueNotifier<List<NotificationsResponseData>?> notificationsListNotifier =
+      ValueNotifier<List<NotificationsResponseData>?>(null);
 
   void listOfNotifications() {
     service.listOfNotifications().then((value) {
-      notificationsListNotifier.value = value.data!;
+      notificationsListNotifier.value = value.data;
     });
+  }
+
+  void markNotificationReaded() async {
+    await service.markAllNotificationsReaded();
+  }
+
+  void deleteNotification(int id) async {
+    await service.deleteNotification(id);
   }
 }
