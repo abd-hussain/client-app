@@ -14,16 +14,16 @@ class UploadContact implements Model {
 }
 
 class MyContact {
-  String? full_name;
+  String? fullName;
   String? mobileNumber;
   String? email;
   int? clientownerid;
 
-  MyContact({this.full_name, this.mobileNumber, this.email, this.clientownerid});
+  MyContact({this.fullName, this.mobileNumber, this.email, this.clientownerid});
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> data = {};
-    data['full_name'] = full_name ?? "";
+    data['full_name'] = fullName ?? "";
     data['mobile_number'] = mobileNumber ?? "";
     data['email'] = email ?? "";
     data['client_owner_id'] = clientownerid ?? 0;
