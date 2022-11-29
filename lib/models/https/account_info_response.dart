@@ -1,5 +1,3 @@
-import 'package:client_app/utils/constants/constant.dart';
-
 class AccountInfo {
   AccountInfoData? data;
   String? message;
@@ -30,6 +28,7 @@ class AccountInfoData {
   bool? blocked;
   String? dateOfBirth;
   int? id;
+  int? points;
   String? referalCode;
   String? lastUsage;
   String? invitationCode;
@@ -56,7 +55,8 @@ class AccountInfoData {
       lastOtp,
       lastName,
       profileImg,
-      apiKey});
+      apiKey,
+      points});
 
   AccountInfoData.fromJson(Map<String, dynamic> json) {
     mobileNumber = json['mobile_number'];
@@ -79,6 +79,7 @@ class AccountInfoData {
     lastOtp = json['last_otp'];
     lastName = json['last_name'];
     profileImg = json['profile_img'];
+    points = json['points'];
     apiKey = json['api_key'];
   }
 }

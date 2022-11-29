@@ -17,6 +17,7 @@ class InviteFriendsScreen extends StatefulWidget {
 class _InviteFriendsScreenState extends State<InviteFriendsScreen> {
   final _bloc = InviteFriendsBloc();
 
+//TODO handle Send MEssage
   @override
   void initState() {
     super.initState();

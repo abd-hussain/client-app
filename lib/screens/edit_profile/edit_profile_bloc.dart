@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:client_app/models/gender_model.dart';
-import 'package:client_app/models/https/account_info_response.dart';
 import 'package:client_app/models/https/update_account_request.dart';
 import 'package:client_app/sevices/account_service.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
@@ -31,7 +30,7 @@ class EditProfileBloc extends Bloc<AccountService> {
   getAccountInformation(BuildContext context) {
     loadingStatus.value = LoadingStatus.inprogress;
     fillGenderList(context);
-    AccountService().getAccountInfo().then((value) {
+    service.getAccountInfo().then((value) {
       if (value.data != null) {
         firstNameController.text = value.data!.firstName ?? "";
         lastNameController.text = value.data!.lastName ?? "";

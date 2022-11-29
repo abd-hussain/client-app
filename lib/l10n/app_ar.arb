@@ -83,7 +83,9 @@
     "feedbackmessage" : "ملاحظاتك مهمة بالنسبة لنا ، يرجى وصف مشكلتك هنا",
     "areyousurelogout" : "هل أنت متأكد من أنك تريد تسجيل الخروج ؟",
     "noitem" : "لا يوجد عناصر",
-    "editprofile" : "تعديل الحساب"
+    "editprofile" : "تعديل الحساب",
+    "numberofpoints" : "عدد نقاطك"
+
 
 
 
