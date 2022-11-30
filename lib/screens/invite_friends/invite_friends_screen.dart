@@ -32,31 +32,32 @@ class _InviteFriendsScreenState extends State<InviteFriendsScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ValueListenableBuilder<List<Contact>>(
-              valueListenable: _bloc.contactsNotifier,
-              builder: (context, snapshot, child) {
-                if (_bloc.permissionDenied) {
-                  return Column(
-                    children: [
-                      const SizedBox(height: 50),
-                      Center(
-                        child: CustomText(
-                          title: AppLocalizations.of(context)!.permision_denied,
-                          fontSize: 20,
-                          textColor: Colors.black,
-                        ),
+            valueListenable: _bloc.contactsNotifier,
+            builder: (context, snapshot, child) {
+              if (_bloc.permissionDenied) {
+                return Column(
+                  children: [
+                    const SizedBox(height: 50),
+                    Center(
+                      child: CustomText(
+                        title: AppLocalizations.of(context)!.permision_denied,
+                        fontSize: 20,
+                        textColor: Colors.black,
                       ),
-                    ],
-                  );
-                } else {
-                  return snapshot != []
-                      ? ListOfContactsWidget(
-                          contacts: snapshot,
-                        )
-                      : const ShimmerListView(
-                          count: 15,
-                        );
-                }
-              }),
+                    ),
+                  ],
+                );
+              } else {
+                return snapshot != []
+                    ? ListOfContactsWidget(
+                        contacts: snapshot,
+                      )
+                    : const ShimmerListView(
+                        count: 15,
+                      );
+              }
+            },
+          ),
         ],
       ),
     );

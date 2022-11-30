@@ -52,7 +52,10 @@ class RullesWidget extends StatelessWidget {
                     }),
                   );
                 } else {
-                  return const ShimmerListView(count: 8);
+                  return const Padding(
+                    padding: EdgeInsets.all(12),
+                    child: ShimmerListView(count: 8),
+                  );
                 }
               }),
         ),

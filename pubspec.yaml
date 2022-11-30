@@ -40,6 +40,7 @@ dependencies:
   country_pickers: ^2.0.0
   flutter_holo_date_picker: ^1.0.6
   image_picker: ^0.8.5+3
+  syncfusion_flutter_calendar: ^20.3.59
 
 dev_dependencies:
   flutter_test:
