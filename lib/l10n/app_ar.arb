@@ -84,7 +84,14 @@
     "areyousurelogout" : "هل أنت متأكد من أنك تريد تسجيل الخروج ؟",
     "noitem" : "لا يوجد عناصر",
     "editprofile" : "تعديل الحساب",
-    "numberofpoints" : "عدد نقاطك"
+    "numberofpoints" : "عدد نقاطك",
+    "report" : "الابلاغ عن المنشور",
+    "delete" : "حذف المنشور",
+    "addpost" : "اضافة منشور",
+    "editpost" : "تعديل المنشور",
+    "whatisinyourmind" : "مذا يخطر في بالك !"
+
+
 
 
 

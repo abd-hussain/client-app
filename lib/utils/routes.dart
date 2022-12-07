@@ -4,6 +4,7 @@ import 'package:client_app/screens/call_tab/call_screen.dart';
 import 'package:client_app/screens/categories_tab/categories_screen.dart';
 import 'package:client_app/screens/edit_profile/edit_profile_screen.dart';
 import 'package:client_app/screens/home_tab/home_screen.dart';
+import 'package:client_app/screens/add_post/add_edit_post.dart';
 import 'package:client_app/screens/invite_friends/invite_friends_screen.dart';
 import 'package:client_app/screens/login/first_step/login_first_step_screen.dart';
 import 'package:client_app/screens/login/fourth_step/login_fourth_step_screen.dart';
@@ -42,6 +43,7 @@ class RoutesConstants {
   static const String messagesScreen = 'messagesScreen';
   static const String archiveScreen = 'archiveScreen';
   static const String callScreen = 'callScreen';
+  static const String addEditPostScreen = 'addEditPostScreen';
 }
 
 final Map<String, Widget> routes = {
@@ -65,4 +67,5 @@ final Map<String, Widget> routes = {
   RoutesConstants.messagesScreen: const MessagesScreen(),
   RoutesConstants.archiveScreen: const ArchiveScreen(),
   RoutesConstants.callScreen: const CallScreen(),
+  RoutesConstants.addEditPostScreen: const AddEditPostScreen(),
 };

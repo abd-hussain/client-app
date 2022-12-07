@@ -367,4 +367,141 @@ class BottomSheetsUtil {
       },
     );
   }
+
+  Future postMoreOptionButtomSheet(
+      {required BuildContext context,
+      required bool isItMine,
+      required VoidCallback edit,
+      required VoidCallback delete,
+      required VoidCallback report}) {
+    return showModalBottomSheet(
+      enableDrag: false,
+      useRootNavigator: true,
+      context: context,
+      backgroundColor: Colors.transparent,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      builder: (context) {
+        return SafeArea(
+          child: SizedBox(
+            height: isItMine ? 175 : 100,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: Column(
+                children: [
+                  Container(
+                    color: Colors.white,
+                    height: isItMine ? 120 : 50,
+                    width: double.infinity,
+                    child: Column(
+                      children: [
+                        isItMine
+                            ? Flexible(
+                                fit: FlexFit.tight,
+                                child: Material(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: InkWell(
+                                    borderRadius: BorderRadius.circular(8),
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      edit();
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      width: double.infinity,
+                                      child: CustomText(
+                                        title: AppLocalizations.of(context)!.editpost,
+                                        textColor: const Color(0xff444444),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : Container(),
+                        isItMine ? const Divider(height: 1, color: Color(0xff444444)) : Container(),
+                        isItMine
+                            ? Flexible(
+                                fit: FlexFit.tight,
+                                child: Material(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: InkWell(
+                                    borderRadius: BorderRadius.circular(8),
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      delete();
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      width: double.infinity,
+                                      child: CustomText(
+                                        title: AppLocalizations.of(context)!.delete,
+                                        textColor: const Color(0xffE74C4C),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : Container(),
+                        isItMine ? const Divider(height: 1, color: Color(0xff444444)) : Container(),
+                        Flexible(
+                          fit: FlexFit.tight,
+                          child: Material(
+                            borderRadius: BorderRadius.circular(8),
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(8),
+                              onTap: () {
+                                Navigator.pop(context);
+                                report();
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                width: double.infinity,
+                                child: CustomText(
+                                  title: AppLocalizations.of(context)!.report,
+                                  textColor: const Color(0xffE74C4C),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Flexible(
+                    child: Material(
+                      borderRadius: BorderRadius.circular(8),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(8),
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          color: Colors.white,
+                          height: 50,
+                          width: double.infinity,
+                          child: CustomText(
+                            title: AppLocalizations.of(context)!.cancel,
+                            textColor: const Color(0xff1A59B9),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
 }

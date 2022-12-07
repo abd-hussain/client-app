@@ -83,7 +83,12 @@
     "areyousurelogout" : "Are you sure you want to logout ?",
     "noitem" : "No Item To Show",
     "editprofile" : "Edit Profile",
-    "numberofpoints" : "Number Of Your Points"
+    "numberofpoints" : "Number Of Your Points",
+    "report" : "Report",
+    "delete" : "Delete",
+    "addpost" : "Add Post",
+    "editpost" : "Edit Post",
+    "whatisinyourmind" : "What is in your mind !"
 
 
 
