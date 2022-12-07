@@ -4,7 +4,7 @@ import 'package:client_app/utils/constants/constant.dart';
 import 'package:flutter/material.dart';
 
 class MainBannerHomePage extends StatelessWidget {
-  final List<Banners> bannerList;
+  final List<MainBanner> bannerList;
 
   const MainBannerHomePage({required this.bannerList, Key? key}) : super(key: key);
 
@@ -16,7 +16,7 @@ class MainBannerHomePage extends StatelessWidget {
     );
   }
 
-  List<Widget> _listOfBanners(List<Banners> commingList) {
+  List<Widget> _listOfBanners(List<MainBanner> commingList) {
     List<Widget> list = [];
     for (var item in commingList) {
       list.add(_banner(obj: item));
@@ -24,18 +24,17 @@ class MainBannerHomePage extends StatelessWidget {
     return list;
   }
 
-  Widget _banner({required Banners obj}) {
+  Widget _banner({required MainBanner obj}) {
     return InkWell(
       onTap: () {
         //TODO handle Tab Here
         print(obj.actionType);
       },
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.25),
+              color: Colors.black.withOpacity(0.1),
               spreadRadius: 0,
               blurRadius: 4,
               offset: const Offset(0, 3),

@@ -11,4 +11,12 @@ class HomeService with Service {
     );
     return HomeResponse.fromJson(response);
   }
+
+  Future<void> reportStory({required int storyId}) async {
+    await repository.callRequest(
+      requestType: RequestType.post,
+      methodName: MethodNameConstant.reportStory,
+      queryParam: {"storyId": storyId},
+    );
+  }
 }

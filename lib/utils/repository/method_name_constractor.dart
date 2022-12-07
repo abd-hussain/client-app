@@ -9,9 +9,8 @@ class MethodNameConstant {
   static const String notifications = "notifications/client";
 
   static const String home = "home/";
-  static const String posts = "posts/";
 
-  static const String vote = "posts/vote";
+  static const String reportStory = "home/reportstory";
 
   static const String uploadContactList = "settings/leads";
   static const String auth = "client-auth";
