@@ -56,7 +56,7 @@ class StoriesHomePage extends StatelessWidget {
             children: [
               CircleAvatar(
                 backgroundColor: const Color(0xff034061),
-                radius: 60,
+                radius: 50,
                 child: CircleAvatar(
                   radius: 35,
                   backgroundColor: Colors.transparent,

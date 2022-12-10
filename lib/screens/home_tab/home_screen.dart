@@ -3,6 +3,8 @@ import 'package:client_app/screens/home_tab/home_bloc.dart';
 import 'package:client_app/screens/home_tab/widgets/header.dart';
 import 'package:client_app/screens/home_tab/widgets/main_banner.dart';
 import 'package:client_app/screens/home_tab/widgets/stories.dart';
+import 'package:client_app/screens/home_tab/widgets/tips_view.dart';
+import 'package:client_app/shared_widgets/admob_banner.dart';
 // import 'package:client_app/shared_widgets/admob_banner.dart';
 import 'package:client_app/utils/logger.dart';
 import 'package:client_app/utils/routes.dart';
@@ -73,27 +75,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           }
                         }),
                     const SizedBox(height: 8),
-                    // ValueListenableBuilder<List<PostsResponseData>?>(
-                    //     valueListenable: _bloc.postsListNotifier,
-                    //     builder: (context, snapshot, child) {
-                    //       if (snapshot != null && snapshot.isNotEmpty) {
-                    //         return PostsWidget(
-                    //           listOfPosts: snapshot,
-                    //           voteUp: (id) {
-                    //             _bloc.handleVote(postId: id, voteType: VoteType.up);
-                    //           },
-                    //           voteDown: (id) {
-                    //             _bloc.handleVote(postId: id, voteType: VoteType.down);
-                    //           },
-                    //           moreOption: (post) {
-                    //             _moreOptionView(context, post);
-                    //           },
-                    //         );
-                    //       } else {
-                    //         return const SizedBox();
-                    //       }
-                    //     }),
-//                     const AddMobBanner(),
+                    const AddMobBanner(),
+                    TipsView()
                   ],
                 ),
               ),
@@ -103,23 +86,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
-  // void _moreOptionView(BuildContext context, PostsResponseData post) {
-  //   BottomSheetsUtil().postMoreOptionButtomSheet(
-  //     context: context,
-  //     isItMine: post.ownerId! == (int.parse(_bloc.box.get(DatabaseFieldConstant.userid) ?? "0")),
-  //     edit: () {
-  //       Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.addEditPostScreen,
-  //           arguments: {"content": post.content, "postId": post.id}).then((value) {
-  //         _bloc.getPosts();
-  //       });
-  //     },
-  //     delete: () {
-  //       _bloc.deletePost(post.id!);
-  //     },
-  //     report: () {
-  //       //TODO
-  //     },
-  //   );
-  // }
 }
