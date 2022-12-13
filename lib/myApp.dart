@@ -20,20 +20,7 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-  Locale? _locale;
-  late Box myBox;
-
-  void setLocale(Locale value) {
-    setState(() {
-      _locale = value;
-    });
-  }
-
-  @override
-  void initState() {
-    myBox = Hive.box(DatabaseBoxConstant.userInfo);
-    super.initState();
-  }
+  late Box myBox = Hive.box(DatabaseBoxConstant.userInfo);
 
   void rebuild() {
     setState(() {});
@@ -45,7 +32,9 @@ class MyAppState extends State<MyApp> {
       onGenerateTitle: (BuildContext context) {
         return AppLocalizations.of(context)!.appTitle;
       },
-      locale: _locale,
+      locale: myBox.get(DatabaseFieldConstant.language) != null
+          ? Locale(myBox.get(DatabaseFieldConstant.language))
+          : const Locale("en"),
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

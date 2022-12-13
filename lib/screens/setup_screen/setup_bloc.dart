@@ -70,7 +70,8 @@ class SetupBloc extends Bloc<FilterService> {
     _refreshAppWithLanguageCode(context, code);
   }
 
-  void _refreshAppWithLanguageCode(BuildContext context, String code) {
-    MyApp.of(context)!.setLocale(Locale.fromSubtags(languageCode: code));
+  void _refreshAppWithLanguageCode(BuildContext context, String code) async {
+    await Hive.box(DatabaseBoxConstant.userInfo).put(DatabaseFieldConstant.language, code == "en" ? "ar" : "en");
+    MyApp.of(context)!.rebuild();
   }
 }

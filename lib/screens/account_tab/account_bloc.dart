@@ -139,10 +139,10 @@ class AccountBloc extends Bloc<AccountService> {
         sure: () {
           if (box.get(DatabaseFieldConstant.language) == "en") {
             box.put(DatabaseFieldConstant.language, "ar");
-            _refreshAppWithLanguageCode(context, "ar");
+            _refreshAppWithLanguageCode(context);
           } else {
             box.put(DatabaseFieldConstant.language, "en");
-            _refreshAppWithLanguageCode(context, "en");
+            _refreshAppWithLanguageCode(context);
           }
         });
   }
@@ -168,8 +168,8 @@ class AccountBloc extends Bloc<AccountService> {
     });
   }
 
-  void _refreshAppWithLanguageCode(BuildContext context, String code) {
-    MyApp.of(context)!.setLocale(Locale.fromSubtags(languageCode: code));
+  void _refreshAppWithLanguageCode(BuildContext context) async {
+    MyApp.of(context)!.rebuild();
   }
 
   void _logoutView(BuildContext context) {
