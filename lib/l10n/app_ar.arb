@@ -86,7 +86,15 @@
     "editprofile" : "تعديل الحساب",
     "numberofpoints" : "عدد نقاطك",
     "report" : "الابلاغ",
-    "reportstory" : "هل تريد الابلاغ عن هذا المنشور ؟"
+    "reportstory" : "هل تريد الابلاغ عن هذا المنشور ؟",
+    "todaytips" : "نصائح اليوم",
+    "learnmore" : "اعرف المزيد",
+    "steps" : "خطوات",
+    "comingsoon" : "قريبا",
+    "note" : "تنبيه : ",
+    "referance" : "المرجع : ",
+    "start" : "ابدا الان"
+
 
 
 

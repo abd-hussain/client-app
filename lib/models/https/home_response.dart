@@ -8,22 +8,14 @@ class HomeResponse {
     data = json['data'] != null ? HomeResponseData.fromJson(json['data']) : null;
     message = json['message'];
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
-    }
-    data['message'] = message;
-    return data;
-  }
 }
 
 class HomeResponseData {
   List<MainBanner>? mainBanner;
   List<MainStory>? mainStory;
+  List<MainTips>? mainTips;
 
-  HomeResponseData({this.mainBanner, this.mainStory});
+  HomeResponseData({this.mainBanner, this.mainStory, this.mainTips});
 
   HomeResponseData.fromJson(Map<String, dynamic> json) {
     if (json['main_banner'] != null) {
@@ -38,17 +30,12 @@ class HomeResponseData {
         mainStory!.add(MainStory.fromJson(v));
       });
     }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
-    if (mainBanner != null) {
-      data['main_banner'] = mainBanner!.map((v) => v.toJson()).toList();
+    if (json['main_tips'] != null) {
+      mainTips = <MainTips>[];
+      json['main_tips'].forEach((v) {
+        mainTips!.add(MainTips.fromJson(v));
+      });
     }
-    if (mainStory != null) {
-      data['main_story'] = mainStory!.map((v) => v.toJson()).toList();
-    }
-    return data;
   }
 }
 
@@ -61,13 +48,6 @@ class MainBanner {
   MainBanner.fromJson(Map<String, dynamic> json) {
     image = json['image'];
     actionType = json['action_type'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
-    data['image'] = image;
-    data['action_type'] = actionType;
-    return data;
   }
 }
 
@@ -82,16 +62,6 @@ class MainStory {
     id = json['id'];
     assets = json['assets'];
     owner = json['owner'] != null ? Owner.fromJson(json['owner']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
-    data['id'] = id;
-    data['assets'] = assets;
-    if (owner != null) {
-      data['owner'] = owner!.toJson();
-    }
-    return data;
   }
 }
 
@@ -115,16 +85,26 @@ class Owner {
     profileImg = json['profile_img'];
     countryId = json['country_id'];
   }
+}
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
-    data['id'] = id;
-    data['first_name'] = firstName;
-    data['last_name'] = lastName;
-    data['gender'] = gender;
-    data['blocked'] = blocked;
-    data['profile_img'] = profileImg;
-    data['country_id'] = countryId;
-    return data;
+class MainTips {
+  int? id;
+  String? title;
+  String? desc;
+  String? note;
+  String? referance;
+  String? image;
+  int? steps;
+
+  MainTips({this.id, this.title, this.desc, this.note, this.referance, this.image, this.steps});
+
+  MainTips.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    title = json['title'];
+    desc = json['desc'];
+    note = json['note'];
+    referance = json['referance'];
+    image = json['image'];
+    steps = json['steps'];
   }
 }

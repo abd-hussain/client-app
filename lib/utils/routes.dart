@@ -17,6 +17,7 @@ import 'package:client_app/screens/mycalender_tab/mycalender_screen.dart';
 import 'package:client_app/screens/notifications/notifications_screen.dart';
 import 'package:client_app/screens/report/report_screen.dart';
 import 'package:client_app/screens/setup_screen/setup_screen.dart';
+import 'package:client_app/screens/tips/tips_screen.dart';
 import 'package:client_app/screens/tutorials/tutorials_screen.dart';
 import 'package:client_app/screens/web_view/web_view_screen.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +45,7 @@ class RoutesConstants {
   static const String archiveScreen = 'archiveScreen';
   static const String callScreen = 'callScreen';
   static const String mentorProfileScreen = 'mentorProfileScreen';
+  static const String tipsScreen = 'tipsScreen';
 }
 
 final Map<String, Widget> routes = {
@@ -68,4 +70,5 @@ final Map<String, Widget> routes = {
   RoutesConstants.archiveScreen: const ArchiveScreen(),
   RoutesConstants.callScreen: const CallScreen(),
   RoutesConstants.mentorProfileScreen: const MentorProfileScreen(),
+  RoutesConstants.tipsScreen: const TipsScreen(),
 };

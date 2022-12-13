@@ -4,10 +4,16 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class CustomButton extends StatelessWidget {
   final String buttonTitle;
   final bool enableButton;
+  final Color buttonColor;
   final Function() onTap;
   final double? width;
   const CustomButton(
-      {this.buttonTitle = "Submit", required this.enableButton, this.width, required this.onTap, Key? key})
+      {this.buttonTitle = "Submit",
+      required this.enableButton,
+      this.width,
+      this.buttonColor = const Color(0xff4CB6EA),
+      required this.onTap,
+      Key? key})
       : super(key: key);
 
   @override
@@ -16,8 +22,7 @@ class CustomButton extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: ElevatedButton(
         style: ButtonStyle(
-            backgroundColor:
-                MaterialStateProperty.all(enableButton ? const Color(0xff4CB6EA) : const Color(0xffB1B1B1))),
+            backgroundColor: MaterialStateProperty.all(enableButton ? buttonColor : const Color(0xffB1B1B1))),
         onPressed: () => enableButton ? onTap() : null,
         child: SizedBox(
           height: 45,

@@ -8,6 +8,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 class HomeBloc extends Bloc<HomeService> {
   final ValueNotifier<List<MainBanner>?> bannerListNotifier = ValueNotifier<List<MainBanner>?>(null);
   final ValueNotifier<List<MainStory>?> storiesListNotifier = ValueNotifier<List<MainStory>?>(null);
+  final ValueNotifier<List<MainTips>?> tipsListNotifier = ValueNotifier<List<MainTips>?>(null);
   final box = Hive.box(DatabaseBoxConstant.userInfo);
 
   void getHome() {
@@ -15,6 +16,7 @@ class HomeBloc extends Bloc<HomeService> {
       if (value.data != null) {
         bannerListNotifier.value = value.data!.mainBanner;
         storiesListNotifier.value = value.data!.mainStory;
+        tipsListNotifier.value = value.data!.mainTips;
       }
     });
   }
