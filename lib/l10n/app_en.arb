@@ -94,7 +94,12 @@
     "referance" : "Referance : ",
     "start" : "Start",
     "next" : "Next",
-    "exit" : "Exit"
+    "exit" : "Exit",
+    "shareresult" : "Do you agree to benefit from your answers as they will help us in scientific research? Note that personal data will not be shared with any other party",
+    "yes" : "Yes",
+    "no" : "No",
+    "result" : "Result",
+    "specialistcanhelp" : "Specialist can help"
 
 
 

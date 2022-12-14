@@ -1,4 +1,5 @@
 import 'package:client_app/locator.dart';
+import 'package:client_app/models/https/answers_obj.dart';
 import 'package:client_app/models/https/tips_questions.dart';
 import 'package:client_app/screens/tips/tips_bloc.dart';
 import 'package:client_app/shared_widgets/custom_appbar.dart';
@@ -89,10 +90,17 @@ class _TipsQuestionsScreenState extends State<TipsQuestionsScreen> {
                                     buttonColor: const Color(0xff554d56),
                                     enableButton: true,
                                     onTap: () {
+                                      bloc.answerslist.add(
+                                        AnswersList(
+                                            question: item[snapshot].question!,
+                                            answer: item[snapshot].answer1!,
+                                            point: item[snapshot].answer1Points!),
+                                      );
                                       if (bloc.selectedIndexNotifier.value + 1 < bloc.tipInformations!.steps!) {
                                         bloc.selectedIndexNotifier.value = bloc.selectedIndexNotifier.value + 1;
                                       } else {
-                                        //TODO : handle show resuilt
+                                        Navigator.of(context, rootNavigator: true)
+                                            .pushNamed(RoutesConstants.tipsShareResultScreen);
                                       }
                                     });
                               }),
@@ -104,10 +112,17 @@ class _TipsQuestionsScreenState extends State<TipsQuestionsScreen> {
                                     buttonColor: const Color(0xff554d56),
                                     enableButton: true,
                                     onTap: () {
+                                      bloc.answerslist.add(
+                                        AnswersList(
+                                            question: item[snapshot].question!,
+                                            answer: item[snapshot].answer2!,
+                                            point: item[snapshot].answer2Points!),
+                                      );
                                       if (bloc.selectedIndexNotifier.value + 1 < bloc.tipInformations!.steps!) {
                                         bloc.selectedIndexNotifier.value = bloc.selectedIndexNotifier.value + 1;
                                       } else {
-                                        //TODO : handle show resuilt
+                                        Navigator.of(context, rootNavigator: true)
+                                            .pushNamed(RoutesConstants.tipsShareResultScreen);
                                       }
                                     });
                               }),
@@ -119,10 +134,17 @@ class _TipsQuestionsScreenState extends State<TipsQuestionsScreen> {
                                     buttonColor: const Color(0xff554d56),
                                     enableButton: true,
                                     onTap: () {
+                                      bloc.answerslist.add(
+                                        AnswersList(
+                                            question: item[snapshot].question!,
+                                            answer: item[snapshot].answer3!,
+                                            point: item[snapshot].answer3Points!),
+                                      );
                                       if (bloc.selectedIndexNotifier.value + 1 < bloc.tipInformations!.steps!) {
                                         bloc.selectedIndexNotifier.value = bloc.selectedIndexNotifier.value + 1;
                                       } else {
-                                        //TODO : handle show resuilt
+                                        Navigator.of(context, rootNavigator: true)
+                                            .pushNamed(RoutesConstants.tipsShareResultScreen);
                                       }
                                     });
                               }),
@@ -134,10 +156,17 @@ class _TipsQuestionsScreenState extends State<TipsQuestionsScreen> {
                                     buttonColor: const Color(0xff554d56),
                                     enableButton: true,
                                     onTap: () {
+                                      bloc.answerslist.add(
+                                        AnswersList(
+                                            question: item[snapshot].question!,
+                                            answer: item[snapshot].answer4!,
+                                            point: item[snapshot].answer4Points!),
+                                      );
                                       if (bloc.selectedIndexNotifier.value + 1 < bloc.tipInformations!.steps!) {
                                         bloc.selectedIndexNotifier.value = bloc.selectedIndexNotifier.value + 1;
                                       } else {
-                                        //TODO : handle show resuilt
+                                        Navigator.of(context, rootNavigator: true)
+                                            .pushNamed(RoutesConstants.tipsShareResultScreen);
                                       }
                                     });
                               }),

@@ -97,8 +97,7 @@ class _TipsScreenState extends State<TipsScreen> {
                       buttonColor: const Color(0xff034061),
                       enableButton: true,
                       onTap: () {
-                        Navigator.of(context, rootNavigator: true)
-                            .pushNamed(RoutesConstants.tipsQuestionsScreen, arguments: {"tip": "tip"});
+                        Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.tipsQuestionsScreen);
                       }),
                 ],
               ),

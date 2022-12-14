@@ -17,8 +17,10 @@ import 'package:client_app/screens/mycalender_tab/mycalender_screen.dart';
 import 'package:client_app/screens/notifications/notifications_screen.dart';
 import 'package:client_app/screens/report/report_screen.dart';
 import 'package:client_app/screens/setup_screen/setup_screen.dart';
-import 'package:client_app/screens/tips/tips_questions.dart';
+import 'package:client_app/screens/tips/tips_questions_screen.dart';
+import 'package:client_app/screens/tips/tips_result_screen.dart';
 import 'package:client_app/screens/tips/tips_screen.dart';
+import 'package:client_app/screens/tips/tips_share_result_screen.dart';
 import 'package:client_app/screens/tutorials/tutorials_screen.dart';
 import 'package:client_app/screens/web_view/web_view_screen.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +50,8 @@ class RoutesConstants {
   static const String mentorProfileScreen = 'mentorProfileScreen';
   static const String tipsScreen = 'tipsScreen';
   static const String tipsQuestionsScreen = 'tipsQuestionsScreen';
+  static const String tipsShareResultScreen = 'tipsShareResultScreen';
+  static const String tipsResultScreen = 'tipsResultScreen';
 }
 
 final Map<String, Widget> routes = {
@@ -74,4 +78,6 @@ final Map<String, Widget> routes = {
   RoutesConstants.mentorProfileScreen: const MentorProfileScreen(),
   RoutesConstants.tipsScreen: const TipsScreen(),
   RoutesConstants.tipsQuestionsScreen: const TipsQuestionsScreen(),
+  RoutesConstants.tipsShareResultScreen: const TipsShareResultScreen(),
+  RoutesConstants.tipsResultScreen: const TipsResultScreen(),
 };
