@@ -2,6 +2,8 @@ import 'package:client_app/locator.dart';
 import 'package:client_app/utils/repository/http_repository.dart';
 
 abstract class Bloc<T extends Object> {
+  onDispose();
+
   final service = locator<T>();
 }
 

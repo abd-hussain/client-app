@@ -18,11 +18,16 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   final _bloc = CategoriesBloc();
 
   @override
-  void initState() {
+  void didChangeDependencies() {
     logDebugMessage(message: 'Categories init Called ...');
     _bloc.listOfCategories();
+    super.didChangeDependencies();
+  }
 
-    super.initState();
+  @override
+  void dispose() {
+    _bloc.onDispose();
+    super.dispose();
   }
 
   //TODO: Handle Search Page

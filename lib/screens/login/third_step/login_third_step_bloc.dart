@@ -42,4 +42,13 @@ class LoginThirdStepBloc extends Bloc<AuthService> {
   Future<AuthDebugResponse> callRequest() async {
     return await service.auth(countryCode: countryCode, mobileNumber: controller.text);
   }
+
+  @override
+  onDispose() {
+    controller.dispose();
+    timer!.cancel();
+    otpNotValid.dispose();
+
+    throw UnimplementedError();
+  }
 }

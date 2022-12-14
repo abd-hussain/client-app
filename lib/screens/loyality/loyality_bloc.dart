@@ -19,4 +19,12 @@ class LoyalityBloc extends Bloc<LoyalityService> {
       loyalityRulles.value = value.data;
     });
   }
+
+  @override
+  onDispose() {
+    pointNotifier.dispose();
+    loyalityRulles.dispose();
+
+    throw UnimplementedError();
+  }
 }

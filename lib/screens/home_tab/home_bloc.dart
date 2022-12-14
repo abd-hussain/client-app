@@ -24,4 +24,13 @@ class HomeBloc extends Bloc<HomeService> {
   void reportStory({required int storyId}) async {
     await service.reportStory(storyId: storyId);
   }
+
+  @override
+  onDispose() {
+    bannerListNotifier.dispose();
+    storiesListNotifier.dispose();
+    tipsListNotifier.dispose();
+
+    throw UnimplementedError();
+  }
 }

@@ -23,9 +23,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final bloc = EditProfileBloc();
 
   @override
-  Widget build(BuildContext context) {
+  void didChangeDependencies() {
     bloc.getAccountInformation(context);
+    super.didChangeDependencies();
+  }
 
+  @override
+  void dispose() {
+    bloc.onDispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffFAFAFA),
       body: GestureDetector(

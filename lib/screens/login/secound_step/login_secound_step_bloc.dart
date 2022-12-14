@@ -33,4 +33,13 @@ class LoginSecoundStepBloc extends Bloc<AuthService> {
     }
     return await service.auth(countryCode: countryCode, mobileNumber: controller.text);
   }
+
+  @override
+  onDispose() {
+    loadingStatus.dispose();
+    controller.dispose();
+    enableVerifyBtn.dispose();
+
+    throw UnimplementedError();
+  }
 }

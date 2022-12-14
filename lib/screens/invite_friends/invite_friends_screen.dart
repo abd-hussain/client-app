@@ -18,10 +18,17 @@ class _InviteFriendsScreenState extends State<InviteFriendsScreen> {
   final _bloc = InviteFriendsBloc();
 
 //TODO handle Send MEssage
+
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
     _bloc.fetchContacts();
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _bloc.onDispose();
+    super.dispose();
   }
 
   @override

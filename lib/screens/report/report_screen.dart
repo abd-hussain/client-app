@@ -9,19 +9,34 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum ReportPageType { issue, suggestion }
 
-class ReportScreen extends StatelessWidget {
+class ReportScreen extends StatefulWidget {
   const ReportScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final bloc = ReportBloc();
+  State<ReportScreen> createState() => _ReportScreenState();
+}
 
+class _ReportScreenState extends State<ReportScreen> {
+  final bloc = ReportBloc();
+
+  @override
+  void didChangeDependencies() {
     bloc.handleReadingArguments(arguments: ModalRoute.of(context)!.settings.arguments);
 
     bloc.textController.addListener(() {
       bloc.validationFields();
     });
+    super.didChangeDependencies();
+  }
 
+  @override
+  void dispose() {
+    bloc.onDispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(

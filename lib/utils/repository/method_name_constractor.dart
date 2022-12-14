@@ -12,6 +12,8 @@ class MethodNameConstant {
 
   static const String reportStory = "home/reportstory";
 
+  static const String tipsQuestions = "tips/";
+
   static const String uploadContactList = "settings/leads";
   static const String auth = "client-auth";
   static const String authDebuging = "client-auth-debug";

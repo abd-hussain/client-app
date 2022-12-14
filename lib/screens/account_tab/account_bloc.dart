@@ -16,7 +16,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class AccountBloc extends Bloc<AccountService> {
-  BuildContext? mainContext;
   final box = Hive.box(DatabaseBoxConstant.userInfo);
   ValueNotifier<LoadingStatus> loadingStatus = ValueNotifier<LoadingStatus>(LoadingStatus.idle);
 
@@ -203,5 +202,10 @@ class AccountBloc extends Bloc<AccountService> {
       ),
     );
     loadingStatus.value = LoadingStatus.finish;
+  }
+
+  @override
+  onDispose() {
+    loadingStatus.dispose();
   }
 }

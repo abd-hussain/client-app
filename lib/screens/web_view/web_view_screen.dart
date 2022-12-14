@@ -4,14 +4,31 @@ import 'package:client_app/utils/enums/loading_status.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class WebViewScreen extends StatelessWidget {
+class WebViewScreen extends StatefulWidget {
   WebViewScreen({Key? key}) : super(key: key);
 
-  final _bloc = WebViewBloc();
   @override
-  Widget build(BuildContext context) {
+  State<WebViewScreen> createState() => _WebViewScreenState();
+}
+
+class _WebViewScreenState extends State<WebViewScreen> {
+  final _bloc = WebViewBloc();
+
+  @override
+  void didChangeDependencies() {
     _bloc.extractArguments(context);
 
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _bloc.onDispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(title: _bloc.pageTitle),
       body: ValueListenableBuilder<LoadingStatus>(

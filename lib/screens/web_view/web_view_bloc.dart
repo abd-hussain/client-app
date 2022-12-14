@@ -18,4 +18,8 @@ class WebViewBloc {
       loadingStatus.value = LoadingStatus.finish;
     }
   }
+
+  onDispose() {
+    loadingStatus.dispose();
+  }
 }

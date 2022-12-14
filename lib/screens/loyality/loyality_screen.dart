@@ -21,10 +21,16 @@ class _LoyalityScreenState extends State<LoyalityScreen> {
   final bloc = LoyalityBloc();
 
   @override
-  void initState() {
+  void didChangeDependencies() {
     bloc.updatePoints();
     bloc.getRulles();
-    super.initState();
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    bloc.onDispose();
+    super.dispose();
   }
 
   @override

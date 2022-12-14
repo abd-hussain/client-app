@@ -18,15 +18,19 @@ class _AccountScreenState extends State<AccountScreen> {
   final bloc = AccountBloc();
 
   @override
-  void initState() {
+  void didChangeDependencies() {
     logDebugMessage(message: 'Account init Called ...');
+    super.didChangeDependencies();
+  }
 
-    super.initState();
+  @override
+  void dispose() {
+    bloc.onDispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    bloc.mainContext = context;
     return Scaffold(
       backgroundColor: const Color(0xffFBFBFB),
       body: Column(

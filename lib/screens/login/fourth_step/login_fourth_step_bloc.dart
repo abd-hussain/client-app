@@ -142,4 +142,19 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
       ),
     );
   }
+
+  @override
+  onDispose() {
+    firstNameController.dispose();
+    lastNameController.dispose();
+    emailController.dispose();
+    countryController.dispose();
+    genderController.dispose();
+    referalCodeController.dispose();
+    loadingStatus.dispose();
+    enableReferalCode.dispose();
+    enableNextBtn.dispose();
+
+    throw UnimplementedError();
+  }
 }

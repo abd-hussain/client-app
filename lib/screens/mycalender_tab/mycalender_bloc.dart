@@ -34,4 +34,9 @@ class MyCalenderBloc {
 
     return meetings;
   }
+
+  @override
+  onDispose() {
+    throw UnimplementedError();
+  }
 }

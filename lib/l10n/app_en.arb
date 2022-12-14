@@ -92,8 +92,9 @@
     "comingsoon" : "Coming Soon",
     "note" : "Note : ",
     "referance" : "Referance : ",
-    "start" : "Start"
-
+    "start" : "Start",
+    "next" : "Next",
+    "exit" : "Exit"
 
 
 

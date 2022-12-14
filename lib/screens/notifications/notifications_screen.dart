@@ -16,11 +16,17 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   var bloc = NotificationsBloc();
 
   @override
-  void initState() {
+  void didChangeDependencies() {
     logDebugMessage(message: 'Notifications init Called ...');
     bloc.markNotificationReaded();
     bloc.listOfNotifications();
-    super.initState();
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    bloc.onDispose();
+    super.dispose();
   }
 
   @override

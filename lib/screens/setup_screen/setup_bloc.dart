@@ -74,4 +74,12 @@ class SetupBloc extends Bloc<FilterService> {
     await Hive.box(DatabaseBoxConstant.userInfo).put(DatabaseFieldConstant.language, code == "en" ? "ar" : "en");
     MyApp.of(context)!.rebuild();
   }
+
+  @override
+  onDispose() {
+    selectedLanguageNotifier.dispose();
+    countriesListNotifier.dispose();
+
+    throw UnimplementedError();
+  }
 }

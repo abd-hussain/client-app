@@ -1,8 +1,10 @@
+import 'package:client_app/screens/tips/tips_bloc.dart';
 import 'package:client_app/sevices/home_services.dart';
 import 'package:client_app/sevices/mentor_service.dart';
 import 'package:client_app/sevices/noticitions_services.dart';
 import 'package:client_app/sevices/report_service.dart';
 import 'package:client_app/sevices/settings_service.dart';
+import 'package:client_app/sevices/tips_service.dart';
 import 'package:client_app/utils/day_time.dart';
 import 'package:client_app/utils/repository/http_interceptor.dart';
 import 'package:client_app/utils/repository/http_repository.dart';
@@ -29,10 +31,12 @@ Future<void> setupLocator() async {
   locator.registerFactory<SettingService>(() => SettingService());
   locator.registerFactory<LoyalityService>(() => LoyalityService());
   locator.registerFactory<HomeService>(() => HomeService());
+  locator.registerFactory<TipsService>(() => TipsService());
 
   locator.registerFactory<Dio>(() => Dio());
   locator.registerFactory<HttpInterceptor>(() => HttpInterceptor());
   locator.registerSingleton<HttpRepository>(HttpRepository());
   locator.registerSingleton<DayTime>(DayTime());
   locator.registerSingleton<BackgroundColor>(BackgroundColor());
+  locator.registerLazySingleton(() => TipsBloc());
 }

@@ -52,4 +52,12 @@ class ReportBloc extends Bloc<ReportService> {
       return await service.addSuggestion(reportData: model);
     }
   }
+
+  @override
+  onDispose() {
+    textController.dispose();
+    enableSubmitBtn.dispose();
+    loadingStatus.dispose();
+    throw UnimplementedError();
+  }
 }

@@ -25,10 +25,21 @@ class _LoginFourthStepScreenState extends State<LoginFourthStepScreen> {
   final bloc = LoginFourthStepBloc();
 
   @override
-  Widget build(BuildContext context) {
+  void didChangeDependencies() {
     bloc.extractArguments(context);
-    final String savedLanguage = bloc.box.get(DatabaseFieldConstant.language);
     bloc.controllersHandler();
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    bloc.onDispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final String savedLanguage = bloc.box.get(DatabaseFieldConstant.language);
 
     return Scaffold(
       body: GestureDetector(

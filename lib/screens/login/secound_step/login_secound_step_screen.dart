@@ -8,16 +8,32 @@ import 'package:client_app/utils/enums/loading_status.dart';
 import 'package:client_app/utils/logger.dart';
 import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class LoginSecoundStepScreen extends StatelessWidget {
+class LoginSecoundStepScreen extends StatefulWidget {
   const LoginSecoundStepScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final bloc = LoginSecoundStepBloc();
+  State<LoginSecoundStepScreen> createState() => _LoginSecoundStepScreenState();
+}
+
+class _LoginSecoundStepScreenState extends State<LoginSecoundStepScreen> {
+  final bloc = LoginSecoundStepBloc();
+
+  @override
+  void didChangeDependencies() {
     bloc.controllerLisiner();
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    bloc.onDispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),

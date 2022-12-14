@@ -6,7 +6,6 @@ import 'package:client_app/screens/home_tab/widgets/stories.dart';
 import 'package:client_app/screens/home_tab/widgets/tips_view.dart';
 import 'package:client_app/shared_widgets/admob_banner.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
-// import 'package:client_app/shared_widgets/admob_banner.dart';
 import 'package:client_app/utils/logger.dart';
 import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
@@ -22,11 +21,16 @@ class _HomeScreenState extends State<HomeScreen> {
   final _bloc = HomeBloc();
 
   @override
-  void initState() {
+  void didChangeDependencies() {
     logDebugMessage(message: 'Home init Called ...');
     _bloc.getHome();
-    // _bloc.getPosts();
-    super.initState();
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _bloc.onDispose();
+    super.dispose();
   }
 
   //TODO: Handle Home Page

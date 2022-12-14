@@ -97,4 +97,15 @@ class EditProfileBloc extends Bloc<AccountService> {
       return true;
     }
   }
+
+  @override
+  onDispose() {
+    firstNameController.dispose();
+    lastNameController.dispose();
+    emailController.dispose();
+    genderController.dispose();
+    loadingStatus.dispose();
+
+    throw UnimplementedError();
+  }
 }

@@ -45,7 +45,7 @@ class _LoginThirdStepScreenState extends State<LoginThirdStepScreen> {
   }
 
   @override
-  void initState() {
+  void didChangeDependencies() {
     startTimer();
 
     bloc.controller.addListener(() {
@@ -67,12 +67,12 @@ class _LoginThirdStepScreenState extends State<LoginThirdStepScreen> {
       }
     });
 
-    super.initState();
+    super.didChangeDependencies();
   }
 
   @override
   void dispose() {
-    bloc.timer!.cancel();
+    bloc.onDispose();
     super.dispose();
   }
 

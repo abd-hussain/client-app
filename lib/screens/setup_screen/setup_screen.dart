@@ -15,11 +15,17 @@ class _SetupScreenState extends State<SetupScreen> {
   final _bloc = SetupBloc();
 
   @override
-  void initState() {
+  void didChangeDependencies() {
     _bloc.getSystemLanguage(context).then((value) {
       _bloc.listOfCountries();
     });
-    super.initState();
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _bloc.onDispose();
+    super.dispose();
   }
 
   @override

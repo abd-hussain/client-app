@@ -40,4 +40,10 @@ class InviteFriendsBloc extends Bloc<SettingService> {
 
     await service.uploadContactList(contacts: listOfContacts);
   }
+
+  @override
+  onDispose() {
+    contactsNotifier.dispose();
+    throw UnimplementedError();
+  }
 }

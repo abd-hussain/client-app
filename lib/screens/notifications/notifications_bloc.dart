@@ -20,4 +20,10 @@ class NotificationsBloc extends Bloc<NotificationsService> {
   void deleteNotification(int id) async {
     await service.deleteNotification(id);
   }
+
+  @override
+  onDispose() {
+    notificationsListNotifier.dispose();
+    throw UnimplementedError();
+  }
 }

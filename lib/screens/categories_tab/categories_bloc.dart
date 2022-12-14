@@ -28,4 +28,11 @@ class CategoriesBloc extends Bloc<FilterService> {
       }
     });
   }
+
+  @override
+  onDispose() {
+    categoriesListNotifier.dispose();
+    selectedCategoryNotifier.dispose();
+    mentorsListNotifier.dispose();
+  }
 }
