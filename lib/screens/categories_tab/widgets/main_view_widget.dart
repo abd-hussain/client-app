@@ -129,39 +129,9 @@ class CategoryMainView extends StatelessWidget {
               textColor: const Color(0xff444444),
             ),
             const Expanded(child: SizedBox()),
-            Row(
-              children: const [
-                Icon(Icons.flag),
-                Text("Review"),
-                Icon(Icons.star),
-                Icon(Icons.star),
-                Icon(Icons.star),
-                Icon(Icons.star),
-                Icon(Icons.star_border),
-              ],
-            )
           ],
         ),
       ),
     );
   }
 }
-
-// String? lastName;
-// int? id;
-// String? email;
-// bool? blocked;
-// String? invitationCode;
-// String? appVersion;
-// String? lastUsage;
-// String? apiKey;
-// String? createdAt;
-// String? mobileNumber;
-// int? categoryId;
-// String? firstName;
-// int? gender;
-// String? referalCode;
-// String? profileImg;
-// String? dateOfBirth;
-// String? lastOtp;
-// int? countryId;

@@ -42,7 +42,7 @@ class TipsView extends StatelessWidget {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: InkWell(
-                      onTap: () => onTipSelected(tip),
+                      onTap: () => tip.steps! == 0 ? null : onTipSelected(tip),
                       child: Container(
                         width: 150,
                         decoration: BoxDecoration(
