@@ -94,6 +94,7 @@ class _TipsQuestionsScreenState extends State<TipsQuestionsScreen> {
                                         AnswersList(
                                             question: item[snapshot].question!,
                                             answer: item[snapshot].answer1!,
+                                            questionId: item[snapshot].id!,
                                             point: item[snapshot].answer1Points!),
                                       );
                                       if (bloc.selectedIndexNotifier.value + 1 < bloc.tipInformations!.steps!) {
@@ -116,6 +117,7 @@ class _TipsQuestionsScreenState extends State<TipsQuestionsScreen> {
                                         AnswersList(
                                             question: item[snapshot].question!,
                                             answer: item[snapshot].answer2!,
+                                            questionId: item[snapshot].id!,
                                             point: item[snapshot].answer2Points!),
                                       );
                                       if (bloc.selectedIndexNotifier.value + 1 < bloc.tipInformations!.steps!) {
@@ -138,6 +140,7 @@ class _TipsQuestionsScreenState extends State<TipsQuestionsScreen> {
                                         AnswersList(
                                             question: item[snapshot].question!,
                                             answer: item[snapshot].answer3!,
+                                            questionId: item[snapshot].id!,
                                             point: item[snapshot].answer3Points!),
                                       );
                                       if (bloc.selectedIndexNotifier.value + 1 < bloc.tipInformations!.steps!) {
@@ -160,6 +163,7 @@ class _TipsQuestionsScreenState extends State<TipsQuestionsScreen> {
                                         AnswersList(
                                             question: item[snapshot].question!,
                                             answer: item[snapshot].answer4!,
+                                            questionId: item[snapshot].id!,
                                             point: item[snapshot].answer4Points!),
                                       );
                                       if (bloc.selectedIndexNotifier.value + 1 < bloc.tipInformations!.steps!) {

@@ -10,6 +10,9 @@ class MentorService with Service {
       methodName: MethodNameConstant.mentors,
       queryParam: {"categories_id": categoryID},
     );
+    print("response");
+
+    print(response);
     return MentorsModel.fromJson(response);
   }
 }

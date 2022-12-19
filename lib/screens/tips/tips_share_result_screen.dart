@@ -62,7 +62,6 @@ class _TipsShareResultScreenState extends State<TipsShareResultScreen> {
                       buttonColor: const Color(0xff554d56),
                       enableButton: true,
                       onTap: () {
-                        bloc.submitAnswers();
                         Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.tipsResultScreen);
                       }),
                   CustomButton(
@@ -70,7 +69,6 @@ class _TipsShareResultScreenState extends State<TipsShareResultScreen> {
                       buttonColor: const Color(0xff554d56),
                       enableButton: true,
                       onTap: () {
-                        bloc.submitAnswers();
                         Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.tipsResultScreen);
                       }),
                   const SizedBox(height: 20),

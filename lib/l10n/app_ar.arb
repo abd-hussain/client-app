@@ -100,7 +100,10 @@
     "yes" : "نعم",
     "no" : "لا",
     "result" : "النتيجة",    
-    "specialistcanhelp" : "مختصون يمكنهم المساعدة"
+    "specialistcanhelp" : "مختصون يمكنهم المساعدة",
+    "min" : "دقيقة",
+    "rate" : "التقييم",
+    "specialist" : "الاختصاص"
 
 
 

@@ -19,14 +19,16 @@ class AnswersList {
   String question;
   String answer;
   int point;
+  int questionId;
 
-  AnswersList({required this.question, required this.answer, required this.point});
+  AnswersList({required this.question, required this.answer, required this.point, required this.questionId});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
     data['question'] = question;
     data['answer'] = answer;
     data['point'] = point;
+    data['question_id'] = questionId;
     return data;
   }
 }

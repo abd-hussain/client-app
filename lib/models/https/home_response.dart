@@ -89,6 +89,7 @@ class Owner {
 
 class MainTips {
   int? id;
+  int? catId;
   String? title;
   String? desc;
   String? note;
@@ -96,10 +97,11 @@ class MainTips {
   String? image;
   int? steps;
 
-  MainTips({this.id, this.title, this.desc, this.note, this.referance, this.image, this.steps});
+  MainTips({this.id, this.catId, this.title, this.desc, this.note, this.referance, this.image, this.steps});
 
   MainTips.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    catId = json['category_id'];
     title = json['title'];
     desc = json['desc'];
     note = json['note'];

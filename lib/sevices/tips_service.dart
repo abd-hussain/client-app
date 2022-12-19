@@ -1,4 +1,5 @@
 import 'package:client_app/models/https/answers_obj.dart';
+import 'package:client_app/models/https/answers_result_response.dart';
 import 'package:client_app/models/https/tips_questions.dart';
 import 'package:client_app/utils/mixins.dart';
 import 'package:client_app/utils/repository/http_repository.dart';
@@ -14,11 +15,13 @@ class TipsService with Service {
     return TipsQuestionsModel.fromJson(response);
   }
 
-  Future<void> submitAnswers({required AnswersObj answersObj}) async {
+  Future<ResultOfTheTips> submitAnswersAndGetResult({required int tipId, required AnswersObj answersObj}) async {
     final response = await repository.callRequest(
       requestType: RequestType.post,
       methodName: MethodNameConstant.tipsQuestions,
+      queryParam: {"tip_id": tipId},
       postBody: answersObj,
     );
+    return ResultOfTheTips.fromJson(response);
   }
 }

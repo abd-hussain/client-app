@@ -99,7 +99,10 @@
     "yes" : "Yes",
     "no" : "No",
     "result" : "Result",
-    "specialistcanhelp" : "Specialist can help"
+    "specialistcanhelp" : "Specialist can help",
+    "min" : "min",
+    "rate" : "rate",
+    "specialist" : "specialist"
 
 
 

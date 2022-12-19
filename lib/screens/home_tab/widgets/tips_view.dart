@@ -11,8 +11,6 @@ class TipsView extends StatelessWidget {
 
   const TipsView({required this.language, required this.listOfTips, required this.onTipSelected, super.key});
 
-  //TODO : Handle Tips View
-
   @override
   Widget build(BuildContext context) {
     return Padding(
