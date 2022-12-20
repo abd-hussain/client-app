@@ -1,7 +1,10 @@
 import 'package:client_app/sevices/mentor_service.dart';
+import 'package:client_app/utils/currency.dart';
 import 'package:client_app/utils/enums/loading_status.dart';
+import 'package:client_app/utils/gender_format.dart';
 import 'package:client_app/utils/mixins.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_multi_select_items/flutter_multi_select_items.dart';
 
 class MentorProfileBloc extends Bloc<MentorService> {
   ValueNotifier<LoadingStatus> loadingStatus = ValueNotifier<LoadingStatus>(LoadingStatus.idle);
@@ -9,17 +12,27 @@ class MentorProfileBloc extends Bloc<MentorService> {
   String? firstName;
   String? lastName;
   String? suffixeName;
-  int? categoryName;
+  String? bio;
+  String? categoryName;
+  String? hourRate;
+  int? classMin;
+  String? speakingLanguage;
+  String? gender;
+  int? genderIndex;
+  String? countryName;
+  String? countryFlag;
+  String? dateOfBirth;
+  List<MultiSelectCard<String>> majors = [];
 
-  void handleReadingArguments({required Object? arguments}) {
+  void handleReadingArguments(BuildContext context, {required Object? arguments}) {
     if (arguments != null) {
       final newArguments = arguments as Map<String, dynamic>;
       int mentorId = newArguments["id"] as int;
-      _getMentorInformation(mentorId);
+      _getMentorInformation(context, mentorId);
     }
   }
 
-  _getMentorInformation(int id) {
+  _getMentorInformation(BuildContext context, int id) {
     loadingStatus.value = LoadingStatus.inprogress;
     service.getmentorDetails(id).then((value) {
       if (value.data != null) {
@@ -27,8 +40,19 @@ class MentorProfileBloc extends Bloc<MentorService> {
         firstName = value.data!.firstName!;
         lastName = value.data!.lastName!;
         suffixeName = value.data!.suffixeName!;
-        categoryName = value.data!.categoryId!;
-
+        categoryName = value.data!.categoryName;
+        hourRate = Currency().getCorrectAmountAndCurrency(value.data!.hourRateByJD!);
+        classMin = value.data!.classMin!;
+        bio = value.data!.bio;
+        speakingLanguage = value.data!.speakingLanguage.toString();
+        genderIndex = value.data!.gender!;
+        gender = GenderFormat().convertIndexToString(context, genderIndex!);
+        countryName = value.data!.country!;
+        countryFlag = value.data!.countryFlag!;
+        dateOfBirth = value.data!.dateOfBirth!;
+        for (String item in value.data!.major!) {
+          majors.add(MultiSelectCard(value: item, label: item));
+        }
         loadingStatus.value = LoadingStatus.finish;
       }
     });
