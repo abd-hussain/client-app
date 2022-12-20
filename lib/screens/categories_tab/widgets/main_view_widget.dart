@@ -15,7 +15,6 @@ class CategoryMainView extends StatelessWidget {
 
   const CategoryMainView({required this.selectedCategory, required this.mentorsListNotifier, super.key});
 
-  //TODO : Compleate the Cards
   @override
   Widget build(BuildContext context) {
     return Padding(
