@@ -15,7 +15,7 @@ class MentorProfileBloc extends Bloc<MentorService> {
   String? suffixeName;
   String? bio;
   String? categoryName;
-  String? hourRate;
+  double? hourRate;
   int? classMin;
   String? speakingLanguage;
   String? gender;
@@ -45,7 +45,7 @@ class MentorProfileBloc extends Bloc<MentorService> {
         suffixeName = value.data!.suffixeName!;
         categoryName = value.data!.categoryName;
         totalRate = value.data!.totalRate!;
-        hourRate = Currency().getCorrectAmountAndCurrency(value.data!.hourRateByJD!);
+        hourRate = value.data!.hourRateByJD!;
         classMin = value.data!.classMin!;
         bio = value.data!.bio;
         speakingLanguage = value.data!.speakingLanguage.toString();

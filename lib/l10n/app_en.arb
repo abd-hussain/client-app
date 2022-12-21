@@ -108,7 +108,13 @@
     "ratingandreview" : "Ratings & Reviews",
     "ratecount" : "Rating Count",
     "rateaverage" : "Rating Average",
-    "meetingtype" : "Meeting Type"
+    "meetingtype" : "Meeting Type",
+    "meetingduration" : "Meeting Duration",
+    "bookingonetime" : "One Time",
+    "bookingmanytime" : "Frequent",
+    "bookingdays" : "Days",
+    "bookingtimes" : "Times"
+
 
 
 

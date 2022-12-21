@@ -108,7 +108,12 @@
     "ratingandreview" : "التقييمات",
     "ratecount" : "مجموع التقييمات",
     "rateaverage" : "معدل التقييمات",
-    "meetingtype" : "نوع الجلسة"
+    "meetingtype" : "نوع الجلسة",
+    "meetingduration" : "مدة الجلسة",
+    "bookingonetime" : "جلسة واحدة",
+    "bookingmanytime" : "متكرر",
+    "bookingdays" : "الأيام",
+    "bookingtimes" : "الاوقات"
 
 
 
