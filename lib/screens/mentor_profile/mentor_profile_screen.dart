@@ -169,7 +169,16 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: MultiSelectContainer(items: bloc.majors, onChange: (allSelectedItems, selectedItem) {}),
-                      )
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CustomText(
+                          title: "-- ${AppLocalizations.of(context)!.ratingandreview} --",
+                          fontSize: 14,
+                          maxLins: 5,
+                          textColor: const Color(0xff554d56),
+                        ),
+                      ),
                     ],
                   );
                 } else {

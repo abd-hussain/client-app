@@ -72,6 +72,7 @@
     "reportsuggestion" : "Report Suggestion",
     "changelanguagemessage" : "Do You Want To Change The Language ?",
     "changecountrymessage" : "Do You Want To Change The Country ?",
+    "settings" : "Settings",
     "generalsettings" : "General Settings",
     "reachouttous" : "Reach out to us",
     "accountsettings" : "Account Settings",
@@ -103,7 +104,10 @@
     "min" : "min",
     "rate" : "rate",
     "specialist" : "specialist",
-    "booknow" : "Book Now"
+    "booknow" : "Book Now",
+    "ratingandreview" : "Ratings & Reviews",
+
+
 
 
 

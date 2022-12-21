@@ -8,9 +8,9 @@ class Currency {
     //TODO must save object and return obj
 
     if (box.get(DatabaseFieldConstant.language) == "en") {
-      return "${amount} JD";
+      return "$amount JD";
     }
 
-    return "${amount} د.أ";
+    return "$amount د.أ";
   }
 }

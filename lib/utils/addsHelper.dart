@@ -11,23 +11,23 @@ class AdHelper {
     }
   }
 
-  static String get _interstitialAdUnitId {
-    if (Platform.isAndroid) {
-      return "";
-    } else if (Platform.isIOS) {
-      return "";
-    } else {
-      throw UnsupportedError("Unsupported platform");
-    }
-  }
+  // static String get _interstitialAdUnitId {
+  //   if (Platform.isAndroid) {
+  //     return "";
+  //   } else if (Platform.isIOS) {
+  //     return "";
+  //   } else {
+  //     throw UnsupportedError("Unsupported platform");
+  //   }
+  // }
 
-  static String get _rewardedAdUnitId {
-    if (Platform.isAndroid) {
-      return "";
-    } else if (Platform.isIOS) {
-      return "";
-    } else {
-      throw UnsupportedError("Unsupported platform");
-    }
-  }
+  // static String get _rewardedAdUnitId {
+  //   if (Platform.isAndroid) {
+  //     return "";
+  //   } else if (Platform.isIOS) {
+  //     return "";
+  //   } else {
+  //     throw UnsupportedError("Unsupported platform");
+  //   }
+  // }
 }
