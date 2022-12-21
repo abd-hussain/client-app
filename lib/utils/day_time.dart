@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class DayTime {
   String gettheCorrentImageDependOnCurrentTime() {
     final currentTime = DateTime.now();
@@ -5,5 +7,11 @@ class DayTime {
       return "assets/images/days/sun.png";
     }
     return "assets/images/days/moon.png";
+  }
+
+  String dateFormatter(String dateAsString) {
+    var parsedDate = DateTime.parse(dateAsString);
+    final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    return formatter.format(parsedDate);
   }
 }

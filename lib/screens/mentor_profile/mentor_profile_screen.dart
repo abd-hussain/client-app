@@ -2,12 +2,16 @@ import 'package:client_app/screens/login/widget/top_bar.dart';
 import 'package:client_app/screens/mentor_profile/mentor_profile_bloc.dart';
 import 'package:client_app/screens/mentor_profile/widget/footer_view.dart';
 import 'package:client_app/screens/mentor_profile/widget/grid_item.dart';
+import 'package:client_app/screens/mentor_profile/widget/review_header_view.dart';
+import 'package:client_app/screens/mentor_profile/widget/reviews_body_view.dart';
+import 'package:client_app/shared_widgets/custom_appbar.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/utils/constants/constant.dart';
 import 'package:client_app/utils/enums/loading_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_multi_select_items/flutter_multi_select_items.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class MentorProfileScreen extends StatefulWidget {
   const MentorProfileScreen({super.key});
@@ -31,11 +35,18 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
     super.dispose();
   }
 
-  //TODO
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffFAFAFA),
+      appBar: customAppBar(title: "", actions: [
+        IconButton(
+          onPressed: () {
+            //TODO
+          },
+          icon: const Icon(Icons.share),
+        )
+      ]),
       body: SafeArea(
         child: SingleChildScrollView(
           child: ValueListenableBuilder<LoadingStatus>(
@@ -44,7 +55,6 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
                 if (loadingsnapshot != LoadingStatus.inprogress) {
                   return Column(
                     children: [
-                      const TopBarWidget(),
                       const SizedBox(height: 20),
                       Center(
                         child: CircleAvatar(
@@ -179,6 +189,11 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
                           textColor: const Color(0xff554d56),
                         ),
                       ),
+                      ReviewHeaderView(
+                        ratesCount: bloc.reviews.length,
+                        totalRates: bloc.totalRate,
+                      ),
+                      SizedBox(height: 400, child: ReviewBodyView(reviews: bloc.reviews)),
                     ],
                   );
                 } else {

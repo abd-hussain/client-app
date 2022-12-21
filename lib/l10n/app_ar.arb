@@ -105,7 +105,9 @@
     "rate" : "التقييم",
     "specialist" : "الاختصاص",
     "booknow" : "احجز الآن",
-    "ratingandreview" : "التقييمات"
+    "ratingandreview" : "التقييمات",
+    "ratecount" : "مجموع التقييمات",
+    "rateaverage" : "معدل التقييمات"
 
 
 

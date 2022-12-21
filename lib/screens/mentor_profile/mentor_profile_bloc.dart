@@ -1,3 +1,4 @@
+import 'package:client_app/models/https/mentor_details_model.dart';
 import 'package:client_app/sevices/mentor_service.dart';
 import 'package:client_app/utils/currency.dart';
 import 'package:client_app/utils/enums/loading_status.dart';
@@ -23,6 +24,8 @@ class MentorProfileBloc extends Bloc<MentorService> {
   String? countryFlag;
   String? dateOfBirth;
   List<MultiSelectCard<String>> majors = [];
+  List<Reviews> reviews = [];
+  double totalRate = 0;
 
   void handleReadingArguments(BuildContext context, {required Object? arguments}) {
     if (arguments != null) {
@@ -41,6 +44,7 @@ class MentorProfileBloc extends Bloc<MentorService> {
         lastName = value.data!.lastName!;
         suffixeName = value.data!.suffixeName!;
         categoryName = value.data!.categoryName;
+        totalRate = value.data!.totalRate!;
         hourRate = Currency().getCorrectAmountAndCurrency(value.data!.hourRateByJD!);
         classMin = value.data!.classMin!;
         bio = value.data!.bio;
@@ -53,6 +57,7 @@ class MentorProfileBloc extends Bloc<MentorService> {
         for (String item in value.data!.major!) {
           majors.add(MultiSelectCard(value: item, label: item));
         }
+        reviews = value.data!.reviews!;
         loadingStatus.value = LoadingStatus.finish;
       }
     });

@@ -18,7 +18,7 @@ class MentorDetailsResponseData {
   List<String>? speakingLanguage;
   int? classMin;
   double? hourRateByJD;
-  double? rate;
+  double? totalRate;
   int? gender;
   String? profileImg;
   String? dateOfBirth;
@@ -26,6 +26,7 @@ class MentorDetailsResponseData {
   String? country;
   String? countryFlag;
   List<String>? major;
+  List<Reviews>? reviews;
 
   MentorDetailsResponseData(
       {this.suffixeName,
@@ -35,14 +36,15 @@ class MentorDetailsResponseData {
       this.speakingLanguage,
       this.classMin,
       this.hourRateByJD,
-      this.rate,
+      this.totalRate,
       this.gender,
       this.profileImg,
       this.dateOfBirth,
       this.categoryName,
       this.country,
       this.countryFlag,
-      this.major});
+      this.major,
+      this.reviews});
 
   MentorDetailsResponseData.fromJson(Map<String, dynamic> json) {
     suffixeName = json['suffixe_name'];
@@ -52,7 +54,7 @@ class MentorDetailsResponseData {
     speakingLanguage = json['speaking_language'].cast<String>();
     classMin = json['class_min'];
     hourRateByJD = json['hour_rate_by_JD'];
-    rate = json['rate'];
+    totalRate = json['total_rate'];
     gender = json['gender'];
     profileImg = json['profile_img'];
     dateOfBirth = json['date_of_birth'];
@@ -60,5 +62,43 @@ class MentorDetailsResponseData {
     country = json['country'];
     countryFlag = json['country_flag'];
     major = json['major'].cast<String>();
+    if (json['reviews'] != null) {
+      reviews = <Reviews>[];
+      json['reviews'].forEach((v) {
+        reviews!.add(Reviews.fromJson(v));
+      });
+    }
+  }
+}
+
+class Reviews {
+  int? id;
+  String? clientFirstName;
+  String? clientLastName;
+  String? clientProfileImg;
+  int? mentorId;
+  double? stars;
+  String? comments;
+  String? createdAt;
+
+  Reviews(
+      {this.id,
+      this.clientFirstName,
+      this.clientLastName,
+      this.clientProfileImg,
+      this.mentorId,
+      this.stars,
+      this.comments,
+      this.createdAt});
+
+  Reviews.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    clientFirstName = json['client_first_name'];
+    clientLastName = json['client_last_name'];
+    clientProfileImg = json['client_profile_img'];
+    mentorId = json['mentor_id'];
+    stars = json['stars'];
+    comments = json['comments'];
+    createdAt = json['created_at'];
   }
 }
