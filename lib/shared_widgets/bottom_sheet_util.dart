@@ -431,4 +431,84 @@ class BottomSheetsUtil {
               ));
         });
   }
+
+  Future bookMettingBottomSheet({required BuildContext context}) {
+    return showModalBottomSheet(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(25),
+          ),
+        ),
+        enableDrag: false,
+        useRootNavigator: true,
+        context: context,
+        backgroundColor: Colors.white,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        builder: (context) {
+          return Padding(
+            padding: const EdgeInsets.only(top: 20, left: 16, right: 16, bottom: 50),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: CustomText(
+                    title: AppLocalizations.of(context)!.booknow,
+                    textColor: const Color(0xff444444),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                CustomText(
+                  title: AppLocalizations.of(context)!.meetingtype,
+                  textColor: const Color(0xff444444),
+                  fontSize: 14,
+                ),
+                const SizedBox(height: 8),
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          //border: Border.all(color: Colors.red),
+                          color: const Color(0xffE4E9EF),
+                        ),
+                        child: Center(
+                          child: CustomText(
+                            title: "One Time",
+                            textColor: const Color(0xff444444),
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Colors.red),
+                          color: const Color(0xffE4E9EF),
+                        ),
+                        child: Center(
+                          child: CustomText(
+                            title: "Many Time",
+                            textColor: const Color(0xff444444),
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
+          );
+        });
+  }
 }

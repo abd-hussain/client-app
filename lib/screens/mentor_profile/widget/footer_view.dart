@@ -1,3 +1,4 @@
+import 'package:client_app/shared_widgets/bottom_sheet_util.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:flutter/material.dart';
@@ -42,8 +43,15 @@ class MentorProfileFooterView extends StatelessWidget {
                 enableButton: true,
                 width: MediaQuery.of(context).size.width * 0.3,
                 buttonTitle: AppLocalizations.of(context)!.booknow,
-                onTap: () {
-                  //TODO
+                onTap: () async {
+                  await BottomSheetsUtil().bookMettingBottomSheet(
+                    context: context,
+
+                    // await BottomSheetsUtil().areYouShoureButtomSheet(
+                    //   message: AppLocalizations.of(context)!.reportstory,
+                    //   sure: () => reportStory(story.owner!.id!),
+                    // );
+                  );
                 })
           ],
         ),
