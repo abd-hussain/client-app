@@ -154,7 +154,7 @@ class CategoryMainView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CustomText(
-                    title: Currency().getCorrectAmountAndCurrency(data.hourRateByJD!),
+                    title: Currency().calculateHourRate(data.hourRateByJD!, Timing.halfHour),
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                     textColor: const Color(0xff034061),

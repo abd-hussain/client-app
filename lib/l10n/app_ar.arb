@@ -113,7 +113,15 @@
     "bookingonetime" : "جلسة واحدة",
     "bookingmanytime" : "متكرر",
     "bookingdays" : "الأيام",
-    "bookingtimes" : "الاوقات"
+    "bookingtimes" : "الاوقات",
+    "meetingdate" : "تاريخ الجلسة",
+    "meetingtime" : "وقت الجلسة",
+    "bookinglaststeptitle" : "نحن هنا من أجلك ، لقد وضعنا هذه الشروط لنضمن لك رحلة جيدة جدًا معنا ، يرجى التحقق منها",
+    "bookinglaststeptext1" : "جميع بياناتك سرية و مشفرة، لا يمكن للمختصين ولا فريقنا الوصول اليها او مشاهدتها",
+    "bookinglaststeptext2" : "في حال عدم حضور المختص يتم ارجاع كامل المبلغ المدفوع لحسابك",
+    "bookinglaststeptext3" : "في حال عدم حضورك انت للموعد سيتم خصم المبلغ كاملا "
+
+
 
 
 

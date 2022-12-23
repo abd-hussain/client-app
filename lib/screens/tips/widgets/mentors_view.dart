@@ -133,7 +133,7 @@ class SuggestedMentorsForYouView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomText(
-                      title: Currency().getCorrectAmountAndCurrency(mentorInfo.hourRateByJD!),
+                      title: Currency().calculateHourRate(mentorInfo.hourRateByJD!, Timing.halfHour),
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                       textColor: const Color(0xff034061),
