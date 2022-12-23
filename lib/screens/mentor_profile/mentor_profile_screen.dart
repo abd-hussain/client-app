@@ -1,4 +1,3 @@
-import 'package:client_app/screens/login/widget/top_bar.dart';
 import 'package:client_app/screens/mentor_profile/mentor_profile_bloc.dart';
 import 'package:client_app/screens/mentor_profile/widget/footer_view.dart';
 import 'package:client_app/screens/mentor_profile/widget/grid_item.dart';
@@ -11,7 +10,6 @@ import 'package:client_app/utils/enums/loading_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_multi_select_items/flutter_multi_select_items.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class MentorProfileScreen extends StatefulWidget {
   const MentorProfileScreen({super.key});
@@ -212,7 +210,15 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
           valueListenable: bloc.loadingStatus,
           builder: (context, loadingsnapshot, child) {
             if (loadingsnapshot != LoadingStatus.inprogress) {
-              return MentorProfileFooterView(hourRate: bloc.hourRate!, classMin: bloc.classMin!);
+              return MentorProfileFooterView(
+                hourRate: bloc.hourRate!,
+                classMin: bloc.classMin!,
+                suffixeName: bloc.suffixeName!,
+                firstName: bloc.firstName!,
+                lastName: bloc.lastName!,
+                categoryName: bloc.categoryName!,
+                profileImageUrl: bloc.profileImageUrl!,
+              );
             } else {
               return const SizedBox(
                 child: Center(

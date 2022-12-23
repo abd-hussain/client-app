@@ -7,7 +7,9 @@ class CustomTextField extends StatelessWidget {
   final String? hintText;
   final bool readOnly;
   final bool enabled;
+  final double fontSize;
   final EdgeInsetsGeometry padding;
+  final Widget? suffixWidget;
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
   final Function(String text)? onChange;
@@ -17,6 +19,8 @@ class CustomTextField extends StatelessWidget {
       required this.hintText,
       this.readOnly = false,
       this.enabled = true,
+      this.fontSize = 14,
+      this.suffixWidget,
       this.keyboardType,
       this.inputFormatters,
       this.onChange,
@@ -35,10 +39,11 @@ class CustomTextField extends StatelessWidget {
           keyboardType: keyboardType,
           autocorrect: false,
           controller: controller,
-          style:
-              CustomTextStyle().regular(color: enabled ? const Color(0xff191C1F) : const Color(0xffA2A3A4), size: 14),
+          style: CustomTextStyle()
+              .regular(color: enabled ? const Color(0xff191C1F) : const Color(0xffA2A3A4), size: fontSize),
           cursorColor: const Color(0xff100C31),
           decoration: InputDecoration(
+            suffix: suffixWidget,
             labelText: hintText,
             labelStyle: CustomTextStyle().regular(color: const Color(0xff384048), size: 14),
             enabledBorder: const OutlineInputBorder(

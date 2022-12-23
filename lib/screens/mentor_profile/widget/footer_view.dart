@@ -11,7 +11,22 @@ import 'package:hive_flutter/hive_flutter.dart';
 class MentorProfileFooterView extends StatelessWidget {
   final double hourRate;
   final int classMin;
-  const MentorProfileFooterView({required this.hourRate, required this.classMin, super.key});
+  final String suffixeName;
+  final String firstName;
+  final String lastName;
+  final String profileImageUrl;
+  final String categoryName;
+
+  const MentorProfileFooterView({
+    required this.hourRate,
+    required this.classMin,
+    super.key,
+    required this.suffixeName,
+    required this.firstName,
+    required this.lastName,
+    required this.categoryName,
+    required this.profileImageUrl,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -68,13 +83,30 @@ class MentorProfileFooterView extends StatelessWidget {
                           hourRate: hourRate,
                           language: box.get(DatabaseFieldConstant.language),
                           faze: BookingFaze.three,
-                          openNext: () {
-                            Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.bookingScreen);
+                          openNext: () => null,
+                          doneSelection: (meetingType, meetingduration, meetingtime, meetingdate, meetingcost) {
+                            Navigator.of(context, rootNavigator: true).pushNamed(
+                              RoutesConstants.bookingScreen,
+                              arguments: {
+                                "profileImageUrl": profileImageUrl,
+                                "suffixeName": suffixeName,
+                                "firstName": firstName,
+                                "lastName": lastName,
+                                "categoryName": categoryName,
+                                "meetingType": meetingType,
+                                "meetingduration": meetingduration,
+                                "meetingtime": meetingtime,
+                                "meetingdate": meetingdate,
+                                "meetingcost": meetingcost
+                              },
+                            );
                           },
                         );
                       },
+                      doneSelection: (meetingType, meetingdate, meetingduration, meetingtime, meetingcost) => null,
                     );
                   },
+                  doneSelection: (meetingType, meetingdate, meetingduration, meetingtime, meetingcost) => null,
                 );
               },
             )

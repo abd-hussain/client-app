@@ -2,6 +2,7 @@ import 'package:client_app/shared_widgets/booking/widgets/parser.dart';
 import 'package:client_app/shared_widgets/booking/widgets/points_in_last_view.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/utils/currency.dart';
+import 'package:client_app/utils/day_time.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -15,12 +16,21 @@ class BookingBottomSheetsUtil {
   ValueNotifier<DateTime?> selectedMeetingDate = ValueNotifier<DateTime?>(null);
   ValueNotifier<int?> selectedMeetingTime = ValueNotifier<int?>(null);
 
-  Future bookMeetingBottomSheet(
-      {required BuildContext context,
-      required double hourRate,
-      required BookingFaze faze,
-      String language = "en",
-      required Function() openNext}) async {
+  Future bookMeetingBottomSheet({
+    required BuildContext context,
+    required double hourRate,
+    required BookingFaze faze,
+    String language = "en",
+    required Function() openNext,
+    required Function(
+      String meetingType,
+      String meetingduration,
+      String meetingtime,
+      String meetingdate,
+      String meetingcost,
+    )
+        doneSelection,
+  }) async {
     return await showModalBottomSheet(
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
@@ -82,8 +92,14 @@ class BookingBottomSheetsUtil {
                     : faze3View(
                         context: context,
                         hourRate: hourRate,
-                        openNext: () => openNext(),
-                      )
+                        doneSelection: () => doneSelection(
+                          AppLocalizations.of(context)!.bookingonetime,
+                          ParserTimer().getTime(selectedMeetingDuration.value),
+                          ParserTimer().getHours(selectedMeetingTime.value!),
+                          DayTime().dateFormatter(selectedMeetingDate.value.toString()),
+                          Currency().calculateHourRate(hourRate, selectedMeetingDuration.value),
+                        ),
+                      ),
           ]),
         );
       },
@@ -346,7 +362,7 @@ class BookingBottomSheetsUtil {
     );
   }
 
-  Widget faze3View({required BuildContext context, required double hourRate, required Function() openNext}) {
+  Widget faze3View({required BuildContext context, required double hourRate, required Function() doneSelection}) {
     return Column(
       children: [
         const SizedBox(height: 20),
@@ -392,7 +408,7 @@ class BookingBottomSheetsUtil {
           selectedMeetingDuration: selectedMeetingDuration.value,
           openNext: () {
             Navigator.pop(context);
-            openNext();
+            doneSelection();
           },
         )
       ],

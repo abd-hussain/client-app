@@ -1,6 +1,5 @@
 import 'package:client_app/models/https/mentor_details_model.dart';
 import 'package:client_app/sevices/mentor_service.dart';
-import 'package:client_app/utils/currency.dart';
 import 'package:client_app/utils/enums/loading_status.dart';
 import 'package:client_app/utils/gender_format.dart';
 import 'package:client_app/utils/mixins.dart';

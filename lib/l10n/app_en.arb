@@ -119,7 +119,18 @@
     "bookinglaststeptitle" : "We are here for you, we put these terms to guarantee you will have a very good journey with us, please check it",
     "bookinglaststeptext1" : "All your data is confidential and encrypted, neither the specialists nor our team can access or view it",
     "bookinglaststeptext2" : "In the event that the specialist does not attend, the full amount paid will be returned to your account",
-    "bookinglaststeptext3" : "If you do not attend the appointment, the full amount will be deducted"
+    "bookinglaststeptext3" : "If you do not attend the appointment, the full amount will be deducted",
+    "payments" : "Payments",
+    "appointmentdetails" : "Appointment Details",
+    "billdetails" : "Bill Details",
+    "meetingcost" : "Meeting Cost",
+    "discount" : "Discount",
+    "totalamount" : "Total Amount",
+    "pay" : "pay now",
+    "apply" : "Apply",
+    "discountcode" : "Diccount Code"
+
+
 
 
 
