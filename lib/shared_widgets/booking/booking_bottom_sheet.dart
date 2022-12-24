@@ -232,19 +232,38 @@ class BookingBottomSheetsUtil {
           fontSize: 14,
         ),
         const SizedBox(height: 8),
-        ValueListenableBuilder(
+        ValueListenableBuilder<DateTime?>(
             valueListenable: selectedMeetingDate,
             builder: (context, snapshot, child) {
-              return MeetingTimeView(
-                workingHoursSaturday: workingHoursSaturday,
-                workingHoursSunday: workingHoursSunday,
-                workingHoursMonday: workingHoursMonday,
-                workingHoursTuesday: workingHoursTuesday,
-                workingHoursWednesday: workingHoursWednesday,
-                workingHoursThursday: workingHoursThursday,
-                workingHoursFriday: workingHoursFriday,
-                selectedMeetingTime: selectedMeetingTime,
-                selectedMeetingDate: snapshot,
+              return Column(
+                children: [
+                  MeetingTimeView(
+                    workingHoursSaturday: workingHoursSaturday,
+                    workingHoursSunday: workingHoursSunday,
+                    workingHoursMonday: workingHoursMonday,
+                    workingHoursTuesday: workingHoursTuesday,
+                    workingHoursWednesday: workingHoursWednesday,
+                    workingHoursThursday: workingHoursThursday,
+                    workingHoursFriday: workingHoursFriday,
+                    selectedMeetingTime: selectedMeetingTime,
+                    selectedMeetingDate: snapshot,
+                  ),
+                  const SizedBox(height: 8),
+                  ValueListenableBuilder<int?>(
+                      valueListenable: selectedMeetingTime,
+                      builder: (context, snapshot2, child) {
+                        return footerBottomSheet(
+                          context: context,
+                          hourRate: hourRate,
+                          isButtonEnable: snapshot != null && snapshot2 != null,
+                          selectedMeetingDuration: selectedMeetingDuration.value,
+                          openNext: () {
+                            Navigator.pop(context);
+                            openNext();
+                          },
+                        );
+                      })
+                ],
               );
             }),
       ],

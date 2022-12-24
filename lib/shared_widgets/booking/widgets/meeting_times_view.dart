@@ -33,7 +33,7 @@ class MeetingTimeView extends StatelessWidget {
     list = checkDayOfTheWeek(selectedMeetingDate);
 
     return SizedBox(
-      height: 300,
+      height: 220,
       child: ValueListenableBuilder<int?>(
           valueListenable: selectedMeetingTime,
           builder: (context, snapshot, child) {
