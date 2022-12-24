@@ -21,4 +21,12 @@ class Currency {
         return "${hourRate / 4} $currency";
     }
   }
+
+  String getHourRateWithoutCurrency(String hourRate) {
+    String currency = "JD";
+    if (box.get(DatabaseFieldConstant.language) != "en") {
+      currency = "د.أ";
+    }
+    return hourRate.replaceAll(currency, "");
+  }
 }

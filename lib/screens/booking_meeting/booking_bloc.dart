@@ -1,8 +1,9 @@
-import 'package:client_app/sevices/mentor_service.dart';
+import 'package:client_app/sevices/discount_service.dart';
+import 'package:client_app/utils/currency.dart';
 import 'package:client_app/utils/mixins.dart';
 import 'package:flutter/material.dart';
 
-class BookingBloc extends Bloc<MentorService> {
+class BookingBloc extends Bloc<DiscountService> {
   ValueNotifier<bool> applyDiscountButton = ValueNotifier<bool>(false);
   String? profileImageUrl;
   String? firstName;
@@ -15,6 +16,7 @@ class BookingBloc extends Bloc<MentorService> {
   String? meetingdate;
   String? meetingcost;
   TextEditingController discountController = TextEditingController();
+  ValueNotifier<String?> discountErrorMessage = ValueNotifier<String?>(null);
 
   void handleReadingArguments(BuildContext context, {required Object? arguments}) {
     if (arguments != null) {
@@ -35,10 +37,27 @@ class BookingBloc extends Bloc<MentorService> {
   handleLisinnerOfDiscountController() {
     discountController.addListener(() {
       applyDiscountButton.value = false;
+      discountErrorMessage.value = null;
       if (discountController.text.length == 6) {
         applyDiscountButton.value = true;
       }
     });
+  }
+
+  void verifyCode() {
+    service.discount(discountController.text).then((value) {
+      if (value.data == null) {
+        discountErrorMessage.value = "error";
+      } else {
+        discountErrorMessage.value = value.data.toString();
+      }
+    });
+  }
+
+  String calculateTotalAmount(double amount, double discount) {
+    final priceDiscount = amount * discount / 100;
+    final newAmount = amount - priceDiscount;
+    return Currency().calculateHourRate(newAmount, Timing.hour);
   }
 
   @override

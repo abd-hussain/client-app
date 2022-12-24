@@ -128,7 +128,8 @@
     "totalamount" : "Total Amount",
     "pay" : "pay now",
     "apply" : "Apply",
-    "discountcode" : "Diccount Code"
+    "discountcode" : "Diccount Code",
+    "notvaliddiscountcode" : "Code is not valid"
 
 
 

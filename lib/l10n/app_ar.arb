@@ -128,7 +128,9 @@
     "totalamount" : "المجموع الكلي",
     "pay" : "ادفع الان",
     "apply" : "تطبيق",
-    "discountcode" : "كود الخصم"
+    "discountcode" : "كود الخصم",
+    "notvaliddiscountcode" : "كود الخصم غير صحيح"
+
 
 
 

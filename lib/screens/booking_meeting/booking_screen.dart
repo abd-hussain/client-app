@@ -111,26 +111,46 @@ class _BookingScreenState extends State<BookingScreen> {
                 ),
                 Row(
                   children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.6,
-                      height: 50,
-                      child: CustomTextField(
-                        controller: bloc.discountController,
-                        fontSize: 25,
-                        hintText: AppLocalizations.of(context)!.discountcode,
-                        inputFormatters: [
-                          LengthLimitingTextInputFormatter(6),
-                        ],
-                        suffixWidget: IconButton(
-                          icon: const Icon(
-                            Icons.close,
-                            size: 20,
+                    Column(
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          height: 50,
+                          child: CustomTextField(
+                            controller: bloc.discountController,
+                            fontSize: 25,
+                            hintText: AppLocalizations.of(context)!.discountcode,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(6),
+                            ],
+                            suffixWidget: IconButton(
+                              icon: const Icon(
+                                Icons.close,
+                                size: 20,
+                              ),
+                              onPressed: () {
+                                bloc.discountController.text = "";
+                              },
+                            ),
                           ),
-                          onPressed: () {
-                            bloc.discountController.text = "";
-                          },
                         ),
-                      ),
+                        ValueListenableBuilder<String?>(
+                            valueListenable: bloc.discountErrorMessage,
+                            builder: (context, snapshot, child) {
+                              return snapshot != null
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(top: 2, left: 8, right: 8),
+                                      child: CustomText(
+                                        title: snapshot == "error"
+                                            ? AppLocalizations.of(context)!.notvaliddiscountcode
+                                            : "",
+                                        fontSize: 14,
+                                        textColor: Colors.red,
+                                      ),
+                                    )
+                                  : const SizedBox();
+                            }),
+                      ],
                     ),
                     Expanded(child: Container()),
                     ValueListenableBuilder<bool>(
@@ -141,7 +161,8 @@ class _BookingScreenState extends State<BookingScreen> {
                             width: MediaQuery.of(context).size.width * 0.2,
                             buttonTitle: AppLocalizations.of(context)!.apply,
                             onTap: () async {
-                              //TODO : Payment View
+                              FocusScope.of(context).unfocus();
+                              bloc.verifyCode();
                             },
                           );
                         }),
@@ -163,14 +184,23 @@ class _BookingScreenState extends State<BookingScreen> {
                   title: AppLocalizations.of(context)!.meetingcost,
                   desc: bloc.meetingcost!,
                 ),
-                AppointmentDetailsView(
-                  title: AppLocalizations.of(context)!.discount,
-                  desc: Currency().calculateHourRate(0, Timing.hour), // TODO
-                ),
-                AppointmentDetailsView(
-                  title: AppLocalizations.of(context)!.totalamount,
-                  desc: bloc.meetingcost!, // TODO
-                ),
+                ValueListenableBuilder<String?>(
+                    valueListenable: bloc.discountErrorMessage,
+                    builder: (context, snapshot, child) {
+                      return AppointmentDetailsView(
+                        title: AppLocalizations.of(context)!.discount,
+                        desc: snapshot == null || snapshot == "error" ? "0 %" : "$snapshot %",
+                      );
+                    }),
+                ValueListenableBuilder<String?>(
+                    valueListenable: bloc.discountErrorMessage,
+                    builder: (context, snapshot, child) {
+                      return AppointmentDetailsView(
+                          title: AppLocalizations.of(context)!.totalamount,
+                          desc: bloc.calculateTotalAmount(
+                              double.parse(Currency().getHourRateWithoutCurrency(bloc.meetingcost!)),
+                              snapshot == null || snapshot == "error" ? 0 : double.parse(snapshot)));
+                    }),
                 CustomButton(
                   enableButton: false,
                   buttonTitle: AppLocalizations.of(context)!.pay,
