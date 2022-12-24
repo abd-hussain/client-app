@@ -191,7 +191,10 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
                         ratesCount: bloc.reviews.length,
                         totalRates: bloc.totalRate,
                       ),
-                      SizedBox(height: 400, child: ReviewBodyView(reviews: bloc.reviews)),
+                      SizedBox(
+                        height: bloc.reviews.isEmpty ? 20 : 400,
+                        child: ReviewBodyView(reviews: bloc.reviews),
+                      ),
                     ],
                   );
                 } else {
