@@ -22,7 +22,6 @@ class MentorsModelData {
   String? firstName;
   String? lastName;
   double? rate;
-  int? classMin;
   double? hourRateByJD;
   String? profileImg;
 
@@ -33,7 +32,6 @@ class MentorsModelData {
     this.suffixeName,
     this.firstName,
     this.lastName,
-    this.classMin,
     this.hourRateByJD,
     this.profileImg,
   });
@@ -45,7 +43,6 @@ class MentorsModelData {
     suffixeName = json['suffixe_name'];
     firstName = json['first_name'];
     lastName = json['last_name'];
-    classMin = json['class_min'];
     hourRateByJD = json['hour_rate_by_JD'];
     profileImg = json['profile_img'];
   }

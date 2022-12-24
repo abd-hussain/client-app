@@ -11,11 +11,11 @@ class BookingCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(4),
       child: InkWell(
         onTap: () => onPress(),
         child: Container(
-          height: 50,
+          height: 40,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             border: Border.all(color: isSelected ? const Color(0xff034061) : const Color(0xffE4E9EF)),

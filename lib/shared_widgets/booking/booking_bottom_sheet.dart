@@ -1,3 +1,4 @@
+import 'package:client_app/shared_widgets/booking/widgets/meeting_times_view.dart';
 import 'package:client_app/shared_widgets/booking/widgets/parser.dart';
 import 'package:client_app/shared_widgets/booking/widgets/points_in_last_view.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
@@ -8,19 +9,42 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:client_app/shared_widgets/booking/widgets/cell_of_booking.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
+import 'package:intl/intl.dart';
 
 enum BookingFaze { one, two, three }
 
 class BookingBottomSheetsUtil {
+  final BuildContext context;
+  final double hourRate;
+  final String language;
+
+  final List<int>? workingHoursSaturday;
+  final List<int>? workingHoursSunday;
+  final List<int>? workingHoursMonday;
+  final List<int>? workingHoursTuesday;
+  final List<int>? workingHoursWednesday;
+  final List<int>? workingHoursThursday;
+  final List<int>? workingHoursFriday;
+
+  BookingBottomSheetsUtil({
+    required this.workingHoursSaturday,
+    required this.workingHoursSunday,
+    required this.workingHoursMonday,
+    required this.workingHoursTuesday,
+    required this.workingHoursWednesday,
+    required this.workingHoursThursday,
+    required this.workingHoursFriday,
+    required this.context,
+    required this.hourRate,
+    this.language = "en",
+  });
+
   ValueNotifier<Timing> selectedMeetingDuration = ValueNotifier<Timing>(Timing.halfHour);
-  ValueNotifier<DateTime?> selectedMeetingDate = ValueNotifier<DateTime?>(null);
+  ValueNotifier<DateTime?> selectedMeetingDate = ValueNotifier<DateTime?>(DateTime.now());
   ValueNotifier<int?> selectedMeetingTime = ValueNotifier<int?>(null);
 
   Future bookMeetingBottomSheet({
-    required BuildContext context,
-    required double hourRate,
     required BookingFaze faze,
-    String language = "en",
     required Function() openNext,
     required Function(
       String meetingType,
@@ -180,6 +204,7 @@ class BookingBottomSheetsUtil {
   Widget faze2View({required BuildContext context, required double hourRate, required Function() openNext}) {
     return Column(
       children: [
+        const SizedBox(height: 20),
         CustomText(
           title: AppLocalizations.of(context)!.meetingdate,
           textColor: const Color(0xff444444),
@@ -195,6 +220,7 @@ class BookingBottomSheetsUtil {
             appointmentDisplayCount: 10,
           ),
           minDate: DateTime.now(),
+          initialSelectedDate: DateTime.now(),
           onTap: (calendarTapDetails) {
             selectedMeetingDate.value = calendarTapDetails.date;
           },
@@ -206,156 +232,19 @@ class BookingBottomSheetsUtil {
           fontSize: 14,
         ),
         const SizedBox(height: 8),
-        ValueListenableBuilder<int?>(
-            valueListenable: selectedMeetingTime,
+        ValueListenableBuilder(
+            valueListenable: selectedMeetingDate,
             builder: (context, snapshot, child) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: BookingCell(
-                          title: "9:00 a.m",
-                          isSelected: (snapshot ?? 0) == 9,
-                          onPress: () {
-                            selectedMeetingTime.value = 9;
-                          },
-                        ),
-                      ),
-                      Expanded(
-                        child: BookingCell(
-                          title: "10:00 a.m",
-                          isSelected: (snapshot ?? 0) == 10,
-                          onPress: () {
-                            selectedMeetingTime.value = 10;
-                          },
-                        ),
-                      ),
-                      Expanded(
-                        child: BookingCell(
-                          title: "11:00 a.m",
-                          isSelected: (snapshot ?? 0) == 11,
-                          onPress: () {
-                            selectedMeetingTime.value = 11;
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: BookingCell(
-                          title: "12:00 a.m",
-                          isSelected: (snapshot ?? 0) == 12,
-                          onPress: () {
-                            selectedMeetingTime.value = 12;
-                          },
-                        ),
-                      ),
-                      Expanded(
-                        child: BookingCell(
-                          title: "1:00 p.m",
-                          isSelected: (snapshot ?? 0) == 13,
-                          onPress: () {
-                            selectedMeetingTime.value = 13;
-                          },
-                        ),
-                      ),
-                      Expanded(
-                        child: BookingCell(
-                          title: "2:00 p.m",
-                          isSelected: (snapshot ?? 0) == 14,
-                          onPress: () {
-                            selectedMeetingTime.value = 14;
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: BookingCell(
-                          title: "3:00 p.m",
-                          isSelected: (snapshot ?? 0) == 15,
-                          onPress: () {
-                            selectedMeetingTime.value = 15;
-                          },
-                        ),
-                      ),
-                      Expanded(
-                        child: BookingCell(
-                          title: "4:00 p.m",
-                          isSelected: (snapshot ?? 0) == 16,
-                          onPress: () {
-                            selectedMeetingTime.value = 16;
-                          },
-                        ),
-                      ),
-                      Expanded(
-                        child: BookingCell(
-                          title: "5:00 p.m",
-                          isSelected: (snapshot ?? 0) == 17,
-                          onPress: () {
-                            selectedMeetingTime.value = 17;
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: BookingCell(
-                          title: "6:00 p.m",
-                          isSelected: (snapshot ?? 0) == 18,
-                          onPress: () {
-                            selectedMeetingTime.value = 18;
-                          },
-                        ),
-                      ),
-                      Expanded(
-                        child: BookingCell(
-                          title: "7:00 p.m",
-                          isSelected: (snapshot ?? 0) == 19,
-                          onPress: () {
-                            selectedMeetingTime.value = 19;
-                          },
-                        ),
-                      ),
-                      Expanded(
-                        child: BookingCell(
-                          title: "8:00 p.m",
-                          isSelected: (snapshot ?? 0) == 20,
-                          onPress: () {
-                            selectedMeetingTime.value = 20;
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  ValueListenableBuilder<DateTime?>(
-                      valueListenable: selectedMeetingDate,
-                      builder: (context, snapshot2, child) {
-                        return footerBottomSheet(
-                          context: context,
-                          hourRate: hourRate,
-                          isButtonEnable: snapshot != null && snapshot2 != null,
-                          selectedMeetingDuration: selectedMeetingDuration.value,
-                          openNext: () {
-                            Navigator.pop(context);
-                            openNext();
-                          },
-                        );
-                      })
-                ],
+              return MeetingTimeView(
+                workingHoursSaturday: workingHoursSaturday,
+                workingHoursSunday: workingHoursSunday,
+                workingHoursMonday: workingHoursMonday,
+                workingHoursTuesday: workingHoursTuesday,
+                workingHoursWednesday: workingHoursWednesday,
+                workingHoursThursday: workingHoursThursday,
+                workingHoursFriday: workingHoursFriday,
+                selectedMeetingTime: selectedMeetingTime,
+                selectedMeetingDate: snapshot,
               );
             }),
       ],

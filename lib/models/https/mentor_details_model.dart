@@ -16,7 +16,6 @@ class MentorDetailsResponseData {
   String? lastName;
   String? bio;
   List<String>? speakingLanguage;
-  int? classMin;
   double? hourRateByJD;
   double? totalRate;
   int? gender;
@@ -26,6 +25,13 @@ class MentorDetailsResponseData {
   String? country;
   String? countryFlag;
   List<String>? major;
+  List<int>? workingHoursSaturday;
+  List<int>? workingHoursSunday;
+  List<int>? workingHoursMonday;
+  List<int>? workingHoursTuesday;
+  List<int>? workingHoursWednesday;
+  List<int>? workingHoursThursday;
+  List<int>? workingHoursFriday;
   List<Reviews>? reviews;
 
   MentorDetailsResponseData(
@@ -34,7 +40,6 @@ class MentorDetailsResponseData {
       this.lastName,
       this.bio,
       this.speakingLanguage,
-      this.classMin,
       this.hourRateByJD,
       this.totalRate,
       this.gender,
@@ -44,6 +49,13 @@ class MentorDetailsResponseData {
       this.country,
       this.countryFlag,
       this.major,
+      this.workingHoursSaturday,
+      this.workingHoursSunday,
+      this.workingHoursMonday,
+      this.workingHoursTuesday,
+      this.workingHoursWednesday,
+      this.workingHoursThursday,
+      this.workingHoursFriday,
       this.reviews});
 
   MentorDetailsResponseData.fromJson(Map<String, dynamic> json) {
@@ -52,7 +64,6 @@ class MentorDetailsResponseData {
     lastName = json['last_name'];
     bio = json['bio'];
     speakingLanguage = json['speaking_language'].cast<String>();
-    classMin = json['class_min'];
     hourRateByJD = json['hour_rate_by_JD'];
     totalRate = json['total_rate'];
     gender = json['gender'];
@@ -62,6 +73,13 @@ class MentorDetailsResponseData {
     country = json['country'];
     countryFlag = json['country_flag'];
     major = json['major'].cast<String>();
+    workingHoursSaturday = json['working_hours_saturday'].cast<int>();
+    workingHoursSunday = json['working_hours_sunday'].cast<int>();
+    workingHoursMonday = json['working_hours_monday'].cast<int>();
+    workingHoursTuesday = json['working_hours_tuesday'].cast<int>();
+    workingHoursWednesday = json['working_hours_wednesday'].cast<int>();
+    workingHoursThursday = json['working_hours_thursday'].cast<int>();
+    workingHoursFriday = json['working_hours_friday'].cast<int>();
     if (json['reviews'] != null) {
       reviews = <Reviews>[];
       json['reviews'].forEach((v) {

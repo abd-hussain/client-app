@@ -212,12 +212,18 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
             if (loadingsnapshot != LoadingStatus.inprogress) {
               return MentorProfileFooterView(
                 hourRate: bloc.hourRate!,
-                classMin: bloc.classMin!,
                 suffixeName: bloc.suffixeName!,
                 firstName: bloc.firstName!,
                 lastName: bloc.lastName!,
                 categoryName: bloc.categoryName!,
                 profileImageUrl: bloc.profileImageUrl!,
+                workingHoursFriday: bloc.workingHoursFriday,
+                workingHoursWednesday: bloc.workingHoursWednesday,
+                workingHoursMonday: bloc.workingHoursMonday,
+                workingHoursSaturday: bloc.workingHoursSaturday,
+                workingHoursSunday: bloc.workingHoursSunday,
+                workingHoursThursday: bloc.workingHoursThursday,
+                workingHoursTuesday: bloc.workingHoursTuesday,
               );
             } else {
               return const SizedBox(

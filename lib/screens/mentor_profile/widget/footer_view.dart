@@ -10,22 +10,34 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 class MentorProfileFooterView extends StatelessWidget {
   final double hourRate;
-  final int classMin;
   final String suffixeName;
   final String firstName;
   final String lastName;
   final String profileImageUrl;
   final String categoryName;
+  final List<int>? workingHoursSaturday;
+  final List<int>? workingHoursSunday;
+  final List<int>? workingHoursMonday;
+  final List<int>? workingHoursTuesday;
+  final List<int>? workingHoursWednesday;
+  final List<int>? workingHoursThursday;
+  final List<int>? workingHoursFriday;
 
   const MentorProfileFooterView({
     required this.hourRate,
-    required this.classMin,
     super.key,
     required this.suffixeName,
     required this.firstName,
     required this.lastName,
     required this.categoryName,
     required this.profileImageUrl,
+    required this.workingHoursSaturday,
+    required this.workingHoursSunday,
+    required this.workingHoursMonday,
+    required this.workingHoursTuesday,
+    required this.workingHoursWednesday,
+    required this.workingHoursThursday,
+    required this.workingHoursFriday,
   });
 
   @override
@@ -54,7 +66,7 @@ class MentorProfileFooterView extends StatelessWidget {
             ),
             const SizedBox(width: 5),
             CustomText(
-              title: "$classMin ${AppLocalizations.of(context)!.min}",
+              title: "30 ${AppLocalizations.of(context)!.min}",
               fontSize: 18,
               fontWeight: FontWeight.bold,
               textColor: const Color(0xff034061),
@@ -65,23 +77,25 @@ class MentorProfileFooterView extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.3,
               buttonTitle: AppLocalizations.of(context)!.booknow,
               onTap: () async {
-                final bottomSheet = BookingBottomSheetsUtil();
-                await bottomSheet.bookMeetingBottomSheet(
+                final bottomSheet = BookingBottomSheetsUtil(
                   context: context,
-                  language: box.get(DatabaseFieldConstant.language),
                   hourRate: hourRate,
+                  language: box.get(DatabaseFieldConstant.language),
+                  workingHoursSaturday: workingHoursSaturday,
+                  workingHoursSunday: workingHoursSunday,
+                  workingHoursFriday: workingHoursFriday,
+                  workingHoursThursday: workingHoursThursday,
+                  workingHoursMonday: workingHoursMonday,
+                  workingHoursTuesday: workingHoursTuesday,
+                  workingHoursWednesday: workingHoursWednesday,
+                );
+                await bottomSheet.bookMeetingBottomSheet(
                   faze: BookingFaze.one,
                   openNext: () async {
                     await bottomSheet.bookMeetingBottomSheet(
-                      context: context,
-                      hourRate: hourRate,
-                      language: box.get(DatabaseFieldConstant.language),
                       faze: BookingFaze.two,
                       openNext: () async {
                         await bottomSheet.bookMeetingBottomSheet(
-                          context: context,
-                          hourRate: hourRate,
-                          language: box.get(DatabaseFieldConstant.language),
                           faze: BookingFaze.three,
                           openNext: () => null,
                           doneSelection: (meetingType, meetingduration, meetingtime, meetingdate, meetingcost) {

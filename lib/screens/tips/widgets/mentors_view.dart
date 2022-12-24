@@ -139,7 +139,7 @@ class SuggestedMentorsForYouView extends StatelessWidget {
                       textColor: const Color(0xff034061),
                     ),
                     CustomText(
-                      title: "${mentorInfo.classMin!} ${AppLocalizations.of(context)!.min}",
+                      title: "30 ${AppLocalizations.of(context)!.min}",
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                       textColor: const Color(0xff034061),

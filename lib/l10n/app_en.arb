@@ -129,7 +129,8 @@
     "pay" : "pay now",
     "apply" : "Apply",
     "discountcode" : "Diccount Code",
-    "notvaliddiscountcode" : "Code is not valid"
+    "notvaliddiscountcode" : "Code is not valid",
+    "noavaliabletime" : "No Avaliable Times"
 
 
 

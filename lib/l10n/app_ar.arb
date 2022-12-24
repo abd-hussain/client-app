@@ -129,7 +129,8 @@
     "pay" : "ادفع الان",
     "apply" : "تطبيق",
     "discountcode" : "كود الخصم",
-    "notvaliddiscountcode" : "كود الخصم غير صحيح"
+    "notvaliddiscountcode" : "كود الخصم غير صحيح",
+    "noavaliabletime" : "لا يوجد اوقات متاحة"
 
 
 

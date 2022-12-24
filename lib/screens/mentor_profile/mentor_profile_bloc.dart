@@ -15,7 +15,6 @@ class MentorProfileBloc extends Bloc<MentorService> {
   String? bio;
   String? categoryName;
   double? hourRate;
-  int? classMin;
   String? speakingLanguage;
   String? gender;
   int? genderIndex;
@@ -25,6 +24,13 @@ class MentorProfileBloc extends Bloc<MentorService> {
   List<MultiSelectCard<String>> majors = [];
   List<Reviews> reviews = [];
   double totalRate = 0;
+  List<int>? workingHoursSaturday;
+  List<int>? workingHoursSunday;
+  List<int>? workingHoursMonday;
+  List<int>? workingHoursTuesday;
+  List<int>? workingHoursWednesday;
+  List<int>? workingHoursThursday;
+  List<int>? workingHoursFriday;
 
   void handleReadingArguments(BuildContext context, {required Object? arguments}) {
     if (arguments != null) {
@@ -45,7 +51,6 @@ class MentorProfileBloc extends Bloc<MentorService> {
         categoryName = value.data!.categoryName;
         totalRate = value.data!.totalRate!;
         hourRate = value.data!.hourRateByJD!;
-        classMin = value.data!.classMin!;
         bio = value.data!.bio;
         speakingLanguage = value.data!.speakingLanguage.toString();
         genderIndex = value.data!.gender!;
@@ -56,6 +61,13 @@ class MentorProfileBloc extends Bloc<MentorService> {
         for (String item in value.data!.major!) {
           majors.add(MultiSelectCard(value: item, label: item));
         }
+        workingHoursSaturday = value.data!.workingHoursSaturday;
+        workingHoursSunday = value.data!.workingHoursSunday;
+        workingHoursMonday = value.data!.workingHoursMonday;
+        workingHoursTuesday = value.data!.workingHoursTuesday;
+        workingHoursWednesday = value.data!.workingHoursWednesday;
+        workingHoursThursday = value.data!.workingHoursThursday;
+        workingHoursFriday = value.data!.workingHoursFriday;
         reviews = value.data!.reviews!;
         loadingStatus.value = LoadingStatus.finish;
       }
