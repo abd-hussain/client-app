@@ -227,6 +227,7 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
                 workingHoursSunday: bloc.workingHoursSunday,
                 workingHoursThursday: bloc.workingHoursThursday,
                 workingHoursTuesday: bloc.workingHoursTuesday,
+                listOfAppointments: bloc.listOfAppointments,
               );
             } else {
               return const SizedBox(

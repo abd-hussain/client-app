@@ -1,3 +1,4 @@
+import 'package:client_app/models/https/mentor_appointment.dart';
 import 'package:client_app/shared_widgets/booking/widgets/cell_of_booking.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/utils/day_time.dart';
@@ -15,17 +16,21 @@ class MeetingTimeView extends StatelessWidget {
   final List<int>? workingHoursFriday;
   final ValueNotifier<int?> selectedMeetingTime;
   final DateTime? selectedMeetingDate;
-  const MeetingTimeView(
-      {super.key,
-      required this.workingHoursSaturday,
-      required this.workingHoursSunday,
-      required this.workingHoursMonday,
-      required this.workingHoursTuesday,
-      required this.workingHoursWednesday,
-      required this.workingHoursThursday,
-      required this.workingHoursFriday,
-      required this.selectedMeetingTime,
-      required this.selectedMeetingDate});
+  final List<MentorAppointmentData> listOfAppointments;
+
+  const MeetingTimeView({
+    super.key,
+    required this.workingHoursSaturday,
+    required this.workingHoursSunday,
+    required this.workingHoursMonday,
+    required this.workingHoursTuesday,
+    required this.workingHoursWednesday,
+    required this.workingHoursThursday,
+    required this.workingHoursFriday,
+    required this.selectedMeetingTime,
+    required this.listOfAppointments,
+    required this.selectedMeetingDate,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -69,22 +74,44 @@ class MeetingTimeView extends StatelessWidget {
     if (dateTime != null) {
       final dayOfTheWeek = DateFormat('EEEE').format(dateTime);
       if (dayOfTheWeek == "Saturday") {
-        return workingHoursSaturday;
+        return chackifTheDateSelectedExsistInAppotmentsList(dateTime, workingHoursSaturday);
       } else if (dayOfTheWeek == "Sunday") {
-        return workingHoursSunday;
+        return chackifTheDateSelectedExsistInAppotmentsList(dateTime, workingHoursSunday);
       } else if (dayOfTheWeek == "Monday") {
-        return workingHoursMonday;
+        return chackifTheDateSelectedExsistInAppotmentsList(dateTime, workingHoursMonday);
       } else if (dayOfTheWeek == "Tuesday") {
-        return workingHoursTuesday;
+        return chackifTheDateSelectedExsistInAppotmentsList(dateTime, workingHoursTuesday);
       } else if (dayOfTheWeek == "Wednesday") {
-        return workingHoursWednesday;
+        return chackifTheDateSelectedExsistInAppotmentsList(dateTime, workingHoursWednesday);
       } else if (dayOfTheWeek == "Thursday") {
-        return workingHoursThursday;
+        return chackifTheDateSelectedExsistInAppotmentsList(dateTime, workingHoursThursday);
       } else if (dayOfTheWeek == "Friday") {
-        return workingHoursFriday;
+        return chackifTheDateSelectedExsistInAppotmentsList(dateTime, workingHoursFriday);
       } else {
         return [];
       }
+    } else {
+      return null;
+    }
+  }
+
+  //TODO: handle Timing UTC
+
+  List<int>? chackifTheDateSelectedExsistInAppotmentsList(DateTime selectedDateTime, List<int>? listOFHours) {
+    if (listOFHours != null) {
+      List<int> newListOFHours = listOFHours;
+      final DateFormat formatter = DateFormat('yyyy-MM-dd');
+      final DateFormat formatterHour = DateFormat('HH');
+      final String formattedSelectedDateTime = formatter.format(selectedDateTime);
+      for (var date in listOfAppointments) {
+        var parsedDate = DateTime.parse(date.date!);
+        final String formattedparsedDate = formatter.format(parsedDate);
+        if (formattedSelectedDateTime == formattedparsedDate) {
+          final value = int.parse(formatterHour.format(parsedDate));
+          newListOFHours.removeWhere((item) => item == value);
+        }
+      }
+      return newListOFHours;
     } else {
       return null;
     }

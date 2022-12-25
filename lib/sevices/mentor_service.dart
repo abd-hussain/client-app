@@ -1,3 +1,4 @@
+import 'package:client_app/models/https/mentor_appointment.dart';
 import 'package:client_app/models/https/mentor_details_model.dart';
 import 'package:client_app/models/https/mentors_model.dart';
 import 'package:client_app/utils/mixins.dart';
@@ -23,5 +24,15 @@ class MentorService with Service {
     );
 
     return MentorDetailsResponse.fromJson(response);
+  }
+
+  Future<MentorAppointment> getAppointments(int mentorID) async {
+    final response = await repository.callRequest(
+      requestType: RequestType.get,
+      methodName: MethodNameConstant.mentorAppointments,
+      queryParam: {"id": mentorID},
+    );
+
+    return MentorAppointment.fromJson(response);
   }
 }

@@ -1,3 +1,4 @@
+import 'package:client_app/models/https/mentor_appointment.dart';
 import 'package:client_app/shared_widgets/booking/booking_bottom_sheet.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
@@ -22,6 +23,7 @@ class MentorProfileFooterView extends StatelessWidget {
   final List<int>? workingHoursWednesday;
   final List<int>? workingHoursThursday;
   final List<int>? workingHoursFriday;
+  final List<MentorAppointmentData> listOfAppointments;
 
   const MentorProfileFooterView({
     required this.hourRate,
@@ -38,6 +40,7 @@ class MentorProfileFooterView extends StatelessWidget {
     required this.workingHoursWednesday,
     required this.workingHoursThursday,
     required this.workingHoursFriday,
+    required this.listOfAppointments,
   });
 
   @override
@@ -88,6 +91,7 @@ class MentorProfileFooterView extends StatelessWidget {
                   workingHoursMonday: workingHoursMonday,
                   workingHoursTuesday: workingHoursTuesday,
                   workingHoursWednesday: workingHoursWednesday,
+                  listOfAppointments: listOfAppointments,
                 );
                 await bottomSheet.bookMeetingBottomSheet(
                   faze: BookingFaze.one,

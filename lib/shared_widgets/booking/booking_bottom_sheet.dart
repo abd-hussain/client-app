@@ -1,3 +1,4 @@
+import 'package:client_app/models/https/mentor_appointment.dart';
 import 'package:client_app/shared_widgets/booking/widgets/meeting_times_view.dart';
 import 'package:client_app/shared_widgets/booking/widgets/parser.dart';
 import 'package:client_app/shared_widgets/booking/widgets/points_in_last_view.dart';
@@ -9,7 +10,6 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:client_app/shared_widgets/booking/widgets/cell_of_booking.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
-import 'package:intl/intl.dart';
 
 enum BookingFaze { one, two, three }
 
@@ -25,6 +25,7 @@ class BookingBottomSheetsUtil {
   final List<int>? workingHoursWednesday;
   final List<int>? workingHoursThursday;
   final List<int>? workingHoursFriday;
+  final List<MentorAppointmentData> listOfAppointments;
 
   BookingBottomSheetsUtil({
     required this.workingHoursSaturday,
@@ -34,6 +35,7 @@ class BookingBottomSheetsUtil {
     required this.workingHoursWednesday,
     required this.workingHoursThursday,
     required this.workingHoursFriday,
+    required this.listOfAppointments,
     required this.context,
     required this.hourRate,
     this.language = "en",
@@ -247,6 +249,7 @@ class BookingBottomSheetsUtil {
                     workingHoursFriday: workingHoursFriday,
                     selectedMeetingTime: selectedMeetingTime,
                     selectedMeetingDate: snapshot,
+                    listOfAppointments: listOfAppointments,
                   ),
                   const SizedBox(height: 8),
                   ValueListenableBuilder<int?>(

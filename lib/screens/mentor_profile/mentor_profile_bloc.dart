@@ -1,3 +1,4 @@
+import 'package:client_app/models/https/mentor_appointment.dart';
 import 'package:client_app/models/https/mentor_details_model.dart';
 import 'package:client_app/sevices/mentor_service.dart';
 import 'package:client_app/utils/enums/loading_status.dart';
@@ -32,15 +33,26 @@ class MentorProfileBloc extends Bloc<MentorService> {
   List<int>? workingHoursThursday;
   List<int>? workingHoursFriday;
 
+  List<MentorAppointmentData> listOfAppointments = [];
+
   void handleReadingArguments(BuildContext context, {required Object? arguments}) {
     if (arguments != null) {
       final newArguments = arguments as Map<String, dynamic>;
       int mentorId = newArguments["id"] as int;
       _getMentorInformation(context, mentorId);
+      _getMentorAppointments(mentorId);
     }
   }
 
-  _getMentorInformation(BuildContext context, int id) {
+  void _getMentorAppointments(int id) {
+    service.getAppointments(id).then((value) {
+      if (value.data != null) {
+        listOfAppointments = value.data!;
+      }
+    });
+  }
+
+  void _getMentorInformation(BuildContext context, int id) {
     loadingStatus.value = LoadingStatus.inprogress;
     service.getmentorDetails(id).then((value) {
       if (value.data != null) {
