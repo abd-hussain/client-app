@@ -26,6 +26,8 @@ class _CallScreenState extends State<CallScreen> {
     super.dispose();
   }
 
+  //TODO handle when the user is not loggedin
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
