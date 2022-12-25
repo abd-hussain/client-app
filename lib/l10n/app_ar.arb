@@ -130,7 +130,15 @@
     "apply" : "تطبيق",
     "discountcode" : "كود الخصم",
     "notvaliddiscountcode" : "كود الخصم غير صحيح",
-    "noavaliabletime" : "لا يوجد اوقات متاحة"
+    "noavaliabletime" : "لا يوجد اوقات متاحة",
+    "nocalltoday" : "لا يوجد لديك جلسة اليوم",
+    "checkcallfromcalender" : "تحقق من مكالمتك القادمة من شاشة التقويم ، أو احجز مكالمتك الأولى الآن",
+    "meetingnow" : "جلسة فورية",
+    "meetingnowdesc" : "جلسات فورية للحالات الطارئة خلال ٦٠ دقيقة",
+    "meetingshudule" : "جلسة مجدولة",
+    "meetingshuduledesc" : "احجز موعدك مع المختص و الوقت المناسب لك"
+
+
 
 
 

@@ -1,11 +1,13 @@
 import 'package:client_app/screens/main_contaner/widgets/tab_navigator.dart';
 import 'package:client_app/utils/routes.dart';
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 
 enum SelectedTab { home, categories, call, calender, account }
 
 class MainContainerBloc {
   final ValueNotifier<SelectedTab> currentTabIndexNotifier = ValueNotifier<SelectedTab>(SelectedTab.home);
+  GlobalKey<ConvexAppBarState> appBarKey = GlobalKey<ConvexAppBarState>();
 
   List<TabNavigator> navTabs = const [
     TabNavigator(initialRoute: RoutesConstants.homeScreen),

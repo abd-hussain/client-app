@@ -31,7 +31,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   }
 
   //TODO: Handle Search Page
-  //TODO: Handle Mentors
 
   @override
   Widget build(BuildContext context) {

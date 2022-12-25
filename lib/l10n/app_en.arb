@@ -108,14 +108,14 @@
     "ratingandreview" : "Ratings & Reviews",
     "ratecount" : "Rating Count",
     "rateaverage" : "Rating Average",
-    "meetingtype" : "Meeting Type",
-    "meetingduration" : "Meeting Duration",
+    "meetingtype" : "Session Type",
+    "meetingduration" : "Session Duration",
     "bookingonetime" : "One Time",
     "bookingmanytime" : "Frequent",
     "bookingdays" : "Days",
     "bookingtimes" : "Times",
-    "meetingdate" : "Meeting Date",
-    "meetingtime" : "Meeting Time",
+    "meetingdate" : "Session Date",
+    "meetingtime" : "Session Time",
     "bookinglaststeptitle" : "We are here for you, we put these terms to guarantee you will have a very good journey with us, please check it",
     "bookinglaststeptext1" : "All your data is confidential and encrypted, neither the specialists nor our team can access or view it",
     "bookinglaststeptext2" : "In the event that the specialist does not attend, the full amount paid will be returned to your account",
@@ -123,14 +123,21 @@
     "payments" : "Payments",
     "appointmentdetails" : "Appointment Details",
     "billdetails" : "Bill Details",
-    "meetingcost" : "Meeting Cost",
+    "meetingcost" : "Session Cost",
     "discount" : "Discount",
     "totalamount" : "Total Amount",
     "pay" : "pay now",
     "apply" : "Apply",
     "discountcode" : "Diccount Code",
     "notvaliddiscountcode" : "Code is not valid",
-    "noavaliabletime" : "No Avaliable Times"
+    "noavaliabletime" : "No Avaliable Times",
+    "nocalltoday" : "You Dont' Have Any Session Today",
+    "checkcallfromcalender" : "Check Your upcoming call from the calendar tab, or reserve your first one now",
+    "meetingnow" : "Setup instant session",
+    "meetingnowdesc" : "Immediate emergency sessions within 60 minutes",
+    "meetingshudule" : "Setup scheduled session",
+    "meetingshuduledesc" : "Setup scheduled session"
+
 
 
 

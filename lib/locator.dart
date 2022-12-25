@@ -1,3 +1,4 @@
+import 'package:client_app/screens/main_contaner/main_container_bloc.dart';
 import 'package:client_app/screens/tips/tips_bloc.dart';
 import 'package:client_app/sevices/discount_service.dart';
 import 'package:client_app/sevices/home_services.dart';
@@ -41,4 +42,5 @@ Future<void> setupLocator() async {
   locator.registerSingleton<DayTime>(DayTime());
   locator.registerSingleton<BackgroundColor>(BackgroundColor());
   locator.registerLazySingleton(() => TipsBloc());
+  locator.registerSingleton<MainContainerBloc>(MainContainerBloc());
 }

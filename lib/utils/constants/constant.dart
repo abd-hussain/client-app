@@ -16,7 +16,7 @@ class AppConstant {
 
   static const String imagesBaseURLForProfileImages = "https://www.helpera.app/";
 
-  /// LINKS //TODO: Review This Links
+  //TODO: Review This Links
   static const String termsLink = "https://talabay.net/";
   static const String aboutusLink = "https://talabay.net/";
   static const String privacypolicyLink = "https://www.talabat.com/jordan/privacy";

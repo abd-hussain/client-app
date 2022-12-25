@@ -1,3 +1,4 @@
+import 'package:client_app/locator.dart';
 import 'package:client_app/screens/main_contaner/main_container_bloc.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,12 @@ class MainContainer extends StatefulWidget {
 }
 
 class _MainContainerState extends State<MainContainer> {
-  final _bloc = MainContainerBloc();
+  final _bloc = locator<MainContainerBloc>();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +33,7 @@ class _MainContainerState extends State<MainContainer> {
                 );
               })),
       bottomNavigationBar: ConvexAppBar(
+        key: _bloc.appBarKey,
         backgroundColor: Colors.white,
         activeColor: const Color(0xff4CB6EA),
         color: const Color(0xff444444),

@@ -33,7 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  //TODO: Handle Home Page
   //TODO: Handle Search Page
 
   @override
