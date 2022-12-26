@@ -1,5 +1,6 @@
 import 'package:client_app/models/https/mentor_appointment.dart';
 import 'package:client_app/models/https/mentor_details_model.dart';
+import 'package:client_app/models/https/mentor_info_model.dart';
 import 'package:client_app/models/https/mentors_model.dart';
 import 'package:client_app/utils/mixins.dart';
 import 'package:client_app/utils/repository/http_repository.dart';
@@ -34,5 +35,14 @@ class MentorService with Service {
     );
 
     return MentorAppointment.fromJson(response);
+  }
+
+  Future<MentorInfoResponse> getmentorAvaliablewithin60min({required int categoryID, required int hour}) async {
+    final response = await repository.callRequest(
+      requestType: RequestType.get,
+      methodName: MethodNameConstant.mentoravaliable,
+      queryParam: {"catId": categoryID, "hour": hour},
+    );
+    return MentorInfoResponse.fromJson(response);
   }
 }

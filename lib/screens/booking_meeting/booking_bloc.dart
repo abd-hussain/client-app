@@ -1,5 +1,10 @@
+import 'dart:async';
+
+import 'package:client_app/locator.dart';
 import 'package:client_app/sevices/discount_service.dart';
+import 'package:client_app/sevices/mentor_service.dart';
 import 'package:client_app/utils/currency.dart';
+import 'package:client_app/utils/day_time.dart';
 import 'package:client_app/utils/mixins.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +19,6 @@ class BookingBloc extends Bloc<DiscountService> {
   String? firstName;
   String? lastName;
   String? suffixeName;
-  int? categoryID;
   String? categoryName;
   String? meetingType;
   String? meetingduration;
@@ -24,6 +28,8 @@ class BookingBloc extends Bloc<DiscountService> {
   TextEditingController discountController = TextEditingController();
   ValueNotifier<String?> discountErrorMessage = ValueNotifier<String?>(null);
   BookingType bookingType = BookingType.schudule;
+  ValueNotifier<bool> checkingAvaliableMentors = ValueNotifier<bool>(false);
+  int hour = 1;
 
   void handleReadingArguments(BuildContext context, {required Object? arguments}) {
     if (arguments != null) {
@@ -47,7 +53,11 @@ class BookingBloc extends Bloc<DiscountService> {
                   : Timing.quarterHour);
 
       bookingType = newArguments["bookingType"] as BookingType;
-      categoryID = newArguments["categoryID"] as int?;
+      int? categoryID = newArguments["categoryID"] as int?;
+
+      if (bookingType == BookingType.instant) {
+        _checkingAvaliableMentorswithin60min(categoryID!);
+      }
     }
   }
 
@@ -75,6 +85,41 @@ class BookingBloc extends Bloc<DiscountService> {
     final priceDiscount = amount * discount / 100;
     final newAmount = amount - priceDiscount;
     return Currency().calculateHourRate(newAmount, Timing.hour);
+  }
+
+  _checkingAvaliableMentorswithin60min(int catID) {
+    checkingAvaliableMentors.value = false;
+    locator<MentorService>().getmentorAvaliablewithin60min(categoryID: catID, hour: hour).then((value) {
+      if (value.data != null) {
+        profileImageUrl = value.data!.profileImg;
+        firstName = value.data!.firstName!;
+        lastName = value.data!.lastName!;
+        suffixeName = value.data!.suffixeName!;
+        meetingcost = Currency().calculateHourRate(
+            value.data!.hourRateByJD! * 1.5,
+            meetingduration == "60"
+                ? Timing.hour
+                : meetingduration == "30"
+                    ? Timing.halfHour
+                    : Timing.quarterHour);
+        meetingtime = "after $hour hour";
+        final now = DateTime.now();
+        meetingdate = DayTime().dateFormatter(DateTime(now.year, now.month, now.day, (now.hour + hour)).toString());
+        Timer(const Duration(seconds: 3), () {
+          checkingAvaliableMentors.value = true;
+          final backup = discountErrorMessage.value;
+          discountErrorMessage.value = "update";
+          discountErrorMessage.value = backup;
+        });
+      } else {
+        hour = hour + 1;
+        if (hour < 24) {
+          _checkingAvaliableMentorswithin60min(catID);
+        } else {
+          print("No Mentor Founded");
+        }
+      }
+    });
   }
 
   @override

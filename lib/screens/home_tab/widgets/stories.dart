@@ -13,7 +13,6 @@ class StoriesHomePage extends StatelessWidget {
       {required this.listOfStories, required this.openMentorProfile, required this.reportStory, Key? key})
       : super(key: key);
 
-  //TODO : Handle Stories
   @override
   Widget build(BuildContext context) {
     return SizedBox(
