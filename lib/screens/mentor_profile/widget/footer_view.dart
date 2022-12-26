@@ -1,4 +1,5 @@
 import 'package:client_app/models/https/mentor_appointment.dart';
+import 'package:client_app/screens/booking_meeting/booking_bloc.dart';
 import 'package:client_app/shared_widgets/booking/booking_bottom_sheet.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
@@ -106,6 +107,7 @@ class MentorProfileFooterView extends StatelessWidget {
                             Navigator.of(context, rootNavigator: true).pushNamed(
                               RoutesConstants.bookingScreen,
                               arguments: {
+                                "bookingType": BookingType.schudule,
                                 "profileImageUrl": profileImageUrl,
                                 "suffixeName": suffixeName,
                                 "firstName": firstName,

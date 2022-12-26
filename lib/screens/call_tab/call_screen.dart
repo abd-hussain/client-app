@@ -34,9 +34,14 @@ class _CallScreenState extends State<CallScreen> {
       body: Column(
         children: [
           const HeaderHomePage(),
-          NoCallView(
-            language: bloc.box.get(DatabaseFieldConstant.language),
-          ),
+          FutureBuilder(
+              future: bloc.listOfCategories(),
+              builder: (context, snapshot) {
+                return NoCallView(
+                  language: bloc.box.get(DatabaseFieldConstant.language),
+                  listOfCategories: snapshot.data ?? [],
+                );
+              }),
           //TODO: handle other status
         ],
       ),

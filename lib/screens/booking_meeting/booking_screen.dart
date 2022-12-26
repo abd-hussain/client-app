@@ -1,5 +1,7 @@
 import 'package:client_app/screens/booking_meeting/booking_bloc.dart';
 import 'package:client_app/screens/booking_meeting/widgets/appointment_details_view.dart';
+import 'package:client_app/screens/booking_meeting/widgets/mentor_profile_info.dart';
+import 'package:client_app/screens/booking_meeting/widgets/serching_for_mentor.dart';
 import 'package:client_app/shared_widgets/custom_appbar.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
@@ -45,34 +47,14 @@ class _BookingScreenState extends State<BookingScreen> {
             child: Column(
               children: [
                 const SizedBox(height: 20),
-                Center(
-                  child: CircleAvatar(
-                    backgroundColor: const Color(0xff034061),
-                    radius: 50,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: bloc.profileImageUrl != ""
-                          ? FadeInImage(
-                              placeholder: const AssetImage("assets/images/avatar.jpeg"),
-                              image:
-                                  NetworkImage(AppConstant.imagesBaseURLForMentors + bloc.profileImageUrl!, scale: 1),
-                            )
-                          : Image.asset(
-                              'assets/images/avatar.jpeg',
-                              width: 110.0,
-                              height: 110.0,
-                              fit: BoxFit.fill,
-                            ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                CustomText(
-                  title: "${bloc.suffixeName!} ${bloc.firstName!} ${bloc.lastName!}",
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  textColor: const Color(0xff554d56),
-                ),
+                bloc.bookingType == BookingType.schudule
+                    ? MentorProfileInfoView(
+                        suffixeName: bloc.suffixeName!,
+                        firstName: bloc.firstName!,
+                        lastName: bloc.lastName!,
+                        profileImg: bloc.profileImageUrl!,
+                      )
+                    : const SearchForMentorView(),
                 CustomText(
                   title: bloc.categoryName!,
                   fontSize: 18,
@@ -90,7 +72,9 @@ class _BookingScreenState extends State<BookingScreen> {
                 ),
                 AppointmentDetailsView(
                   title: AppLocalizations.of(context)!.meetingtype,
-                  desc: bloc.meetingType!,
+                  desc: bloc.bookingType == BookingType.schudule
+                      ? bloc.meetingType!
+                      : AppLocalizations.of(context)!.meetingnow,
                 ),
                 AppointmentDetailsView(
                   title: AppLocalizations.of(context)!.meetingduration,
@@ -98,12 +82,16 @@ class _BookingScreenState extends State<BookingScreen> {
                 ),
                 AppointmentDetailsView(
                   title: AppLocalizations.of(context)!.meetingtime,
-                  desc: bloc.meetingtime!,
+                  desc: bloc.bookingType == BookingType.schudule
+                      ? bloc.meetingtime!
+                      : AppLocalizations.of(context)!.withinhour,
                   forceView: true,
                 ),
                 AppointmentDetailsView(
                   title: AppLocalizations.of(context)!.meetingdate,
-                  desc: bloc.meetingdate!,
+                  desc: bloc.bookingType == BookingType.schudule
+                      ? bloc.meetingdate!
+                      : AppLocalizations.of(context)!.withinhour,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16),

@@ -120,6 +120,7 @@
     "bookinglaststeptext1" : "All your data is confidential and encrypted, neither the specialists nor our team can access or view it",
     "bookinglaststeptext2" : "In the event that the specialist does not attend, the full amount paid will be returned to your account",
     "bookinglaststeptext3" : "If you do not attend the appointment, the full amount will be deducted",
+    "bookinglaststeptext4" : "If no specialist is available to accept your instant session within 60 minutes, the session amount will be automatically refunded to your account",
     "payments" : "Payments",
     "appointmentdetails" : "Appointment Details",
     "billdetails" : "Bill Details",
@@ -133,10 +134,12 @@
     "noavaliabletime" : "No Avaliable Times",
     "nocalltoday" : "You Dont' Have Any Session Today",
     "checkcallfromcalender" : "Check Your upcoming call from the calendar tab, or reserve your first one now",
-    "meetingnow" : "Setup instant session",
+    "meetingnow" : "Instant session",
     "meetingnowdesc" : "Immediate emergency sessions within 60 minutes",
     "meetingshudule" : "Setup scheduled session",
-    "meetingshuduledesc" : "Setup scheduled session"
+    "meetingshuduledesc" : "Setup scheduled session",
+    "searchforsuitablementor" : "Searching For suitable Mentor ...",
+    "withinhour" : "With in 60 min"
 
 
 

@@ -1,4 +1,6 @@
 import 'package:client_app/locator.dart';
+import 'package:client_app/models/https/categories_model.dart';
+import 'package:client_app/screens/booking_meeting/booking_bloc.dart';
 import 'package:client_app/screens/main_contaner/main_container_bloc.dart';
 import 'package:client_app/shared_widgets/booking/booking_bottom_sheet.dart';
 import 'package:client_app/shared_widgets/booking/instant_booking_bottom_sheet.dart';
@@ -10,7 +12,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NoCallView extends StatelessWidget {
   final String language;
-  const NoCallView({required this.language, super.key});
+  final List<Category> listOfCategories;
+  const NoCallView({required this.language, required this.listOfCategories, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -63,40 +66,28 @@ class NoCallView extends StatelessWidget {
                   final bottomSheet = InstantBookingBottomSheetsUtil(
                     context: context,
                     language: language,
+                    listOfCategories: listOfCategories,
                   );
                   await bottomSheet.bookMeetingBottomSheet(
                     faze: BookingFaze.one,
                     openNext: () async {
                       await bottomSheet.bookMeetingBottomSheet(
                         faze: BookingFaze.two,
-                        openNext: () async {
-                          await bottomSheet.bookMeetingBottomSheet(
-                            faze: BookingFaze.three,
-                            openNext: () => null,
-                            doneSelection: (meetingType, meetingduration, meetingtime, meetingdate, meetingcost) {
-                              //TODO
-                              // Navigator.of(context, rootNavigator: true).pushNamed(
-                              //   RoutesConstants.bookingScreen,
-                              //   arguments: {
-                              //     "profileImageUrl": profileImageUrl,
-                              //     "suffixeName": suffixeName,
-                              //     "firstName": firstName,
-                              //     "lastName": lastName,
-                              //     "categoryName": categoryName,
-                              //     "meetingType": meetingType,
-                              //     "meetingduration": meetingduration,
-                              //     "meetingtime": meetingtime,
-                              //     "meetingdate": meetingdate,
-                              //     "meetingcost": meetingcost
-                              //   },
-                              // );
+                        openNext: () => null,
+                        doneSelection: ({required categoryID, required categoryName, required meetingduration}) {
+                          Navigator.of(context, rootNavigator: true).pushNamed(
+                            RoutesConstants.bookingScreen,
+                            arguments: {
+                              "bookingType": BookingType.instant,
+                              "categoryID": categoryID,
+                              "categoryName": categoryName,
+                              "meetingduration": meetingduration,
                             },
                           );
                         },
-                        doneSelection: (meetingType, meetingdate, meetingduration, meetingtime, meetingcost) => null,
                       );
                     },
-                    doneSelection: (meetingType, meetingdate, meetingduration, meetingtime, meetingcost) => null,
+                    doneSelection: ({required categoryID, required categoryName, required meetingduration}) => null,
                   );
                 },
               ),
