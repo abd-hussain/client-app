@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:client_app/locator.dart';
 import 'package:client_app/sevices/discount_service.dart';
 import 'package:client_app/sevices/mentor_service.dart';
+import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/currency.dart';
 import 'package:client_app/utils/day_time.dart';
 import 'package:client_app/utils/mixins.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 enum BookingType {
   schudule,
@@ -30,6 +32,7 @@ class BookingBloc extends Bloc<DiscountService> {
   BookingType bookingType = BookingType.schudule;
   ValueNotifier<bool> checkingAvaliableMentors = ValueNotifier<bool>(false);
   int hour = 1;
+  final box = Hive.box(DatabaseBoxConstant.userInfo);
 
   void handleReadingArguments(BuildContext context, {required Object? arguments}) {
     if (arguments != null) {
@@ -120,6 +123,10 @@ class BookingBloc extends Bloc<DiscountService> {
         }
       }
     });
+  }
+
+  bookMeetingRequest() {
+    //TODO
   }
 
   @override

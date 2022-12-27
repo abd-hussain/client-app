@@ -139,7 +139,11 @@
     "meetingshudule" : "Setup scheduled session",
     "meetingshuduledesc" : "Setup scheduled session",
     "searchforsuitablementor" : "Searching For suitable Mentor ...",
-    "withinhour" : "With in 60 min"
+    "withinhour" : "With in 60 min",
+    "paymentuse" : "Payment use",
+    "googlepay" : "Google Pay",
+    "applypay" : "Apple Pay",
+    "creditcard" : "Credit Card"
 
 
 

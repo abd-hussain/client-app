@@ -139,7 +139,11 @@
     "meetingshudule" : "جلسة مجدولة",
     "meetingshuduledesc" : "احجز موعدك مع المختص و الوقت المناسب لك",
     "searchforsuitablementor" : "جاري البحث عن المختص المناسب ...",
-    "withinhour" : "خلال ٦٠ دقيقة"
+    "withinhour" : "خلال ٦٠ دقيقة",
+    "paymentuse" : "الدفع بإستخدام",
+    "googlepay" : "جوجل باي",
+    "applypay" : "آبل باي",
+    "creditcard" : "بطاقة الائتمان"
 
 
 

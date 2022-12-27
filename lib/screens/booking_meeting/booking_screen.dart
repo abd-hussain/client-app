@@ -1,15 +1,20 @@
+import 'package:client_app/locator.dart';
 import 'package:client_app/screens/booking_meeting/booking_bloc.dart';
 import 'package:client_app/screens/booking_meeting/widgets/appointment_details_view.dart';
 import 'package:client_app/screens/booking_meeting/widgets/mentor_profile_info.dart';
 import 'package:client_app/screens/booking_meeting/widgets/serching_for_mentor.dart';
+import 'package:client_app/shared_widgets/booking/payment_bottom_sheet.dart';
 import 'package:client_app/shared_widgets/custom_appbar.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/shared_widgets/custom_textfield.dart';
+import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/currency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../main_contaner/main_container_bloc.dart';
 
 class BookingScreen extends StatefulWidget {
   const BookingScreen({super.key});
@@ -205,10 +210,30 @@ class _BookingScreenState extends State<BookingScreen> {
                               snapshot == null || snapshot == "error" ? 0 : double.parse(snapshot)));
                     }),
                 CustomButton(
-                  enableButton: false,
+                  enableButton: true,
                   buttonTitle: AppLocalizations.of(context)!.pay,
                   onTap: () async {
-                    //TODO : Payment View
+                    final bottomSheet = PaymentBottomSheetsUtil(
+                        context: context,
+                        language: bloc.box.get(DatabaseFieldConstant.language),
+                        totalAmount: bloc.calculateTotalAmount(
+                            double.parse(Currency().getHourRateWithoutCurrency(bloc.meetingcost!)),
+                            bloc.discountErrorMessage.value == null || bloc.discountErrorMessage.value == "error"
+                                ? 0
+                                : double.parse(bloc.discountErrorMessage.value!)));
+
+                    await bottomSheet.paymentBottomSheet(
+                        faze: PaymentFaze.welcoming,
+                        openNext: () {
+                          if (bloc.bookingType == BookingType.schudule) {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                            locator<MainContainerBloc>().appBarKey.currentState!.animateTo(2);
+                            locator<MainContainerBloc>().currentTabIndexNotifier.value = SelectedTab.call;
+                          } else {
+                            Navigator.of(context).pop();
+                          }
+                        });
                   },
                 ),
               ],
