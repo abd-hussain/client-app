@@ -24,4 +24,28 @@ class DayTime {
       return "${time - 12}:00 pm";
     }
   }
+
+  int getHourFromTimeString(String time) {
+    if (time.contains("a.m")) {
+      String result = time.replaceAll(" a.m", "");
+      var parts = result.split(':');
+      return int.parse(parts[0].trim());
+    } else {
+      String result = time.replaceAll(" p.m", "");
+      var parts = result.split(':');
+      return int.parse(parts[0].trim());
+    }
+  }
+
+  int getMinFromTimeString(String time) {
+    if (time.contains("a.m")) {
+      String result = time.replaceAll(" a.m", "");
+      var parts = result.split(':');
+      return int.parse(parts.sublist(1).join(':').trim());
+    } else {
+      String result = time.replaceAll(" p.m", "");
+      var parts = result.split(':');
+      return int.parse(parts.sublist(1).join(':').trim());
+    }
+  }
 }

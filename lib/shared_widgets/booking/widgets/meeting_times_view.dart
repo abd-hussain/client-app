@@ -1,4 +1,4 @@
-import 'package:client_app/models/https/mentor_appointment.dart';
+import 'package:client_app/models/https/appointment.dart';
 import 'package:client_app/shared_widgets/booking/widgets/cell_of_booking.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/utils/day_time.dart';
@@ -16,7 +16,7 @@ class MeetingTimeView extends StatelessWidget {
   final List<int>? workingHoursFriday;
   final ValueNotifier<int?> selectedMeetingTime;
   final DateTime? selectedMeetingDate;
-  final List<MentorAppointmentData> listOfAppointments;
+  final List<AppointmentData> listOfAppointments;
 
   const MeetingTimeView({
     super.key,
@@ -104,7 +104,7 @@ class MeetingTimeView extends StatelessWidget {
       final DateFormat formatterHour = DateFormat('HH');
       final String formattedSelectedDateTime = formatter.format(selectedDateTime);
       for (var date in listOfAppointments) {
-        var parsedDate = DateTime.parse(date.date!);
+        var parsedDate = DateTime.parse(date.dateFrom!);
         final String formattedparsedDate = formatter.format(parsedDate);
         if (formattedSelectedDateTime == formattedparsedDate) {
           final value = int.parse(formatterHour.format(parsedDate));

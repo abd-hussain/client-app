@@ -3,8 +3,10 @@ class MethodNameConstant {
   static const String categories = "categories";
   static const String mentors = "mentor-list/";
   static const String mentorDetails = "mentor-account/";
-  static const String mentorAppointments = "mentor-account/appointment";
+  static const String mentorAppointments = "appointment/mentor";
+  static const String clientAppointments = "appointment/client";
   static const String mentoravaliable = "mentor-account/mentor-avaliable";
+  static const String bookAppointment = "appointment/book";
 
   static const String discount = "discount/";
 

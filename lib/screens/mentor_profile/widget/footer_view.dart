@@ -1,4 +1,4 @@
-import 'package:client_app/models/https/mentor_appointment.dart';
+import 'package:client_app/models/https/appointment.dart';
 import 'package:client_app/screens/booking_meeting/booking_bloc.dart';
 import 'package:client_app/shared_widgets/booking/booking_bottom_sheet.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
@@ -11,6 +11,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class MentorProfileFooterView extends StatelessWidget {
+  final int mentorId;
   final double hourRate;
   final String suffixeName;
   final String firstName;
@@ -24,9 +25,10 @@ class MentorProfileFooterView extends StatelessWidget {
   final List<int>? workingHoursWednesday;
   final List<int>? workingHoursThursday;
   final List<int>? workingHoursFriday;
-  final List<MentorAppointmentData> listOfAppointments;
+  final List<AppointmentData> listOfAppointments;
 
   const MentorProfileFooterView({
+    required this.mentorId,
     required this.hourRate,
     super.key,
     required this.suffixeName,
@@ -112,6 +114,7 @@ class MentorProfileFooterView extends StatelessWidget {
                                 "suffixeName": suffixeName,
                                 "firstName": firstName,
                                 "lastName": lastName,
+                                "mentor_id": mentorId,
                                 "categoryName": categoryName,
                                 "meetingType": meetingType,
                                 "meetingduration": meetingduration,

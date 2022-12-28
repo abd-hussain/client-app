@@ -214,6 +214,7 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
           builder: (context, loadingsnapshot, child) {
             if (loadingsnapshot != LoadingStatus.inprogress) {
               return MentorProfileFooterView(
+                mentorId: bloc.mentorId!,
                 hourRate: bloc.hourRate!,
                 suffixeName: bloc.suffixeName!,
                 firstName: bloc.firstName!,

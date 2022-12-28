@@ -1,4 +1,4 @@
-import 'package:client_app/models/https/mentor_appointment.dart';
+import 'package:client_app/models/https/appointment.dart';
 import 'package:client_app/shared_widgets/booking/widgets/meeting_times_view.dart';
 import 'package:client_app/shared_widgets/booking/widgets/parser.dart';
 import 'package:client_app/shared_widgets/booking/widgets/points_in_last_view.dart';
@@ -13,6 +13,8 @@ import 'package:client_app/shared_widgets/custom_button.dart';
 
 enum BookingFaze { one, two, three }
 
+//TODO handle not showing hours before now
+
 class BookingBottomSheetsUtil {
   final BuildContext context;
   final double hourRate;
@@ -25,7 +27,7 @@ class BookingBottomSheetsUtil {
   final List<int>? workingHoursWednesday;
   final List<int>? workingHoursThursday;
   final List<int>? workingHoursFriday;
-  final List<MentorAppointmentData> listOfAppointments;
+  final List<AppointmentData> listOfAppointments;
 
   BookingBottomSheetsUtil({
     required this.workingHoursSaturday,

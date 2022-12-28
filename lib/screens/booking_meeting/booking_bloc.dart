@@ -1,6 +1,7 @@
 import 'dart:async';
-
 import 'package:client_app/locator.dart';
+import 'package:client_app/models/https/appointment_request.dart';
+import 'package:client_app/sevices/appointments_service.dart';
 import 'package:client_app/sevices/discount_service.dart';
 import 'package:client_app/sevices/mentor_service.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
@@ -17,10 +18,12 @@ enum BookingType {
 
 class BookingBloc extends Bloc<DiscountService> {
   ValueNotifier<bool> applyDiscountButton = ValueNotifier<bool>(false);
-  String? profileImageUrl;
-  String? firstName;
-  String? lastName;
-  String? suffixeName;
+  int? mentorId;
+  String? mentorSuffixName;
+  String? mentorFirstName;
+  String? mentorLastName;
+  String? mentorProfileImageUrl;
+
   String? categoryName;
   String? meetingType;
   String? meetingduration;
@@ -37,10 +40,11 @@ class BookingBloc extends Bloc<DiscountService> {
   void handleReadingArguments(BuildContext context, {required Object? arguments}) {
     if (arguments != null) {
       final newArguments = arguments as Map<String, dynamic>;
-      profileImageUrl = newArguments["profileImageUrl"] as String?;
-      suffixeName = newArguments["suffixeName"] as String?;
-      firstName = newArguments["firstName"] as String?;
-      lastName = newArguments["lastName"] as String?;
+      mentorProfileImageUrl = newArguments["profileImageUrl"] as String?;
+      mentorSuffixName = newArguments["suffixeName"] as String?;
+      mentorFirstName = newArguments["firstName"] as String?;
+      mentorLastName = newArguments["lastName"] as String?;
+      mentorId = newArguments["mentor_id"] as int?;
       categoryName = newArguments["categoryName"] as String?;
       meetingType = newArguments["meetingType"] as String?;
       meetingduration = newArguments["meetingduration"] as String?;
@@ -94,10 +98,12 @@ class BookingBloc extends Bloc<DiscountService> {
     checkingAvaliableMentors.value = false;
     locator<MentorService>().getmentorAvaliablewithin60min(categoryID: catID, hour: hour).then((value) {
       if (value.data != null) {
-        profileImageUrl = value.data!.profileImg;
-        firstName = value.data!.firstName!;
-        lastName = value.data!.lastName!;
-        suffixeName = value.data!.suffixeName!;
+        mentorProfileImageUrl = value.data!.profileImg;
+        mentorFirstName = value.data!.firstName!;
+        mentorLastName = value.data!.lastName!;
+        mentorSuffixName = value.data!.suffixeName!;
+        mentorId = value.data!.id!;
+
         meetingcost = Currency().calculateHourRate(
             value.data!.hourRateByJD! * 1.5,
             meetingduration == "60"
@@ -125,8 +131,8 @@ class BookingBloc extends Bloc<DiscountService> {
     });
   }
 
-  bookMeetingRequest() {
-    //TODO
+  Future<void> bookMeetingRequest({required AppointmentRequest appointment}) async {
+    return await locator<AppointmentsService>().bookNewAppointments(appointment: appointment).then((value) {});
   }
 
   @override

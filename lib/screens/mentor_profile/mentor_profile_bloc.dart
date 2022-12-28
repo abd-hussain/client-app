@@ -1,5 +1,7 @@
-import 'package:client_app/models/https/mentor_appointment.dart';
+import 'package:client_app/locator.dart';
+import 'package:client_app/models/https/appointment.dart';
 import 'package:client_app/models/https/mentor_details_model.dart';
+import 'package:client_app/sevices/appointments_service.dart';
 import 'package:client_app/sevices/mentor_service.dart';
 import 'package:client_app/utils/enums/loading_status.dart';
 import 'package:client_app/utils/gender_format.dart';
@@ -14,6 +16,7 @@ class MentorProfileBloc extends Bloc<MentorService> {
   String? lastName;
   String? suffixeName;
   String? bio;
+  int? mentorId;
   String? categoryName;
   double? hourRate;
   String? speakingLanguage;
@@ -33,7 +36,7 @@ class MentorProfileBloc extends Bloc<MentorService> {
   List<int>? workingHoursThursday;
   List<int>? workingHoursFriday;
 
-  List<MentorAppointmentData> listOfAppointments = [];
+  List<AppointmentData> listOfAppointments = [];
 
   void handleReadingArguments(BuildContext context, {required Object? arguments}) {
     if (arguments != null) {
@@ -45,7 +48,7 @@ class MentorProfileBloc extends Bloc<MentorService> {
   }
 
   void _getMentorAppointments(int id) {
-    service.getAppointments(id).then((value) {
+    locator<AppointmentsService>().getMentorAppointments(id).then((value) {
       if (value.data != null) {
         listOfAppointments = value.data!;
       }
@@ -64,6 +67,7 @@ class MentorProfileBloc extends Bloc<MentorService> {
         totalRate = value.data!.totalRate!;
         hourRate = value.data!.hourRateByJD!;
         bio = value.data!.bio;
+        mentorId = id;
         speakingLanguage = value.data!.speakingLanguage.toString();
         genderIndex = value.data!.gender!;
         gender = GenderFormat().convertIndexToString(context, genderIndex!);

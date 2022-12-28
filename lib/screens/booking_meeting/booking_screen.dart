@@ -1,8 +1,10 @@
 import 'package:client_app/locator.dart';
+import 'package:client_app/models/https/appointment_request.dart';
 import 'package:client_app/screens/booking_meeting/booking_bloc.dart';
 import 'package:client_app/screens/booking_meeting/widgets/appointment_details_view.dart';
 import 'package:client_app/screens/booking_meeting/widgets/mentor_profile_info.dart';
 import 'package:client_app/screens/booking_meeting/widgets/serching_for_mentor.dart';
+import 'package:client_app/screens/main_contaner/main_container_bloc.dart';
 import 'package:client_app/shared_widgets/booking/payment_bottom_sheet.dart';
 import 'package:client_app/shared_widgets/custom_appbar.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
@@ -10,11 +12,10 @@ import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/shared_widgets/custom_textfield.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/currency.dart';
+import 'package:client_app/utils/day_time.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../main_contaner/main_container_bloc.dart';
 
 class BookingScreen extends StatefulWidget {
   const BookingScreen({super.key});
@@ -56,10 +57,10 @@ class _BookingScreenState extends State<BookingScreen> {
                     builder: (context, snapshot, child) {
                       return bloc.bookingType == BookingType.schudule || snapshot
                           ? MentorProfileInfoView(
-                              suffixeName: bloc.suffixeName!,
-                              firstName: bloc.firstName!,
-                              lastName: bloc.lastName!,
-                              profileImg: bloc.profileImageUrl!,
+                              suffixeName: bloc.mentorSuffixName!,
+                              firstName: bloc.mentorFirstName!,
+                              lastName: bloc.mentorLastName!,
+                              profileImg: bloc.mentorProfileImageUrl!,
                             )
                           : const SearchForMentorView();
                     }),
@@ -224,14 +225,46 @@ class _BookingScreenState extends State<BookingScreen> {
 
                     await bottomSheet.paymentBottomSheet(
                         faze: PaymentFaze.welcoming,
-                        openNext: () {
+                        openNext: () async {
                           if (bloc.bookingType == BookingType.schudule) {
-                            Navigator.of(context).pop();
-                            Navigator.of(context).pop();
-                            locator<MainContainerBloc>().appBarKey.currentState!.animateTo(2);
-                            locator<MainContainerBloc>().currentTabIndexNotifier.value = SelectedTab.call;
+                            final parsedFromDate = DateTime.parse(bloc.meetingdate!);
+                            var toDateTime = DateTime(
+                                parsedFromDate.year,
+                                parsedFromDate.month,
+                                parsedFromDate.day,
+                                DayTime().getHourFromTimeString(bloc.meetingtime!),
+                                DayTime().getMinFromTimeString(bloc.meetingtime!));
+
+                            toDateTime = toDateTime.add(Duration(minutes: int.parse(bloc.meetingduration!)));
+
+                            final appointment = AppointmentRequest(
+                              mentorId: bloc.mentorId!,
+                              priceWithoutDescount: 0,
+                              descountId: null,
+                              dateFrom: CustomDate(
+                                  year: parsedFromDate.year,
+                                  month: parsedFromDate.month,
+                                  day: parsedFromDate.day,
+                                  hour: DayTime().getHourFromTimeString(bloc.meetingtime!),
+                                  min: DayTime().getMinFromTimeString(bloc.meetingtime!)),
+                              dateTo: CustomDate(
+                                  year: toDateTime.year,
+                                  month: toDateTime.month,
+                                  day: toDateTime.day,
+                                  hour: toDateTime.hour,
+                                  min: toDateTime.minute),
+                            );
+
+                            bloc.bookMeetingRequest(appointment: appointment).then((value) {
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                              locator<MainContainerBloc>().appBarKey.currentState!.animateTo(2);
+                              locator<MainContainerBloc>().currentTabIndexNotifier.value = SelectedTab.call;
+                            });
                           } else {
-                            Navigator.of(context).pop();
+                            // bloc.bookMeetingRequest().then((value) {
+                            //   Navigator.of(context).pop();
+                            // });
                           }
                         });
                   },
