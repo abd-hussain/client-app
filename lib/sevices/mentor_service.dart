@@ -30,8 +30,11 @@ class MentorService with Service {
     final response = await repository.callRequest(
       requestType: RequestType.get,
       methodName: MethodNameConstant.mentoravaliable,
-      queryParam: {"catId": categoryID, "hour": hour},
+      queryParam: {"catId": categoryID, "after": hour},
     );
+    print("response");
+    print(response);
+
     return MentorInfoResponse.fromJson(response);
   }
 }

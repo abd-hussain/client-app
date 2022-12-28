@@ -15,20 +15,33 @@ class MentorInfoResponseData {
   String? suffixeName;
   String? firstName;
   String? lastName;
-  double? rate;
+  int? gender;
   String? profileImg;
   double? hourRateByJD;
+  String? bio;
+  String? dateOfBirth;
 
-  MentorInfoResponseData(
-      {this.id, this.suffixeName, this.firstName, this.lastName, this.rate, this.profileImg, this.hourRateByJD});
+  MentorInfoResponseData({
+    this.id,
+    this.suffixeName,
+    this.firstName,
+    this.lastName,
+    this.gender,
+    this.profileImg,
+    this.hourRateByJD,
+    this.bio,
+    this.dateOfBirth,
+  });
 
   MentorInfoResponseData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     suffixeName = json['suffixe_name'];
     firstName = json['first_name'];
     lastName = json['last_name'];
-    rate = json['rate'];
+    gender = json['gender'];
     profileImg = json['profile_img'];
     hourRateByJD = json['hour_rate_by_JD'];
+    bio = json['bio'];
+    dateOfBirth = json['date_of_birth'];
   }
 }

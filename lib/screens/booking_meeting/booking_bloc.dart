@@ -94,6 +94,8 @@ class BookingBloc extends Bloc<DiscountService> {
     return Currency().calculateHourRate(newAmount, Timing.hour);
   }
 
+  //TODO: Still there is a problem here
+
   _checkingAvaliableMentorswithin60min(int catID) {
     checkingAvaliableMentors.value = false;
     locator<MentorService>().getmentorAvaliablewithin60min(categoryID: catID, hour: hour).then((value) {
@@ -122,7 +124,7 @@ class BookingBloc extends Bloc<DiscountService> {
         });
       } else {
         hour = hour + 1;
-        if (hour < 24) {
+        if (hour < 100) {
           _checkingAvaliableMentorswithin60min(catID);
         } else {
           print("No Mentor Founded");
