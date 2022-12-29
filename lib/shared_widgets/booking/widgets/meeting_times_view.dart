@@ -52,11 +52,11 @@ class MeetingTimeView extends StatelessWidget {
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, mainAxisExtent: 50),
                     shrinkWrap: true,
-                    itemCount: list!.length,
+                    itemCount: list.length,
                     itemBuilder: (context, index) {
                       return BookingCell(
                         title: DayTime().convertingTimingToRealTime(list![index]),
-                        isSelected: (snapshot ?? false) == list![index],
+                        isSelected: (snapshot ?? false) == list[index],
                         onPress: () {
                           selectedMeetingTime.value = list![index];
                         },
