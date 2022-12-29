@@ -32,8 +32,6 @@ class MentorService with Service {
       methodName: MethodNameConstant.mentoravaliable,
       queryParam: {"catId": categoryID, "after": hour},
     );
-    print("response");
-    print(response);
 
     return MentorInfoResponse.fromJson(response);
   }

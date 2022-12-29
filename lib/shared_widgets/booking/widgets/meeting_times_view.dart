@@ -17,7 +17,6 @@ class MeetingTimeView extends StatelessWidget {
   final ValueNotifier<int?> selectedMeetingTime;
   final DateTime? selectedMeetingDate;
   final List<AppointmentData> listOfAppointments;
-
   const MeetingTimeView({
     super.key,
     required this.workingHoursSaturday,
@@ -34,8 +33,14 @@ class MeetingTimeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<int>? list;
-    list = checkDayOfTheWeek(selectedMeetingDate);
+    List<int>? list = _getWorkingDayForSelectedDate(selectedMeetingDate);
+    list = chackifTheDateSelectedExsistInAppotmentsList(selectedMeetingDate, list);
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+
+    if (DateTime(selectedMeetingDate!.year, selectedMeetingDate!.month, selectedMeetingDate!.day) == today) {
+      list = filterListWithCurrentTime(list);
+    }
 
     return SizedBox(
       height: 200,
@@ -47,11 +52,11 @@ class MeetingTimeView extends StatelessWidget {
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, mainAxisExtent: 50),
                     shrinkWrap: true,
-                    itemCount: list.length,
+                    itemCount: list!.length,
                     itemBuilder: (context, index) {
                       return BookingCell(
                         title: DayTime().convertingTimingToRealTime(list![index]),
-                        isSelected: (snapshot ?? 0) == list[index],
+                        isSelected: (snapshot ?? false) == list![index],
                         onPress: () {
                           selectedMeetingTime.value = list![index];
                         },
@@ -70,47 +75,57 @@ class MeetingTimeView extends StatelessWidget {
     );
   }
 
-  List<int>? checkDayOfTheWeek(DateTime? dateTime) {
+  List<int>? _getWorkingDayForSelectedDate(DateTime? dateTime) {
     if (dateTime != null) {
       final dayOfTheWeek = DateFormat('EEEE').format(dateTime);
+
       if (dayOfTheWeek == "Saturday") {
-        return chackifTheDateSelectedExsistInAppotmentsList(dateTime, workingHoursSaturday);
+        return workingHoursSaturday;
       } else if (dayOfTheWeek == "Sunday") {
-        return chackifTheDateSelectedExsistInAppotmentsList(dateTime, workingHoursSunday);
+        return workingHoursSunday;
       } else if (dayOfTheWeek == "Monday") {
-        return chackifTheDateSelectedExsistInAppotmentsList(dateTime, workingHoursMonday);
+        return workingHoursMonday;
       } else if (dayOfTheWeek == "Tuesday") {
-        return chackifTheDateSelectedExsistInAppotmentsList(dateTime, workingHoursTuesday);
+        return workingHoursTuesday;
       } else if (dayOfTheWeek == "Wednesday") {
-        return chackifTheDateSelectedExsistInAppotmentsList(dateTime, workingHoursWednesday);
+        return workingHoursWednesday;
       } else if (dayOfTheWeek == "Thursday") {
-        return chackifTheDateSelectedExsistInAppotmentsList(dateTime, workingHoursThursday);
+        return workingHoursThursday;
       } else if (dayOfTheWeek == "Friday") {
-        return chackifTheDateSelectedExsistInAppotmentsList(dateTime, workingHoursFriday);
+        return workingHoursFriday;
       } else {
-        return [];
+        return null;
       }
     } else {
       return null;
     }
   }
 
-  //TODO: handle Timing UTC
-
-  List<int>? chackifTheDateSelectedExsistInAppotmentsList(DateTime selectedDateTime, List<int>? listOFHours) {
-    if (listOFHours != null) {
-      List<int> newListOFHours = listOFHours;
-      final DateFormat formatter = DateFormat('yyyy-MM-dd');
-      final DateFormat formatterHour = DateFormat('HH');
-      final String formattedSelectedDateTime = formatter.format(selectedDateTime);
-      for (var date in listOfAppointments) {
-        var parsedDate = DateTime.parse(date.dateFrom!);
-        final String formattedparsedDate = formatter.format(parsedDate);
-        if (formattedSelectedDateTime == formattedparsedDate) {
-          final value = int.parse(formatterHour.format(parsedDate));
-          newListOFHours.removeWhere((item) => item == value);
+  List<int>? filterListWithCurrentTime(List<int>? list) {
+    if (list != null) {
+      List<int> filteredList = [];
+      int currentHour = DateTime.now().hour;
+      for (int time in list) {
+        if (time > currentHour) {
+          filteredList.add(time);
         }
       }
+      return filteredList;
+    } else {
+      return null;
+    }
+  }
+
+  List<int>? chackifTheDateSelectedExsistInAppotmentsList(DateTime? selectedDateTime, List<int>? listOFHours) {
+    if (listOFHours != null && selectedDateTime != null) {
+      List<int>? newListOFHours = listOFHours;
+      for (var appointment in listOfAppointments) {
+        var parsedDateFrom = DateTime.parse(appointment.dateFrom!);
+        if (newListOFHours.contains(parsedDateFrom.hour)) {
+          newListOFHours.remove(parsedDateFrom.hour);
+        }
+      }
+
       return newListOFHours;
     } else {
       return null;

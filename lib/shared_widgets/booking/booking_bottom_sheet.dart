@@ -227,6 +227,7 @@ class BookingBottomSheetsUtil {
           initialSelectedDate: DateTime.now(),
           onTap: (calendarTapDetails) {
             selectedMeetingDate.value = calendarTapDetails.date;
+            selectedMeetingTime.value = null;
           },
         ),
         const SizedBox(height: 8),
@@ -249,8 +250,8 @@ class BookingBottomSheetsUtil {
                     workingHoursWednesday: workingHoursWednesday,
                     workingHoursThursday: workingHoursThursday,
                     workingHoursFriday: workingHoursFriday,
-                    selectedMeetingTime: selectedMeetingTime,
                     selectedMeetingDate: snapshot,
+                    selectedMeetingTime: selectedMeetingTime,
                     listOfAppointments: listOfAppointments,
                   ),
                   const SizedBox(height: 8),

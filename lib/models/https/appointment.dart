@@ -1,3 +1,5 @@
+import 'package:client_app/models/model_checker.dart';
+
 class Appointment {
   List<AppointmentData>? data;
   String? message;
@@ -15,25 +17,34 @@ class Appointment {
   }
 }
 
-class AppointmentData {
+class AppointmentData with ModelChecker {
+  String? dateFrom;
   int? id;
   int? mentorId;
-  int? clientId;
-  String? dateFrom;
-  String? dateTo;
   double? priceBeforeDiscount;
+  String? createdAt;
+  String? dateTo;
+  int? clientId;
   int? discountId;
 
   AppointmentData(
-      {this.id, this.mentorId, this.clientId, this.discountId, this.dateFrom, this.dateTo, this.priceBeforeDiscount});
+      {this.dateFrom,
+      this.id,
+      this.mentorId,
+      this.priceBeforeDiscount,
+      this.createdAt,
+      this.dateTo,
+      this.clientId,
+      this.discountId});
 
   AppointmentData.fromJson(Map<String, dynamic> json) {
+    dateFrom = json['date_from'] as String?;
     id = json['id'];
-    mentorId = json['mentor_id'];
-    clientId = json['client_id'];
-    dateFrom = json['date_from'];
-    dateTo = json['date_to'];
-    discountId = json['discount_id'];
-    priceBeforeDiscount = json['price_before_discount'];
+    mentorId = json['mentor_id'] as int?;
+    priceBeforeDiscount = convertToDouble(json['price_before_discount']);
+    createdAt = json['created_at'] as String?;
+    dateTo = json['date_to'] as String?;
+    clientId = json['client_id'] as int?;
+    discountId = json['discount_id'] as int?;
   }
 }
