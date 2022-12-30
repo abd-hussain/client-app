@@ -16,6 +16,7 @@ class _CallScreenState extends State<CallScreen> {
 
   @override
   void didChangeDependencies() {
+    bloc.getClientAppointments();
     super.didChangeDependencies();
   }
 
@@ -34,16 +35,35 @@ class _CallScreenState extends State<CallScreen> {
         children: [
           const HeaderHomePage(),
           FutureBuilder(
-              future: bloc.listOfCategories(),
-              builder: (context, snapshot) {
-                return NoCallView(
-                  language: bloc.box.get(DatabaseFieldConstant.language),
-                  listOfCategories: snapshot.data ?? [],
-                );
+              future: bloc.getClientAppointments(),
+              builder: (context, snapshot1) {
+                if (snapshot1.hasData) {
+                  if (bloc.checkIfThereIsAnyMeetingToday(snapshot1.data!.data).isNotEmpty) {
+                    return Container(
+                      height: 100,
+                      color: Colors.red,
+                    );
+                  } else {
+                    return noCallView();
+                  }
+                } else {
+                  return noCallView();
+                }
               }),
           //TODO: handle other status
         ],
       ),
     );
+  }
+
+  Widget noCallView() {
+    return FutureBuilder(
+        future: bloc.listOfCategories(),
+        builder: (context, snapshot2) {
+          return NoCallView(
+            language: bloc.box.get(DatabaseFieldConstant.language),
+            listOfCategories: snapshot2.data ?? [],
+          );
+        });
   }
 }

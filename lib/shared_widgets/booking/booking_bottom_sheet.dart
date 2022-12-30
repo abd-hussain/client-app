@@ -13,8 +13,6 @@ import 'package:client_app/shared_widgets/custom_button.dart';
 
 enum BookingFaze { one, two, three }
 
-//TODO handle not showing hours before now
-
 class BookingBottomSheetsUtil {
   final BuildContext context;
   final double hourRate;
@@ -44,7 +42,7 @@ class BookingBottomSheetsUtil {
   });
 
   ValueNotifier<Timing> selectedMeetingDuration = ValueNotifier<Timing>(Timing.halfHour);
-  ValueNotifier<DateTime?> selectedMeetingDate = ValueNotifier<DateTime?>(DateTime.now());
+  ValueNotifier<DateTime> selectedMeetingDate = ValueNotifier<DateTime>(DateTime.now());
   ValueNotifier<int?> selectedMeetingTime = ValueNotifier<int?>(null);
 
   Future bookMeetingBottomSheet({
@@ -226,7 +224,7 @@ class BookingBottomSheetsUtil {
           minDate: DateTime.now(),
           initialSelectedDate: DateTime.now(),
           onTap: (calendarTapDetails) {
-            selectedMeetingDate.value = calendarTapDetails.date;
+            selectedMeetingDate.value = calendarTapDetails.date!;
             selectedMeetingTime.value = null;
           },
         ),
@@ -237,7 +235,7 @@ class BookingBottomSheetsUtil {
           fontSize: 14,
         ),
         const SizedBox(height: 8),
-        ValueListenableBuilder<DateTime?>(
+        ValueListenableBuilder<DateTime>(
             valueListenable: selectedMeetingDate,
             builder: (context, snapshot, child) {
               return Column(

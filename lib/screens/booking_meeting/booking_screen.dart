@@ -204,6 +204,9 @@ class _BookingScreenState extends State<BookingScreen> {
                 ValueListenableBuilder<String?>(
                     valueListenable: bloc.discountErrorMessage,
                     builder: (context, snapshot, child) {
+                      bloc.totalAmount = double.parse(Currency().getHourRateWithoutCurrency(bloc.meetingcost!));
+                      bloc.totalAmount = bloc.calculateTotalAmountWithoutCurrency(
+                          bloc.totalAmount, snapshot == null || snapshot == "error" ? 0 : double.parse(snapshot));
                       return AppointmentDetailsView(
                           title: AppLocalizations.of(context)!.totalamount,
                           desc: bloc.calculateTotalAmount(
@@ -226,27 +229,27 @@ class _BookingScreenState extends State<BookingScreen> {
                     await bottomSheet.paymentBottomSheet(
                         faze: PaymentFaze.welcoming,
                         openNext: () async {
+                          final parsedFromDate = DateTime.parse(bloc.meetingdate!);
+                          var fromDateTime = DateTime(
+                              parsedFromDate.year,
+                              parsedFromDate.month,
+                              parsedFromDate.day,
+                              DayTime().getHourFromTimeString(bloc.meetingtime!),
+                              DayTime().getMinFromTimeString(bloc.meetingtime!));
+
+                          var toDateTime = fromDateTime.add(Duration(minutes: int.parse(bloc.meetingduration!)));
+
                           if (bloc.bookingType == BookingType.schudule) {
-                            final parsedFromDate = DateTime.parse(bloc.meetingdate!);
-                            var toDateTime = DateTime(
-                                parsedFromDate.year,
-                                parsedFromDate.month,
-                                parsedFromDate.day,
-                                DayTime().getHourFromTimeString(bloc.meetingtime!),
-                                DayTime().getMinFromTimeString(bloc.meetingtime!));
-
-                            toDateTime = toDateTime.add(Duration(minutes: int.parse(bloc.meetingduration!)));
-
                             final appointment = AppointmentRequest(
                               mentorId: bloc.mentorId!,
-                              priceWithoutDescount: 0,
+                              priceWithoutDescount: bloc.totalAmount,
                               descountId: null,
                               dateFrom: CustomDate(
-                                  year: parsedFromDate.year,
-                                  month: parsedFromDate.month,
-                                  day: parsedFromDate.day,
-                                  hour: DayTime().getHourFromTimeString(bloc.meetingtime!),
-                                  min: DayTime().getMinFromTimeString(bloc.meetingtime!)),
+                                  year: fromDateTime.year,
+                                  month: fromDateTime.month,
+                                  day: fromDateTime.day,
+                                  hour: fromDateTime.hour,
+                                  min: fromDateTime.minute),
                               dateTo: CustomDate(
                                   year: toDateTime.year,
                                   month: toDateTime.month,
@@ -262,9 +265,28 @@ class _BookingScreenState extends State<BookingScreen> {
                               locator<MainContainerBloc>().currentTabIndexNotifier.value = SelectedTab.call;
                             });
                           } else {
-                            // bloc.bookMeetingRequest().then((value) {
-                            //   Navigator.of(context).pop();
-                            // });
+                            //TODO check date here
+
+                            final appointment = AppointmentRequest(
+                              mentorId: bloc.mentorId!,
+                              priceWithoutDescount: bloc.totalAmount,
+                              descountId: null,
+                              dateFrom: CustomDate(
+                                  year: fromDateTime.year,
+                                  month: fromDateTime.month,
+                                  day: fromDateTime.day,
+                                  hour: fromDateTime.hour,
+                                  min: fromDateTime.minute),
+                              dateTo: CustomDate(
+                                  year: toDateTime.year,
+                                  month: toDateTime.month,
+                                  day: toDateTime.day,
+                                  hour: toDateTime.hour,
+                                  min: toDateTime.minute),
+                            );
+                            bloc.bookMeetingRequest(appointment: appointment).then((value) {
+                              Navigator.of(context).pop();
+                            });
                           }
                         });
                   },

@@ -30,6 +30,7 @@ class BookingBloc extends Bloc<DiscountService> {
   String? meetingtime;
   String? meetingdate;
   String? meetingcost;
+  double totalAmount = 0;
   TextEditingController discountController = TextEditingController();
   ValueNotifier<String?> discountErrorMessage = ValueNotifier<String?>(null);
   BookingType bookingType = BookingType.schudule;
@@ -88,6 +89,11 @@ class BookingBloc extends Bloc<DiscountService> {
     });
   }
 
+  double calculateTotalAmountWithoutCurrency(double amount, double discount) {
+    final priceDiscount = amount * discount / 100;
+    return amount - priceDiscount;
+  }
+
   String calculateTotalAmount(double amount, double discount) {
     final priceDiscount = amount * discount / 100;
     final newAmount = amount - priceDiscount;
@@ -134,7 +140,7 @@ class BookingBloc extends Bloc<DiscountService> {
   }
 
   Future<void> bookMeetingRequest({required AppointmentRequest appointment}) async {
-    return await locator<AppointmentsService>().bookNewAppointments(appointment: appointment).then((value) {});
+    return await locator<AppointmentsService>().bookNewAppointments(appointment: appointment);
   }
 
   @override

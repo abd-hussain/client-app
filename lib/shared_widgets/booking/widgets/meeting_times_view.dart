@@ -15,7 +15,7 @@ class MeetingTimeView extends StatelessWidget {
   final List<int>? workingHoursThursday;
   final List<int>? workingHoursFriday;
   final ValueNotifier<int?> selectedMeetingTime;
-  final DateTime? selectedMeetingDate;
+  final DateTime selectedMeetingDate;
   final List<AppointmentData> listOfAppointments;
   const MeetingTimeView({
     super.key,
@@ -33,102 +33,99 @@ class MeetingTimeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<int>? list = _getWorkingDayForSelectedDate(selectedMeetingDate);
-    list = chackifTheDateSelectedExsistInAppotmentsList(selectedMeetingDate, list);
+    List<int> list = _getWorkingDayForSelectedDate(selectedMeetingDate);
+    list = _chackifTheDateSelectedExsistInAppotmentsList(selectedMeetingDate, list, listOfAppointments);
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
 
-    if (DateTime(selectedMeetingDate!.year, selectedMeetingDate!.month, selectedMeetingDate!.day) == today) {
+    if (DateTime(selectedMeetingDate.year, selectedMeetingDate.month, selectedMeetingDate.day) == today) {
       list = filterListWithCurrentTime(list);
     }
 
     return SizedBox(
       height: 200,
-      child: ValueListenableBuilder<int?>(
-          valueListenable: selectedMeetingTime,
-          builder: (context, snapshot, child) {
-            return list != null
-                ? GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, mainAxisExtent: 50),
-                    shrinkWrap: true,
-                    itemCount: list.length,
-                    itemBuilder: (context, index) {
-                      return BookingCell(
-                        title: DayTime().convertingTimingToRealTime(list![index]),
-                        isSelected: (snapshot ?? false) == list[index],
-                        onPress: () {
-                          selectedMeetingTime.value = list![index];
-                        },
-                      );
-                    },
-                  )
-                : Center(
-                    child: CustomText(
-                      title: AppLocalizations.of(context)!.noavaliabletime,
-                      textColor: const Color(0xff444444),
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  );
-          }),
+      child: avaliableTimesView(
+        context,
+        list,
+      ),
     );
   }
 
-  List<int>? _getWorkingDayForSelectedDate(DateTime? dateTime) {
-    if (dateTime != null) {
-      final dayOfTheWeek = DateFormat('EEEE').format(dateTime);
-
-      if (dayOfTheWeek == "Saturday") {
-        return workingHoursSaturday;
-      } else if (dayOfTheWeek == "Sunday") {
-        return workingHoursSunday;
-      } else if (dayOfTheWeek == "Monday") {
-        return workingHoursMonday;
-      } else if (dayOfTheWeek == "Tuesday") {
-        return workingHoursTuesday;
-      } else if (dayOfTheWeek == "Wednesday") {
-        return workingHoursWednesday;
-      } else if (dayOfTheWeek == "Thursday") {
-        return workingHoursThursday;
-      } else if (dayOfTheWeek == "Friday") {
-        return workingHoursFriday;
-      } else {
-        return null;
-      }
+  Widget avaliableTimesView(BuildContext context, List<int> list) {
+    print("list  $list");
+    if (list == []) {
+      return Center(
+        child: CustomText(
+          title: AppLocalizations.of(context)!.noavaliabletime,
+          textColor: const Color(0xff444444),
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+      );
     } else {
-      return null;
+      return ValueListenableBuilder<int?>(
+          valueListenable: selectedMeetingTime,
+          builder: (context, snapshot, child) {
+            return GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, mainAxisExtent: 50),
+              shrinkWrap: true,
+              itemCount: list.length,
+              itemBuilder: (context, index) {
+                return BookingCell(
+                  title: DayTime().convertingTimingToRealTime(list[index]),
+                  isSelected: (snapshot ?? false) == list[index],
+                  onPress: () {
+                    selectedMeetingTime.value = list[index];
+                  },
+                );
+              },
+            );
+          });
     }
   }
 
-  List<int>? filterListWithCurrentTime(List<int>? list) {
-    if (list != null) {
-      List<int> filteredList = [];
-      int currentHour = DateTime.now().hour;
-      for (int time in list) {
-        if (time > currentHour) {
-          filteredList.add(time);
-        }
-      }
-      return filteredList;
+  List<int> _getWorkingDayForSelectedDate(DateTime dateTime) {
+    final dayOfTheWeek = DateFormat('EEEE').format(dateTime);
+
+    if (dayOfTheWeek == "Saturday") {
+      return workingHoursSaturday ?? [];
+    } else if (dayOfTheWeek == "Sunday") {
+      return workingHoursSunday ?? [];
+    } else if (dayOfTheWeek == "Monday") {
+      return workingHoursMonday ?? [];
+    } else if (dayOfTheWeek == "Tuesday") {
+      return workingHoursTuesday ?? [];
+    } else if (dayOfTheWeek == "Wednesday") {
+      return workingHoursWednesday ?? [];
+    } else if (dayOfTheWeek == "Thursday") {
+      return workingHoursThursday ?? [];
+    } else if (dayOfTheWeek == "Friday") {
+      return workingHoursFriday ?? [];
     } else {
-      return null;
+      return [];
     }
   }
 
-  List<int>? chackifTheDateSelectedExsistInAppotmentsList(DateTime? selectedDateTime, List<int>? listOFHours) {
-    if (listOFHours != null && selectedDateTime != null) {
-      List<int>? newListOFHours = listOFHours;
-      for (var appointment in listOfAppointments) {
-        var parsedDateFrom = DateTime.parse(appointment.dateFrom!);
-        if (newListOFHours.contains(parsedDateFrom.hour)) {
-          newListOFHours.remove(parsedDateFrom.hour);
-        }
+  List<int> filterListWithCurrentTime(List<int> list) {
+    List<int> filteredList = [];
+    int currentHour = DateTime.now().hour;
+    for (int time in list) {
+      if (time > currentHour) {
+        filteredList.add(time);
       }
-
-      return newListOFHours;
-    } else {
-      return null;
     }
+    return filteredList;
+  }
+
+  List<int> _chackifTheDateSelectedExsistInAppotmentsList(
+      DateTime selectedDateTime, List<int> listOFHours, List<AppointmentData> listOfAppointments) {
+    List<int> newListOFHours = listOFHours;
+    for (var appointment in listOfAppointments) {
+      var parsedDateFrom = DateTime.parse(appointment.dateFrom!);
+      if (newListOFHours.contains(parsedDateFrom.hour)) {
+        newListOFHours.remove(parsedDateFrom.hour);
+      }
+    }
+    return newListOFHours;
   }
 }

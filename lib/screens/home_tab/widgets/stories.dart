@@ -56,12 +56,19 @@ class StoriesHomePage extends StatelessWidget {
               CircleAvatar(
                 backgroundColor: const Color(0xff034061),
                 radius: 50,
-                child: CircleAvatar(
-                  radius: 35,
-                  backgroundColor: Colors.transparent,
-                  backgroundImage: story.owner!.profileImg != null
-                      ? NetworkImage(AppConstant.imagesBaseURLForMentors + story.owner!.profileImg!)
-                      : const NetworkImage("${AppConstant.imagesBaseURLForMentors}1.png"),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: story.owner!.profileImg! != ""
+                      ? FadeInImage(
+                          placeholder: const AssetImage("assets/images/avatar.jpeg"),
+                          image: NetworkImage(AppConstant.imagesBaseURLForMentors + story.owner!.profileImg!, scale: 1),
+                        )
+                      : Image.asset(
+                          'assets/images/avatar.jpeg',
+                          width: 65,
+                          height: 65,
+                          fit: BoxFit.fill,
+                        ),
                 ),
               ),
               CustomText(

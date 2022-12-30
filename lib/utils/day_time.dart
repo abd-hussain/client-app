@@ -26,6 +26,7 @@ class DayTime {
   }
 
   int getHourFromTimeString(String time) {
+    print(time);
     if (time.contains("a.m")) {
       String result = time.replaceAll(" a.m", "");
       var parts = result.split(':');
@@ -33,7 +34,37 @@ class DayTime {
     } else {
       String result = time.replaceAll(" p.m", "");
       var parts = result.split(':');
-      return int.parse(parts[0].trim());
+      return _getHourPm(int.parse(parts[0].trim()));
+    }
+  }
+
+  int _getHourPm(int hour) {
+    if (hour == 1) {
+      return 13;
+    } else if (hour == 2) {
+      return 14;
+    } else if (hour == 2) {
+      return 14;
+    } else if (hour == 3) {
+      return 15;
+    } else if (hour == 4) {
+      return 16;
+    } else if (hour == 5) {
+      return 17;
+    } else if (hour == 6) {
+      return 18;
+    } else if (hour == 7) {
+      return 19;
+    } else if (hour == 8) {
+      return 20;
+    } else if (hour == 9) {
+      return 21;
+    } else if (hour == 10) {
+      return 22;
+    } else if (hour == 11) {
+      return 23;
+    } else {
+      return 0;
     }
   }
 
