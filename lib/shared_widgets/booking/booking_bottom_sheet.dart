@@ -6,6 +6,7 @@ import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/utils/currency.dart';
 import 'package:client_app/utils/day_time.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:client_app/shared_widgets/booking/widgets/cell_of_booking.dart';
@@ -241,13 +242,7 @@ class BookingBottomSheetsUtil {
               return Column(
                 children: [
                   MeetingTimeView(
-                    workingHoursSaturday: workingHoursSaturday,
-                    workingHoursSunday: workingHoursSunday,
-                    workingHoursMonday: workingHoursMonday,
-                    workingHoursTuesday: workingHoursTuesday,
-                    workingHoursWednesday: workingHoursWednesday,
-                    workingHoursThursday: workingHoursThursday,
-                    workingHoursFriday: workingHoursFriday,
+                    workingHours: _getWorkingDayForSelectedDate(snapshot),
                     selectedMeetingDate: snapshot,
                     selectedMeetingTime: selectedMeetingTime,
                     listOfAppointments: listOfAppointments,
@@ -374,5 +369,27 @@ class BookingBottomSheetsUtil {
         )
       ],
     );
+  }
+
+  List<int> _getWorkingDayForSelectedDate(DateTime dateTime) {
+    final dayOfTheWeek = DateFormat('EEEE').format(dateTime);
+
+    if (dayOfTheWeek == "Saturday") {
+      return workingHoursSaturday ?? [];
+    } else if (dayOfTheWeek == "Sunday") {
+      return workingHoursSunday ?? [];
+    } else if (dayOfTheWeek == "Monday") {
+      return workingHoursMonday ?? [];
+    } else if (dayOfTheWeek == "Tuesday") {
+      return workingHoursTuesday ?? [];
+    } else if (dayOfTheWeek == "Wednesday") {
+      return workingHoursWednesday ?? [];
+    } else if (dayOfTheWeek == "Thursday") {
+      return workingHoursThursday ?? [];
+    } else if (dayOfTheWeek == "Friday") {
+      return workingHoursFriday ?? [];
+    } else {
+      return [];
+    }
   }
 }
