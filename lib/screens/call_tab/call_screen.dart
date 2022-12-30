@@ -16,7 +16,6 @@ class _CallScreenState extends State<CallScreen> {
 
   @override
   void didChangeDependencies() {
-    bloc.getClientAppointments();
     super.didChangeDependencies();
   }
 

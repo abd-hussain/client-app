@@ -19,8 +19,6 @@ import 'package:client_app/sevices/general/network_info_service.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
-import 'screens/mycalender_tab/utils/get_background_color.dart';
-
 GetIt locator = GetIt.instance;
 
 Future<void> setupLocator() async {
@@ -42,7 +40,6 @@ Future<void> setupLocator() async {
   locator.registerFactory<HttpInterceptor>(() => HttpInterceptor());
   locator.registerSingleton<HttpRepository>(HttpRepository());
   locator.registerSingleton<DayTime>(DayTime());
-  locator.registerSingleton<BackgroundColor>(BackgroundColor());
   locator.registerLazySingleton(() => TipsBloc());
   locator.registerSingleton<MainContainerBloc>(MainContainerBloc());
 }

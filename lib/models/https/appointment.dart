@@ -21,6 +21,11 @@ class AppointmentData with ModelChecker {
   String? dateFrom;
   int? id;
   int? mentorId;
+  String? mentorPrefix;
+  String? mentorFirstName;
+  String? mentorLastName;
+  String? categoryName;
+
   double? priceBeforeDiscount;
   String? createdAt;
   String? dateTo;
@@ -35,12 +40,21 @@ class AppointmentData with ModelChecker {
       this.createdAt,
       this.dateTo,
       this.clientId,
+      this.mentorPrefix,
+      this.mentorFirstName,
+      this.mentorLastName,
+      this.categoryName,
       this.discountId});
 
   AppointmentData.fromJson(Map<String, dynamic> json) {
     dateFrom = json['date_from'] as String?;
     id = json['id'];
     mentorId = json['mentor_id'] as int?;
+    dateTo = json['date_to'] as String?;
+    mentorPrefix = json['suffixe_name'] as String?;
+    mentorFirstName = json['first_name'] as String?;
+    mentorLastName = json['last_name'] as String?;
+    categoryName = json['categoryName'] as String?;
     priceBeforeDiscount = convertToDouble(json['price_before_discount']);
     createdAt = json['created_at'] as String?;
     dateTo = json['date_to'] as String?;

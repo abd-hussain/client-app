@@ -143,7 +143,9 @@
     "paymentuse" : "Payment use",
     "googlepay" : "Google Pay",
     "applypay" : "Apple Pay",
-    "creditcard" : "Credit Card"
+    "creditcard" : "Credit Card",
+    "meetingwith" : "Meeting with",
+    "withword" : "with"
 
 
 

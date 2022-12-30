@@ -1,11 +1,12 @@
-import 'package:client_app/locator.dart';
 import 'package:client_app/models/https/calender_model.dart';
-import 'package:client_app/screens/mycalender_tab/utils/get_background_color.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MeetingDataSource extends CalendarDataSource {
-  MeetingDataSource(List<CalenderMeetings> source) {
+  late final BuildContext context;
+
+  MeetingDataSource(this.context, List<CalenderMeetings> source) {
     appointments = source;
   }
 
@@ -21,12 +22,12 @@ class MeetingDataSource extends CalendarDataSource {
 
   @override
   String getSubject(int index) {
-    return "Call with ${appointments![index].mentorName}";
+    return "${appointments![index].categoryName} ${AppLocalizations.of(context)!.withword} ${appointments![index].mentorPrefix} ${appointments![index].mentorFirstName} ${appointments![index].mentorLastName}";
   }
 
   @override
   Color getColor(int index) {
-    return locator<BackgroundColor>().getRandomColor();
+    return const Color(0xff444444);
   }
 
   @override
