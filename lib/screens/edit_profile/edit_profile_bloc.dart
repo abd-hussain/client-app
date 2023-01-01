@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:client_app/models/gender_model.dart';
+import 'package:client_app/models/https/account_info_response.dart';
 import 'package:client_app/models/https/update_account_request.dart';
 import 'package:client_app/sevices/account_service.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
@@ -67,34 +68,34 @@ class EditProfileBloc extends Bloc<AccountService> {
     ];
   }
 
-  Future<bool> callRequest(BuildContext context) async {
+  Future<AccountInfo?> callRequest(BuildContext context) async {
     if (firstNameController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("First Name is Required"),
       ));
-      return false;
+      return null;
     } else if (lastNameController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Last Name is Required"),
       ));
-      return false;
+      return null;
     } else {
       loadingStatus.value = LoadingStatus.inprogress;
-      await service.updateAccount(
-        account: UpdateAccountRequest(
-          firstName: firstNameController.text,
-          lastName: lastNameController.text,
-          email: emailController.text,
-          referalCode: _referalCode,
-          gender: GenderFormat().convertStringToIndex(context, genderController.text),
-          countryId: int.parse(box.get(DatabaseFieldConstant.countryId)),
-          dateOfBirth: selectedDate,
-          profileImage: profileImage,
-        ),
+
+      int countryId = box.get(DatabaseFieldConstant.countryId);
+
+      final body = UpdateAccountRequest(
+        firstName: firstNameController.text,
+        lastName: lastNameController.text,
+        email: emailController.text,
+        referalCode: _referalCode,
+        gender: GenderFormat().convertStringToIndex(context, genderController.text),
+        countryId: countryId,
+        dateOfBirth: selectedDate,
+        profileImage: profileImage,
       );
 
-      await box.put(DatabaseFieldConstant.userFirstName, firstNameController.text);
-      return true;
+      return await service.updateAccount(account: body);
     }
   }
 
@@ -105,7 +106,5 @@ class EditProfileBloc extends Bloc<AccountService> {
     emailController.dispose();
     genderController.dispose();
     loadingStatus.dispose();
-
-    throw UnimplementedError();
   }
 }

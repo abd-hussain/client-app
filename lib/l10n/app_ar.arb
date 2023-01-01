@@ -145,7 +145,10 @@
     "applypay" : "آبل باي",
     "creditcard" : "بطاقة الائتمان",
     "meetingwith" : "جلسة مع",
-    "withword" : "مع"
+    "withword" : "مع",
+    "remanintime" : "الوقت المتبقي للجلسة",
+    "cancelappointment" : "الغاء الجلسة"
+
 
 
 

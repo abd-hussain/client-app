@@ -1,4 +1,5 @@
 import 'package:client_app/screens/call_tab/call_bloc.dart';
+import 'package:client_app/screens/call_tab/widgets/call_view.dart';
 import 'package:client_app/screens/call_tab/widgets/no_call_view.dart';
 import 'package:client_app/screens/home_tab/widgets/header.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
@@ -37,10 +38,12 @@ class _CallScreenState extends State<CallScreen> {
               future: bloc.getClientAppointments(),
               builder: (context, snapshot1) {
                 if (snapshot1.hasData) {
-                  if (bloc.checkIfThereIsAnyMeetingToday(snapshot1.data!.data).isNotEmpty) {
-                    return Container(
-                      height: 100,
-                      color: Colors.red,
+                  final appointment = bloc.checkIfThereIsAnyMeetingTodayAndReturnTheNearsOne(snapshot1.data!.data);
+                  if (appointment != null) {
+                    return CallView(
+                      timerStartNumberHour: appointment.hour,
+                      timerStartNumberMin: appointment.minute,
+                      timerStartNumberSec: appointment.second,
                     );
                   } else {
                     return noCallView();

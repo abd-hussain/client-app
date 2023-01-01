@@ -51,7 +51,7 @@ class _MyCalenderScreenState extends State<MyCalenderScreen> {
                       if (calendarTapDetails.appointments != null &&
                           calendarTapDetails.targetElement == CalendarElement.appointment) {
                         //TODO handle Clicke
-                        print(calendarTapDetails.appointments![0].eventName);
+                        print(calendarTapDetails.appointments![0]);
                       }
                     },
                   );

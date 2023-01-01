@@ -145,7 +145,9 @@
     "applypay" : "Apple Pay",
     "creditcard" : "Credit Card",
     "meetingwith" : "Meeting with",
-    "withword" : "with"
+    "withword" : "with",
+    "remanintime" : "Remaining Time for the Meeting",
+    "cancelappointment" : "Cancel Meeting"
 
 
 

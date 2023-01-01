@@ -12,6 +12,8 @@ class AccountService with Service {
   }
 
   Future<AccountInfo> updateAccount({required UpdateAccountRequest account}) async {
+    print("account   $account");
+
     String fileName = "";
     if (account.profileImage != null) {
       fileName = account.profileImage!.path.split('/').last;
@@ -31,6 +33,8 @@ class AccountService with Service {
 
     final response = await repository.callRequest(
         requestType: RequestType.put, methodName: MethodNameConstant.updateAccount, formData: formData);
+
+    print("response   $response");
 
     return AccountInfo.fromJson(response);
   }
