@@ -1,4 +1,5 @@
 import 'package:client_app/screens/archive/archive_bloc.dart';
+import 'package:client_app/screens/archive/widgets/archive_tile_view.dart';
 import 'package:client_app/shared_widgets/custom_appbar.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:flutter/material.dart';
@@ -35,11 +36,24 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                 maxLins: 5,
               ),
             ),
-            ListView.builder(
-              itemCount: bloc.listOfArchive.length,
-              itemBuilder: (context, index) {
-                return Container();
-              },
+            Expanded(
+              child: bloc.listOfArchive.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: bloc.listOfArchive.length,
+                      itemBuilder: (context, index) {
+                        return ArchiveTileView(
+                          onTap: (p0) {},
+                        );
+                      },
+                    )
+                  : Center(
+                      child: CustomText(
+                        title: AppLocalizations.of(context)!.noitem,
+                        fontSize: 16,
+                        textColor: const Color(0xff554d56),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
             ),
           ],
         ),
