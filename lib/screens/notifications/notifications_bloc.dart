@@ -24,6 +24,5 @@ class NotificationsBloc extends Bloc<NotificationsService> {
   @override
   onDispose() {
     notificationsListNotifier.dispose();
-    throw UnimplementedError();
   }
 }

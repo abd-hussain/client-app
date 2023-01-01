@@ -24,7 +24,5 @@ class LoyalityBloc extends Bloc<LoyalityService> {
   onDispose() {
     pointNotifier.dispose();
     loyalityRulles.dispose();
-
-    throw UnimplementedError();
   }
 }

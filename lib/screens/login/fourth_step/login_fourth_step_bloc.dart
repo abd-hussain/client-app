@@ -154,7 +154,5 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
     loadingStatus.dispose();
     enableReferalCode.dispose();
     enableNextBtn.dispose();
-
-    throw UnimplementedError();
   }
 }

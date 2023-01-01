@@ -30,7 +30,5 @@ class HomeBloc extends Bloc<HomeService> {
     bannerListNotifier.dispose();
     storiesListNotifier.dispose();
     tipsListNotifier.dispose();
-
-    throw UnimplementedError();
   }
 }

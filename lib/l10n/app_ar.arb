@@ -147,7 +147,9 @@
     "meetingwith" : "جلسة مع",
     "withword" : "مع",
     "remanintime" : "الوقت المتبقي للجلسة",
-    "cancelappointment" : "الغاء الجلسة"
+    "cancelappointment" : "الغاء الجلسة",
+    "archivepagetitle" : "يتم حفظ هذه الارشيف بشكل آمن هنا لجعلها مرجعًا للمستقبل ، يمكنك العودة إليها متى شئت."
+
 
 
 

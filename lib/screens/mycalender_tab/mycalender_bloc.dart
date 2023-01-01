@@ -27,7 +27,5 @@ class MyCalenderBloc extends Bloc<AppointmentsService> {
   }
 
   @override
-  onDispose() {
-    throw UnimplementedError();
-  }
+  onDispose() {}
 }

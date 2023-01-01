@@ -79,7 +79,5 @@ class SetupBloc extends Bloc<FilterService> {
   onDispose() {
     selectedLanguageNotifier.dispose();
     countriesListNotifier.dispose();
-
-    throw UnimplementedError();
   }
 }

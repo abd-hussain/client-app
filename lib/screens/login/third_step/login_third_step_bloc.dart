@@ -48,7 +48,5 @@ class LoginThirdStepBloc extends Bloc<AuthService> {
     controller.dispose();
     timer!.cancel();
     otpNotValid.dispose();
-
-    throw UnimplementedError();
   }
 }

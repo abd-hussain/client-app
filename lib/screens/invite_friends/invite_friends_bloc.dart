@@ -44,6 +44,5 @@ class InviteFriendsBloc extends Bloc<SettingService> {
   @override
   onDispose() {
     contactsNotifier.dispose();
-    throw UnimplementedError();
   }
 }

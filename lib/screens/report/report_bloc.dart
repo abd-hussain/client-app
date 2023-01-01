@@ -58,6 +58,5 @@ class ReportBloc extends Bloc<ReportService> {
     textController.dispose();
     enableSubmitBtn.dispose();
     loadingStatus.dispose();
-    throw UnimplementedError();
   }
 }

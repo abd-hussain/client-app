@@ -39,7 +39,5 @@ class LoginSecoundStepBloc extends Bloc<AuthService> {
     loadingStatus.dispose();
     controller.dispose();
     enableVerifyBtn.dispose();
-
-    throw UnimplementedError();
   }
 }
