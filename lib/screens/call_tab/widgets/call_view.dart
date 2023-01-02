@@ -1,6 +1,8 @@
+import 'package:client_app/screens/booking_meeting/booking_bloc.dart';
 import 'package:client_app/screens/booking_meeting/widgets/appointment_details_view.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
+import 'package:client_app/utils/constants/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -10,12 +12,31 @@ class CallView extends StatefulWidget {
   final int timerStartNumberHour;
   final int timerStartNumberMin;
   final int timerStartNumberSec;
+  final String profileImage;
+  final String suffixeName;
+  final String firstName;
+  final String lastName;
+  final String categoryName;
+  final BookingType bookingType;
+  final String meetingduration;
+  final String meetingtime;
+  final Function() cancelMeetingTapped;
 
-  const CallView(
-      {super.key,
-      required this.timerStartNumberHour,
-      required this.timerStartNumberMin,
-      required this.timerStartNumberSec});
+  const CallView({
+    super.key,
+    required this.bookingType,
+    required this.suffixeName,
+    required this.firstName,
+    required this.lastName,
+    required this.profileImage,
+    required this.timerStartNumberHour,
+    required this.timerStartNumberMin,
+    required this.timerStartNumberSec,
+    required this.categoryName,
+    required this.cancelMeetingTapped,
+    required this.meetingduration,
+    required this.meetingtime,
+  });
 
   @override
   State<CallView> createState() => _CallViewState();
@@ -41,7 +62,7 @@ class _CallViewState extends State<CallView> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Lottie.asset('assets/lottie/115245-medical-heart-pressure-timer.zip', height: 250),
+        Lottie.asset('assets/lottie/115245-medical-heart-pressure-timer.zip', height: 200),
         Padding(
           padding: const EdgeInsets.all(8),
           child: CustomText(
@@ -72,18 +93,92 @@ class _CallViewState extends State<CallView> {
         ),
         AppointmentDetailsView(
           title: AppLocalizations.of(context)!.meetingtype,
-          desc: "", //"bloc.category",
+          desc: widget.bookingType == BookingType.schudule
+              ? AppLocalizations.of(context)!.bookingonetime
+              : AppLocalizations.of(context)!.meetingnow,
         ),
         AppointmentDetailsView(
           title: AppLocalizations.of(context)!.meetingduration,
-          desc: "", //"${bloc.meetingduration!} ${AppLocalizations.of(context)!.min}",
+          desc: "${widget.meetingduration} ${AppLocalizations.of(context)!.min}",
+        ),
+        AppointmentDetailsView(
+          title: AppLocalizations.of(context)!.meetingtime,
+          desc: widget.meetingtime,
+          forceView: true,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey[100],
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 2,
+                  blurRadius: 4,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            height: 60,
+            width: MediaQuery.of(context).size.width,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    backgroundColor: const Color(0xff034061),
+                    radius: 40,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: widget.profileImage != ""
+                          ? FadeInImage(
+                              placeholder: const AssetImage("assets/images/avatar.jpeg"),
+                              image: NetworkImage(AppConstant.imagesBaseURLForMentors + widget.profileImage, scale: 1),
+                            )
+                          : Image.asset(
+                              'assets/images/avatar.jpeg',
+                              width: 40,
+                              height: 40,
+                              fit: BoxFit.fill,
+                            ),
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width - 150,
+                        child: CustomText(
+                          title: "${widget.suffixeName} ${widget.firstName} ${widget.lastName}",
+                          fontSize: 14,
+                          textAlign: TextAlign.center,
+                          fontWeight: FontWeight.bold,
+                          maxLins: 3,
+                          textColor: const Color(0xff554d56),
+                        ),
+                      ),
+                      const Expanded(child: SizedBox()),
+                      CustomText(
+                        title: widget.categoryName,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        textColor: const Color(0xff554d56),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
         CustomButton(
             enableButton: true,
             buttonTitle: AppLocalizations.of(context)!.cancelappointment,
             width: MediaQuery.of(context).size.width / 2,
             buttonColor: const Color(0xffda1100),
-            onTap: () {})
+            onTap: () => widget.cancelMeetingTapped()),
+        const SizedBox(height: 20),
       ],
     );
   }

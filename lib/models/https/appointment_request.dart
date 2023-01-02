@@ -2,6 +2,7 @@ import 'package:client_app/utils/mixins.dart';
 
 class AppointmentRequest implements Model {
   int mentorId;
+  String type;
   double priceWithoutDescount;
   int? descountId;
   CustomDate dateFrom;
@@ -11,6 +12,7 @@ class AppointmentRequest implements Model {
       {required this.mentorId,
       required this.priceWithoutDescount,
       this.descountId,
+      required this.type,
       required this.dateFrom,
       required this.dateTo});
 
@@ -18,6 +20,7 @@ class AppointmentRequest implements Model {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
     data['mentorId'] = mentorId;
+    data['type'] = type;
     data['priceWithoutDescount'] = priceWithoutDescount;
     data['descountId'] = descountId;
     data['dateFrom'] = dateFrom.toJson();

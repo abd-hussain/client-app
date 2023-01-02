@@ -57,7 +57,7 @@ class StoriesHomePage extends StatelessWidget {
                 backgroundColor: const Color(0xff034061),
                 radius: 50,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(35),
                   child: story.owner!.profileImg! != ""
                       ? FadeInImage(
                           placeholder: const AssetImage("assets/images/avatar.jpeg"),
@@ -65,8 +65,8 @@ class StoriesHomePage extends StatelessWidget {
                         )
                       : Image.asset(
                           'assets/images/avatar.jpeg',
-                          width: 65,
-                          height: 65,
+                          width: 70,
+                          height: 70,
                           fit: BoxFit.fill,
                         ),
                 ),

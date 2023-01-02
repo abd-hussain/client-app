@@ -25,6 +25,8 @@ class AppointmentData with ModelChecker {
   String? mentorFirstName;
   String? mentorLastName;
   String? categoryName;
+  String? profileImg;
+  String? appointmentType;
 
   double? priceBeforeDiscount;
   String? createdAt;
@@ -43,6 +45,8 @@ class AppointmentData with ModelChecker {
       this.mentorPrefix,
       this.mentorFirstName,
       this.mentorLastName,
+      this.appointmentType,
+      this.profileImg,
       this.categoryName,
       this.discountId});
 
@@ -58,6 +62,8 @@ class AppointmentData with ModelChecker {
     priceBeforeDiscount = convertToDouble(json['price_before_discount']);
     createdAt = json['created_at'] as String?;
     dateTo = json['date_to'] as String?;
+    appointmentType = json['appointment_type'] as String?;
+    profileImg = json['profile_img'] as String?;
     clientId = json['client_id'] as int?;
     discountId = json['discount_id'] as int?;
   }

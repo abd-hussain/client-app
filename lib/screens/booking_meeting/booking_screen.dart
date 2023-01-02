@@ -243,6 +243,7 @@ class _BookingScreenState extends State<BookingScreen> {
                             final appointment = AppointmentRequest(
                               mentorId: bloc.mentorId!,
                               priceWithoutDescount: bloc.totalAmount,
+                              type: "schudule",
                               descountId: null,
                               dateFrom: CustomDate(
                                   year: fromDateTime.year,
@@ -270,6 +271,7 @@ class _BookingScreenState extends State<BookingScreen> {
                             final appointment = AppointmentRequest(
                               mentorId: bloc.mentorId!,
                               priceWithoutDescount: bloc.totalAmount,
+                              type: "now",
                               descountId: null,
                               dateFrom: CustomDate(
                                   year: fromDateTime.year,

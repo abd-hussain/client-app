@@ -23,26 +23,28 @@ class CallBloc extends Bloc<FilterService> {
     return locator<AppointmentsService>().getClientAppointments();
   }
 
-  DateTime? checkIfThereIsAnyMeetingTodayAndReturnTheNearsOne(List<AppointmentData>? listOfData) {
+  AppointmentData? checkIfThereIsAnyMeetingTodayAndReturnTheNearsOne(List<AppointmentData>? listOfData) {
     if (listOfData != null) {
       final now = DateTime.now();
       final today = DateTime(now.year, now.month, now.day);
-      List<DateTime> newList = [];
+      List<AppointmentData> newList = [];
       for (var appointment in listOfData) {
         final parsedFromDate = DateTime.parse(appointment.dateFrom!);
         if (DateTime(parsedFromDate.year, parsedFromDate.month, parsedFromDate.day) == today) {
-          newList.add(DateTime.parse(appointment.dateFrom!));
+          newList.add(appointment);
         }
       }
       if (newList.isNotEmpty) {
-        DateTime returnedDateTime = newList[0];
+        AppointmentData returnedAppointment = newList[0];
 
-        for (DateTime date in newList) {
-          if (date.isBefore(returnedDateTime)) {
-            returnedDateTime = date;
+        for (AppointmentData appoint in newList) {
+          final parsedFromDate = DateTime.parse(appoint.dateFrom!);
+
+          if (parsedFromDate.isBefore(parsedFromDate)) {
+            returnedAppointment = appoint;
           }
         }
-        return returnedDateTime;
+        return returnedAppointment;
       } else {
         return null;
       }

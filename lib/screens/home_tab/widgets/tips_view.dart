@@ -53,11 +53,11 @@ class TipsView extends StatelessWidget {
                           child: Column(
                             children: [
                               ClipRRect(
-                                borderRadius: BorderRadius.circular(50),
+                                borderRadius: BorderRadius.circular(35),
                                 child: Image.network(
                                   AppConstant.imagesBaseURLForTips + tip.image!,
-                                  width: 75,
-                                  height: 75,
+                                  width: 80,
+                                  height: 80,
                                 ),
                               ),
                               CustomText(

@@ -25,7 +25,7 @@ class MentorProfileInfoView extends StatelessWidget {
             backgroundColor: const Color(0xff034061),
             radius: 50,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(25),
               child: profileImg != ""
                   ? FadeInImage(
                       placeholder: const AssetImage("assets/images/avatar.jpeg"),
