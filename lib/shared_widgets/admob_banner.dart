@@ -40,12 +40,15 @@ class _AddMobBannerState extends State<AddMobBanner> {
   @override
   Widget build(BuildContext context) {
     return _isBannerAdReady
-        ? Align(
-            alignment: Alignment.topCenter,
-            child: SizedBox(
-              width: _bannerAd.size.width.toDouble(),
-              height: _bannerAd.size.height.toDouble(),
-              child: AdWidget(ad: _bannerAd),
+        ? Padding(
+            padding: const EdgeInsets.only(top: 8, bottom: 8),
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: SizedBox(
+                width: _bannerAd.size.width.toDouble(),
+                height: _bannerAd.size.height.toDouble(),
+                child: AdWidget(ad: _bannerAd),
+              ),
             ),
           )
         : Container();

@@ -16,7 +16,7 @@ class StoriesHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 150,
+      height: 140,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: listOfStories.length,
@@ -73,7 +73,7 @@ class StoriesHomePage extends StatelessWidget {
               ),
               CustomText(
                 title: story.owner!.firstName! + story.owner!.lastName!,
-                fontSize: 10,
+                fontSize: 12,
                 maxLins: 4,
                 textAlign: TextAlign.center,
                 textColor: const Color(0xff444444),

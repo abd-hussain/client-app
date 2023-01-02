@@ -19,7 +19,7 @@ class TipsView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            padding: const EdgeInsets.only(top: 4, bottom: 4, left: 4, right: 4),
+            padding: const EdgeInsets.only(top: 4, bottom: 4, left: 8, right: 8),
             color: Colors.grey[300],
             width: MediaQuery.of(context).size.width,
             child: CustomText(

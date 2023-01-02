@@ -148,7 +148,12 @@
     "withword" : "with",
     "remanintime" : "Remaining Time for the Meeting",
     "cancelappointment" : "Cancel Meeting",
-    "archivepagetitle" : "these archives are saved securely here to make it a reference for future, you can return to it when ever you want."
+    "archivepagetitle" : "these archives are saved securely here to make it a reference for future, you can return to it when ever you want.",
+    "comingevent" : "Upcoming Events",
+    "intrestedfrom" : "Intrested From",
+    "registernow" : "Register Now",
+    "free" : "Free"
+
 
 
 

@@ -1,5 +1,7 @@
+import 'package:client_app/models/https/event.dart';
 import 'package:client_app/models/https/home_response.dart';
 import 'package:client_app/screens/home_tab/home_bloc.dart';
+import 'package:client_app/screens/home_tab/widgets/event_view.dart';
 import 'package:client_app/screens/home_tab/widgets/header.dart';
 import 'package:client_app/screens/home_tab/widgets/main_banner.dart';
 import 'package:client_app/screens/home_tab/widgets/stories.dart';
@@ -78,9 +80,24 @@ class _HomeScreenState extends State<HomeScreen> {
                             return const SizedBox();
                           }
                         }),
-                    const SizedBox(height: 8),
                     const AddMobBanner(),
-                    const SizedBox(height: 8),
+                    //TODO : Handle Events
+                    ValueListenableBuilder<List<Event>?>(
+                        valueListenable: _bloc.eventListNotifier,
+                        builder: (context, snapshot, child) {
+                          if (snapshot != null && snapshot.isNotEmpty) {
+                            return EventView(
+                              listOfEvents: snapshot,
+                              onTipSelected: (tip) {
+                                //TODO
+                              },
+                            );
+                          } else {
+                            return const SizedBox();
+                          }
+                        }),
+                    const SizedBox(height: 20),
+                    const AddMobBanner(),
                     ValueListenableBuilder<List<MainTips>?>(
                         valueListenable: _bloc.tipsListNotifier,
                         builder: (context, snapshot, child) {
