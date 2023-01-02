@@ -1,5 +1,6 @@
 import 'package:client_app/screens/booking_meeting/booking_bloc.dart';
 import 'package:client_app/screens/booking_meeting/widgets/appointment_details_view.dart';
+import 'package:client_app/shared_widgets/booking/cancel_booking_bottom_sheet.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/utils/constants/constant.dart';
@@ -177,7 +178,13 @@ class _CallViewState extends State<CallView> {
             buttonTitle: AppLocalizations.of(context)!.cancelappointment,
             width: MediaQuery.of(context).size.width / 2,
             buttonColor: const Color(0xffda1100),
-            onTap: () => widget.cancelMeetingTapped()),
+            onTap: () {
+              CancelBookingBottomSheetsUtil(context: context).bookMeetingBottomSheet(
+                confirm: () {
+                  widget.cancelMeetingTapped();
+                },
+              );
+            }),
         const SizedBox(height: 20),
       ],
     );

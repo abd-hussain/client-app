@@ -61,8 +61,7 @@ class _CallScreenState extends State<CallScreen> {
                             setState(() {});
                           });
                         },
-                        bookingType:
-                            appointment.appointmentType == "schudule" ? BookingType.schudule : BookingType.instant,
+                        bookingType: appointment.appointmentType == 1 ? BookingType.schudule : BookingType.instant,
                         profileImage: appointment.profileImg!,
                         suffixeName: appointment.mentorPrefix!,
                         firstName: appointment.mentorFirstName!,
