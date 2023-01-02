@@ -1,5 +1,4 @@
 import 'package:client_app/shared_widgets/custom_text.dart';
-import 'package:client_app/utils/constants/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -11,7 +10,7 @@ class SearchForMentorView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Lottie.asset('assets/lottie/98723-search-users.zip', height: 250),
+        Lottie.asset('assets/lottie/98723-search-users.zip', height: 200),
         CustomText(
           title: AppLocalizations.of(context)!.searchforsuitablementor,
           fontSize: 18,

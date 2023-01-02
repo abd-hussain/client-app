@@ -111,6 +111,7 @@ class BookingBloc extends Bloc<DiscountService> {
         mentorLastName = value.data!.lastName!;
         mentorSuffixName = value.data!.suffixeName!;
         mentorId = value.data!.id!;
+        final now = DateTime.now();
 
         meetingcost = Currency().calculateHourRate(
             value.data!.hourRateByJD! * 1.5,
@@ -120,9 +121,8 @@ class BookingBloc extends Bloc<DiscountService> {
                     ? Timing.halfHour
                     : Timing.quarterHour);
         meetingtime = "after $hour hour";
-        final now = DateTime.now();
         meetingdate = DayTime().dateFormatter(DateTime(now.year, now.month, now.day, (now.hour + hour)).toString());
-        Timer(const Duration(seconds: 3), () {
+        Timer(const Duration(seconds: 2), () {
           checkingAvaliableMentors.value = true;
           final backup = discountErrorMessage.value;
           discountErrorMessage.value = "update";

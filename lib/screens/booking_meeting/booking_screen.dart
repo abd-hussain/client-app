@@ -94,9 +94,7 @@ class _BookingScreenState extends State<BookingScreen> {
                     builder: (context, snapshot, child) {
                       return AppointmentDetailsView(
                         title: AppLocalizations.of(context)!.meetingtime,
-                        desc: bloc.bookingType == BookingType.schudule || snapshot
-                            ? bloc.meetingtime!
-                            : AppLocalizations.of(context)!.withinhour,
+                        desc: bloc.meetingtime ?? "-----",
                         forceView: true,
                       );
                     }),
@@ -230,16 +228,15 @@ class _BookingScreenState extends State<BookingScreen> {
                         faze: PaymentFaze.welcoming,
                         openNext: () async {
                           final parsedFromDate = DateTime.parse(bloc.meetingdate!);
-                          var fromDateTime = DateTime(
-                              parsedFromDate.year,
-                              parsedFromDate.month,
-                              parsedFromDate.day,
-                              DayTime().getHourFromTimeString(bloc.meetingtime!),
-                              DayTime().getMinFromTimeString(bloc.meetingtime!));
-
-                          var toDateTime = fromDateTime.add(Duration(minutes: int.parse(bloc.meetingduration!)));
-
                           if (bloc.bookingType == BookingType.schudule) {
+                            var fromDateTime = DateTime(
+                                parsedFromDate.year,
+                                parsedFromDate.month,
+                                parsedFromDate.day,
+                                DayTime().getHourFromTimeString(bloc.meetingtime!),
+                                DayTime().getMinFromTimeString(bloc.meetingtime!));
+                            var toDateTime = fromDateTime.add(Duration(minutes: int.parse(bloc.meetingduration!)));
+
                             final appointment = AppointmentRequest(
                               mentorId: bloc.mentorId!,
                               priceWithoutDescount: bloc.totalAmount,
@@ -266,12 +263,12 @@ class _BookingScreenState extends State<BookingScreen> {
                               locator<MainContainerBloc>().currentTabIndexNotifier.value = SelectedTab.call;
                             });
                           } else {
-                            //TODO check date here
-
+                            var fromDateTime = DateTime.now().add(Duration(hours: bloc.hour));
+                            var toDateTime = fromDateTime.add(Duration(minutes: int.parse(bloc.meetingduration!)));
                             final appointment = AppointmentRequest(
                               mentorId: bloc.mentorId!,
                               priceWithoutDescount: bloc.totalAmount,
-                              type: "now",
+                              type: "instant",
                               descountId: null,
                               dateFrom: CustomDate(
                                   year: fromDateTime.year,

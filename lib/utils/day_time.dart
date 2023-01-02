@@ -26,7 +26,6 @@ class DayTime {
   }
 
   int getHourFromTimeString(String time) {
-    print(time);
     if (time.contains("a.m")) {
       String result = time.replaceAll(" a.m", "");
       var parts = result.split(':');
