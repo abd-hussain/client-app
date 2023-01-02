@@ -20,7 +20,6 @@ class AppointmentsService with Service {
       requestType: RequestType.get,
       methodName: MethodNameConstant.clientAppointments,
     );
-
     return Appointment.fromJson(response);
   }
 
@@ -29,6 +28,16 @@ class AppointmentsService with Service {
       requestType: RequestType.post,
       methodName: MethodNameConstant.bookAppointment,
       postBody: appointment,
+    );
+
+    return response;
+  }
+
+  Future<void> cancelAppointment({required int id}) async {
+    final response = await repository.callRequest(
+      requestType: RequestType.post,
+      methodName: MethodNameConstant.cancelAppointment,
+      queryParam: {"id": id},
     );
 
     return response;

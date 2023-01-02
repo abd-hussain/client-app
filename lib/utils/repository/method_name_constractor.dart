@@ -7,6 +7,7 @@ class MethodNameConstant {
   static const String clientAppointments = "appointment/client";
   static const String mentoravaliable = "mentor-account/mentor-avaliable";
   static const String bookAppointment = "appointment/book";
+  static const String cancelAppointment = "appointment/cancel";
 
   static const String discount = "discount/";
 

@@ -57,7 +57,9 @@ class _CallScreenState extends State<CallScreen> {
                         timerStartNumberMin: timeDifference.minute,
                         timerStartNumberSec: timeDifference.second,
                         cancelMeetingTapped: () {
-                          //TODO
+                          bloc.cancelAppointment(id: appointment.id!).then((value) {
+                            setState(() {});
+                          });
                         },
                         bookingType:
                             appointment.appointmentType == "schudule" ? BookingType.schudule : BookingType.instant,

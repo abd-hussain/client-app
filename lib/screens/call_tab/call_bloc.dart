@@ -23,6 +23,10 @@ class CallBloc extends Bloc<FilterService> {
     return locator<AppointmentsService>().getClientAppointments();
   }
 
+  Future<void> cancelAppointment({required int id}) {
+    return locator<AppointmentsService>().cancelAppointment(id: id);
+  }
+
   AppointmentData? checkIfThereIsAnyMeetingTodayAndReturnTheNearsOne(List<AppointmentData>? listOfData) {
     if (listOfData != null) {
       final now = DateTime.now();
