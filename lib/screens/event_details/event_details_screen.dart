@@ -7,6 +7,7 @@ import 'package:client_app/utils/constants/constant.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/currency.dart';
 import 'package:client_app/utils/enums/loading_status.dart';
+import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -143,51 +144,58 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                         width: MediaQuery.of(context).size.width,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: const Color(0xff034061),
-                                radius: 40,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: bloc.mentorProfileImage != ""
-                                      ? FadeInImage(
-                                          placeholder: const AssetImage("assets/images/avatar.jpeg"),
-                                          image: NetworkImage(
-                                              AppConstant.imagesBaseURLForMentors + bloc.mentorProfileImage!,
-                                              scale: 1),
-                                        )
-                                      : Image.asset(
-                                          'assets/images/avatar.jpeg',
-                                          width: 40,
-                                          height: 40,
-                                          fit: BoxFit.fill,
-                                        ),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.of(context, rootNavigator: true)
+                                  .pushNamed(RoutesConstants.mentorProfileScreen, arguments: {"id": bloc.mentorId!});
+                            },
+                            child: Row(
+                              children: [
+                                CircleAvatar(
+                                  backgroundColor: const Color(0xff034061),
+                                  radius: 40,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: bloc.mentorProfileImage != ""
+                                        ? FadeInImage(
+                                            placeholder: const AssetImage("assets/images/avatar.jpeg"),
+                                            image: NetworkImage(
+                                                AppConstant.imagesBaseURLForMentors + bloc.mentorProfileImage!,
+                                                scale: 1),
+                                          )
+                                        : Image.asset(
+                                            'assets/images/avatar.jpeg',
+                                            width: 40,
+                                            height: 40,
+                                            fit: BoxFit.fill,
+                                          ),
+                                  ),
                                 ),
-                              ),
-                              Column(
-                                children: [
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width - 150,
-                                    child: CustomText(
-                                      title: "${bloc.mentorSuffixeName} ${bloc.mentorFirstName} ${bloc.mentorLastName}",
-                                      fontSize: 14,
-                                      textAlign: TextAlign.center,
+                                Column(
+                                  children: [
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width - 150,
+                                      child: CustomText(
+                                        title:
+                                            "${bloc.mentorSuffixeName} ${bloc.mentorFirstName} ${bloc.mentorLastName}",
+                                        fontSize: 14,
+                                        textAlign: TextAlign.center,
+                                        fontWeight: FontWeight.bold,
+                                        maxLins: 3,
+                                        textColor: const Color(0xff554d56),
+                                      ),
+                                    ),
+                                    const Expanded(child: SizedBox()),
+                                    CustomText(
+                                      title: bloc.mentorCategoryName!,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold,
-                                      maxLins: 3,
                                       textColor: const Color(0xff554d56),
                                     ),
-                                  ),
-                                  const Expanded(child: SizedBox()),
-                                  CustomText(
-                                    title: bloc.mentorCategoryName!,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    textColor: const Color(0xff554d56),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),

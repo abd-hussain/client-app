@@ -14,7 +14,7 @@ class EventDetailsBloc extends Bloc<EventService> {
   ValueNotifier<LoadingStatus> loadingStatus = ValueNotifier<LoadingStatus>(LoadingStatus.idle);
 
   String? image = "";
-
+  int? mentorId = 0;
   String? mentorProfileImage = "";
   String? mentorSuffixeName = "";
   String? mentorFirstName = "";
@@ -67,6 +67,12 @@ class EventDetailsBloc extends Bloc<EventService> {
         eventDuration = "$difference ${AppLocalizations.of(context)!.min}";
         eventHour = DayTime().convertingTimingWithMinToRealTime(fromDateTime.hour, fromDateTime.minute);
         eventDescripton = value.data!.description!;
+        mentorCategoryName = value.data!.categoryName!;
+        mentorProfileImage = value.data!.mentorProfileImg!;
+        mentorSuffixeName = value.data!.mentorSuffixName!;
+        mentorFirstName = value.data!.mentorFirstName!;
+        mentorLastName = value.data!.mentorLastName!;
+        mentorId = value.data!.mentorId!;
         loadingStatus.value = LoadingStatus.finish;
       }
     });

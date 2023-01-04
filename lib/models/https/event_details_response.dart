@@ -24,19 +24,32 @@ class EventDetailsData with ModelChecker {
   List<int>? joiningClientsIds;
   String? dateFrom;
   double? price;
+  String? categoryName;
+  String? mentorProfileImg;
+  String? mentorSuffixName;
+  String? mentorFirstName;
+  String? mentorLastName;
+  int? mentorId;
 
-  EventDetailsData(
-      {this.image,
-      this.ownerId,
-      this.description,
-      this.maxNumberOfAttendance,
-      this.dateTo,
-      this.state,
-      this.id,
-      this.title,
-      this.joiningClientsIds,
-      this.dateFrom,
-      this.price});
+  EventDetailsData({
+    this.image,
+    this.ownerId,
+    this.description,
+    this.maxNumberOfAttendance,
+    this.dateTo,
+    this.state,
+    this.id,
+    this.title,
+    this.joiningClientsIds,
+    this.dateFrom,
+    this.price,
+    this.categoryName,
+    this.mentorProfileImg,
+    this.mentorSuffixName,
+    this.mentorFirstName,
+    this.mentorLastName,
+    this.mentorId,
+  });
 
   EventDetailsData.fromJson(Map<String, dynamic> json) {
     image = convertToString(json['image']);
@@ -50,5 +63,11 @@ class EventDetailsData with ModelChecker {
     joiningClientsIds = json['joining_clients_ids'].cast<int>();
     dateFrom = convertToString(json['date_from']);
     price = convertToDouble(json['price']);
+    categoryName = convertToString(json['category_name']);
+    mentorProfileImg = convertToString(json['profile_img']);
+    mentorSuffixName = convertToString(json['suffixe_name']);
+    mentorFirstName = convertToString(json['first_name']);
+    mentorLastName = convertToString(json['last_name']);
+    mentorId = convertToInteger(json['owner_id']);
   }
 }
