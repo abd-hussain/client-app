@@ -86,6 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         builder: (context, snapshot, child) {
                           if (snapshot != null && snapshot.isNotEmpty) {
                             return EventView(
+                              language: _bloc.box.get(DatabaseFieldConstant.language),
                               listOfEvents: snapshot,
                               onEventSelected: (event) {
                                 Navigator.of(context, rootNavigator: true)

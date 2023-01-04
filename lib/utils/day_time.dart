@@ -96,4 +96,25 @@ class DayTime {
       return int.parse(parts.sublist(1).join(':').trim());
     }
   }
+
+  String convertDayToArabic(String dayName) {
+    switch (dayName) {
+      case "Saturday":
+        return "السبت";
+      case "Sunday":
+        return "الاحد";
+      case "Monday":
+        return "الاثنين";
+      case "Tuesday":
+        return "الثلاثاء";
+      case "Wednesday":
+        return "الاربعاء";
+      case "Thursday":
+        return "الخميس";
+      case "Friday":
+        return "الجمعة";
+      default:
+        return "";
+    }
+  }
 }

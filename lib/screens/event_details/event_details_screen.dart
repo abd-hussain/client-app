@@ -6,6 +6,7 @@ import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/utils/constants/constant.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/currency.dart';
+import 'package:client_app/utils/day_time.dart';
 import 'package:client_app/utils/enums/loading_status.dart';
 import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
@@ -80,7 +81,10 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                   eventInfoBox(title: AppLocalizations.of(context)!.eventdate, desc: bloc.eventDate!)),
                           Expanded(
                               child: eventInfoBox(
-                                  title: AppLocalizations.of(context)!.eventday, desc: bloc.eventDayName!)),
+                                  title: AppLocalizations.of(context)!.eventday,
+                                  desc: bloc.box.get(DatabaseFieldConstant.language) == "en"
+                                      ? bloc.eventDayName!
+                                      : DayTime().convertDayToArabic(bloc.eventDayName!))),
                           Expanded(
                               child:
                                   eventInfoBox(title: AppLocalizations.of(context)!.eventhour, desc: bloc.eventHour!)),

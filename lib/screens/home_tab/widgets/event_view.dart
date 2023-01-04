@@ -8,12 +8,17 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 class EventView extends StatelessWidget {
+  final String language;
   final List<MainEvent> listOfEvents;
   final Function(MainEvent) onEventSelected;
   final Function(MainEvent) onOptionSelected;
 
   const EventView(
-      {super.key, required this.listOfEvents, required this.onEventSelected, required this.onOptionSelected});
+      {super.key,
+      required this.listOfEvents,
+      required this.onEventSelected,
+      required this.onOptionSelected,
+      required this.language});
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +128,7 @@ class EventView extends StatelessWidget {
                                       textColor: const Color(0xff444444),
                                     ),
                                     CustomText(
-                                      title: dayName,
+                                      title: language == "en" ? dayName : DayTime().convertDayToArabic(dayName),
                                       fontSize: 14,
                                       textAlign: TextAlign.center,
                                       textColor: const Color(0xff444444),
