@@ -73,7 +73,6 @@ class EventView extends StatelessWidget {
                                             AppConstant.imagesBaseURLForEvents + event.image!,
                                             scale: 1,
                                           ),
-                                          height: 100,
                                         )
                                       : Image.asset(
                                           'assets/images/avatar.jpeg',
