@@ -30,7 +30,6 @@ class AppointmentsService with Service {
       postBody: appointment,
     );
 
-    print("response     $response");
     return response;
   }
 

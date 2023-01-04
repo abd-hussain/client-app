@@ -25,6 +25,24 @@ class DayTime {
     }
   }
 
+  String convertingTimingWithMinToRealTime(int hour, int min) {
+    if (hour > 0 && hour <= 9) {
+      return "0$hour:${_minFraction(min)} am";
+    } else if (hour > 9 && hour <= 12) {
+      return "$hour:${_minFraction(min)} am";
+    } else {
+      return "${hour - 12}:${_minFraction(min)} pm";
+    }
+  }
+
+  String _minFraction(int min) {
+    if (min >= 0 && min <= 9) {
+      return "0$min";
+    } else {
+      return "$min";
+    }
+  }
+
   int getHourFromTimeString(String time) {
     if (time.contains("a.m")) {
       String result = time.replaceAll(" a.m", "");

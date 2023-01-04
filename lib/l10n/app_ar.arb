@@ -153,7 +153,28 @@
     "intrestedfrom" : "مهتم من اصل",
     "registernow" : "سجل الان",
     "free" : "مجانا",
-    "cancelmeetingmessage" : "بالضغط على تأكيد ، ستلغي الجلسة وستخسر نصف تكلفة الجلسة"
+    "cancelmeetingmessage" : "بالضغط على تأكيد ، ستلغي الجلسة وستخسر نصف تكلفة الجلسة",
+    "eventdetails" : "تفاصيل الجلسة",
+    "options" : "خيارات",
+    "hideevent" : "اخفاء هذه الجلسة",
+    "reportevent" : "الابلاغ عن هذه الجلسة",
+    "eventdate" : "التاريخ",
+    "eventday" : "اليوم",
+    "eventhour" : "الساعة",
+    "eventDuration" : "المدة",
+    "price" : "المبلغ",
+    "eventdesc" : "التفاصيل",
+    "eventhowattend" : "كيف احضر",
+    "eventhowattenddetails" : "بعد التسجيل بنجاح ، ستتم إضافة هذا الحدث إلى التقويم الخاص بك وستتلقى إشعارًا في يوم الحدث وقبل ساعة واحدة من بدء الحدث"
+
+
+
+
+
+
+
+
+
 
 
 

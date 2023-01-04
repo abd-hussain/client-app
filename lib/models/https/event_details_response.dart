@@ -1,0 +1,54 @@
+import 'package:client_app/models/model_checker.dart';
+
+class EventDetails {
+  EventDetailsData? data;
+  String? message;
+
+  EventDetails({this.data, this.message});
+
+  EventDetails.fromJson(Map<String, dynamic> json) {
+    data = json['data'] != null ? EventDetailsData.fromJson(json['data']) : null;
+    message = json['message'];
+  }
+}
+
+class EventDetailsData with ModelChecker {
+  String? image;
+  int? ownerId;
+  String? description;
+  int? maxNumberOfAttendance;
+  String? dateTo;
+  int? state;
+  int? id;
+  String? title;
+  List<int>? joiningClientsIds;
+  String? dateFrom;
+  double? price;
+
+  EventDetailsData(
+      {this.image,
+      this.ownerId,
+      this.description,
+      this.maxNumberOfAttendance,
+      this.dateTo,
+      this.state,
+      this.id,
+      this.title,
+      this.joiningClientsIds,
+      this.dateFrom,
+      this.price});
+
+  EventDetailsData.fromJson(Map<String, dynamic> json) {
+    image = convertToString(json['image']);
+    ownerId = convertToInteger(json['owner_id']);
+    description = convertToString(json['description']);
+    maxNumberOfAttendance = convertToInteger(json['max_number_of_attendance']);
+    dateTo = convertToString(json['date_to']);
+    id = convertToInteger(json['id']);
+    state = convertToInteger(json['state']);
+    title = convertToString(json['title']);
+    joiningClientsIds = json['joining_clients_ids'].cast<int>();
+    dateFrom = convertToString(json['date_from']);
+    price = convertToDouble(json['price']);
+  }
+}

@@ -1,4 +1,3 @@
-import 'package:client_app/models/https/event.dart';
 import 'package:client_app/models/https/home_response.dart';
 import 'package:client_app/screens/home_tab/home_bloc.dart';
 import 'package:client_app/screens/home_tab/widgets/event_view.dart';
@@ -7,6 +6,7 @@ import 'package:client_app/screens/home_tab/widgets/main_banner.dart';
 import 'package:client_app/screens/home_tab/widgets/stories.dart';
 import 'package:client_app/screens/home_tab/widgets/tips_view.dart';
 import 'package:client_app/shared_widgets/admob_banner.dart';
+import 'package:client_app/shared_widgets/booking/event_bottom_sheet.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/logger.dart';
 import 'package:client_app/utils/routes.dart';
@@ -81,15 +81,22 @@ class _HomeScreenState extends State<HomeScreen> {
                           }
                         }),
                     const AddMobBanner(),
-                    //TODO : Handle Events
-                    ValueListenableBuilder<List<Event>?>(
+                    ValueListenableBuilder<List<MainEvent>?>(
                         valueListenable: _bloc.eventListNotifier,
                         builder: (context, snapshot, child) {
                           if (snapshot != null && snapshot.isNotEmpty) {
                             return EventView(
                               listOfEvents: snapshot,
-                              onTipSelected: (tip) {
-                                //TODO
+                              onEventSelected: (event) {
+                                Navigator.of(context, rootNavigator: true)
+                                    .pushNamed(RoutesConstants.eventDetailsScreen, arguments: {"event_details": event});
+                              },
+                              onOptionSelected: (event) {
+                                EventOptionBookingBottomSheetsUtil(
+                                        context: context, language: _bloc.box.get(DatabaseFieldConstant.language))
+                                    .bookMeetingBottomSheet(report: () {
+                                  _bloc.reportEvent(eventId: event.id!);
+                                });
                               },
                             );
                           } else {

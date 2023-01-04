@@ -1,13 +1,19 @@
-import 'package:client_app/models/https/event.dart';
+import 'package:client_app/models/https/home_response.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
+import 'package:client_app/utils/constants/constant.dart';
+import 'package:client_app/utils/currency.dart';
+import 'package:client_app/utils/day_time.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 
 class EventView extends StatelessWidget {
-  final List<Event> listOfEvents;
-  final Function(Event) onTipSelected;
+  final List<MainEvent> listOfEvents;
+  final Function(MainEvent) onEventSelected;
+  final Function(MainEvent) onOptionSelected;
 
-  const EventView({super.key, required this.listOfEvents, required this.onTipSelected});
+  const EventView(
+      {super.key, required this.listOfEvents, required this.onEventSelected, required this.onOptionSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -29,16 +35,22 @@ class EventView extends StatelessWidget {
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width,
-            height: 350,
+            height: 375,
             child: ListView.builder(
                 itemCount: listOfEvents.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  final Event event = listOfEvents[index];
+                  final MainEvent event = listOfEvents[index];
+                  final fromDateTime = DateTime.parse(event.dateFrom!);
+                  final toDateTime = DateTime.parse(event.dateTo!);
+                  final dayName = DateFormat('EEEE').format(fromDateTime);
+
+                  final difference = toDateTime.difference(fromDateTime).inMinutes;
+
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: InkWell(
-                      onTap: () => onTipSelected(event),
+                      onTap: () => onEventSelected(event),
                       child: Container(
                         width: 275,
                         height: 300,
@@ -49,15 +61,54 @@ class EventView extends StatelessWidget {
                         ),
                         child: Column(
                           children: [
-                            ClipRRect(
-                              borderRadius:
-                                  const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-                              child: Image.network(
-                                event.image,
-                                width: 275,
-                                height: 150,
-                                fit: BoxFit.fill,
-                              ),
+                            Stack(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                                  child: event.image != ""
+                                      ? FadeInImage(
+                                          placeholder: const AssetImage("assets/images/avatar.jpeg"),
+                                          image: NetworkImage(
+                                            AppConstant.imagesBaseURLForEvents + event.image!,
+                                            scale: 1,
+                                          ),
+                                          height: 100,
+                                        )
+                                      : Image.asset(
+                                          'assets/images/avatar.jpeg',
+                                          fit: BoxFit.fill,
+                                        ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: InkWell(
+                                    onTap: () => onOptionSelected(event),
+                                    child: Container(
+                                      width: 50,
+                                      height: 20,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[200],
+                                        borderRadius: BorderRadius.circular(10),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.3),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(0, 2),
+                                          ),
+                                        ],
+                                      ),
+                                      child: const Center(
+                                        child: Icon(
+                                          Icons.more_horiz,
+                                          color: Color(0xff444444),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 8, bottom: 4, left: 8, right: 8),
@@ -67,13 +118,13 @@ class EventView extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     CustomText(
-                                      title: event.eventDate,
+                                      title: "${fromDateTime.year}/${fromDateTime.month}/${fromDateTime.day}",
                                       fontSize: 14,
                                       textAlign: TextAlign.center,
                                       textColor: const Color(0xff444444),
                                     ),
                                     CustomText(
-                                      title: event.eventDay,
+                                      title: dayName,
                                       fontSize: 14,
                                       textAlign: TextAlign.center,
                                       textColor: const Color(0xff444444),
@@ -88,13 +139,14 @@ class EventView extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   CustomText(
-                                    title: event.fromHour,
+                                    title: DayTime()
+                                        .convertingTimingWithMinToRealTime(fromDateTime.hour, fromDateTime.minute),
                                     fontSize: 14,
                                     textAlign: TextAlign.center,
                                     textColor: const Color(0xff444444),
                                   ),
                                   CustomText(
-                                    title: event.duration,
+                                    title: "$difference ${AppLocalizations.of(context)!.min}",
                                     fontSize: 14,
                                     textAlign: TextAlign.center,
                                     textColor: const Color(0xff444444),
@@ -104,20 +156,23 @@ class EventView extends StatelessWidget {
                             ),
                             Expanded(
                               child: Center(
-                                child: CustomText(
-                                  title: event.eventName,
-                                  fontSize: 18,
-                                  textAlign: TextAlign.center,
-                                  fontWeight: FontWeight.bold,
-                                  maxLins: 3,
-                                  textColor: const Color(0xff444444),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: CustomText(
+                                    title: event.title!,
+                                    fontSize: 18,
+                                    textAlign: TextAlign.center,
+                                    fontWeight: FontWeight.bold,
+                                    maxLins: 3,
+                                    textColor: const Color(0xff444444),
+                                  ),
                                 ),
                               ),
                             ),
                             const SizedBox(height: 4),
                             CustomText(
                               title:
-                                  "${event.intrestedcount} ${AppLocalizations.of(context)!.intrestedfrom} ${event.intrestedTotalcount}",
+                                  "${event.joiningClientsIds!.length} ${AppLocalizations.of(context)!.intrestedfrom} ${event.maxNumberOfAttendance}",
                               fontSize: 14,
                               textAlign: TextAlign.center,
                               textColor: const Color(0xff444444),
@@ -148,7 +203,7 @@ class EventView extends StatelessWidget {
                                           child: CustomText(
                                             title: event.price == 0
                                                 ? "${AppLocalizations.of(context)!.registernow} ( ${AppLocalizations.of(context)!.free} )"
-                                                : "${AppLocalizations.of(context)!.registernow} (${event.price} JD)",
+                                                : "${AppLocalizations.of(context)!.registernow} ( ${Currency().calculateHourRate(event.price!, Timing.hour)} )",
                                             fontSize: 16,
                                             textAlign: TextAlign.center,
                                             fontWeight: FontWeight.bold,

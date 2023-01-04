@@ -4,6 +4,7 @@ import 'package:client_app/screens/booking_meeting/booking_screen.dart';
 import 'package:client_app/screens/call_tab/call_screen.dart';
 import 'package:client_app/screens/categories_tab/categories_screen.dart';
 import 'package:client_app/screens/edit_profile/edit_profile_screen.dart';
+import 'package:client_app/screens/event_details/event_details_screen.dart';
 import 'package:client_app/screens/home_tab/home_screen.dart';
 import 'package:client_app/screens/invite_friends/invite_friends_screen.dart';
 import 'package:client_app/screens/login/first_step/login_first_step_screen.dart';
@@ -54,6 +55,7 @@ class RoutesConstants {
   static const String tipsShareResultScreen = 'tipsShareResultScreen';
   static const String tipsResultScreen = 'tipsResultScreen';
   static const String bookingScreen = 'bookingScreen';
+  static const String eventDetailsScreen = 'eventDetailsScreen';
 }
 
 final Map<String, Widget> routes = {
@@ -83,4 +85,5 @@ final Map<String, Widget> routes = {
   RoutesConstants.tipsShareResultScreen: const TipsShareResultScreen(),
   RoutesConstants.tipsResultScreen: const TipsResultScreen(),
   RoutesConstants.bookingScreen: const BookingScreen(),
+  RoutesConstants.eventDetailsScreen: const EventDetailsScreen(),
 };

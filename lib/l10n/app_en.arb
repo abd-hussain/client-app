@@ -153,7 +153,19 @@
     "intrestedfrom" : "Intrested From",
     "registernow" : "Register Now",
     "free" : "Free",
-    "cancelmeetingmessage" : "By pressing confirm you will cancel the meeting and you will lose half of the meeting cost"
+    "cancelmeetingmessage" : "By pressing confirm you will cancel the meeting and you will lose half of the meeting cost",
+    "eventdetails" : "Event Details",
+    "options" : "More Options",
+    "hideevent" : "Hide Event",
+    "reportevent" : "Report Event",
+    "eventdate" : "Date",
+    "eventday" : "Day",
+    "eventhour" : "Hour",
+    "eventDuration" : "Duration",
+    "price" : "Price",
+    "eventdesc" : "Description",
+    "eventhowattend" : "How To Attend",
+    "eventhowattenddetails" : "After successfully registering this event will be added to your calendar and you will receive a notification on the day of the event and 1 hour before the event started"
 
 
 

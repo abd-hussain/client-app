@@ -14,8 +14,9 @@ class HomeResponseData {
   List<MainBanner>? mainBanner;
   List<MainStory>? mainStory;
   List<MainTips>? mainTips;
+  List<MainEvent>? mainEvent;
 
-  HomeResponseData({this.mainBanner, this.mainStory, this.mainTips});
+  HomeResponseData({this.mainBanner, this.mainStory, this.mainTips, this.mainEvent});
 
   HomeResponseData.fromJson(Map<String, dynamic> json) {
     if (json['main_banner'] != null) {
@@ -36,6 +37,68 @@ class HomeResponseData {
         mainTips!.add(MainTips.fromJson(v));
       });
     }
+    if (json['main_event'] != null) {
+      mainEvent = <MainEvent>[];
+      json['main_event'].forEach((v) {
+        mainEvent!.add(MainEvent.fromJson(v));
+      });
+    }
+  }
+}
+
+class EventRespose {
+  List<MainEvent>? data;
+  String? message;
+
+  EventRespose({this.data, this.message});
+
+  EventRespose.fromJson(Map<String, dynamic> json) {
+    if (json['data'] != null) {
+      data = <MainEvent>[];
+      json['data'].forEach((v) {
+        data!.add(MainEvent.fromJson(v));
+      });
+    }
+    message = json['message'];
+  }
+}
+
+class MainEvent {
+  int? id;
+  String? title;
+  String? image;
+  String? description;
+  List<int>? joiningClientsIds;
+  int? maxNumberOfAttendance;
+  String? dateFrom;
+  String? dateTo;
+  double? price;
+  int? state;
+
+  MainEvent({
+    this.id,
+    this.title,
+    this.image,
+    this.description,
+    this.joiningClientsIds,
+    this.maxNumberOfAttendance,
+    this.dateFrom,
+    this.dateTo,
+    this.price,
+    this.state,
+  });
+
+  MainEvent.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    title = json['title'];
+    image = json['image'];
+    description = json['description'];
+    joiningClientsIds = json['joining_clients_ids'].cast<int>();
+    maxNumberOfAttendance = json['max_number_of_attendance'];
+    dateFrom = json['date_from'];
+    dateTo = json['date_to'];
+    price = json['price'];
+    state = json['state'];
   }
 }
 
@@ -48,6 +111,23 @@ class MainBanner {
   MainBanner.fromJson(Map<String, dynamic> json) {
     image = json['image'];
     actionType = json['action_type'];
+  }
+}
+
+class StoryRespose {
+  List<MainStory>? data;
+  String? message;
+
+  StoryRespose({this.data, this.message});
+
+  StoryRespose.fromJson(Map<String, dynamic> json) {
+    if (json['data'] != null) {
+      data = <MainStory>[];
+      json['data'].forEach((v) {
+        data!.add(MainStory.fromJson(v));
+      });
+    }
+    message = json['message'];
   }
 }
 

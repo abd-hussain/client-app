@@ -44,6 +44,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   flutter_multi_select_items: ^0.4.2
   lottie: ^2.1.0
+  ionicons: ^0.2.1
 
 dev_dependencies:
   flutter_test:
