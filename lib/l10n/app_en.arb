@@ -165,7 +165,12 @@
     "price" : "Price",
     "eventdesc" : "Description",
     "eventhowattend" : "How To Attend",
-    "eventhowattenddetails" : "After successfully registering this event will be added to your calendar and you will receive a notification on the day of the event and 1 hour before the event started"
+    "eventhowattenddetails" : "After successfully registering this event will be added to your calendar and you will receive a notification on the day of the event and 1 hour before the event started",
+    "tutorial1" : "All consultations through specialized programs and packages",
+    "tutorial2" : "Enter into a safe consultation with the audiovisual specialist",
+    "tutorial3" : "Choose the specialist based on his specialization, qualifications, experience, and customer experiences with him",
+    "tutorial4" : "Search among hundreds of specialists and consultants in various specialties",
+    "tutorial5" : "Talk to specialists around the clock to help you as soon as possible"
 
 
 
