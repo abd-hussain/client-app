@@ -34,4 +34,12 @@ class AccountService with Service {
 
     return AccountInfo.fromJson(response);
   }
+
+  Future<dynamic> removeAccount() async {
+    final response = await repository.callRequest(
+      requestType: RequestType.delete,
+      methodName: MethodNameConstant.deleteAccount,
+    );
+    return response;
+  }
 }

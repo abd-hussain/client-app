@@ -269,7 +269,7 @@ class _LoginFourthStepScreenState extends State<LoginFourthStepScreen> {
 
     late DateTime date;
     if (bloc.selectedDate != null) {
-      date = DateFormat('dd-MMM-yyyy').parse(bloc.selectedDate!);
+      date = DateFormat('yyyy/MM/dd').parse(bloc.selectedDate!);
     } else {
       date = DateTime(1992, 05, 22);
     }
@@ -279,10 +279,10 @@ class _LoginFourthStepScreenState extends State<LoginFourthStepScreen> {
         firstDate: DateTime(1945, 01, 01),
         lastDate: DateTime(DateTime.now().year - 10, 1, 1),
         initialDate: date,
-        dateFormat: "dd-MMM-yyyy",
+        dateFormat: "yyyy/MM/dd",
         locale: DatePicker.localeFromString(savedLanguage),
         onChange: (DateTime newDate, _) {
-          bloc.selectedDate = DateFormat("dd-MMM-yyyy").format(newDate);
+          bloc.selectedDate = DateFormat("yyyy/MM/dd").format(newDate);
         },
         pickerTheme: const DateTimePickerTheme(
           itemTextStyle: TextStyle(color: Color(0xff384048), fontSize: 15),

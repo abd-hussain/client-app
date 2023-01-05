@@ -14,6 +14,7 @@ import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:ionicons/ionicons.dart';
 
 class AccountBloc extends Bloc<AccountService> {
   final box = Hive.box(DatabaseBoxConstant.userInfo);
@@ -36,6 +37,15 @@ class AccountBloc extends Bloc<AccountService> {
         name: AppLocalizations.of(context)!.logout,
         onTap: () {
           _logoutView(context);
+        },
+      ),
+      ProfileOptions(
+        icon: Ionicons.bag_remove_outline,
+        iconColor: Colors.red,
+        name: AppLocalizations.of(context)!.deleteaccount,
+        nameColor: Colors.red,
+        onTap: () {
+          _deleteAccountView(context);
         },
       ),
     ];
@@ -83,10 +93,17 @@ class AccountBloc extends Bloc<AccountService> {
             .pushNamed(RoutesConstants.reportScreen, arguments: {AppConstant.argument1: ReportPageType.issue}),
       ),
       ProfileOptions(
-        icon: Icons.auto_fix_high,
+        icon: Ionicons.balloon,
         name: AppLocalizations.of(context)!.reportsuggestion,
         onTap: () => Navigator.of(context, rootNavigator: true)
             .pushNamed(RoutesConstants.reportScreen, arguments: {AppConstant.argument1: ReportPageType.suggestion}),
+      ),
+      ProfileOptions(
+        icon: Ionicons.extension_puzzle,
+        name: AppLocalizations.of(context)!.joinasmentor,
+        onTap: () {
+          //TODO
+        },
       )
     ];
   }
@@ -94,14 +111,14 @@ class AccountBloc extends Bloc<AccountService> {
   List<ProfileOptions> listOfSupportOptions(BuildContext context) {
     return [
       ProfileOptions(
-        icon: Icons.info,
+        icon: Ionicons.color_palette,
         name: AppLocalizations.of(context)!.aboutus,
         onTap: () {
           _openAboutUs(context);
         },
       ),
       ProfileOptions(
-        icon: Icons.group_add,
+        icon: Ionicons.person_add,
         name: AppLocalizations.of(context)!.invite_friends,
         onTap: () {
           _openInviteFriends(context);
@@ -172,6 +189,7 @@ class AccountBloc extends Bloc<AccountService> {
   }
 
   void _logoutView(BuildContext context) {
+    var nav = Navigator.of(context, rootNavigator: true);
     BottomSheetsUtil().areYouShoureButtomSheet(
         context: context,
         message: AppLocalizations.of(context)!.areyousurelogout,
@@ -187,10 +205,32 @@ class AccountBloc extends Bloc<AccountService> {
             DatabaseFieldConstant.isUserLoggedIn,
             DatabaseFieldConstant.userFirstName,
           ]);
-          await locator.popScope().then((value) async {
-            MyApp.of(context)!.rebuild();
-            await Navigator.of(context, rootNavigator: true)
-                .pushNamedAndRemoveUntil(RoutesConstants.initialRoute, (Route<dynamic> route) => true);
+
+          await nav.pushNamedAndRemoveUntil(RoutesConstants.initialRoute, (Route<dynamic> route) => true);
+        });
+  }
+
+  void _deleteAccountView(BuildContext context) {
+    var nav = Navigator.of(context, rootNavigator: true);
+
+    BottomSheetsUtil().areYouShoureButtomSheet(
+        context: context,
+        message: AppLocalizations.of(context)!.areyousuredeleteaccount,
+        sure: () async {
+          service.removeAccount().whenComplete(() async {
+            final box = await Hive.openBox(DatabaseBoxConstant.userInfo);
+            box.deleteAll([
+              DatabaseFieldConstant.apikey,
+              DatabaseFieldConstant.token,
+              DatabaseFieldConstant.language,
+              DatabaseFieldConstant.userid,
+              DatabaseFieldConstant.countryId,
+              DatabaseFieldConstant.countryFlag,
+              DatabaseFieldConstant.isUserLoggedIn,
+              DatabaseFieldConstant.userFirstName,
+            ]);
+
+            await nav.pushNamedAndRemoveUntil(RoutesConstants.initialRoute, (Route<dynamic> route) => true);
           });
         });
   }

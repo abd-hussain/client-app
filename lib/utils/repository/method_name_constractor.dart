@@ -29,6 +29,7 @@ class MethodNameConstant {
   static const String authDebuging = "client-auth-debug";
   static const String authVerify = "client-auth-verify";
   static const String account = "client-account/";
+  static const String deleteAccount = "client-account/delete";
   static const String updateAccount = "client-account/update";
   static const String reportIssue = "report/issue";
   static const String reportSuggestion = "report/suggestion";

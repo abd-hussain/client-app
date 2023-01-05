@@ -34,11 +34,11 @@ class ListOfOptions extends StatelessWidget {
           children: [
             const AddMobBanner(),
             isItLoggedIn ? titleOptionCollection(title: AppLocalizations.of(context)!.accountsettings) : Container(),
-            isItLoggedIn ? optionCollectionItem(listOfAccountOptions, containerHight: 195) : Container(),
+            isItLoggedIn ? optionCollectionItem(listOfAccountOptions, containerHight: 260) : Container(),
             titleOptionCollection(title: AppLocalizations.of(context)!.generalsettings),
             optionCollectionItem(listOfSettingsOptions, containerHight: 200),
             titleOptionCollection(title: AppLocalizations.of(context)!.reachouttous),
-            optionCollectionItem(listOfReachOutUsOptions, containerHight: 125),
+            optionCollectionItem(listOfReachOutUsOptions, containerHight: 200),
             titleOptionCollection(title: AppLocalizations.of(context)!.support),
             optionCollectionItem(listOfSupportOptions, containerHight: 125),
             const SizedBox(height: 8),
@@ -94,13 +94,13 @@ class ListOfOptions extends StatelessWidget {
                     Icon(
                       listOfOptions[index].icon,
                       size: 20,
-                      color: const Color(0xff034061),
+                      color: listOfOptions[index].iconColor,
                     ),
                     const SizedBox(width: 8),
                     CustomText(
                         title: listOfOptions[index].name,
                         fontSize: 16,
-                        textColor: const Color(0xff034061),
+                        textColor: listOfOptions[index].nameColor,
                         fontWeight: FontWeight.w500),
                     Expanded(child: Container()),
                     listOfOptions[index].selectedItem != ""
