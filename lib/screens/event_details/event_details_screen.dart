@@ -1,3 +1,4 @@
+import 'package:client_app/screens/booking_meeting/widgets/appointment_details_view.dart';
 import 'package:client_app/screens/event_details/event_details_bloc.dart';
 import 'package:client_app/shared_widgets/booking/payment_bottom_sheet.dart';
 import 'package:client_app/shared_widgets/custom_appbar.dart';
@@ -47,213 +48,223 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
           icon: const Icon(Icons.share),
         )
       ]),
-      body: SingleChildScrollView(
-        child: ValueListenableBuilder<LoadingStatus>(
-            valueListenable: bloc.loadingStatus,
-            builder: (context, snapshot, child) {
-              if (snapshot != LoadingStatus.inprogress) {
-                return Column(
-                  children: [
-                    Image.network(
-                      bloc.image!,
-                      width: MediaQuery.of(context).size.width,
-                      fit: BoxFit.fill,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Center(
-                        child: CustomText(
-                          title: bloc.eventName!,
-                          fontSize: 18,
-                          textAlign: TextAlign.center,
-                          fontWeight: FontWeight.bold,
-                          maxLins: 3,
-                          textColor: const Color(0xff444444),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: ValueListenableBuilder<LoadingStatus>(
+              valueListenable: bloc.loadingStatus,
+              builder: (context, snapshot, child) {
+                if (snapshot != LoadingStatus.inprogress) {
+                  return Column(
+                    children: [
+                      Image.network(
+                        bloc.image!,
+                        width: MediaQuery.of(context).size.width,
+                        fit: BoxFit.fill,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Center(
+                          child: CustomText(
+                            title: bloc.eventName!,
+                            fontSize: 18,
+                            textAlign: TextAlign.center,
+                            fontWeight: FontWeight.bold,
+                            maxLins: 3,
+                            textColor: const Color(0xff444444),
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8, right: 8),
-                      child: Row(
-                        children: [
-                          Expanded(
-                              child:
-                                  eventInfoBox(title: AppLocalizations.of(context)!.eventdate, desc: bloc.eventDate!)),
-                          Expanded(
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8, right: 8),
+                        child: Row(
+                          children: [
+                            Expanded(
+                                child: eventInfoBox(
+                                    title: AppLocalizations.of(context)!.eventdate, desc: bloc.eventDate!)),
+                            Expanded(
+                                child: eventInfoBox(
+                                    title: AppLocalizations.of(context)!.eventday,
+                                    desc: bloc.box.get(DatabaseFieldConstant.language) == "en"
+                                        ? bloc.eventDayName!
+                                        : DayTime().convertDayToArabic(bloc.eventDayName!))),
+                            Expanded(
+                                child: eventInfoBox(
+                                    title: AppLocalizations.of(context)!.eventhour, desc: bloc.eventHour!)),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8, right: 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Expanded(
+                                flex: 1,
+                                child: eventInfoBox(
+                                    title: AppLocalizations.of(context)!.eventDuration, desc: bloc.eventDuration!)),
+                            Expanded(
+                              flex: 3,
                               child: eventInfoBox(
-                                  title: AppLocalizations.of(context)!.eventday,
-                                  desc: bloc.box.get(DatabaseFieldConstant.language) == "en"
-                                      ? bloc.eventDayName!
-                                      : DayTime().convertDayToArabic(bloc.eventDayName!))),
-                          Expanded(
-                              child:
-                                  eventInfoBox(title: AppLocalizations.of(context)!.eventhour, desc: bloc.eventHour!)),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8, right: 8),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Expanded(
-                              flex: 1,
-                              child: eventInfoBox(
-                                  title: AppLocalizations.of(context)!.eventDuration, desc: bloc.eventDuration!)),
-                          Expanded(
-                            flex: 3,
-                            child: eventInfoBox(
-                                title: AppLocalizations.of(context)!.price,
-                                desc: bloc.eventPrice! == 0
-                                    ? "( ${AppLocalizations.of(context)!.free} )"
-                                    : "( ${Currency().calculateHourRate(bloc.eventPrice!, Timing.hour)} )"),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CustomText(
-                        title: "-- ${AppLocalizations.of(context)!.eventdesc} --",
-                        fontSize: 16,
-                        textColor: const Color(0xff554d56),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CustomText(
-                        title: bloc.eventDescripton!,
-                        fontSize: 14,
-                        textAlign: TextAlign.center,
-                        maxLins: 40,
-                        textColor: const Color(0xff444444),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey[100],
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.3),
-                              spreadRadius: 2,
-                              blurRadius: 4,
-                              offset: const Offset(0, 3),
+                                  title: AppLocalizations.of(context)!.price,
+                                  desc: bloc.eventPrice! == 0
+                                      ? "( ${AppLocalizations.of(context)!.free} )"
+                                      : "( ${Currency().calculateHourRate(bloc.eventPrice!, Timing.hour)} )"),
                             ),
                           ],
                         ),
-                        height: 60,
-                        width: MediaQuery.of(context).size.width,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.of(context, rootNavigator: true)
-                                  .pushNamed(RoutesConstants.mentorProfileScreen, arguments: {"id": bloc.mentorId!});
-                            },
-                            child: Row(
-                              children: [
-                                CircleAvatar(
-                                  backgroundColor: const Color(0xff034061),
-                                  radius: 40,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(20),
-                                    child: bloc.mentorProfileImage != ""
-                                        ? FadeInImage(
-                                            placeholder: const AssetImage("assets/images/avatar.jpeg"),
-                                            image: NetworkImage(
-                                                AppConstant.imagesBaseURLForMentors + bloc.mentorProfileImage!,
-                                                scale: 1),
-                                          )
-                                        : Image.asset(
-                                            'assets/images/avatar.jpeg',
-                                            width: 40,
-                                            height: 40,
-                                            fit: BoxFit.fill,
-                                          ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CustomText(
+                          title: "-- ${AppLocalizations.of(context)!.eventdesc} --",
+                          fontSize: 16,
+                          textColor: const Color(0xff554d56),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CustomText(
+                          title: bloc.eventDescripton!,
+                          fontSize: 14,
+                          textAlign: TextAlign.center,
+                          maxLins: 40,
+                          textColor: const Color(0xff444444),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[100],
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                spreadRadius: 2,
+                                blurRadius: 4,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          height: 60,
+                          width: MediaQuery.of(context).size.width,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.of(context, rootNavigator: true)
+                                    .pushNamed(RoutesConstants.mentorProfileScreen, arguments: {"id": bloc.mentorId!});
+                              },
+                              child: Row(
+                                children: [
+                                  CircleAvatar(
+                                    backgroundColor: const Color(0xff034061),
+                                    radius: 40,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: bloc.mentorProfileImage != ""
+                                          ? FadeInImage(
+                                              placeholder: const AssetImage("assets/images/avatar.jpeg"),
+                                              image: NetworkImage(
+                                                  AppConstant.imagesBaseURLForMentors + bloc.mentorProfileImage!,
+                                                  scale: 1),
+                                            )
+                                          : Image.asset(
+                                              'assets/images/avatar.jpeg',
+                                              width: 40,
+                                              height: 40,
+                                              fit: BoxFit.fill,
+                                            ),
+                                    ),
                                   ),
-                                ),
-                                Column(
-                                  children: [
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width - 150,
-                                      child: CustomText(
-                                        title:
-                                            "${bloc.mentorSuffixeName} ${bloc.mentorFirstName} ${bloc.mentorLastName}",
-                                        fontSize: 14,
-                                        textAlign: TextAlign.center,
+                                  Column(
+                                    children: [
+                                      SizedBox(
+                                        width: MediaQuery.of(context).size.width - 150,
+                                        child: CustomText(
+                                          title:
+                                              "${bloc.mentorSuffixeName} ${bloc.mentorFirstName} ${bloc.mentorLastName}",
+                                          fontSize: 14,
+                                          textAlign: TextAlign.center,
+                                          fontWeight: FontWeight.bold,
+                                          maxLins: 3,
+                                          textColor: const Color(0xff554d56),
+                                        ),
+                                      ),
+                                      const Expanded(child: SizedBox()),
+                                      CustomText(
+                                        title: bloc.mentorCategoryName!,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.bold,
-                                        maxLins: 3,
                                         textColor: const Color(0xff554d56),
                                       ),
-                                    ),
-                                    const Expanded(child: SizedBox()),
-                                    CustomText(
-                                      title: bloc.mentorCategoryName!,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      textColor: const Color(0xff554d56),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CustomText(
-                        title: "-- ${AppLocalizations.of(context)!.eventhowattend} --",
-                        fontSize: 16,
-                        textColor: const Color(0xff554d56),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CustomText(
+                          title: "-- ${AppLocalizations.of(context)!.eventhowattend} --",
+                          fontSize: 16,
+                          textColor: const Color(0xff554d56),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CustomText(
+                          title: AppLocalizations.of(context)!.eventhowattenddetails,
+                          fontSize: 14,
+                          textAlign: TextAlign.center,
+                          maxLins: 40,
+                          textColor: const Color(0xff444444),
+                        ),
+                      ),
+                      AppointmentDetailsView(
+                        title: AppLocalizations.of(context)!.freeseat,
+                        desc: (bloc.maxNumberOfAttendance - bloc.joiningClients).toString(),
+                      ),
+                      CustomButton(
+                        enableButton: bloc.joiningClients < bloc.maxNumberOfAttendance,
+                        buttonTitle: AppLocalizations.of(context)!.registernow,
+                        onTap: () async {
+                          if (bloc.isEventFree) {
+                            bloc.bookEventRequest().whenComplete(() {
+                              //TODO
+                            });
+                          } else {
+                            final bottomSheet = PaymentBottomSheetsUtil(
+                              context: context,
+                              language: bloc.box.get(DatabaseFieldConstant.language),
+                              totalAmount: bloc.eventPrice.toString(),
+                            );
+                            await bottomSheet.paymentBottomSheet(
+                                faze: PaymentFaze.welcoming,
+                                openNext: () async {
+                                  bloc.bookEventRequest().whenComplete(() {
+                                    //TODO
+                                  });
+                                });
+                          }
+                        },
+                      ),
+                    ],
+                  );
+                } else {
+                  return const SizedBox(
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CustomText(
-                        title: AppLocalizations.of(context)!.eventhowattenddetails,
-                        fontSize: 14,
-                        textAlign: TextAlign.center,
-                        maxLins: 40,
-                        textColor: const Color(0xff444444),
-                      ),
-                    ),
-                    CustomButton(
-                      enableButton: true,
-                      buttonTitle: AppLocalizations.of(context)!.registernow,
-                      onTap: () async {
-                        if (bloc.isEventFree) {
-                          //TODO
-                        } else {
-                          final bottomSheet = PaymentBottomSheetsUtil(
-                            context: context,
-                            language: bloc.box.get(DatabaseFieldConstant.language),
-                            totalAmount: bloc.eventPrice.toString(),
-                          );
-                          await bottomSheet.paymentBottomSheet(
-                              faze: PaymentFaze.welcoming,
-                              openNext: () async {
-                                //TODO
-                              });
-                        }
-                      },
-                    ),
-                  ],
-                );
-              } else {
-                return const SizedBox(
-                  child: Center(
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
-                    ),
-                  ),
-                );
-              }
-            }),
+                  );
+                }
+              }),
+        ),
       ),
     );
   }

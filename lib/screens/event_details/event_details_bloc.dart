@@ -28,6 +28,8 @@ class EventDetailsBloc extends Bloc<EventService> {
   String? eventDuration = "";
   String? eventDescripton = "";
   int eventId = 0;
+  int maxNumberOfAttendance = 0;
+  int joiningClients = 0;
 
   bool isEventFree = false;
 
@@ -58,6 +60,7 @@ class EventDetailsBloc extends Bloc<EventService> {
       if (value.data != null) {
         eventName = value.data!.title!;
         eventPrice = value.data!.price!;
+        eventId = value.data!.id!;
         image = AppConstant.imagesBaseURLForEvents + value.data!.image!;
         final fromDateTime = DateTime.parse(value.data!.dateFrom!);
         final toDateTime = DateTime.parse(value.data!.dateTo!);
@@ -73,9 +76,16 @@ class EventDetailsBloc extends Bloc<EventService> {
         mentorFirstName = value.data!.mentorFirstName!;
         mentorLastName = value.data!.mentorLastName!;
         mentorId = value.data!.mentorId!;
+        joiningClients = value.data!.joiningClients!;
+        maxNumberOfAttendance = value.data!.maxNumberOfAttendance!;
+
         loadingStatus.value = LoadingStatus.finish;
       }
     });
+  }
+
+  Future<dynamic> bookEventRequest() async {
+    return await service.bookNewEvent(eventID: eventId);
   }
 
   @override

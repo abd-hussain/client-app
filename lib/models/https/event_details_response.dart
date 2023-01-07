@@ -21,7 +21,7 @@ class EventDetailsData with ModelChecker {
   int? state;
   int? id;
   String? title;
-  List<int>? joiningClientsIds;
+  int? joiningClients;
   String? dateFrom;
   double? price;
   String? categoryName;
@@ -40,7 +40,7 @@ class EventDetailsData with ModelChecker {
     this.state,
     this.id,
     this.title,
-    this.joiningClientsIds,
+    this.joiningClients,
     this.dateFrom,
     this.price,
     this.categoryName,
@@ -60,7 +60,7 @@ class EventDetailsData with ModelChecker {
     id = convertToInteger(json['id']);
     state = convertToInteger(json['state']);
     title = convertToString(json['title']);
-    joiningClientsIds = json['joining_clients_ids'].cast<int>();
+    joiningClients = convertToInteger(json['joining_clients']);
     dateFrom = convertToString(json['date_from']);
     price = convertToDouble(json['price']);
     categoryName = convertToString(json['category_name']);

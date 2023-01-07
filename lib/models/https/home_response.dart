@@ -68,7 +68,7 @@ class MainEvent {
   String? title;
   String? image;
   String? description;
-  List<int>? joiningClientsIds;
+  int? joiningClients;
   int? maxNumberOfAttendance;
   String? dateFrom;
   String? dateTo;
@@ -80,7 +80,7 @@ class MainEvent {
     this.title,
     this.image,
     this.description,
-    this.joiningClientsIds,
+    this.joiningClients,
     this.maxNumberOfAttendance,
     this.dateFrom,
     this.dateTo,
@@ -93,7 +93,7 @@ class MainEvent {
     title = json['title'];
     image = json['image'];
     description = json['description'];
-    joiningClientsIds = json['joining_clients_ids'].cast<int>();
+    joiningClients = json['joining_clients'];
     maxNumberOfAttendance = json['max_number_of_attendance'];
     dateFrom = json['date_from'];
     dateTo = json['date_to'];

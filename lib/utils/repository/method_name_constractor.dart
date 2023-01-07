@@ -8,6 +8,8 @@ class MethodNameConstant {
   static const String mentoravaliable = "mentor-account/mentor-avaliable";
   static const String bookAppointment = "appointment/book";
   static const String cancelAppointment = "appointment/cancel";
+  static const String bookevent = "event/book";
+  static const String cancelbookevent = "event/bookcancel";
 
   static const String discount = "discount/";
 

@@ -176,7 +176,7 @@ class EventView extends StatelessWidget {
                             const SizedBox(height: 4),
                             CustomText(
                               title:
-                                  "${event.joiningClientsIds!.length} ${AppLocalizations.of(context)!.intrestedfrom} ${event.maxNumberOfAttendance}",
+                                  "${event.joiningClients!} ${AppLocalizations.of(context)!.intrestedfrom} ${event.maxNumberOfAttendance}",
                               fontSize: 14,
                               textAlign: TextAlign.center,
                               textColor: const Color(0xff444444),

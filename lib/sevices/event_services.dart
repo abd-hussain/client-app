@@ -12,4 +12,22 @@ class EventService with Service {
     );
     return EventDetails.fromJson(response);
   }
+
+  Future<dynamic> bookNewEvent({required int eventID}) async {
+    final response = await repository.callRequest(
+      requestType: RequestType.post,
+      methodName: MethodNameConstant.bookevent,
+      queryParam: {"id": eventID},
+    );
+    return response;
+  }
+
+  Future<dynamic> cancelbookedEvent({required int eventID}) async {
+    final response = await repository.callRequest(
+      requestType: RequestType.post,
+      methodName: MethodNameConstant.cancelbookevent,
+      queryParam: {"id": eventID},
+    );
+    return response;
+  }
 }
