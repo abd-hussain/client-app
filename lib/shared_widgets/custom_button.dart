@@ -7,19 +7,21 @@ class CustomButton extends StatelessWidget {
   final Color buttonColor;
   final Function() onTap;
   final double? width;
-  const CustomButton(
-      {this.buttonTitle = "Submit",
-      required this.enableButton,
-      this.width,
-      this.buttonColor = const Color(0xff4CB6EA),
-      required this.onTap,
-      Key? key})
-      : super(key: key);
+  final EdgeInsetsGeometry padding;
+  const CustomButton({
+    this.buttonTitle = "Submit",
+    required this.enableButton,
+    this.width,
+    this.buttonColor = const Color(0xff4CB6EA),
+    required this.onTap,
+    Key? key,
+    this.padding = const EdgeInsets.all(16),
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: padding,
       child: ElevatedButton(
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(enableButton ? buttonColor : const Color(0xffB1B1B1))),

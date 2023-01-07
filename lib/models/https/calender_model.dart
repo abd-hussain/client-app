@@ -1,8 +1,12 @@
+enum Type { event, meeting }
+
 class CalenderMeetings {
   final String mentorPrefix;
   final String mentorFirstName;
   final String mentorLastName;
   final String categoryName;
+  final Type type;
+  final String? title;
 
   final int mentorId;
   final int meetingId;
@@ -16,5 +20,7 @@ class CalenderMeetings {
       required this.mentorId,
       required this.meetingId,
       required this.fromTime,
-      required this.toTime});
+      required this.toTime,
+      required this.type,
+      this.title});
 }

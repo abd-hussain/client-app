@@ -20,6 +20,7 @@ class MethodNameConstant {
 
   static const String home = "home/";
   static const String event = "event/";
+  static const String clientEvent = "event/client";
 
   static const String reportStory = "home/reportstory";
   static const String reportEvent = "home/reportevent";

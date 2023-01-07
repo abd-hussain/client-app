@@ -116,6 +116,7 @@
     "bookingtimes" : "Times",
     "meetingdate" : "Session Date",
     "meetingtime" : "Session Time",
+    "eventtime" : "Event Time",
     "bookinglaststeptitle" : "We are here for you, we put these terms to guarantee you will have a very good journey with us, please check it",
     "bookinglaststeptext1" : "All your data is confidential and encrypted, neither the specialists nor our team can access or view it",
     "bookinglaststeptext2" : "In the event that the specialist does not attend, the full amount paid will be returned to your account",
@@ -147,7 +148,7 @@
     "meetingwith" : "Meeting with",
     "withword" : "with",
     "remanintime" : "Remaining Time for the Meeting",
-    "cancelappointment" : "Cancel Meeting",
+    "cancelappointment" : "Cancel Attend",
     "archivepagetitle" : "these archives are saved securely here to make it a reference for future, you can return to it when ever you want.",
     "comingevent" : "Upcoming Events",
     "intrestedfrom" : "Intrested From",
@@ -174,7 +175,12 @@
     "deleteaccount" : "Delete Account",
     "areyousuredeleteaccount" : "Are you sure you want to Delete your Account ?",
     "joinasmentor" : "Join as a Mentor",
-    "freeseat" : "Available Seats"
+    "freeseat" : "Available Seats",
+    "event" : "Event",
+    "meeting" : "Meeting",
+    "openeventdetails" : "Open Event Details",
+    "by" : "By",
+    "witha" : "With"
 
 
 

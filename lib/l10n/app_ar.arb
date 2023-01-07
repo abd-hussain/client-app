@@ -116,6 +116,7 @@
     "bookingtimes" : "الاوقات",
     "meetingdate" : "تاريخ الجلسة",
     "meetingtime" : "وقت الجلسة",
+    "eventtime" : "وقت الحدث",
     "bookinglaststeptitle" : "نحن هنا من أجلك ، لقد وضعنا هذه الشروط لنضمن لك رحلة جيدة جدًا معنا ، يرجى التحقق منها",
     "bookinglaststeptext1" : "جميع بياناتك سرية و مشفرة، لا يمكن للمختصين ولا فريقنا الوصول اليها او مشاهدتها",
     "bookinglaststeptext2" : "في حال عدم حضور المختص يتم ارجاع كامل المبلغ المدفوع لحسابك",
@@ -147,7 +148,7 @@
     "meetingwith" : "جلسة مع",
     "withword" : "مع",
     "remanintime" : "الوقت المتبقي للجلسة",
-    "cancelappointment" : "الغاء الجلسة",
+    "cancelappointment" : "الغاء الحضور",
     "archivepagetitle" : "يتم حفظ هذه الارشيف بشكل آمن هنا لجعلها مرجعًا للمستقبل ، يمكنك العودة إليها متى شئت.",
     "comingevent" : "جلسات قادمة",
     "intrestedfrom" : "مهتم من اصل",
@@ -174,7 +175,13 @@
     "deleteaccount" : "حذف الحساب",
     "areyousuredeleteaccount" : "هل أنت متأكد من أنك تريد حذف الحساب الخاص بك ؟",
     "joinasmentor" : "الانضمام الى المستشارين",
-    "freeseat" : "المقاعد المتاحة"
+    "freeseat" : "المقاعد المتاحة",
+    "event" : "حدث",
+    "meeting" : "جلسة",
+    "openeventdetails" : "تفاصيل الحدث",
+    "by" : "من",
+    "witha" : "مع"
+
 
 
 

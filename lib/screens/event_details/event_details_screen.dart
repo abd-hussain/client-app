@@ -38,7 +38,6 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //TODO: handle event details
     return Scaffold(
       appBar: customAppBar(title: AppLocalizations.of(context)!.eventdetails, actions: [
         IconButton(
