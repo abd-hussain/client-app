@@ -34,6 +34,7 @@ class _MainContainerState extends State<MainContainer> {
                 );
               })),
       bottomNavigationBar: ConvexAppBar(
+        initialActiveIndex: 0,
         key: _bloc.appBarKey,
         backgroundColor: Colors.white,
         activeColor: const Color(0xff4CB6EA),
@@ -48,7 +49,6 @@ class _MainContainerState extends State<MainContainer> {
           TabItem(icon: Icons.calendar_month, title: AppLocalizations.of(context)!.containerCalenderIconTitle),
           TabItem(icon: Icons.person, title: AppLocalizations.of(context)!.containerAccountIconTitle),
         ],
-        initialActiveIndex: 0,
         onTap: (int index) => _bloc.currentTabIndexNotifier.value = _bloc.returnSelectedtypeDependOnIndex(index),
       ),
     );
