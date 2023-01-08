@@ -1,4 +1,3 @@
-import 'package:client_app/screens/booking_meeting/booking_bloc.dart';
 import 'package:client_app/screens/booking_meeting/widgets/appointment_details_view.dart';
 import 'package:client_app/shared_widgets/booking/cancel_booking_bottom_sheet.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
@@ -18,14 +17,12 @@ class CallView extends StatefulWidget {
   final String firstName;
   final String lastName;
   final String categoryName;
-  final BookingType bookingType;
   final String meetingduration;
   final String meetingtime;
   final Function() cancelMeetingTapped;
 
   const CallView({
     super.key,
-    required this.bookingType,
     required this.suffixeName,
     required this.firstName,
     required this.lastName,
@@ -91,12 +88,6 @@ class _CallViewState extends State<CallView> {
             fontSize: 16,
             textColor: const Color(0xff554d56),
           ),
-        ),
-        AppointmentDetailsView(
-          title: AppLocalizations.of(context)!.meetingtype,
-          desc: widget.bookingType == BookingType.schudule
-              ? AppLocalizations.of(context)!.bookingonetime
-              : AppLocalizations.of(context)!.meetingnow,
         ),
         AppointmentDetailsView(
           title: AppLocalizations.of(context)!.meetingduration,

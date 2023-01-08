@@ -16,6 +16,8 @@ enum BookingType {
   instant,
 }
 
+//TODO : REFRESH When You come back
+
 class BookingBloc extends Bloc<DiscountService> {
   ValueNotifier<bool> applyDiscountButton = ValueNotifier<bool>(false);
   int? mentorId;
@@ -99,8 +101,6 @@ class BookingBloc extends Bloc<DiscountService> {
     final newAmount = amount - priceDiscount;
     return Currency().calculateHourRate(newAmount, Timing.hour);
   }
-
-  //TODO: Still there is a problem here
 
   _checkingAvaliableMentorswithin60min(int catID) {
     checkingAvaliableMentors.value = false;

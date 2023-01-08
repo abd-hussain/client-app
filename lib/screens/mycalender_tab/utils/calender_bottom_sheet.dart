@@ -67,7 +67,7 @@ class CalenderBottomSheetsUtil {
                 metingDetails.type == Type.event
                     ? CustomButton(
                         padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
-                        enableButton: metingDetails.fromTime.compareTo(DateTime.now()) > 0,
+                        enableButton: DateTime.now().isBefore(metingDetails.fromTime),
                         buttonColor: const Color(0xff4CB6EA),
                         buttonTitle: AppLocalizations.of(context)!.openeventdetails,
                         onTap: () {
@@ -77,7 +77,7 @@ class CalenderBottomSheetsUtil {
                       )
                     : const SizedBox(),
                 CustomButton(
-                  enableButton: metingDetails.fromTime.compareTo(DateTime.now()) > 0,
+                  enableButton: DateTime.now().isBefore(metingDetails.fromTime),
                   padding: const EdgeInsets.all(8.0),
                   buttonColor: const Color(0xffda1100),
                   buttonTitle: AppLocalizations.of(context)!.cancelappointment,

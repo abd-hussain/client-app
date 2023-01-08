@@ -35,8 +35,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  //TODO: Handle Search Page
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

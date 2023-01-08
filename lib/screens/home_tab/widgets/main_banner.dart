@@ -27,7 +27,7 @@ class MainBannerHomePage extends StatelessWidget {
   Widget _banner({required MainBanner obj}) {
     return InkWell(
       onTap: () {
-        //TODO handle Tab Here
+        //TODO handle Tab Here click
         print(obj.actionType);
       },
       child: Container(

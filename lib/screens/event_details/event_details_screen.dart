@@ -42,7 +42,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
       appBar: customAppBar(title: AppLocalizations.of(context)!.eventdetails, actions: [
         IconButton(
           onPressed: () {
-            //TODO
+            //TODO: handle share
           },
           icon: const Icon(Icons.share),
         )
@@ -233,7 +233,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                         onTap: () async {
                           if (bloc.isEventFree) {
                             bloc.bookEventRequest().whenComplete(() {
-                              //TODO
+                              //TODO : handle payment
                             });
                           } else {
                             final bottomSheet = PaymentBottomSheetsUtil(
@@ -245,7 +245,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                 faze: PaymentFaze.welcoming,
                                 openNext: () async {
                                   bloc.bookEventRequest().whenComplete(() {
-                                    //TODO
+                                    //TODO : handle payment
                                   });
                                 });
                           }

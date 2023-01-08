@@ -1,3 +1,4 @@
+import 'package:client_app/models/https/calender_model.dart';
 import 'package:client_app/screens/booking_meeting/booking_bloc.dart';
 import 'package:client_app/screens/call_tab/call_bloc.dart';
 import 'package:client_app/screens/call_tab/widgets/call_view.dart';
@@ -19,6 +20,7 @@ class _CallScreenState extends State<CallScreen> {
 
   @override
   void didChangeDependencies() {
+    bloc.getAppointmentsAndEvents();
     super.didChangeDependencies();
   }
 
@@ -37,46 +39,44 @@ class _CallScreenState extends State<CallScreen> {
         child: Column(
           children: [
             const HeaderHomePage(),
-            FutureBuilder(
-                future: bloc.getClientAppointments(),
-                builder: (context, snapshot1) {
-                  if (snapshot1.hasData) {
-                    final appointment = bloc.checkIfThereIsAnyMeetingTodayAndReturnTheNearsOne(snapshot1.data!.data);
-                    if (appointment != null) {
-                      final parsedFromDate = DateTime.parse(appointment.dateFrom!);
-                      final parsedToDate = DateTime.parse(appointment.dateTo!);
+            ValueListenableBuilder<List<CalenderMeetings>>(
+              valueListenable: bloc.eventsmeetingsListNotifier,
+              builder: (BuildContext context, List<CalenderMeetings> value, Widget? child) {
+                if (value.isNotEmpty) {
+                  final appointment = bloc.checkIfThereIsAnyMeetingTodayAndReturnTheNearsOne(value);
+                  if (appointment != null) {
+                    final timeDifference = appointment.fromTime.subtract(Duration(
+                        days: 0,
+                        hours: DateTime.now().hour,
+                        minutes: DateTime.now().minute,
+                        seconds: DateTime.now().second));
 
-                      final timeDifference = parsedFromDate.subtract(Duration(
-                          days: 0,
-                          hours: DateTime.now().hour,
-                          minutes: DateTime.now().minute,
-                          seconds: DateTime.now().second));
-
-                      return CallView(
-                        timerStartNumberHour: timeDifference.hour,
-                        timerStartNumberMin: timeDifference.minute,
-                        timerStartNumberSec: timeDifference.second,
-                        cancelMeetingTapped: () {
-                          bloc.cancelAppointment(id: appointment.id!).then((value) {
-                            setState(() {});
-                          });
-                        },
-                        bookingType: appointment.appointmentType == 1 ? BookingType.schudule : BookingType.instant,
-                        profileImage: appointment.profileImg!,
-                        suffixeName: appointment.mentorPrefix!,
-                        firstName: appointment.mentorFirstName!,
-                        lastName: appointment.mentorLastName!,
-                        categoryName: appointment.categoryName!,
-                        meetingtime: DateFormat('hh:mm a').format(parsedFromDate),
-                        meetingduration: "${parsedToDate.difference(parsedFromDate).inMinutes}",
-                      );
-                    } else {
-                      return noCallView();
-                    }
+                    return CallView(
+                      timerStartNumberHour: timeDifference.hour,
+                      timerStartNumberMin: timeDifference.minute,
+                      timerStartNumberSec: timeDifference.second,
+                      cancelMeetingTapped: () {
+                        bloc.cancelAppointment(id: appointment.meetingId).then((value) {
+                          setState(() {});
+                        });
+                      },
+                      profileImage: appointment.type == Type.meeting ? appointment.profileImg! : appointment.eventImg!,
+                      suffixeName: appointment.mentorPrefix,
+                      firstName: appointment.mentorFirstName,
+                      lastName: appointment.mentorLastName,
+                      categoryName: appointment.categoryName,
+                      meetingtime: DateFormat('hh:mm a').format(appointment.fromTime),
+                      meetingduration: "${appointment.toTime.difference(appointment.fromTime).inMinutes}",
+                    );
                   } else {
                     return noCallView();
                   }
-                }),
+                } else {
+                  return noCallView();
+                }
+              },
+            ),
+
             //TODO: handle status of the call is arrived
           ],
         ),

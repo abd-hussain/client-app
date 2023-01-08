@@ -7,6 +7,8 @@ class CalenderMeetings {
   final String categoryName;
   final Type type;
   final String? title;
+  final String? profileImg;
+  final String? eventImg;
 
   final int mentorId;
   final int meetingId;
@@ -22,5 +24,7 @@ class CalenderMeetings {
       required this.fromTime,
       required this.toTime,
       required this.type,
+      this.profileImg,
+      this.eventImg,
       this.title});
 }

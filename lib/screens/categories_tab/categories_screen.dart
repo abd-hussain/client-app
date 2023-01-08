@@ -30,8 +30,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     super.dispose();
   }
 
-  //TODO: Handle Search Page
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
