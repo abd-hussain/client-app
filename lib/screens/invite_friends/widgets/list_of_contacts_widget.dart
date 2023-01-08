@@ -1,9 +1,11 @@
 import 'dart:typed_data';
 
 import 'package:client_app/shared_widgets/custom_button.dart';
+import 'package:client_app/utils/constants/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_sms/flutter_sms.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ListOfContactsWidget extends StatefulWidget {
   final List<Contact> contacts;
@@ -51,13 +53,19 @@ class _ListOfContactsWidgetState extends State<ListOfContactsWidget> {
                 }),
           ),
           CustomButton(
-            buttonTitle: "Send",
+            buttonTitle: AppLocalizations.of(context)!.sendsmsmessage,
             enableButton: listOfCheckboxInContact.contains(true) ? true : false,
             onTap: () async {
-              //TODO : this not working yet
+              List<String> recipents = [];
+
+              for (var i = 0; i <= listOfCheckboxInContact.length - 1; i++) {
+                if (listOfCheckboxInContact[i]) {
+                  recipents.add(widget.contacts[i].phones.first.number);
+                }
+              }
+
               if (await canSendSMS()) {
-                String message = "This is a test message!";
-                List<String> recipents = ["1234567890", "5556787676"];
+                String message = "${AppLocalizations.of(context)!.smsmessage} ${AppConstant.appLink}";
                 await sendSMS(message: message, recipients: recipents, sendDirect: false);
               }
             },

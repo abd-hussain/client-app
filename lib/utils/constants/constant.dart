@@ -24,4 +24,5 @@ class AppConstant {
   static const String whatsappNumber = "+962795190663";
   static const String linkedinLink = "https://www.linkedin.com/";
   static const String facebookLink = "https://www.facebook.com/";
+  static const String appLink = "";
 }
