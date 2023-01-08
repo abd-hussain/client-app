@@ -1,5 +1,7 @@
+import 'package:client_app/locator.dart';
 import 'package:client_app/screens/booking_meeting/widgets/appointment_details_view.dart';
 import 'package:client_app/screens/event_details/event_details_bloc.dart';
+import 'package:client_app/screens/main_contaner/main_container_bloc.dart';
 import 'package:client_app/shared_widgets/booking/payment_bottom_sheet.dart';
 import 'package:client_app/shared_widgets/custom_appbar.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
@@ -234,6 +236,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                           if (bloc.isEventFree) {
                             bloc.bookEventRequest().whenComplete(() {
                               //TODO : handle payment
+                              locator<MainContainerBloc>().getAppointmentsAndEvents();
+                              Navigator.of(context).pop();
                             });
                           } else {
                             final bottomSheet = PaymentBottomSheetsUtil(
@@ -246,6 +250,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                 openNext: () async {
                                   bloc.bookEventRequest().whenComplete(() {
                                     //TODO : handle payment
+                                    locator<MainContainerBloc>().getAppointmentsAndEvents();
+                                    Navigator.of(context).pop();
                                   });
                                 });
                           }

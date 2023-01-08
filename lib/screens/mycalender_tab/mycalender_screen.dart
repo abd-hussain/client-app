@@ -1,6 +1,8 @@
+import 'package:client_app/locator.dart';
 import 'package:client_app/models/https/calender_model.dart';
 import 'package:client_app/models/https/home_response.dart';
 import 'package:client_app/screens/home_tab/widgets/header.dart';
+import 'package:client_app/screens/main_contaner/main_container_bloc.dart';
 import 'package:client_app/screens/mycalender_tab/mycalender_bloc.dart';
 import 'package:client_app/screens/mycalender_tab/utils/calender_bottom_sheet.dart';
 import 'package:client_app/screens/mycalender_tab/utils/meeting_datasource.dart';
@@ -41,8 +43,7 @@ class _MyCalenderScreenState extends State<MyCalenderScreen> {
           const SizedBox(height: 8),
           Expanded(
             child: FutureBuilder<List<CalenderMeetings>>(
-                initialData: [],
-                future: bloc.getClientAppointments(),
+                future: locator<MainContainerBloc>().getAppointmentsAndEvents(),
                 builder: (context, snapshot) {
                   return SfCalendar(
                       view: CalendarView.month,
@@ -50,7 +51,7 @@ class _MyCalenderScreenState extends State<MyCalenderScreen> {
                       allowAppointmentResize: true,
                       initialSelectedDate: DateTime.now(),
                       todayHighlightColor: const Color(0xff4CB6EA),
-                      dataSource: MeetingDataSource(context, snapshot.data!),
+                      dataSource: MeetingDataSource(context, snapshot.data ?? []),
                       monthViewSettings: const MonthViewSettings(
                         appointmentDisplayMode: MonthAppointmentDisplayMode.indicator,
                         showAgenda: true,
@@ -75,12 +76,13 @@ class _MyCalenderScreenState extends State<MyCalenderScreen> {
                             cancel: () {
                               if (item.type == Type.meeting) {
                                 bloc.cancelMeeting(item.meetingId).whenComplete(() async {
-                                  await bloc.getClientAppointments();
+                                  locator<MainContainerBloc>().getAppointmentsAndEvents();
+
                                   setState(() {});
                                 });
                               } else if (item.type == Type.event) {
                                 bloc.cancelEvent(item.meetingId).whenComplete(() async {
-                                  await bloc.getClientAppointments();
+                                  locator<MainContainerBloc>().getAppointmentsAndEvents();
                                   setState(() {});
                                 });
                               }

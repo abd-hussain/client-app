@@ -259,6 +259,7 @@ class _BookingScreenState extends State<BookingScreen> {
                             bloc.bookMeetingRequest(appointment: appointment).then((value) {
                               Navigator.of(context).pop();
                               Navigator.of(context).pop();
+                              locator<MainContainerBloc>().getAppointmentsAndEvents();
                               locator<MainContainerBloc>().appBarKey.currentState!.animateTo(2);
                               locator<MainContainerBloc>().currentTabIndexNotifier.value = SelectedTab.call;
                             });
@@ -284,6 +285,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                   min: toDateTime.minute),
                             );
                             bloc.bookMeetingRequest(appointment: appointment).then((value) {
+                              locator<MainContainerBloc>().getAppointmentsAndEvents();
                               Navigator.of(context).pop();
                             });
                           }

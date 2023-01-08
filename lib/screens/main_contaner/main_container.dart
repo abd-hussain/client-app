@@ -15,6 +15,7 @@ class _MainContainerState extends State<MainContainer> {
 
   @override
   void didChangeDependencies() {
+    _bloc.getAppointmentsAndEvents();
     super.didChangeDependencies();
   }
 

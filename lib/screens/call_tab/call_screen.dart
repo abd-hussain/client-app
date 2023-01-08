@@ -1,9 +1,11 @@
+import 'package:client_app/locator.dart';
 import 'package:client_app/models/https/calender_model.dart';
 import 'package:client_app/screens/booking_meeting/booking_bloc.dart';
 import 'package:client_app/screens/call_tab/call_bloc.dart';
 import 'package:client_app/screens/call_tab/widgets/call_view.dart';
 import 'package:client_app/screens/call_tab/widgets/no_call_view.dart';
 import 'package:client_app/screens/home_tab/widgets/header.dart';
+import 'package:client_app/screens/main_contaner/main_container_bloc.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -20,7 +22,6 @@ class _CallScreenState extends State<CallScreen> {
 
   @override
   void didChangeDependencies() {
-    bloc.getAppointmentsAndEvents();
     super.didChangeDependencies();
   }
 
@@ -40,7 +41,7 @@ class _CallScreenState extends State<CallScreen> {
           children: [
             const HeaderHomePage(),
             ValueListenableBuilder<List<CalenderMeetings>>(
-              valueListenable: bloc.eventsmeetingsListNotifier,
+              valueListenable: locator<MainContainerBloc>().eventsmeetingsListNotifier,
               builder: (BuildContext context, List<CalenderMeetings> value, Widget? child) {
                 if (value.isNotEmpty) {
                   final appointment = bloc.checkIfThereIsAnyMeetingTodayAndReturnTheNearsOne(value);
@@ -57,6 +58,7 @@ class _CallScreenState extends State<CallScreen> {
                       timerStartNumberSec: timeDifference.second,
                       cancelMeetingTapped: () {
                         bloc.cancelAppointment(id: appointment.meetingId).then((value) {
+                          locator<MainContainerBloc>().getAppointmentsAndEvents();
                           setState(() {});
                         });
                       },
