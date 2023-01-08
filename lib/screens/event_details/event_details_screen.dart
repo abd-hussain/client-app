@@ -235,7 +235,6 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                         onTap: () async {
                           if (bloc.isEventFree) {
                             bloc.bookEventRequest().whenComplete(() {
-                              //TODO : handle payment
                               locator<MainContainerBloc>().getAppointmentsAndEvents();
                               Navigator.of(context).pop();
                             });
@@ -249,7 +248,6 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                 faze: PaymentFaze.welcoming,
                                 openNext: () async {
                                   bloc.bookEventRequest().whenComplete(() {
-                                    //TODO : handle payment
                                     locator<MainContainerBloc>().getAppointmentsAndEvents();
                                     Navigator.of(context).pop();
                                   });

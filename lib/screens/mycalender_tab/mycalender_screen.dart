@@ -42,16 +42,16 @@ class _MyCalenderScreenState extends State<MyCalenderScreen> {
           const HeaderHomePage(),
           const SizedBox(height: 8),
           Expanded(
-            child: FutureBuilder<List<CalenderMeetings>>(
-                future: locator<MainContainerBloc>().getAppointmentsAndEvents(),
-                builder: (context, snapshot) {
+            child: ValueListenableBuilder<List<CalenderMeetings>>(
+                valueListenable: locator<MainContainerBloc>().eventsmeetingsListNotifier,
+                builder: (context, snapshot, child) {
                   return SfCalendar(
                       view: CalendarView.month,
                       firstDayOfWeek: 6,
                       allowAppointmentResize: true,
                       initialSelectedDate: DateTime.now(),
                       todayHighlightColor: const Color(0xff4CB6EA),
-                      dataSource: MeetingDataSource(context, snapshot.data ?? []),
+                      dataSource: MeetingDataSource(context, snapshot),
                       monthViewSettings: const MonthViewSettings(
                         appointmentDisplayMode: MonthAppointmentDisplayMode.indicator,
                         showAgenda: true,

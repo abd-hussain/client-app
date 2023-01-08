@@ -182,10 +182,10 @@ class EventView extends StatelessWidget {
                               textColor: const Color(0xff444444),
                             ),
                             const SizedBox(height: 4),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: SizedBox(
-                                height: 40,
+                            SizedBox(
+                              height: 50,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [

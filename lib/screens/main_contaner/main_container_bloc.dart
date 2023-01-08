@@ -62,7 +62,7 @@ class MainContainerBloc {
 
     list.addAll(await _getClientAppointments());
     list.addAll(await _getClientEventAppointments());
-
+    eventsmeetingsListNotifier.value = list;
     return list;
   }
 
