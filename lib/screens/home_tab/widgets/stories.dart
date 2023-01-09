@@ -33,9 +33,9 @@ class StoriesHomePage extends StatelessWidget {
         await BottomSheetsUtil().showStoryFullView(
             profileId: story.owner!.id!,
             profileName: story.owner!.firstName! + story.owner!.lastName!,
-            profileImg: story.owner!.profileImg != null
+            profileImg: (story.owner!.profileImg != null && story.owner!.profileImg != "")
                 ? AppConstant.imagesBaseURLForMentors + story.owner!.profileImg!
-                : "${AppConstant.imagesBaseURLForMentors}1.png",
+                : "",
             context: context,
             assets: story.assets!,
             openProfile: (id) => openProfile(id),

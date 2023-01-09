@@ -397,12 +397,31 @@ class BottomSheetsUtil {
                     child: CircleAvatar(
                       backgroundColor: const Color(0xff034061),
                       radius: 30,
-                      child: CircleAvatar(
-                        radius: 25,
-                        backgroundColor: Colors.transparent,
-                        backgroundImage: NetworkImage(profileImg),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(35),
+                        child: profileImg != ""
+                            ? FadeInImage(
+                                placeholder: const AssetImage("assets/images/avatar.jpeg"),
+                                image: NetworkImage(profileImg, scale: 1),
+                              )
+                            : Image.asset(
+                                'assets/images/avatar.jpeg',
+                                width: 50,
+                                height: 50,
+                                fit: BoxFit.fill,
+                              ),
                       ),
                     ),
+
+                    // CircleAvatar(
+                    //   backgroundColor: const Color(0xff034061),
+                    //   radius: 30,
+                    //   child: CircleAvatar(
+                    //     radius: 25,
+                    //     backgroundColor: Colors.transparent,
+                    //     backgroundImage: NetworkImage(profileImg),
+                    //   ),
+                    // ),
                   ),
                   CustomText(
                     title: profileName,
