@@ -117,9 +117,9 @@ class PaymentBottomSheetsUtil {
                   rowItem(
                     context: context,
                     containerColor: const Color(0xffE8E8E8),
-                    title: AppLocalizations.of(context)!.creditcard,
-                    desc: "${AppLocalizations.of(context)!.paymentuse} ${AppLocalizations.of(context)!.creditcard}",
-                    icon: Icons.payment,
+                    title: AppLocalizations.of(context)!.paypal,
+                    desc: "${AppLocalizations.of(context)!.paymentuse} ${AppLocalizations.of(context)!.paypal}",
+                    icon: Icons.paypal,
                     onPress: () => openNext(),
                   ),
                 ],
