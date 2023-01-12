@@ -70,7 +70,7 @@ final Map<String, Widget> routes = {
   RoutesConstants.calenderScreen: const MyCalenderScreen(),
   RoutesConstants.accountScreen: const AccountScreen(),
   RoutesConstants.notificationsScreen: const NotificationsScreen(),
-  RoutesConstants.webViewScreen: WebViewScreen(),
+  RoutesConstants.webViewScreen: const WebViewScreen(),
   RoutesConstants.inviteFriendScreen: const InviteFriendsScreen(),
   RoutesConstants.tutorialsScreen: const TutorialsScreen(),
   RoutesConstants.loyalityScreen: const LoyalityScreen(),

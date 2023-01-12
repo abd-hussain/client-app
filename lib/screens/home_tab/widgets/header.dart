@@ -31,7 +31,7 @@ class _HeaderHomePageState extends State<HeaderHomePage> {
               color: Color(0xff034061),
               size: 30,
             ),
-          )
+          ),
         ],
       ),
     );
