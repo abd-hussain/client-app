@@ -217,21 +217,26 @@ class AccountBloc extends Bloc<AccountService> {
         context: context,
         message: AppLocalizations.of(context)!.areyousuredeleteaccount,
         sure: () async {
-          service.removeAccount().whenComplete(() async {
-            final box = await Hive.openBox(DatabaseBoxConstant.userInfo);
-            box.deleteAll([
-              DatabaseFieldConstant.apikey,
-              DatabaseFieldConstant.token,
-              DatabaseFieldConstant.language,
-              DatabaseFieldConstant.userid,
-              DatabaseFieldConstant.countryId,
-              DatabaseFieldConstant.countryFlag,
-              DatabaseFieldConstant.isUserLoggedIn,
-              DatabaseFieldConstant.userFirstName,
-            ]);
+          BottomSheetsUtil().areYouShoureButtomSheet(
+              context: context,
+              message: AppLocalizations.of(context)!.accountInformationwillbedeleted,
+              sure: () async {
+                service.removeAccount().whenComplete(() async {
+                  final box = await Hive.openBox(DatabaseBoxConstant.userInfo);
+                  box.deleteAll([
+                    DatabaseFieldConstant.apikey,
+                    DatabaseFieldConstant.token,
+                    DatabaseFieldConstant.language,
+                    DatabaseFieldConstant.userid,
+                    DatabaseFieldConstant.countryId,
+                    DatabaseFieldConstant.countryFlag,
+                    DatabaseFieldConstant.isUserLoggedIn,
+                    DatabaseFieldConstant.userFirstName,
+                  ]);
 
-            await nav.pushNamedAndRemoveUntil(RoutesConstants.initialRoute, (Route<dynamic> route) => true);
-          });
+                  await nav.pushNamedAndRemoveUntil(RoutesConstants.initialRoute, (Route<dynamic> route) => true);
+                });
+              });
         });
   }
 
