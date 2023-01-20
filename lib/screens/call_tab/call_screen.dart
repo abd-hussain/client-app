@@ -1,6 +1,5 @@
 import 'package:client_app/locator.dart';
 import 'package:client_app/models/https/calender_model.dart';
-import 'package:client_app/screens/booking_meeting/booking_bloc.dart';
 import 'package:client_app/screens/call_tab/call_bloc.dart';
 import 'package:client_app/screens/call_tab/widgets/call_view.dart';
 import 'package:client_app/screens/call_tab/widgets/no_call_view.dart';
