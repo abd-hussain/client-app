@@ -1,5 +1,7 @@
+import 'package:client_app/locator.dart';
 import 'package:client_app/models/https/home_response.dart';
 import 'package:client_app/sevices/home_services.dart';
+import 'package:client_app/sevices/report_service.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/mixins.dart';
 import 'package:flutter/material.dart';
@@ -25,13 +27,13 @@ class HomeBloc extends Bloc<HomeService> {
   }
 
   void reportStory({required int storyId}) {
-    service.reportStory(storyId: storyId).then((value) {
+    locator<ReportService>().reportStory(storyId: storyId).then((value) {
       storiesListNotifier.value = value.data!;
     });
   }
 
   void reportEvent({required int eventId}) {
-    service.reportEvent(eventId: eventId).then((value) {
+    locator<ReportService>().reportEvent(eventId: eventId).then((value) {
       eventListNotifier.value = value.data!;
     });
   }

@@ -15,6 +15,8 @@ class _AddMobBannerState extends State<AddMobBanner> {
 
   @override
   void initState() {
+    MobileAds.instance
+        .updateRequestConfiguration(RequestConfiguration(testDeviceIds: ['33BE2250B43518CCDA7DE426D04EE231']));
     _bannerAd = BannerAd(
       adUnitId: AdHelper.bannerAdUnitId,
       request: const AdRequest(),

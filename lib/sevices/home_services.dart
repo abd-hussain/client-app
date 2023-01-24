@@ -11,22 +11,4 @@ class HomeService with Service {
     );
     return HomeResponse.fromJson(response);
   }
-
-  Future<StoryRespose> reportStory({required int storyId}) async {
-    final response = await repository.callRequest(
-      requestType: RequestType.post,
-      methodName: MethodNameConstant.reportStory,
-      queryParam: {"storyId": storyId},
-    );
-    return StoryRespose.fromJson(response);
-  }
-
-  Future<EventRespose> reportEvent({required int eventId}) async {
-    final response = await repository.callRequest(
-      requestType: RequestType.post,
-      methodName: MethodNameConstant.reportEvent,
-      queryParam: {"eventId": eventId},
-    );
-    return EventRespose.fromJson(response);
-  }
 }

@@ -18,12 +18,12 @@ class MethodNameConstant {
 
   static const String notifications = "notifications/client";
 
-  static const String home = "home/";
+  static const String home = "client-home/";
   static const String event = "event/";
   static const String clientEvent = "event/client";
 
-  static const String reportStory = "home/reportstory";
-  static const String reportEvent = "home/reportevent";
+  static const String reportStory = "report/story";
+  static const String reportEvent = "report/event";
 
   static const String tipsQuestions = "tips/";
 
