@@ -2,10 +2,10 @@ class MethodNameConstant {
   static const String countries = "countries";
   static const String categories = "categories";
   static const String mentors = "mentor-list/";
-  static const String mentorDetails = "mentor-account/";
+  static const String mentorDetails = "mentors-details/";
   static const String mentorAppointments = "appointment/mentor";
   static const String clientAppointments = "appointment/client";
-  static const String mentoravaliable = "mentor-account/mentor-avaliable";
+  static const String mentoravaliable = "mentors-details/mentor-avaliable";
   static const String bookAppointment = "appointment/book";
   static const String cancelAppointment = "appointment/cancel";
   static const String bookevent = "event/book";
