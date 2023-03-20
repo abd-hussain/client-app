@@ -9,8 +9,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 class HomeBloc extends Bloc<HomeService> {
   final ValueNotifier<List<MainBanner>?> bannerListNotifier = ValueNotifier<List<MainBanner>?>(null);
-  final ValueNotifier<List<MainStory>?> storiesListNotifier = ValueNotifier<List<MainStory>?>(null);
-  final ValueNotifier<List<MainTips>?> tipsListNotifier = ValueNotifier<List<MainTips>?>(null);
   final ValueNotifier<List<MainEvent>?> eventListNotifier = ValueNotifier<List<MainEvent>?>(null);
 
   final box = Hive.box(DatabaseBoxConstant.userInfo);
@@ -19,15 +17,9 @@ class HomeBloc extends Bloc<HomeService> {
     service.getHome().then((value) {
       if (value.data != null) {
         bannerListNotifier.value = value.data!.mainBanner;
-        storiesListNotifier.value = value.data!.mainStory;
-        tipsListNotifier.value = value.data!.mainTips;
         eventListNotifier.value = value.data!.mainEvent;
       }
     });
-  }
-
-  void reportStory({required int storyId}) async {
-    await locator<ReportService>().reportStory(storyId: storyId);
   }
 
   void reportEvent({required int eventId}) async {
@@ -37,8 +29,6 @@ class HomeBloc extends Bloc<HomeService> {
   @override
   onDispose() {
     bannerListNotifier.dispose();
-    storiesListNotifier.dispose();
-    tipsListNotifier.dispose();
     eventListNotifier.dispose();
   }
 }

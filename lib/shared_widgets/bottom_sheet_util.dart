@@ -1,7 +1,6 @@
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/models/gender_model.dart';
 import 'package:client_app/models/https/countries_model.dart';
-import 'package:client_app/utils/constants/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -370,88 +369,5 @@ class BottomSheetsUtil {
         );
       },
     );
-  }
-
-  Future showStoryFullView(
-      {required BuildContext context,
-      required String assets,
-      required String profileName,
-      required String profileImg,
-      required int profileId,
-      required Function(int) openProfile,
-      required Function(int) reportStory}) {
-    return showModalBottomSheet(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(25),
-          ),
-        ),
-        enableDrag: false,
-        useRootNavigator: true,
-        context: context,
-        backgroundColor: Colors.white,
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        builder: (context) {
-          return Padding(
-              padding: const EdgeInsets.only(top: 20, left: 16, right: 16, bottom: 50),
-              child: Column(
-                children: [
-                  InkWell(
-                    onTap: () => openProfile(profileId),
-                    child: CircleAvatar(
-                      backgroundColor: const Color(0xff034061),
-                      radius: 30,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(35),
-                        child: profileImg != ""
-                            ? FadeInImage(
-                                placeholder: const AssetImage("assets/images/avatar.jpeg"),
-                                image: NetworkImage(profileImg, scale: 1),
-                              )
-                            : Image.asset(
-                                'assets/images/avatar.jpeg',
-                                width: 50,
-                                height: 50,
-                                fit: BoxFit.fill,
-                              ),
-                      ),
-                    ),
-
-                    // CircleAvatar(
-                    //   backgroundColor: const Color(0xff034061),
-                    //   radius: 30,
-                    //   child: CircleAvatar(
-                    //     radius: 25,
-                    //     backgroundColor: Colors.transparent,
-                    //     backgroundImage: NetworkImage(profileImg),
-                    //   ),
-                    // ),
-                  ),
-                  CustomText(
-                    title: profileName,
-                    textColor: Colors.black,
-                    fontSize: 15,
-                  ),
-                  const SizedBox(height: 10),
-                  Container(
-                    height: 250,
-                    padding: const EdgeInsets.only(top: 20, left: 16, right: 16, bottom: 20),
-                    decoration: BoxDecoration(color: Colors.grey[100], borderRadius: BorderRadius.circular(20)),
-                    child: Image.network(AppConstant.imagesBaseURLForStories + assets),
-                  ),
-                  const SizedBox(height: 5),
-                  IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      reportStory(profileId);
-                    },
-                    icon: const Icon(
-                      Icons.report,
-                      color: Color(0xff444444),
-                    ),
-                  )
-                ],
-              ));
-        });
   }
 }

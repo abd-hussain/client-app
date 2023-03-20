@@ -1,4 +1,3 @@
-import 'package:client_app/models/https/home_response.dart';
 import 'package:client_app/models/https/report_request.dart';
 import 'package:client_app/utils/mixins.dart';
 import 'package:client_app/utils/repository/http_repository.dart';
@@ -74,14 +73,6 @@ class ReportService with Service {
         requestType: RequestType.post, methodName: MethodNameConstant.reportIssue, formData: formData);
 
     return true;
-  }
-
-  Future<dynamic> reportStory({required int storyId}) async {
-    return await repository.callRequest(
-      requestType: RequestType.post,
-      methodName: MethodNameConstant.reportStory,
-      queryParam: {"storyId": storyId, "isMentor": false},
-    );
   }
 
   Future<dynamic> reportEvent({required int eventId}) async {

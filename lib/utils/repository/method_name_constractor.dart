@@ -25,10 +25,7 @@ class MethodNameConstant {
   static const String messages = "messages/client";
   static const String chat = "messages/chat";
 
-  static const String reportStory = "report/story";
   static const String reportEvent = "report/event";
-
-  static const String tipsQuestions = "tips/";
 
   static const String uploadContactList = "settings/leads";
   static const String auth = "client-auth";

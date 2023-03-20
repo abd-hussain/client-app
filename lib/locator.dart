@@ -1,5 +1,4 @@
 import 'package:client_app/screens/main_contaner/main_container_bloc.dart';
-import 'package:client_app/screens/tips/tips_bloc.dart';
 import 'package:client_app/sevices/appointments_service.dart';
 import 'package:client_app/sevices/discount_service.dart';
 import 'package:client_app/sevices/event_services.dart';
@@ -9,7 +8,6 @@ import 'package:client_app/sevices/messages_services.dart';
 import 'package:client_app/sevices/noticitions_services.dart';
 import 'package:client_app/sevices/report_service.dart';
 import 'package:client_app/sevices/settings_service.dart';
-import 'package:client_app/sevices/tips_service.dart';
 import 'package:client_app/utils/day_time.dart';
 import 'package:client_app/utils/repository/http_interceptor.dart';
 import 'package:client_app/utils/repository/http_repository.dart';
@@ -34,7 +32,6 @@ Future<void> setupLocator() async {
   locator.registerFactory<SettingService>(() => SettingService());
   locator.registerFactory<LoyalityService>(() => LoyalityService());
   locator.registerFactory<HomeService>(() => HomeService());
-  locator.registerFactory<TipsService>(() => TipsService());
   locator.registerFactory<DiscountService>(() => DiscountService());
   locator.registerFactory<AppointmentsService>(() => AppointmentsService());
   locator.registerFactory<EventService>(() => EventService());
@@ -44,6 +41,5 @@ Future<void> setupLocator() async {
   locator.registerFactory<HttpInterceptor>(() => HttpInterceptor());
   locator.registerSingleton<HttpRepository>(HttpRepository());
   locator.registerSingleton<DayTime>(DayTime());
-  locator.registerLazySingleton(() => TipsBloc());
   locator.registerSingleton<MainContainerBloc>(MainContainerBloc());
 }

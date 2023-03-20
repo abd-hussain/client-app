@@ -3,8 +3,6 @@ import 'package:client_app/screens/home_tab/home_bloc.dart';
 import 'package:client_app/screens/home_tab/widgets/event_view.dart';
 import 'package:client_app/screens/home_tab/widgets/header.dart';
 import 'package:client_app/screens/home_tab/widgets/main_banner.dart';
-import 'package:client_app/screens/home_tab/widgets/stories.dart';
-import 'package:client_app/screens/home_tab/widgets/tips_view.dart';
 import 'package:client_app/shared_widgets/admob_banner.dart';
 import 'package:client_app/shared_widgets/booking/event_bottom_sheet.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
@@ -60,24 +58,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           }
                         }),
                     const SizedBox(height: 8),
-                    ValueListenableBuilder<List<MainStory>?>(
-                        valueListenable: _bloc.storiesListNotifier,
-                        builder: (context, snapshot, child) {
-                          if (snapshot != null && snapshot.isNotEmpty) {
-                            return StoriesHomePage(
-                              listOfStories: snapshot,
-                              reportStory: (id) {
-                                _bloc.reportStory(storyId: id);
-                              },
-                              openMentorProfile: (id) {
-                                Navigator.of(context, rootNavigator: true)
-                                    .pushNamed(RoutesConstants.mentorProfileScreen, arguments: {"id": id});
-                              },
-                            );
-                          } else {
-                            return const SizedBox();
-                          }
-                        }),
                     const AddMobBanner(),
                     ValueListenableBuilder<List<MainEvent>?>(
                         valueListenable: _bloc.eventListNotifier,
@@ -104,22 +84,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         }),
                     const SizedBox(height: 20),
                     const AddMobBanner(),
-                    ValueListenableBuilder<List<MainTips>?>(
-                        valueListenable: _bloc.tipsListNotifier,
-                        builder: (context, snapshot, child) {
-                          if (snapshot != null && snapshot.isNotEmpty) {
-                            return TipsView(
-                              language: _bloc.box.get(DatabaseFieldConstant.language),
-                              listOfTips: snapshot,
-                              onTipSelected: (tip) {
-                                Navigator.of(context, rootNavigator: true)
-                                    .pushNamed(RoutesConstants.tipsScreen, arguments: {"tip": tip});
-                              },
-                            );
-                          } else {
-                            return const SizedBox();
-                          }
-                        }),
                     const SizedBox(height: 20),
                   ],
                 ),
