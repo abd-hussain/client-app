@@ -1,5 +1,6 @@
 import 'package:client_app/models/https/home_response.dart';
 import 'package:client_app/screens/home_tab/home_bloc.dart';
+import 'package:client_app/screens/home_tab/widgets/event_header_view.dart';
 import 'package:client_app/screens/home_tab/widgets/event_view.dart';
 import 'package:client_app/screens/home_tab/widgets/header.dart';
 import 'package:client_app/screens/home_tab/widgets/main_banner.dart';
@@ -57,8 +58,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             return const SizedBox();
                           }
                         }),
-                    const SizedBox(height: 8),
                     const AddMobBanner(),
+                    const EventHeaderView(),
                     ValueListenableBuilder<List<MainEvent>?>(
                         valueListenable: _bloc.eventListNotifier,
                         builder: (context, snapshot, child) {
