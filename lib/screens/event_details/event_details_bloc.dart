@@ -42,6 +42,9 @@ class EventDetailsBloc extends Bloc<EventService> {
       eventId = event.id!;
       eventName = event.title!;
       eventPrice = event.price!;
+      if (eventPrice == 0) {
+        isEventFree = true;
+      }
       image = AppConstant.imagesBaseURLForEvents + event.image!;
 
       final fromDateTime = DateTime.parse(event.dateFrom!);
@@ -82,6 +85,16 @@ class EventDetailsBloc extends Bloc<EventService> {
         loadingStatus.value = LoadingStatus.finish;
       }
     });
+  }
+
+  bool checkIfUserIsLoggedIn() {
+    bool isItLoggedIn = false;
+
+    if (box.get(DatabaseFieldConstant.isUserLoggedIn) != null) {
+      isItLoggedIn = box.get(DatabaseFieldConstant.isUserLoggedIn);
+    }
+
+    return isItLoggedIn;
   }
 
   Future<dynamic> bookEventRequest() async {
