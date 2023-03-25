@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 
 class MainBannerHomePage extends StatelessWidget {
   final List<MainBanner> bannerList;
+  final Function() onPress;
 
-  const MainBannerHomePage({required this.bannerList, Key? key}) : super(key: key);
+  const MainBannerHomePage({required this.bannerList, required this.onPress, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,18 +27,12 @@ class MainBannerHomePage extends StatelessWidget {
 
   Widget _banner({required MainBanner obj}) {
     return InkWell(
-      onTap: () {
-        //TODO handle Tab Here click
-        print(obj.actionType);
-      },
+      onTap: () => onPress(),
       child: Container(
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.1),
-              spreadRadius: 0,
-              blurRadius: 4,
-              offset: const Offset(0, 3),
             ),
           ],
         ),

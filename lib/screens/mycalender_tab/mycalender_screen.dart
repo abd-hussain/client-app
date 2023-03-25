@@ -1,7 +1,6 @@
 import 'package:client_app/locator.dart';
 import 'package:client_app/models/https/calender_model.dart';
 import 'package:client_app/models/https/home_response.dart';
-import 'package:client_app/screens/home_tab/widgets/header.dart';
 import 'package:client_app/screens/main_contaner/main_container_bloc.dart';
 import 'package:client_app/screens/mycalender_tab/mycalender_bloc.dart';
 import 'package:client_app/screens/mycalender_tab/utils/calender_bottom_sheet.dart';
@@ -36,81 +35,78 @@ class _MyCalenderScreenState extends State<MyCalenderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          const HeaderHomePage(),
-          const SizedBox(height: 8),
-          Expanded(
-            child: ValueListenableBuilder<List<CalenderMeetings>>(
-                valueListenable: locator<MainContainerBloc>().eventsmeetingsListNotifier,
-                builder: (context, snapshot, child) {
-                  return SfCalendar(
-                      view: CalendarView.month,
-                      firstDayOfWeek: 6,
-                      allowAppointmentResize: true,
-                      initialSelectedDate: DateTime.now(),
-                      todayHighlightColor: const Color(0xff4CB6EA),
-                      dataSource: MeetingDataSource(context, snapshot),
-                      monthViewSettings: const MonthViewSettings(
-                        appointmentDisplayMode: MonthAppointmentDisplayMode.indicator,
-                        showAgenda: true,
-                        numberOfWeeksInView: 6,
-                        appointmentDisplayCount: 10,
-                        agendaStyle: AgendaStyle(
-                          backgroundColor: Color(0xffE8E8E8),
-                          dayTextStyle: TextStyle(fontSize: 16, color: Colors.black),
-                          dateTextStyle: TextStyle(fontSize: 25, color: Colors.black),
-                          placeholderTextStyle: TextStyle(fontSize: 25, color: Colors.grey),
-                        ),
+    return Column(
+      children: [
+        const SizedBox(height: 8),
+        Expanded(
+          child: ValueListenableBuilder<List<CalenderMeetings>>(
+              valueListenable: locator<MainContainerBloc>().eventsmeetingsListNotifier,
+              builder: (context, snapshot, child) {
+                return SfCalendar(
+                    view: CalendarView.month,
+                    firstDayOfWeek: 6,
+                    allowAppointmentResize: true,
+                    initialSelectedDate: DateTime.now(),
+                    todayHighlightColor: const Color(0xff4CB6EA),
+                    dataSource: MeetingDataSource(context, snapshot),
+                    monthViewSettings: const MonthViewSettings(
+                      appointmentDisplayMode: MonthAppointmentDisplayMode.indicator,
+                      showAgenda: true,
+                      numberOfWeeksInView: 6,
+                      appointmentDisplayCount: 10,
+                      agendaStyle: AgendaStyle(
+                        backgroundColor: Color(0xffE8E8E8),
+                        dayTextStyle: TextStyle(fontSize: 16, color: Colors.black),
+                        dateTextStyle: TextStyle(fontSize: 25, color: Colors.black),
+                        placeholderTextStyle: TextStyle(fontSize: 25, color: Colors.grey),
                       ),
-                      onTap: (calendarTapDetails) {
-                        if (calendarTapDetails.appointments != null &&
-                            calendarTapDetails.targetElement == CalendarElement.appointment) {
-                          final item = calendarTapDetails.appointments![0] as CalenderMeetings;
-                          CalenderBottomSheetsUtil(
-                            context: context,
-                            metingDetails: item,
-                            language: bloc.box.get(DatabaseFieldConstant.language),
-                          ).bookMeetingBottomSheet(
-                            cancel: () {
-                              if (item.type == Type.meeting) {
-                                bloc.cancelMeeting(item.meetingId).whenComplete(() async {
-                                  locator<MainContainerBloc>().getAppointmentsAndEvents();
+                    ),
+                    onTap: (calendarTapDetails) {
+                      if (calendarTapDetails.appointments != null &&
+                          calendarTapDetails.targetElement == CalendarElement.appointment) {
+                        final item = calendarTapDetails.appointments![0] as CalenderMeetings;
+                        CalenderBottomSheetsUtil(
+                          context: context,
+                          metingDetails: item,
+                          language: bloc.box.get(DatabaseFieldConstant.language),
+                        ).bookMeetingBottomSheet(
+                          cancel: () {
+                            if (item.type == Type.meeting) {
+                              bloc.cancelMeeting(item.meetingId).whenComplete(() async {
+                                locator<MainContainerBloc>().getAppointmentsAndEvents();
 
-                                  setState(() {});
-                                });
-                              } else if (item.type == Type.event) {
-                                bloc.cancelEvent(item.meetingId).whenComplete(() async {
-                                  locator<MainContainerBloc>().getAppointmentsAndEvents();
-                                  setState(() {});
-                                });
-                              }
-                            },
-                            openEventDetails: () {
-                              Navigator.of(context, rootNavigator: true)
-                                  .pushNamed(RoutesConstants.eventDetailsScreen, arguments: {
-                                "event_details": MainEvent(
-                                  title: item.title!,
-                                  id: item.meetingId,
-                                  image: "",
-                                  description: "",
-                                  joiningClients: 0,
-                                  maxNumberOfAttendance: 0,
-                                  dateFrom: item.fromTime.toString(),
-                                  dateTo: item.toTime.toString(),
-                                  price: 0,
-                                  state: 0,
-                                )
+                                setState(() {});
                               });
-                            },
-                          );
-                        }
-                      });
-                }),
-          ),
-        ],
-      ),
+                            } else if (item.type == Type.event) {
+                              bloc.cancelEvent(item.meetingId).whenComplete(() async {
+                                locator<MainContainerBloc>().getAppointmentsAndEvents();
+                                setState(() {});
+                              });
+                            }
+                          },
+                          openEventDetails: () {
+                            Navigator.of(context, rootNavigator: true)
+                                .pushNamed(RoutesConstants.eventDetailsScreen, arguments: {
+                              "event_details": MainEvent(
+                                title: item.title!,
+                                id: item.meetingId,
+                                image: "",
+                                description: "",
+                                joiningClients: 0,
+                                maxNumberOfAttendance: 0,
+                                dateFrom: item.fromTime.toString(),
+                                dateTo: item.toTime.toString(),
+                                price: 0,
+                                state: 0,
+                              )
+                            });
+                          },
+                        );
+                      }
+                    });
+              }),
+        ),
+      ],
     );
   }
 }
