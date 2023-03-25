@@ -14,6 +14,7 @@ import 'package:client_app/utils/enums/loading_status.dart';
 import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ionicons/ionicons.dart';
 
 class EventDetailsScreen extends StatefulWidget {
   const EventDetailsScreen({super.key});
@@ -46,7 +47,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
           onPressed: () {
             //TODO: handle share
           },
-          icon: const Icon(Icons.share),
+          icon: const Icon(Ionicons.share_outline),
         )
       ]),
       body: SafeArea(
