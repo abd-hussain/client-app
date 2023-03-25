@@ -26,6 +26,16 @@ class HomeBloc extends Bloc<HomeService> {
     await locator<ReportService>().reportEvent(eventId: eventId);
   }
 
+  bool checkIfUserIsLoggedIn() {
+    bool isItLoggedIn = false;
+
+    if (box.get(DatabaseFieldConstant.isUserLoggedIn) != null) {
+      isItLoggedIn = box.get(DatabaseFieldConstant.isUserLoggedIn);
+    }
+
+    return isItLoggedIn;
+  }
+
   @override
   onDispose() {
     bannerListNotifier.dispose();

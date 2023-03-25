@@ -1,4 +1,5 @@
-import 'package:client_app/utils/addsHelper.dart';
+import 'package:client_app/utils/adds_helper.dart';
+import 'package:client_app/utils/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -28,7 +29,7 @@ class _AddMobBannerState extends State<AddMobBanner> {
           });
         },
         onAdFailedToLoad: (ad, err) {
-          print('Failed to load a banner ad: ${err.message}');
+          logDebugMessage(message: 'Failed to load a banner ad: ${err.message}');
           _isBannerAdReady = false;
           ad.dispose();
         },
@@ -43,7 +44,7 @@ class _AddMobBannerState extends State<AddMobBanner> {
   Widget build(BuildContext context) {
     return _isBannerAdReady
         ? Padding(
-            padding: const EdgeInsets.only(top: 8, bottom: 8),
+            padding: const EdgeInsets.only(top: 4, bottom: 4),
             child: Align(
               alignment: Alignment.topCenter,
               child: SizedBox(

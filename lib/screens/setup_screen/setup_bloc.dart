@@ -1,5 +1,6 @@
-import 'package:client_app/myApp.dart';
+import 'package:client_app/my_app.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
+import 'package:client_app/utils/logger.dart';
 import 'package:client_app/utils/mixins.dart';
 import 'package:client_app/models/https/countries_model.dart';
 import 'package:client_app/sevices/filter_services.dart';
@@ -13,8 +14,8 @@ class SetupBloc extends Bloc<FilterService> {
 
   Future<void> getSystemLanguage(BuildContext context) async {
     final String? savedLanguage = box.get(DatabaseFieldConstant.language);
-    print("savedLanguage");
-    print(savedLanguage);
+
+    logDebugMessage(message: 'savedLanguage ...  $savedLanguage');
 
     if (savedLanguage == null) {
       _setLanguageFromTheSystem(context: context);

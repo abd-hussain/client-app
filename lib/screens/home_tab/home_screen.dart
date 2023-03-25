@@ -1,6 +1,5 @@
 import 'package:client_app/models/https/home_response.dart';
 import 'package:client_app/screens/home_tab/home_bloc.dart';
-import 'package:client_app/screens/home_tab/widgets/event_header_view.dart';
 import 'package:client_app/screens/home_tab/widgets/event_view.dart';
 import 'package:client_app/screens/home_tab/widgets/main_banner.dart';
 import 'package:client_app/shared_widgets/admob_banner.dart';
@@ -10,6 +9,7 @@ import 'package:client_app/utils/logger.dart';
 import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -57,7 +57,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 }
               }),
           const AddMobBanner(),
-          const EventHeaderView(),
           ValueListenableBuilder<List<MainEvent>?>(
               valueListenable: _bloc.eventListNotifier,
               builder: (context, snapshot, child) {
@@ -73,7 +72,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       EventOptionBookingBottomSheetsUtil(
                               context: context, language: _bloc.box.get(DatabaseFieldConstant.language))
                           .bookMeetingBottomSheet(report: () {
-                        _bloc.reportEvent(eventId: event.id!);
+                        if (_bloc.checkIfUserIsLoggedIn()) {
+                          _bloc.reportEvent(eventId: event.id!);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(AppLocalizations.of(context)!.youhavetobeloggedintodothat),
+                            ),
+                          );
+                        }
                       });
                     },
                   );

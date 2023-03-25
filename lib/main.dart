@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:client_app/locator.dart';
-import 'package:client_app/myApp.dart';
+import 'package:client_app/my_app.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/errors/exceptions.dart';
 import 'package:client_app/utils/logger.dart';
