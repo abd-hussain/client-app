@@ -61,6 +61,7 @@ class EventView extends StatelessWidget {
                               child: event.image != ""
                                   ? FadeInImage(
                                       fit: BoxFit.fill,
+                                      width: MediaQuery.of(context).size.width,
                                       placeholder: const AssetImage("assets/images/avatar.jpeg"),
                                       image: NetworkImage(
                                         AppConstant.imagesBaseURLForEvents + event.image!,
