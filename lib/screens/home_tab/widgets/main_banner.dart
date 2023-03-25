@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class MainBannerHomePage extends StatelessWidget {
   final List<MainBanner> bannerList;
-  final Function() onPress;
+  final Function(String?) onPress;
 
   const MainBannerHomePage({required this.bannerList, required this.onPress, Key? key}) : super(key: key);
 
@@ -27,7 +27,7 @@ class MainBannerHomePage extends StatelessWidget {
 
   Widget _banner({required MainBanner obj}) {
     return InkWell(
-      onTap: () => onPress(),
+      onTap: () => onPress(obj.actionType),
       child: Container(
         decoration: BoxDecoration(
           boxShadow: [

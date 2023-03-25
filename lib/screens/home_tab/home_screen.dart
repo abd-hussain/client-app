@@ -9,6 +9,7 @@ import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/logger.dart';
 import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -45,8 +46,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (snapshot != null && snapshot.isNotEmpty) {
                   return MainBannerHomePage(
                     bannerList: snapshot,
-                    onPress: () {
-                      //TODO : handle on click
+                    onPress: (link) async {
+                      if (link != null) {
+                        await launchUrl(Uri.parse(link));
+                      }
                     },
                   );
                 } else {
