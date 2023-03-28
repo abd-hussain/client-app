@@ -34,7 +34,6 @@ void main() {
       if (exception is HttpException) {
         Logger().wtf(exception.status);
         Logger().wtf(exception.message);
-        Logger().wtf(exception.requestId);
       }
     }
   });

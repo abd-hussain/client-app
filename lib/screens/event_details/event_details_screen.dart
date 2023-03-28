@@ -134,9 +134,11 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                         onTap: () async {
                           if (bloc.checkIfUserIsLoggedIn()) {
                             if (bloc.isEventFree) {
-                              bloc.bookEventRequest().whenComplete(() {
-                                locator<MainContainerBloc>().getAppointmentsAndEvents();
-                                Navigator.of(context).pop();
+                              bloc.bookEventRequest(context).then((value) {
+                                if (value != null) {
+                                  locator<MainContainerBloc>().getAppointmentsAndEvents();
+                                  Navigator.of(context).pop();
+                                }
                               });
                             } else {
                               final bottomSheet = PaymentBottomSheetsUtil(
@@ -147,9 +149,11 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                               await bottomSheet.paymentBottomSheet(
                                   faze: PaymentFaze.welcoming,
                                   openNext: () async {
-                                    bloc.bookEventRequest().whenComplete(() {
-                                      locator<MainContainerBloc>().getAppointmentsAndEvents();
-                                      Navigator.of(context).pop();
+                                    bloc.bookEventRequest(context).then((value) {
+                                      if (value != null) {
+                                        locator<MainContainerBloc>().getAppointmentsAndEvents();
+                                        Navigator.of(context).pop();
+                                      }
                                     });
                                   });
                             }

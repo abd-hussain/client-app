@@ -4,7 +4,9 @@ import 'package:client_app/utils/constants/constant.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/day_time.dart';
 import 'package:client_app/utils/enums/loading_status.dart';
+import 'package:client_app/utils/errors/exceptions.dart';
 import 'package:client_app/utils/mixins.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
@@ -97,8 +99,18 @@ class EventDetailsBloc extends Bloc<EventService> {
     return isItLoggedIn;
   }
 
-  Future<dynamic> bookEventRequest() async {
-    return await service.bookNewEvent(eventID: eventId);
+  Future<dynamic> bookEventRequest(BuildContext context) async {
+    try {
+      final value = await service.bookNewEvent(eventID: eventId);
+    } on DioError catch (error) {
+      final exception = error.error;
+      if (exception is HttpException) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(exception.message),
+        ));
+      }
+    }
+    return;
   }
 
   @override
