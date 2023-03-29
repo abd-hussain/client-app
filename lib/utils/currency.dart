@@ -7,26 +7,20 @@ class Currency {
   final box = Hive.box(DatabaseBoxConstant.userInfo);
 
   String calculateHourRate(double hourRate, Timing timing) {
-    //TODO must save object and return obj
-    String currency = "JD";
-    if (box.get(DatabaseFieldConstant.language) != "en") {
-      currency = "د.أ";
-    }
+    String currency = "\$";
+
     switch (timing) {
       case Timing.hour:
-        return "$hourRate $currency";
+        return "$currency$hourRate";
       case Timing.halfHour:
-        return "${hourRate / 2} $currency";
+        return "$currency${hourRate / 2}";
       case Timing.quarterHour:
-        return "${hourRate / 4} $currency";
+        return "$currency${hourRate / 4}";
     }
   }
 
   String getHourRateWithoutCurrency(String hourRate) {
-    String currency = "JD";
-    if (box.get(DatabaseFieldConstant.language) != "en") {
-      currency = "د.أ";
-    }
+    String currency = "\$";
     return hourRate.replaceAll(currency, "");
   }
 }

@@ -22,8 +22,12 @@ class MentorsModelData {
   String? firstName;
   String? lastName;
   double? rate;
-  double? hourRateByJD;
+  double? hourRate;
   String? profileImg;
+  List<String>? languages;
+  String? countryName;
+  String? countryFlag;
+  int? numberOfReviewr;
 
   MentorsModelData({
     this.rate,
@@ -32,8 +36,12 @@ class MentorsModelData {
     this.suffixeName,
     this.firstName,
     this.lastName,
-    this.hourRateByJD,
+    this.hourRate,
     this.profileImg,
+    this.languages,
+    this.countryName,
+    this.countryFlag,
+    this.numberOfReviewr,
   });
 
   MentorsModelData.fromJson(Map<String, dynamic> json) {
@@ -43,7 +51,11 @@ class MentorsModelData {
     suffixeName = json['suffixe_name'];
     firstName = json['first_name'];
     lastName = json['last_name'];
-    hourRateByJD = json['hour_rate_by_JD'];
+    hourRate = json['hour_rate'];
     profileImg = json['profile_img'];
+    languages = json['languages'].cast<String>();
+    countryName = json['country_name'];
+    countryFlag = json['country_flag'];
+    numberOfReviewr = json['number_of_reviewr'];
   }
 }
