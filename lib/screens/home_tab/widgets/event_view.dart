@@ -169,25 +169,6 @@ class EventView extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              const SizedBox(width: 6),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[400],
-                                  borderRadius: BorderRadius.circular(5),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 2,
-                                      blurRadius: 5,
-                                      offset: const Offset(0, 2),
-                                    ),
-                                  ],
-                                ),
-                                width: 40,
-                                child: const Center(
-                                  child: Icon(Icons.share_sharp),
-                                ),
-                              ),
                             ],
                           ),
                         ),

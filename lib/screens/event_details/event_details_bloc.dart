@@ -32,6 +32,7 @@ class EventDetailsBloc extends Bloc<EventService> {
   int eventId = 0;
   int maxNumberOfAttendance = 0;
   int joiningClients = 0;
+  bool alreadyRegister = false;
 
   bool isEventFree = false;
 
@@ -61,7 +62,10 @@ class EventDetailsBloc extends Bloc<EventService> {
 
   void getEventDetails(BuildContext context) {
     loadingStatus.value = LoadingStatus.inprogress;
-    service.getEventDetails(eventId: eventId).then((value) {
+
+    final int userID = int.tryParse(box.get(DatabaseFieldConstant.userid)) ?? 0;
+
+    service.getEventDetails(eventId: eventId, userId: userID).then((value) {
       if (value.data != null) {
         eventName = value.data!.title!;
         eventPrice = value.data!.price!;
@@ -82,6 +86,7 @@ class EventDetailsBloc extends Bloc<EventService> {
         mentorLastName = value.data!.mentorLastName!;
         mentorId = value.data!.mentorId!;
         joiningClients = value.data!.joiningClients!;
+        alreadyRegister = value.data!.alreadyRegister!;
         maxNumberOfAttendance = value.data!.maxNumberOfAttendance!;
 
         loadingStatus.value = LoadingStatus.finish;

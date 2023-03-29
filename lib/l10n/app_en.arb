@@ -153,6 +153,7 @@
     "comingevent" : "Upcoming Events",
     "intrestedfrom" : "Intrested From",
     "registernow" : "Register Now",
+    "cancelRegisternow" : "Cancel Registration",
     "free" : "Free",
     "cancelmeetingmessage" : "By pressing confirm you will cancel the meeting and you will lose half of the meeting cost",
     "eventdetails" : "Event Details",

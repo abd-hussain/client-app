@@ -129,8 +129,11 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                         desc: (bloc.maxNumberOfAttendance - bloc.joiningClients).toString(),
                       ),
                       CustomButton(
+                        buttonColor: bloc.alreadyRegister ? Colors.red : const Color(0xff4CB6EA),
                         enableButton: bloc.joiningClients < bloc.maxNumberOfAttendance,
-                        buttonTitle: AppLocalizations.of(context)!.registernow,
+                        buttonTitle: bloc.alreadyRegister
+                            ? AppLocalizations.of(context)!.cancelRegisternow
+                            : AppLocalizations.of(context)!.registernow,
                         onTap: () async {
                           if (bloc.checkIfUserIsLoggedIn()) {
                             if (bloc.isEventFree) {

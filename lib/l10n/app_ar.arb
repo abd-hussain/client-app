@@ -153,6 +153,7 @@
     "comingevent" : "جلسات قادمة",
     "intrestedfrom" : "مهتم من اصل",
     "registernow" : "سجل الان",
+    "cancelRegisternow" : "الغاء التسجيل",
     "free" : "مجانا",
     "cancelmeetingmessage" : "بالضغط على تأكيد ، ستلغي الجلسة وستخسر نصف تكلفة الجلسة",
     "eventdetails" : "تفاصيل الجلسة",

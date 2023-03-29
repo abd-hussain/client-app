@@ -5,11 +5,11 @@ import 'package:client_app/utils/repository/http_repository.dart';
 import 'package:client_app/utils/repository/method_name_constractor.dart';
 
 class EventService with Service {
-  Future<EventDetails> getEventDetails({required int eventId}) async {
+  Future<EventDetails> getEventDetails({required int eventId, required int userId}) async {
     final response = await repository.callRequest(
       requestType: RequestType.get,
       methodName: MethodNameConstant.event,
-      queryParam: {"id": eventId},
+      queryParam: {"id": eventId, "user_id": userId},
     );
     return EventDetails.fromJson(response);
   }
