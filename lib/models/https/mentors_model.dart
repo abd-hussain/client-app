@@ -1,3 +1,5 @@
+import 'package:client_app/utils/constants/constant.dart';
+
 class MentorsModel {
   List<MentorsModelData>? data;
   String? message;
@@ -55,7 +57,7 @@ class MentorsModelData {
     profileImg = json['profile_img'];
     languages = json['languages'].cast<String>();
     countryName = json['country_name'];
-    countryFlag = json['country_flag'];
+    countryFlag = AppConstant.imagesBaseURLForCountries + json['country_flag'];
     numberOfReviewr = json['number_of_reviewr'];
   }
 }

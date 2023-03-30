@@ -43,6 +43,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   categoriesListNotifier: _bloc.categoriesListNotifier,
                   onTap: (category) {
                     _bloc.selectedCategoryNotifier.value = category;
+                    _bloc.mentorsListNotifier.value = null;
                     _bloc.listOfMentors(categoryID: category.id!);
                   },
                 ),

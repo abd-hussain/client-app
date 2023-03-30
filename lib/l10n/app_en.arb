@@ -102,7 +102,7 @@
     "result" : "Result",
     "specialistcanhelp" : "Specialist can help",
     "min" : "min",
-    "rate" : "rate",
+    "rate" : "Rate",
     "specialist" : "specialist",
     "booknow" : "Book Now",
     "ratingandreview" : "Ratings & Reviews",
@@ -187,7 +187,8 @@
     "paypal" : "Paypal",
     "message" : "Message ...",
     "youhavetobeloggedintodothat" : "You have to be logged in to do that",
-    "vote" : "Vote"
+    "vote" : "Vote",
+    "sort" : "Sort"
 
 
 

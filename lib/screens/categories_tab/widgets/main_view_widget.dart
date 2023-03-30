@@ -10,12 +10,17 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:ionicons/ionicons.dart';
 
-class CategoryMainView extends StatelessWidget {
+class CategoryMainView extends StatefulWidget {
   final Category selectedCategory;
-  final List<MentorsModelData>? mentorsListNotifier;
+  List<MentorsModelData>? mentorsListNotifier;
 
-  const CategoryMainView({required this.selectedCategory, required this.mentorsListNotifier, super.key});
+  CategoryMainView({required this.selectedCategory, required this.mentorsListNotifier, super.key});
 
+  @override
+  State<CategoryMainView> createState() => _CategoryMainViewState();
+}
+
+class _CategoryMainViewState extends State<CategoryMainView> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -25,19 +30,116 @@ class CategoryMainView extends StatelessWidget {
         width: MediaQuery.of(context).size.width - 126,
         child: Column(
           children: [
+            headerFilter(context),
             Expanded(
-              child: mentorsListNotifier == null
+              child: widget.mentorsListNotifier == null
                   ? const ShimmerCardListView(count: 5)
-                  : mentorsListNotifier!.isEmpty
+                  : widget.mentorsListNotifier!.isEmpty
                       ? noMentorToShow(context)
                       : ListView.builder(
-                          itemCount: mentorsListNotifier!.length,
+                          itemCount: widget.mentorsListNotifier!.length,
                           itemBuilder: (context, index) {
-                            return _item(context, index, mentorsListNotifier!.length);
+                            return _item(context, index, widget.mentorsListNotifier!.length);
                           },
                         ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget headerFilter(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        color: Colors.grey[100],
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              CustomText(
+                title: "${AppLocalizations.of(context)!.sort} : ",
+                fontSize: 10,
+                textColor: const Color(0xff444444),
+              ),
+              const SizedBox(width: 6),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    filterIcon(
+                        text: AppLocalizations.of(context)!.price,
+                        icon: Ionicons.logo_bitcoin,
+                        onPress: () {
+                          widget.mentorsListNotifier!.sort((a, b) => a.hourRate!.compareTo(b.hourRate!));
+                          setState(() {});
+                        }),
+                    const SizedBox(width: 3),
+                    filterIcon(
+                        text: AppLocalizations.of(context)!.rate,
+                        icon: Ionicons.star_half_outline,
+                        onPress: () {
+                          widget.mentorsListNotifier!.sort((a, b) => b.rate!.compareTo(a.rate!));
+                          setState(() {});
+                        }),
+                    const SizedBox(width: 3),
+                    filterIcon(
+                        text: AppLocalizations.of(context)!.countryprofile,
+                        icon: Ionicons.navigate_circle_outline,
+                        onPress: () {
+                          widget.mentorsListNotifier!.sort((a, b) => a.countryName!.compareTo(b.countryName!));
+                          setState(() {});
+                        }),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget filterIcon({required String text, required IoniconsData icon, required Function onPress}) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () => onPress(),
+        child: Container(
+          height: 55,
+          width: 55,
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Colors.grey[100],
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 1,
+                blurRadius: 2,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                size: 10,
+                color: const Color(0xff034061),
+              ),
+              const SizedBox(height: 3),
+              CustomText(
+                title: text,
+                fontSize: 10,
+                fontWeight: FontWeight.w600,
+                textColor: const Color(0xff444444),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -60,7 +162,7 @@ class CategoryMainView extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       child: Column(
         children: [
-          _card(context, mentorsListNotifier![index]),
+          _card(context, widget.mentorsListNotifier![index]),
           listLenght - 1 == index
               ? const SizedBox(
                   height: 16,
@@ -102,7 +204,7 @@ class CategoryMainView extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     width: 75,
-                    height: 75,
+                    height: 100,
                     child: Center(
                       child: data.profileImg != ""
                           ? FadeInImage(
@@ -137,6 +239,26 @@ class CategoryMainView extends StatelessWidget {
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                         textColor: const Color(0xff444444),
+                      ),
+                      const SizedBox(height: 2),
+                      Row(
+                        children: [
+                          ClipOval(
+                            child: FadeInImage(
+                                width: 20,
+                                height: 20,
+                                fit: BoxFit.cover,
+                                placeholder: const AssetImage("assets/images/flagPlaceHolderImg.png"),
+                                image: NetworkImage(data.countryFlag!, scale: 1)),
+                          ),
+                          const SizedBox(width: 8),
+                          CustomText(
+                            title: data.countryName!,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12,
+                            textColor: const Color(0xff444444),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 2),
                       Row(
@@ -220,25 +342,28 @@ class CategoryMainView extends StatelessWidget {
                           ),
                         ],
                       ),
+                      const SizedBox(height: 4),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width / 3,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CustomText(
+                              title: Currency().calculateHourRate(data.hourRate!, Timing.halfHour),
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              textColor: const Color(0xff034061),
+                            ),
+                            CustomText(
+                              title: "30 ${AppLocalizations.of(context)!.min}",
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              textColor: const Color(0xff034061),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
-                  ),
-                ],
-              ),
-              const SizedBox(height: 4),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CustomText(
-                    title: Currency().calculateHourRate(data.hourRate!, Timing.halfHour),
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    textColor: const Color(0xff034061),
-                  ),
-                  CustomText(
-                    title: "30 ${AppLocalizations.of(context)!.min}",
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    textColor: const Color(0xff034061),
                   ),
                 ],
               ),
