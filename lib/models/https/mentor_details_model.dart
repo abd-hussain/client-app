@@ -64,7 +64,7 @@ class MentorDetailsResponseData {
     lastName = json['last_name'];
     bio = json['bio'];
     speakingLanguage = json['speaking_language'].cast<String>();
-    hourRateByJD = json['hour_rate_by_JD'];
+    hourRateByJD = json['hour_rate'];
     totalRate = json['total_rate'];
     gender = json['gender'];
     profileImg = json['profile_img'];
