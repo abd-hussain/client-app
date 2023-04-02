@@ -64,13 +64,23 @@ class _BookingScreenState extends State<BookingScreen> {
                             )
                           : const SearchForMentorView();
                     }),
-                CustomText(
-                  title: bloc.categoryName!,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  textColor: const Color(0xff554d56),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomText(
+                      title: "${AppLocalizations.of(context)!.category} :",
+                      fontSize: 12,
+                      textColor: const Color(0xff554d56),
+                    ),
+                    const SizedBox(width: 8),
+                    CustomText(
+                      title: bloc.categoryName!,
+                      fontSize: 12,
+                      textColor: const Color(0xff554d56),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: CustomText(
@@ -79,25 +89,6 @@ class _BookingScreenState extends State<BookingScreen> {
                     textColor: const Color(0xff554d56),
                   ),
                 ),
-                AppointmentDetailsView(
-                  title: AppLocalizations.of(context)!.meetingtype,
-                  desc: bloc.bookingType == BookingType.schudule
-                      ? bloc.meetingType!
-                      : AppLocalizations.of(context)!.meetingnow,
-                ),
-                AppointmentDetailsView(
-                  title: AppLocalizations.of(context)!.meetingduration,
-                  desc: "${bloc.meetingduration!} ${AppLocalizations.of(context)!.min}",
-                ),
-                ValueListenableBuilder<bool>(
-                    valueListenable: bloc.checkingAvaliableMentors,
-                    builder: (context, snapshot, child) {
-                      return AppointmentDetailsView(
-                        title: AppLocalizations.of(context)!.meetingtime,
-                        desc: bloc.meetingtime ?? "-----",
-                        forceView: true,
-                      );
-                    }),
                 ValueListenableBuilder<bool>(
                     valueListenable: bloc.checkingAvaliableMentors,
                     builder: (context, snapshot, child) {
@@ -108,6 +99,19 @@ class _BookingScreenState extends State<BookingScreen> {
                             : AppLocalizations.of(context)!.withinhour,
                       );
                     }),
+                ValueListenableBuilder<bool>(
+                    valueListenable: bloc.checkingAvaliableMentors,
+                    builder: (context, snapshot, child) {
+                      return AppointmentDetailsView(
+                        title: AppLocalizations.of(context)!.meetingtime,
+                        desc: bloc.meetingtime ?? "-----",
+                        forceView: true,
+                      );
+                    }),
+                AppointmentDetailsView(
+                  title: AppLocalizations.of(context)!.meetingduration,
+                  desc: "${bloc.meetingduration!} ${AppLocalizations.of(context)!.min}",
+                ),
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: Container(height: 1, color: const Color(0xff444444)),

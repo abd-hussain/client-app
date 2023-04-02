@@ -87,7 +87,7 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
                           ),
                           const SizedBox(width: 8),
                           CustomText(
-                            title: bloc.categoryName!.toString(),
+                            title: bloc.categoryName!,
                             fontSize: 12,
                             textColor: const Color(0xff554d56),
                           ),
