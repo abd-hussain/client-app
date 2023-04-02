@@ -5,6 +5,8 @@ class ParserTimer {
     switch (time) {
       case Timing.hour:
         return "60";
+      case Timing.threeQuarter:
+        return "45";
       case Timing.halfHour:
         return "30";
       case Timing.quarterHour:

@@ -138,18 +138,6 @@ class BookingBottomSheetsUtil {
       children: [
         const SizedBox(height: 20),
         CustomText(
-          title: AppLocalizations.of(context)!.meetingtype,
-          textColor: const Color(0xff444444),
-          fontSize: 14,
-        ),
-        const SizedBox(height: 8),
-        BookingCell(
-          title: AppLocalizations.of(context)!.bookingonetime,
-          isSelected: true,
-          onPress: () {},
-        ),
-        const SizedBox(height: 8),
-        CustomText(
           title: AppLocalizations.of(context)!.meetingduration,
           textColor: const Color(0xff444444),
           fontSize: 14,
@@ -173,6 +161,13 @@ class BookingBottomSheetsUtil {
                     isSelected: (snapshot ?? Timing.hour) == Timing.halfHour,
                     onPress: () {
                       selectedMeetingDuration.value = Timing.halfHour;
+                    },
+                  ),
+                  BookingCell(
+                    title: "45  ${AppLocalizations.of(context)!.min}",
+                    isSelected: (snapshot ?? Timing.hour) == Timing.threeQuarter,
+                    onPress: () {
+                      selectedMeetingDuration.value = Timing.threeQuarter;
                     },
                   ),
                   BookingCell(
