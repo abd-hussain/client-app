@@ -12,9 +12,9 @@ import 'package:ionicons/ionicons.dart';
 
 class CategoryMainView extends StatefulWidget {
   final Category selectedCategory;
-  List<MentorsModelData>? mentorsListNotifier;
+  final List<MentorsModelData>? mentorsListNotifier;
 
-  CategoryMainView({required this.selectedCategory, required this.mentorsListNotifier, super.key});
+  const CategoryMainView({required this.selectedCategory, required this.mentorsListNotifier, super.key});
 
   @override
   State<CategoryMainView> createState() => _CategoryMainViewState();
@@ -151,7 +151,7 @@ class _CategoryMainViewState extends State<CategoryMainView> {
         title: AppLocalizations.of(context)!.noitem,
         fontSize: 14,
         textColor: const Color(0xff444444),
-        maxLins: 4,
+        fontWeight: FontWeight.bold,
         textAlign: TextAlign.center,
       ),
     );

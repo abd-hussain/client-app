@@ -10,6 +10,7 @@ import 'package:client_app/utils/enums/loading_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_multi_select_items/flutter_multi_select_items.dart';
+import 'package:ionicons/ionicons.dart';
 
 class MentorProfileScreen extends StatefulWidget {
   const MentorProfileScreen({super.key});
@@ -37,14 +38,7 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffFAFAFA),
-      appBar: customAppBar(title: "", actions: [
-        IconButton(
-          onPressed: () {
-            //TODO handle share
-          },
-          icon: const Icon(Icons.share),
-        )
-      ]),
+      appBar: customAppBar(title: ""),
       body: SafeArea(
         child: SingleChildScrollView(
           child: ValueListenableBuilder<LoadingStatus>(
@@ -87,7 +81,7 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CustomText(
-                            title: "${AppLocalizations.of(context)!.specialist} :",
+                            title: "${AppLocalizations.of(context)!.category} :",
                             fontSize: 12,
                             textColor: const Color(0xff554d56),
                           ),
@@ -153,10 +147,11 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
                                 ),
                                 const SizedBox(height: 20),
                                 MentorGridItem(
-                                  title: AppLocalizations.of(context)!.dbprofile,
-                                  value: bloc.dateOfBirth!,
+                                  title: AppLocalizations.of(context)!.experience,
+                                  value:
+                                      "${bloc.calculateExperience(bloc.experienceSince)} ${AppLocalizations.of(context)!.year}",
                                   icon: const Icon(
-                                    Icons.date_range_outlined,
+                                    Ionicons.library_outline,
                                     color: Color(0xff444444),
                                   ),
                                 ),

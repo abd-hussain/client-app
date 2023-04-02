@@ -25,6 +25,8 @@ class MentorProfileBloc extends Bloc<MentorService> {
   String? countryName;
   String? countryFlag;
   String? dateOfBirth;
+  String? experienceSince;
+
   List<MultiSelectCard<String>> majors = [];
   List<Reviews> reviews = [];
   double totalRate = 0;
@@ -74,6 +76,7 @@ class MentorProfileBloc extends Bloc<MentorService> {
         countryName = value.data!.country!;
         countryFlag = value.data!.countryFlag!;
         dateOfBirth = value.data!.dateOfBirth!;
+        experienceSince = value.data!.experienceSince!;
         for (String item in value.data!.major!) {
           majors.add(MultiSelectCard(value: item, label: item));
         }
@@ -88,6 +91,17 @@ class MentorProfileBloc extends Bloc<MentorService> {
         loadingStatus.value = LoadingStatus.finish;
       }
     });
+  }
+
+  String calculateExperience(String? experienceSince) {
+    if (experienceSince != null) {
+      int intExperienceSince = int.tryParse(experienceSince) ?? 0;
+      final now = DateTime.now();
+      int intCurrentYear = now.year;
+      return "${intCurrentYear - intExperienceSince}";
+    } else {
+      return "0";
+    }
   }
 
   @override

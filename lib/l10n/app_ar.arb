@@ -188,7 +188,12 @@
     "message" : "الرساله ...",
     "youhavetobeloggedintodothat" : "عليك أن تكون مسجلا للقيام بذلك",
     "vote" : "صوت",
-    "sort" : "ترتيب"
+    "sort" : "ترتيب",
+    "experience" : "الخبرة",
+    "category" : "التصنيف",
+    "year" : "سنة"
+
+
 
 
 

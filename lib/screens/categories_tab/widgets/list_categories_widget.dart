@@ -3,13 +3,17 @@ import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/shared_widgets/shimmers/shimmer_categories.dart';
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
-class CategoriesList extends StatelessWidget {
+class CategoriesList extends StatefulWidget {
   final ValueNotifier<List<Category>> categoriesListNotifier;
   final Function(Category) onTap;
 
-  CategoriesList({super.key, required this.categoriesListNotifier, required this.onTap});
+  const CategoriesList({super.key, required this.categoriesListNotifier, required this.onTap});
 
+  @override
+  State<CategoriesList> createState() => _CategoriesListState();
+}
+
+class _CategoriesListState extends State<CategoriesList> {
   ValueNotifier<int> selectedIndex = ValueNotifier<int>(0);
 
   @override
@@ -17,7 +21,7 @@ class CategoriesList extends StatelessWidget {
     return SizedBox(
       width: 110,
       child: ValueListenableBuilder<List<Category>>(
-          valueListenable: categoriesListNotifier,
+          valueListenable: widget.categoriesListNotifier,
           builder: (context, data, child) {
             return data.isEmpty
                 ? const ShimmerCategoriesView()
@@ -36,7 +40,7 @@ class CategoriesList extends StatelessWidget {
       child: InkWell(
         onTap: () {
           selectedIndex.value = index;
-          onTap(item);
+          widget.onTap(item);
         },
         child: ValueListenableBuilder<int>(
             valueListenable: selectedIndex,
@@ -46,7 +50,7 @@ class CategoriesList extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(5),
-                  border: Border.all(width: 5, color: snapshot == index ? const Color(0xff4CB6EA) : Colors.white),
+                  border: Border.all(width: 3, color: snapshot == index ? const Color(0xff4CB6EA) : Colors.white),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(top: 8, bottom: 8),
@@ -67,7 +71,7 @@ class CategoriesList extends StatelessWidget {
                           title: item.name!,
                           fontSize: 14,
                           textAlign: TextAlign.center,
-                          textColor: const Color(0xff4CB6EA),
+                          textColor: const Color(0xff034061),
                           maxLins: 2,
                         ),
                       ),

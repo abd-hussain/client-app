@@ -21,6 +21,7 @@ class MentorDetailsResponseData {
   int? gender;
   String? profileImg;
   String? dateOfBirth;
+  String? experienceSince;
   String? categoryName;
   String? country;
   String? countryFlag;
@@ -45,6 +46,7 @@ class MentorDetailsResponseData {
       this.gender,
       this.profileImg,
       this.dateOfBirth,
+      this.experienceSince,
       this.categoryName,
       this.country,
       this.countryFlag,
@@ -69,6 +71,7 @@ class MentorDetailsResponseData {
     gender = json['gender'];
     profileImg = json['profile_img'];
     dateOfBirth = json['date_of_birth'];
+    experienceSince = json['experience_since'];
     categoryName = json['category_name'];
     country = json['country'];
     countryFlag = json['country_flag'];
