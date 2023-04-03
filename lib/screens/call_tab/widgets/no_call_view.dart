@@ -11,9 +11,10 @@ import 'package:lottie/lottie.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NoCallView extends StatelessWidget {
+  final bool isUserLoggedIn;
   final String language;
   final List<Category> listOfCategories;
-  const NoCallView({required this.language, required this.listOfCategories, super.key});
+  const NoCallView({required this.isUserLoggedIn, required this.language, required this.listOfCategories, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -63,32 +64,40 @@ class NoCallView extends StatelessWidget {
                 desc: AppLocalizations.of(context)!.meetingnowdesc,
                 icon: Icons.timer,
                 onPress: () async {
-                  final bottomSheet = InstantBookingBottomSheetsUtil(
-                    context: context,
-                    language: language,
-                    listOfCategories: listOfCategories,
-                  );
-                  await bottomSheet.bookMeetingBottomSheet(
-                    faze: BookingFaze.one,
-                    openNext: () async {
-                      await bottomSheet.bookMeetingBottomSheet(
-                        faze: BookingFaze.two,
-                        openNext: () => null,
-                        doneSelection: ({required categoryID, required categoryName, required meetingduration}) {
-                          Navigator.of(context, rootNavigator: true).pushNamed(
-                            RoutesConstants.bookingScreen,
-                            arguments: {
-                              "bookingType": BookingType.instant,
-                              "categoryID": categoryID,
-                              "categoryName": categoryName,
-                              "meetingduration": meetingduration,
-                            },
-                          );
-                        },
-                      );
-                    },
-                    doneSelection: ({required categoryID, required categoryName, required meetingduration}) => null,
-                  );
+                  if (isUserLoggedIn) {
+                    final bottomSheet = InstantBookingBottomSheetsUtil(
+                      context: context,
+                      language: language,
+                      listOfCategories: listOfCategories,
+                    );
+                    await bottomSheet.bookMeetingBottomSheet(
+                      faze: BookingFaze.one,
+                      openNext: () async {
+                        await bottomSheet.bookMeetingBottomSheet(
+                          faze: BookingFaze.two,
+                          openNext: () => null,
+                          doneSelection: ({required categoryID, required categoryName, required meetingduration}) {
+                            Navigator.of(context, rootNavigator: true).pushNamed(
+                              RoutesConstants.bookingScreen,
+                              arguments: {
+                                "bookingType": BookingType.instant,
+                                "categoryID": categoryID,
+                                "categoryName": categoryName,
+                                "meetingduration": meetingduration,
+                              },
+                            );
+                          },
+                        );
+                      },
+                      doneSelection: ({required categoryID, required categoryName, required meetingduration}) => null,
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(AppLocalizations.of(context)!.youhavetobeloggedintodothat),
+                      ),
+                    );
+                  }
                 },
               ),
               const SizedBox(height: 8),

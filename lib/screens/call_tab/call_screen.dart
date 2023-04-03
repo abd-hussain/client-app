@@ -29,8 +29,6 @@ class _CallScreenState extends State<CallScreen> {
     super.dispose();
   }
 
-  //TODO handle when the user is not loggedin
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -86,6 +84,7 @@ class _CallScreenState extends State<CallScreen> {
         future: bloc.listOfCategories(),
         builder: (context, snapshot2) {
           return NoCallView(
+            isUserLoggedIn: bloc.checkIfUserIsLoggedIn(),
             language: bloc.box.get(DatabaseFieldConstant.language),
             listOfCategories: snapshot2.data ?? [],
           );

@@ -47,6 +47,16 @@ class CallBloc extends Bloc<FilterService> {
     }
   }
 
+  bool checkIfUserIsLoggedIn() {
+    bool isItLoggedIn = false;
+
+    if (box.get(DatabaseFieldConstant.isUserLoggedIn) != null) {
+      isItLoggedIn = box.get(DatabaseFieldConstant.isUserLoggedIn);
+    }
+
+    return isItLoggedIn;
+  }
+
   @override
   onDispose() {}
 }
