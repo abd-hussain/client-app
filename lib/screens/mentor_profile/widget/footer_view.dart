@@ -11,6 +11,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class MentorProfileFooterView extends StatelessWidget {
+  final bool isUserLoggedin;
   final int mentorId;
   final double hourRate;
   final String suffixeName;
@@ -28,6 +29,7 @@ class MentorProfileFooterView extends StatelessWidget {
   final List<AppointmentData> listOfAppointments;
 
   const MentorProfileFooterView({
+    required this.isUserLoggedin,
     required this.mentorId,
     required this.hourRate,
     super.key,
@@ -83,53 +85,61 @@ class MentorProfileFooterView extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.3,
               buttonTitle: AppLocalizations.of(context)!.booknow,
               onTap: () async {
-                final bottomSheet = BookingBottomSheetsUtil(
-                  context: context,
-                  hourRate: hourRate,
-                  language: box.get(DatabaseFieldConstant.language),
-                  workingHoursSaturday: workingHoursSaturday,
-                  workingHoursSunday: workingHoursSunday,
-                  workingHoursFriday: workingHoursFriday,
-                  workingHoursThursday: workingHoursThursday,
-                  workingHoursMonday: workingHoursMonday,
-                  workingHoursTuesday: workingHoursTuesday,
-                  workingHoursWednesday: workingHoursWednesday,
-                  listOfAppointments: listOfAppointments,
-                );
-                await bottomSheet.bookMeetingBottomSheet(
-                  faze: BookingFaze.one,
-                  openNext: () async {
-                    await bottomSheet.bookMeetingBottomSheet(
-                      faze: BookingFaze.two,
-                      openNext: () async {
-                        await bottomSheet.bookMeetingBottomSheet(
-                          faze: BookingFaze.three,
-                          openNext: () => null,
-                          doneSelection: (meetingduration, meetingtime, meetingdate, meetingcost) {
-                            Navigator.of(context, rootNavigator: true).pushNamed(
-                              RoutesConstants.bookingScreen,
-                              arguments: {
-                                "bookingType": BookingType.schudule,
-                                "profileImageUrl": profileImageUrl,
-                                "suffixeName": suffixeName,
-                                "firstName": firstName,
-                                "lastName": lastName,
-                                "mentor_id": mentorId,
-                                "categoryName": categoryName,
-                                "meetingduration": meetingduration,
-                                "meetingtime": meetingtime,
-                                "meetingdate": meetingdate,
-                                "meetingcost": meetingcost
-                              },
-                            );
-                          },
-                        );
-                      },
-                      doneSelection: (meetingdate, meetingduration, meetingtime, meetingcost) => null,
-                    );
-                  },
-                  doneSelection: (meetingdate, meetingduration, meetingtime, meetingcost) => null,
-                );
+                if (isUserLoggedin) {
+                  final bottomSheet = BookingBottomSheetsUtil(
+                    context: context,
+                    hourRate: hourRate,
+                    language: box.get(DatabaseFieldConstant.language),
+                    workingHoursSaturday: workingHoursSaturday,
+                    workingHoursSunday: workingHoursSunday,
+                    workingHoursFriday: workingHoursFriday,
+                    workingHoursThursday: workingHoursThursday,
+                    workingHoursMonday: workingHoursMonday,
+                    workingHoursTuesday: workingHoursTuesday,
+                    workingHoursWednesday: workingHoursWednesday,
+                    listOfAppointments: listOfAppointments,
+                  );
+                  await bottomSheet.bookMeetingBottomSheet(
+                    faze: BookingFaze.one,
+                    openNext: () async {
+                      await bottomSheet.bookMeetingBottomSheet(
+                        faze: BookingFaze.two,
+                        openNext: () async {
+                          await bottomSheet.bookMeetingBottomSheet(
+                            faze: BookingFaze.three,
+                            openNext: () => null,
+                            doneSelection: (meetingduration, meetingtime, meetingdate, meetingcost) {
+                              Navigator.of(context, rootNavigator: true).pushNamed(
+                                RoutesConstants.bookingScreen,
+                                arguments: {
+                                  "bookingType": BookingType.schudule,
+                                  "profileImageUrl": profileImageUrl,
+                                  "suffixeName": suffixeName,
+                                  "firstName": firstName,
+                                  "lastName": lastName,
+                                  "mentor_id": mentorId,
+                                  "categoryName": categoryName,
+                                  "meetingduration": meetingduration,
+                                  "meetingtime": meetingtime,
+                                  "meetingdate": meetingdate,
+                                  "meetingcost": meetingcost
+                                },
+                              );
+                            },
+                          );
+                        },
+                        doneSelection: (meetingdate, meetingduration, meetingtime, meetingcost) => null,
+                      );
+                    },
+                    doneSelection: (meetingdate, meetingduration, meetingtime, meetingcost) => null,
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(AppLocalizations.of(context)!.youhavetobeloggedintodothat),
+                    ),
+                  );
+                }
               },
             )
           ],

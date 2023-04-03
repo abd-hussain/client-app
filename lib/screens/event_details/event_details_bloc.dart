@@ -63,7 +63,11 @@ class EventDetailsBloc extends Bloc<EventService> {
   void getEventDetails(BuildContext context) {
     loadingStatus.value = LoadingStatus.inprogress;
 
-    final int userID = int.tryParse(box.get(DatabaseFieldConstant.userid)) ?? 0;
+    int userID = 0;
+
+    if (box.get(DatabaseFieldConstant.userid) != null) {
+      userID = int.parse(box.get(DatabaseFieldConstant.userid));
+    }
 
     service.getEventDetails(eventId: eventId, userId: userID).then((value) {
       if (value.data != null) {

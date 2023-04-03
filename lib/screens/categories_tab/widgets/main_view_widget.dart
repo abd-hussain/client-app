@@ -177,7 +177,7 @@ class _CategoryMainViewState extends State<CategoryMainView> {
     return InkWell(
       onTap: () {
         Navigator.of(context, rootNavigator: true)
-            .pushNamed(RoutesConstants.mentorProfileScreen, arguments: {"id": data.id});
+            .pushNamed(RoutesConstants.mentorProfileScreen, arguments: {"id": data.id ?? 0});
       },
       child: Container(
         decoration: BoxDecoration(

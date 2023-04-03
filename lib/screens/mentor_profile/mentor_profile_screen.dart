@@ -209,6 +209,7 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
           builder: (context, loadingsnapshot, child) {
             if (loadingsnapshot != LoadingStatus.inprogress) {
               return MentorProfileFooterView(
+                isUserLoggedin: bloc.checkIfUserIsLoggedIn(),
                 mentorId: bloc.mentorId!,
                 hourRate: bloc.hourRate!,
                 suffixeName: bloc.suffixeName!,

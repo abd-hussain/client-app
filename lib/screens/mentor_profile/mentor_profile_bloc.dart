@@ -3,11 +3,13 @@ import 'package:client_app/models/https/appointment.dart';
 import 'package:client_app/models/https/mentor_details_model.dart';
 import 'package:client_app/sevices/appointments_service.dart';
 import 'package:client_app/sevices/mentor_service.dart';
+import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/enums/loading_status.dart';
 import 'package:client_app/utils/gender_format.dart';
 import 'package:client_app/utils/mixins.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_select_items/flutter_multi_select_items.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class MentorProfileBloc extends Bloc<MentorService> {
   ValueNotifier<LoadingStatus> loadingStatus = ValueNotifier<LoadingStatus>(LoadingStatus.idle);
@@ -39,11 +41,13 @@ class MentorProfileBloc extends Bloc<MentorService> {
   List<int>? workingHoursFriday;
 
   List<AppointmentData> listOfAppointments = [];
+  final box = Hive.box(DatabaseBoxConstant.userInfo);
 
   void handleReadingArguments(BuildContext context, {required Object? arguments}) {
     if (arguments != null) {
       final newArguments = arguments as Map<String, dynamic>;
       int mentorId = newArguments["id"] as int;
+
       _getMentorInformation(context, mentorId);
       _getMentorAppointments(mentorId);
     }
@@ -102,6 +106,16 @@ class MentorProfileBloc extends Bloc<MentorService> {
     } else {
       return "0";
     }
+  }
+
+  bool checkIfUserIsLoggedIn() {
+    bool isItLoggedIn = false;
+
+    if (box.get(DatabaseFieldConstant.isUserLoggedIn) != null) {
+      isItLoggedIn = box.get(DatabaseFieldConstant.isUserLoggedIn);
+    }
+
+    return isItLoggedIn;
   }
 
   @override
