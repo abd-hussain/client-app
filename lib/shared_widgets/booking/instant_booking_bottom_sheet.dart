@@ -44,13 +44,11 @@ class InstantBookingBottomSheetsUtil {
       clipBehavior: Clip.antiAliasWithSaveLayer,
       builder: (context) {
         return Padding(
-          padding: const EdgeInsets.only(top: 20, left: 16, right: 16, bottom: 20),
+          padding: const EdgeInsets.only(top: 10, left: 16, right: 16, bottom: 20),
           child: Wrap(children: [
             Row(
               children: [
-                const SizedBox(
-                  width: 50,
-                ),
+                const SizedBox(width: 50),
                 const Expanded(child: SizedBox()),
                 CustomText(
                   title: AppLocalizations.of(context)!.meetingnow,
@@ -75,7 +73,7 @@ class InstantBookingBottomSheetsUtil {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
             faze == BookingFaze.one
                 ? faze1View(
                     context: context,
@@ -99,7 +97,7 @@ class InstantBookingBottomSheetsUtil {
       {required BuildContext context, required List<Category> listOfCategories, required Function() openNext}) {
     return Column(
       children: [
-        const SizedBox(height: 20),
+        const SizedBox(height: 10),
         CustomText(
           title: AppLocalizations.of(context)!.specialist,
           textColor: const Color(0xff444444),
@@ -107,7 +105,7 @@ class InstantBookingBottomSheetsUtil {
         ),
         const SizedBox(height: 8),
         SizedBox(
-          height: 145,
+          height: 190,
           child: ValueListenableBuilder<String?>(
               valueListenable: selectedCategories,
               builder: (context, snapshot, child) {
@@ -153,6 +151,13 @@ class InstantBookingBottomSheetsUtil {
                     isSelected: (snapshot ?? Timing.hour) == Timing.halfHour,
                     onPress: () {
                       selectedMeetingDuration.value = Timing.halfHour;
+                    },
+                  ),
+                  BookingCell(
+                    title: "45 ${AppLocalizations.of(context)!.min}",
+                    isSelected: (snapshot ?? Timing.hour) == Timing.threeQuarter,
+                    onPress: () {
+                      selectedMeetingDuration.value = Timing.threeQuarter;
                     },
                   ),
                   BookingCell(
@@ -259,6 +264,7 @@ class InstantBookingBottomSheetsUtil {
                         ? "00 ${AppLocalizations.of(context)!.min}"
                         : "${ParserTimer().getTime(selectedMeetingDuration)} ${AppLocalizations.of(context)!.min}",
                     textColor: const Color(0xff444444),
+                    fontWeight: FontWeight.bold,
                     fontSize: 18,
                   ),
                 ],

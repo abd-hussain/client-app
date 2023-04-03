@@ -94,9 +94,7 @@ class _BookingScreenState extends State<BookingScreen> {
                     builder: (context, snapshot, child) {
                       return AppointmentDetailsView(
                         title: AppLocalizations.of(context)!.meetingdate,
-                        desc: bloc.bookingType == BookingType.schudule || snapshot
-                            ? bloc.meetingdate!
-                            : AppLocalizations.of(context)!.withinhour,
+                        desc: bloc.bookingType == BookingType.schudule || snapshot ? bloc.meetingdate! : "-----",
                       );
                     }),
                 ValueListenableBuilder<bool>(

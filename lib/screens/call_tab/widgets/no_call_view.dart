@@ -35,6 +35,8 @@ class NoCallView extends StatelessWidget {
           child: CustomText(
             title: AppLocalizations.of(context)!.checkcallfromcalender,
             fontSize: 14,
+            maxLins: 2,
+            textAlign: TextAlign.center,
             textColor: const Color(0xff554d56),
             fontWeight: FontWeight.bold,
           ),
@@ -140,10 +142,7 @@ class NoCallView extends StatelessWidget {
               color: containerColor,
             ),
             child: Center(
-              child: Icon(
-                icon,
-                color: Colors.white,
-              ),
+              child: Icon(icon, color: Colors.white),
             ),
           ),
           const SizedBox(width: 8),

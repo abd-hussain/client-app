@@ -64,7 +64,7 @@ class BookingBloc extends Bloc<DiscountService> {
       int? categoryID = newArguments["categoryID"] as int?;
 
       if (bookingType == BookingType.instant) {
-        _checkingAvaliableMentorswithin60min(categoryID!);
+        _checkingAvaliableMentors(categoryID!);
       }
     }
   }
@@ -100,9 +100,10 @@ class BookingBloc extends Bloc<DiscountService> {
     return Currency().calculateHourRate(newAmount, Timing.hour);
   }
 
-  _checkingAvaliableMentorswithin60min(int catID) {
+  _checkingAvaliableMentors(int catID) {
+    //HEREEEEEE
     checkingAvaliableMentors.value = false;
-    locator<MentorService>().getmentorAvaliablewithin60min(categoryID: catID, hour: hour).then((value) {
+    locator<MentorService>().getmentorAvaliable(categoryID: catID, hour: hour).then((value) {
       if (value.data != null) {
         mentorProfileImageUrl = value.data!.profileImg;
         mentorFirstName = value.data!.firstName!;
@@ -129,7 +130,7 @@ class BookingBloc extends Bloc<DiscountService> {
       } else {
         hour = hour + 1;
         if (hour < 100) {
-          _checkingAvaliableMentorswithin60min(catID);
+          // _checkingAvaliableMentors(catID);
         } else {
           print("No Mentor Founded");
           //TODO
