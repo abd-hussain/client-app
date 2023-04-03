@@ -101,7 +101,7 @@ class BookingBloc extends Bloc<DiscountService> {
   }
 
   _checkingAvaliableMentors(int catID) {
-    //HEREEEEEE
+    //TODO HEREEEEEE
     checkingAvaliableMentors.value = false;
     locator<MentorService>().getmentorAvaliable(categoryID: catID, hour: hour).then((value) {
       if (value.data != null) {
