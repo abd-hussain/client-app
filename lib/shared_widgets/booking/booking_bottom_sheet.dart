@@ -50,7 +50,6 @@ class BookingBottomSheetsUtil {
     required BookingFaze faze,
     required Function() openNext,
     required Function(
-      String meetingType,
       String meetingduration,
       String meetingtime,
       String meetingdate,
@@ -120,7 +119,6 @@ class BookingBottomSheetsUtil {
                         context: context,
                         hourRate: hourRate,
                         doneSelection: () => doneSelection(
-                          AppLocalizations.of(context)!.bookingonetime,
                           ParserTimer().getTime(selectedMeetingDuration.value),
                           ParserTimer().getHours(selectedMeetingTime.value!),
                           DayTime().dateFormatter(selectedMeetingDate.value.toString()),

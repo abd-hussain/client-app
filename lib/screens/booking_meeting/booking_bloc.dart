@@ -27,7 +27,6 @@ class BookingBloc extends Bloc<DiscountService> {
   String? mentorProfileImageUrl;
 
   String? categoryName;
-  String? meetingType;
   String? meetingduration;
   String? meetingtime;
   String? meetingdate;
@@ -49,7 +48,6 @@ class BookingBloc extends Bloc<DiscountService> {
       mentorLastName = newArguments["lastName"] as String?;
       mentorId = newArguments["mentor_id"] as int?;
       categoryName = newArguments["categoryName"] as String?;
-      meetingType = newArguments["meetingType"] as String?;
       meetingduration = newArguments["meetingduration"] as String?;
       meetingtime = newArguments["meetingtime"] as String?;
       meetingdate = newArguments["meetingdate"] as String?;
