@@ -7,6 +7,7 @@ class CustomTextField extends StatelessWidget {
   final String? hintText;
   final bool readOnly;
   final bool enabled;
+  final int maxLine;
   final double fontSize;
   final EdgeInsetsGeometry padding;
   final Widget? suffixWidget;
@@ -20,6 +21,7 @@ class CustomTextField extends StatelessWidget {
       this.readOnly = false,
       this.enabled = true,
       this.fontSize = 14,
+      this.maxLine = 1,
       this.suffixWidget,
       this.keyboardType,
       this.inputFormatters,
@@ -38,6 +40,7 @@ class CustomTextField extends StatelessWidget {
           enableSuggestions: false,
           keyboardType: keyboardType,
           autocorrect: false,
+          maxLines: maxLine,
           controller: controller,
           style: CustomTextStyle()
               .regular(color: enabled ? const Color(0xff191C1F) : const Color(0xffA2A3A4), size: fontSize),

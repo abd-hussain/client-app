@@ -15,6 +15,12 @@ class DayTime {
     return formatter.format(parsedDate);
   }
 
+  String dayFormatter(String dateAsString) {
+    var parsedDate = DateTime.parse(dateAsString);
+    final DateFormat formatter = DateFormat('EEEE');
+    return formatter.format(parsedDate);
+  }
+
   String convertingTimingToRealTime(int time) {
     if (time > 0 && time <= 9) {
       return "0$time:00 am";
@@ -44,12 +50,15 @@ class DayTime {
   }
 
   int getHourFromTimeString(String time) {
-    if (time.contains("a.m")) {
+    if (time.contains("a.m") || time.contains("am")) {
       String result = time.replaceAll(" a.m", "");
+      result = time.replaceAll(" am", "");
       var parts = result.split(':');
       return int.parse(parts[0].trim());
     } else {
-      String result = time.replaceAll(" p.m", "");
+      String result = time.replaceAll("p.m", "");
+      result = time.replaceAll(" pm", "");
+
       var parts = result.split(':');
       return _getHourPm(int.parse(parts[0].trim()));
     }
@@ -86,12 +95,16 @@ class DayTime {
   }
 
   int getMinFromTimeString(String time) {
-    if (time.contains("a.m")) {
+    if (time.contains("a.m") || time.contains("am")) {
       String result = time.replaceAll(" a.m", "");
+      result = time.replaceAll(" am", "");
       var parts = result.split(':');
       return int.parse(parts.sublist(1).join(':').trim());
     } else {
       String result = time.replaceAll(" p.m", "");
+      result = time.replaceAll(" pm", "");
+      result = time.replaceAll("p.m", "");
+
       var parts = result.split(':');
       return int.parse(parts.sublist(1).join(':').trim());
     }

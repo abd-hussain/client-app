@@ -1,5 +1,5 @@
 import 'package:client_app/models/https/mentor_details_model.dart';
-import 'package:client_app/models/https/mentor_info_model.dart';
+import 'package:client_app/models/https/mentor_info_avaliable_model.dart';
 import 'package:client_app/models/https/mentors_model.dart';
 import 'package:client_app/utils/mixins.dart';
 import 'package:client_app/utils/repository/http_repository.dart';
@@ -26,13 +26,13 @@ class MentorService with Service {
     return MentorDetailsResponse.fromJson(response);
   }
 
-  Future<MentorInfoResponse> getmentorAvaliable({required int categoryID, required int hour}) async {
+  Future<MentorInfoAvaliableResponse> getmentorAvaliable({required int categoryID}) async {
     final response = await repository.callRequest(
       requestType: RequestType.get,
       methodName: MethodNameConstant.mentoravaliable,
-      queryParam: {"catId": categoryID, "after": hour},
+      queryParam: {"catId": categoryID},
     );
 
-    return MentorInfoResponse.fromJson(response);
+    return MentorInfoAvaliableResponse.fromJson(response);
   }
 }

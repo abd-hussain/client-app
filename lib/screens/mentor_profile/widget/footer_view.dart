@@ -108,7 +108,7 @@ class MentorProfileFooterView extends StatelessWidget {
                           await bottomSheet.bookMeetingBottomSheet(
                             faze: BookingFaze.three,
                             openNext: () => null,
-                            doneSelection: (meetingduration, meetingtime, meetingdate, meetingcost) {
+                            doneSelection: (meetingduration, meetingtime, meetingdate, meetingday, meetingcost) {
                               Navigator.of(context, rootNavigator: true).pushNamed(
                                 RoutesConstants.bookingScreen,
                                 arguments: {
@@ -122,16 +122,17 @@ class MentorProfileFooterView extends StatelessWidget {
                                   "meetingduration": meetingduration,
                                   "meetingtime": meetingtime,
                                   "meetingdate": meetingdate,
+                                  "meetingday": meetingday,
                                   "meetingcost": meetingcost
                                 },
                               );
                             },
                           );
                         },
-                        doneSelection: (meetingdate, meetingduration, meetingtime, meetingcost) => null,
+                        doneSelection: (meetingdate, meetingduration, meetingtime, meetingday, meetingcost) => null,
                       );
                     },
-                    doneSelection: (meetingdate, meetingduration, meetingtime, meetingcost) => null,
+                    doneSelection: (meetingdate, meetingduration, meetingtime, meetingday, meetingcost) => null,
                   );
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(

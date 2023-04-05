@@ -11,13 +11,13 @@ class Currency {
 
     switch (timing) {
       case Timing.hour:
-        return "$currency$hourRate";
+        return "$currency${hourRate.toStringAsFixed(2)}";
       case Timing.threeQuarter:
-        return "$currency${hourRate - (hourRate / 4)}";
+        return "$currency${(hourRate - (hourRate / 4)).toStringAsFixed(2)}";
       case Timing.halfHour:
-        return "$currency${hourRate / 2}";
+        return "$currency${(hourRate / 2).toStringAsFixed(2)}";
       case Timing.quarterHour:
-        return "$currency${hourRate / 4}";
+        return "$currency${(hourRate / 4).toStringAsFixed(2)}";
     }
   }
 

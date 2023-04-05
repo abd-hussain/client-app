@@ -16,7 +16,11 @@ enum BookingType {
   instant,
 }
 
-//TODO : REFRESH When You come back
+enum AvaliableMentorStatus {
+  searching,
+  found,
+  notFound,
+}
 
 class BookingBloc extends Bloc<DiscountService> {
   ValueNotifier<bool> applyDiscountButton = ValueNotifier<bool>(false);
@@ -30,13 +34,14 @@ class BookingBloc extends Bloc<DiscountService> {
   String? meetingduration;
   String? meetingtime;
   String? meetingdate;
+  String? meetingday;
   String? meetingcost;
-  double totalAmount = 0;
+  TextEditingController noteController = TextEditingController();
   TextEditingController discountController = TextEditingController();
   ValueNotifier<String?> discountErrorMessage = ValueNotifier<String?>(null);
   BookingType bookingType = BookingType.schudule;
-  ValueNotifier<bool> checkingAvaliableMentors = ValueNotifier<bool>(false);
-  int hour = 1;
+  ValueNotifier<AvaliableMentorStatus> checkingAvaliableMentors =
+      ValueNotifier<AvaliableMentorStatus>(AvaliableMentorStatus.searching);
   final box = Hive.box(DatabaseBoxConstant.userInfo);
 
   void handleReadingArguments(BuildContext context, {required Object? arguments}) {
@@ -51,6 +56,7 @@ class BookingBloc extends Bloc<DiscountService> {
       meetingduration = newArguments["meetingduration"] as String?;
       meetingtime = newArguments["meetingtime"] as String?;
       meetingdate = newArguments["meetingdate"] as String?;
+      meetingday = newArguments["meetingday"] as String?;
       meetingcost = newArguments["meetingcost"] as String?;
       meetingcost ??= Currency().calculateHourRate(
           50,
@@ -95,51 +101,50 @@ class BookingBloc extends Bloc<DiscountService> {
   }
 
   String calculateTotalAmount(double amount, double discount) {
+    return Currency().calculateHourRate(calculateTotalAmountDouble(amount, discount), Timing.hour);
+  }
+
+  double calculateTotalAmountDouble(double amount, double discount) {
     final priceDiscount = amount * discount / 100;
     final newAmount = amount - priceDiscount;
-    return Currency().calculateHourRate(newAmount, Timing.hour);
+    return newAmount;
   }
 
   _checkingAvaliableMentors(int catID) {
-    //TODO HEREEEEEE
-    checkingAvaliableMentors.value = false;
-    locator<MentorService>().getmentorAvaliable(categoryID: catID, hour: hour).then((value) {
+    checkingAvaliableMentors.value = AvaliableMentorStatus.searching;
+    locator<MentorService>().getmentorAvaliable(categoryID: catID).then((value) {
       if (value.data != null) {
         mentorProfileImageUrl = value.data!.profileImg;
+        mentorSuffixName = value.data!.suffixeName!;
         mentorFirstName = value.data!.firstName!;
         mentorLastName = value.data!.lastName!;
-        mentorSuffixName = value.data!.suffixeName!;
         mentorId = value.data!.id!;
-        final now = DateTime.now();
 
         meetingcost = Currency().calculateHourRate(
-            value.data!.hourRateByJD! * 1.5,
+            value.data!.hourRate!,
             meetingduration == "60"
                 ? Timing.hour
-                : meetingduration == "30"
-                    ? Timing.halfHour
-                    : Timing.quarterHour);
-        meetingtime = "after $hour hour";
-        meetingdate = DayTime().dateFormatter(DateTime(now.year, now.month, now.day, (now.hour + hour)).toString());
-        Timer(const Duration(seconds: 2), () {
-          checkingAvaliableMentors.value = true;
-          final backup = discountErrorMessage.value;
-          discountErrorMessage.value = "update";
-          discountErrorMessage.value = backup;
-        });
+                : meetingduration == "45"
+                    ? Timing.threeQuarter
+                    : meetingduration == "30"
+                        ? Timing.halfHour
+                        : Timing.quarterHour);
+
+        meetingtime = DayTime().convertingTimingToRealTime(value.data!.hour!);
+        meetingdate = value.data!.date!;
+        meetingday = value.data!.day!;
+
+        checkingAvaliableMentors.value = AvaliableMentorStatus.found;
+        final backup = discountErrorMessage.value;
+        discountErrorMessage.value = "update";
+        discountErrorMessage.value = backup;
       } else {
-        hour = hour + 1;
-        if (hour < 100) {
-          // _checkingAvaliableMentors(catID);
-        } else {
-          print("No Mentor Founded");
-          //TODO
-        }
+        checkingAvaliableMentors.value = AvaliableMentorStatus.notFound;
       }
     });
   }
 
-  Future<void> bookMeetingRequest({required AppointmentRequest appointment}) async {
+  Future<dynamic> bookMeetingRequest({required AppointmentRequest appointment}) async {
     return await locator<AppointmentsService>().bookNewAppointments(appointment: appointment);
   }
 

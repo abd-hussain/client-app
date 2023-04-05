@@ -53,6 +53,7 @@ class BookingBottomSheetsUtil {
       String meetingduration,
       String meetingtime,
       String meetingdate,
+      String meetingday,
       String meetingcost,
     )
         doneSelection,
@@ -122,6 +123,7 @@ class BookingBottomSheetsUtil {
                           ParserTimer().getTime(selectedMeetingDuration.value),
                           ParserTimer().getHours(selectedMeetingTime.value!),
                           DayTime().dateFormatter(selectedMeetingDate.value.toString()),
+                          DayTime().dayFormatter(selectedMeetingDate.value.toString()),
                           Currency().calculateHourRate(hourRate, selectedMeetingDuration.value),
                         ),
                       ),

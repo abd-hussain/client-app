@@ -110,7 +110,7 @@ class EventDetailsBloc extends Bloc<EventService> {
 
   Future<dynamic> bookEventRequest(BuildContext context) async {
     try {
-      final value = await service.bookNewEvent(eventID: eventId);
+      final _ = await service.bookNewEvent(eventID: eventId);
     } on DioError catch (error) {
       final exception = error.error;
       if (exception is HttpException) {

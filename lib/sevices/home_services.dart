@@ -5,12 +5,10 @@ import 'package:client_app/utils/repository/method_name_constractor.dart';
 
 class HomeService with Service {
   Future<HomeResponse> getHome() async {
-    print("getHome");
     final response = await repository.callRequest(
       requestType: RequestType.get,
       methodName: MethodNameConstant.home,
     );
-    print("response");
 
     return HomeResponse.fromJson(response);
   }

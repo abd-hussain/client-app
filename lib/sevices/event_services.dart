@@ -29,7 +29,6 @@ class EventService with Service {
       queryParam: {"id": eventID},
     );
 
-    print("response");
     return response;
   }
 
