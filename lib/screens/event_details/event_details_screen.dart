@@ -1,7 +1,6 @@
 import 'package:client_app/locator.dart';
 import 'package:client_app/screens/booking_meeting/widgets/appointment_details_view.dart';
 import 'package:client_app/screens/event_details/event_details_bloc.dart';
-import 'package:client_app/screens/event_details/widgets/event_info_box.dart';
 import 'package:client_app/screens/event_details/widgets/event_mentor_view.dart';
 import 'package:client_app/screens/event_details/widgets/event_timing_view.dart';
 import 'package:client_app/screens/main_contaner/main_container_bloc.dart';
@@ -9,12 +8,9 @@ import 'package:client_app/shared_widgets/booking/payment_bottom_sheet.dart';
 import 'package:client_app/shared_widgets/custom_appbar.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
-import 'package:client_app/utils/constants/constant.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
-import 'package:client_app/utils/currency.dart';
 import 'package:client_app/utils/day_time.dart';
 import 'package:client_app/utils/enums/loading_status.dart';
-import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

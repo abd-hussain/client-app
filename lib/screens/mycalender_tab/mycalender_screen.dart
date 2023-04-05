@@ -40,7 +40,7 @@ class _MyCalenderScreenState extends State<MyCalenderScreen> {
         const SizedBox(height: 8),
         Expanded(
           child: ValueListenableBuilder<List<CalenderMeetings>>(
-              valueListenable: locator<MainContainerBloc>().eventsmeetingsListNotifier,
+              valueListenable: locator<MainContainerBloc>().eventsMeetingsListNotifier,
               builder: (context, snapshot, child) {
                 return SfCalendar(
                     view: CalendarView.month,

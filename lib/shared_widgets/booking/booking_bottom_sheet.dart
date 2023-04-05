@@ -249,7 +249,7 @@ class BookingBottomSheetsUtil {
                         return footerBottomSheet(
                           context: context,
                           hourRate: hourRate,
-                          isButtonEnable: snapshot != null && snapshot2 != null,
+                          isButtonEnable: snapshot2 != null,
                           selectedMeetingDuration: selectedMeetingDuration.value,
                           openNext: () {
                             Navigator.pop(context);

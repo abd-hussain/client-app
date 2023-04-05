@@ -3,7 +3,6 @@ import 'package:client_app/shared_widgets/booking/widgets/cell_of_booking.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/utils/day_time.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MeetingTimeView extends StatelessWidget {

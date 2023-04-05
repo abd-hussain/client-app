@@ -24,7 +24,7 @@ class CallBloc extends Bloc<FilterService> {
     return locator<AppointmentsService>().cancelAppointment(id: id);
   }
 
-  CalenderMeetings? checkIfThereIsAnyMeetingTodayAndReturnTheNearsOne(List<CalenderMeetings> listOfData) {
+  CalenderMeetings? checkIfThereIsAnyMeetingTodayAndReturnTheNearOne(List<CalenderMeetings> listOfData) {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     List<CalenderMeetings> newList = [];

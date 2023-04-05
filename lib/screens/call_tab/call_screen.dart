@@ -35,10 +35,11 @@ class _CallScreenState extends State<CallScreen> {
       child: Column(
         children: [
           ValueListenableBuilder<List<CalenderMeetings>>(
-            valueListenable: locator<MainContainerBloc>().eventsmeetingsListNotifier,
+            valueListenable: locator<MainContainerBloc>().eventsMeetingsListNotifier,
             builder: (BuildContext context, List<CalenderMeetings> value, Widget? child) {
               if (value.isNotEmpty) {
-                final appointment = bloc.checkIfThereIsAnyMeetingTodayAndReturnTheNearsOne(value);
+                final appointment = bloc.checkIfThereIsAnyMeetingTodayAndReturnTheNearOne(value);
+                //TODO HERE
                 if (appointment != null) {
                   final timeDifference = appointment.fromTime.subtract(Duration(
                       days: 0,

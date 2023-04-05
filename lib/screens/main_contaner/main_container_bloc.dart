@@ -13,7 +13,7 @@ enum SelectedTab { home, categories, call, calender, account }
 
 class MainContainerBloc {
   final ValueNotifier<SelectedTab> currentTabIndexNotifier = ValueNotifier<SelectedTab>(SelectedTab.home);
-  final ValueNotifier<List<CalenderMeetings>> eventsmeetingsListNotifier = ValueNotifier<List<CalenderMeetings>>([]);
+  final ValueNotifier<List<CalenderMeetings>> eventsMeetingsListNotifier = ValueNotifier<List<CalenderMeetings>>([]);
 
   GlobalKey<ConvexAppBarState> appBarKey = GlobalKey<ConvexAppBarState>();
 
@@ -62,7 +62,7 @@ class MainContainerBloc {
 
     list.addAll(await _getClientAppointments());
     list.addAll(await _getClientEventAppointments());
-    eventsmeetingsListNotifier.value = list;
+    eventsMeetingsListNotifier.value = list;
     return list;
   }
 
