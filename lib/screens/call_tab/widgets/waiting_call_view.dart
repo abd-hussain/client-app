@@ -3,12 +3,14 @@ import 'package:client_app/shared_widgets/booking/cancel_booking_bottom_sheet.da
 import 'package:client_app/shared_widgets/custom_button.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/utils/constants/constant.dart';
+import 'package:client_app/utils/constants/database_constant.dart';
+import 'package:client_app/utils/day_time.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:async';
 
-class CallView extends StatefulWidget {
+class WaitingCallView extends StatefulWidget {
   final int timerStartNumberHour;
   final int timerStartNumberMin;
   final int timerStartNumberSec;
@@ -19,9 +21,13 @@ class CallView extends StatefulWidget {
   final String categoryName;
   final String meetingduration;
   final String meetingtime;
+  final String meetingday;
+  final String clientMeetingNote;
+  final String mentorMeetingNote;
+
   final Function() cancelMeetingTapped;
 
-  const CallView({
+  const WaitingCallView({
     super.key,
     required this.suffixeName,
     required this.firstName,
@@ -34,13 +40,16 @@ class CallView extends StatefulWidget {
     required this.cancelMeetingTapped,
     required this.meetingduration,
     required this.meetingtime,
+    required this.meetingday,
+    required this.clientMeetingNote,
+    required this.mentorMeetingNote,
   });
 
   @override
-  State<CallView> createState() => _CallViewState();
+  State<WaitingCallView> createState() => _WaitingCallViewState();
 }
 
-class _CallViewState extends State<CallView> {
+class _WaitingCallViewState extends State<WaitingCallView> {
   Timer? timer;
   int timerStartNumberSec = 59;
   int timerStartNumberMin = 0;
@@ -62,7 +71,7 @@ class _CallViewState extends State<CallView> {
       children: [
         Lottie.asset('assets/lottie/115245-medical-heart-pressure-timer.zip', height: 200),
         Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.only(bottom: 8),
           child: CustomText(
             title: AppLocalizations.of(context)!.remanintime,
             fontSize: 20,
@@ -80,7 +89,7 @@ class _CallViewState extends State<CallView> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 8),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: CustomText(
@@ -90,80 +99,27 @@ class _CallViewState extends State<CallView> {
           ),
         ),
         AppointmentDetailsView(
-          title: AppLocalizations.of(context)!.meetingduration,
-          desc: "${widget.meetingduration} ${AppLocalizations.of(context)!.min}",
+          title: AppLocalizations.of(context)!.meetingday,
+          desc: widget.meetingday,
         ),
         AppointmentDetailsView(
           title: AppLocalizations.of(context)!.meetingtime,
           desc: widget.meetingtime,
           forceView: true,
         ),
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[100],
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.3),
-                  spreadRadius: 2,
-                  blurRadius: 4,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-            ),
-            height: 60,
-            width: MediaQuery.of(context).size.width,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    backgroundColor: const Color(0xff034061),
-                    radius: 40,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: widget.profileImage != ""
-                          ? FadeInImage(
-                              placeholder: const AssetImage("assets/images/avatar.jpeg"),
-                              image: NetworkImage(AppConstant.imagesBaseURLForMentors + widget.profileImage, scale: 1),
-                            )
-                          : Image.asset(
-                              'assets/images/avatar.jpeg',
-                              width: 40,
-                              height: 40,
-                              fit: BoxFit.fill,
-                            ),
-                    ),
-                  ),
-                  Column(
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width - 150,
-                        child: CustomText(
-                          title: "${widget.suffixeName} ${widget.firstName} ${widget.lastName}",
-                          fontSize: 14,
-                          textAlign: TextAlign.center,
-                          fontWeight: FontWeight.bold,
-                          maxLins: 3,
-                          textColor: const Color(0xff554d56),
-                        ),
-                      ),
-                      const Expanded(child: SizedBox()),
-                      CustomText(
-                        title: widget.categoryName,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        textColor: const Color(0xff554d56),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
+        AppointmentDetailsView(
+          title: AppLocalizations.of(context)!.meetingduration,
+          desc: "${widget.meetingduration} ${AppLocalizations.of(context)!.min}",
         ),
+        AppointmentDetailsView(
+          title: AppLocalizations.of(context)!.clientnote,
+          desc: widget.clientMeetingNote,
+        ),
+        AppointmentDetailsView(
+          title: AppLocalizations.of(context)!.mentornote,
+          desc: widget.mentorMeetingNote,
+        ),
+        mentorBoxView(),
         CustomButton(
             enableButton: true,
             buttonTitle: AppLocalizations.of(context)!.cancelappointment,
@@ -178,6 +134,78 @@ class _CallViewState extends State<CallView> {
             }),
         const SizedBox(height: 20),
       ],
+    );
+  }
+
+  Widget mentorBoxView() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 8),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.grey[100],
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              spreadRadius: 2,
+              blurRadius: 1,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        height: 75,
+        width: MediaQuery.of(context).size.width,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 75,
+                height: 75,
+                child: widget.profileImage != ""
+                    ? FadeInImage(
+                        placeholder: const AssetImage("assets/images/avatar.jpeg"),
+                        image: NetworkImage(AppConstant.imagesBaseURLForMentors + widget.profileImage, scale: 1),
+                      )
+                    : Image.asset(
+                        'assets/images/avatar.jpeg',
+                        fit: BoxFit.fill,
+                      ),
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomText(
+                    title: "${widget.suffixeName} ${widget.firstName} ${widget.lastName}",
+                    fontSize: 14,
+                    textAlign: TextAlign.center,
+                    fontWeight: FontWeight.bold,
+                    maxLins: 3,
+                    textColor: const Color(0xff554d56),
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CustomText(
+                        title: "${AppLocalizations.of(context)!.category} :",
+                        fontSize: 12,
+                        textColor: const Color(0xff554d56),
+                      ),
+                      const SizedBox(width: 8),
+                      CustomText(
+                        title: widget.categoryName,
+                        fontSize: 12,
+                        textColor: const Color(0xff554d56),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 

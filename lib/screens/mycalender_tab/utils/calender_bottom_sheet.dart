@@ -134,7 +134,7 @@ class CalenderBottomSheetsUtil {
         ),
         Center(
           child: CustomText(
-            title: metingDetails.categoryName,
+            title: metingDetails.categoryName!,
             textColor: const Color(0xff444444),
             fontSize: 14,
             textAlign: TextAlign.center,
@@ -196,7 +196,7 @@ class CalenderBottomSheetsUtil {
         ),
         Center(
           child: CustomText(
-            title: metingDetails.categoryName,
+            title: metingDetails.categoryName!,
             textColor: const Color(0xff444444),
             fontSize: 14,
             textAlign: TextAlign.center,

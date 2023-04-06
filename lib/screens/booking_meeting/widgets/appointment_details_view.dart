@@ -20,22 +20,27 @@ class AppointmentDetailsView extends StatelessWidget {
             fontSize: 14,
             textColor: const Color(0xff554d56),
           ),
-          forceView
-              ? Directionality(
-                  textDirection: TextDirection.ltr,
-                  child: CustomText(
+          SizedBox(
+            width: 200,
+            child: forceView
+                ? Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: CustomText(
+                      title: desc,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      maxLins: 10,
+                      textColor: const Color(0xff554d56),
+                    ),
+                  )
+                : CustomText(
                     title: desc,
                     fontSize: 14,
+                    maxLins: 10,
                     fontWeight: FontWeight.bold,
                     textColor: const Color(0xff554d56),
                   ),
-                )
-              : CustomText(
-                  title: desc,
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  textColor: const Color(0xff554d56),
-                ),
+          ),
         ],
       ),
     );

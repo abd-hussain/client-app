@@ -91,6 +91,8 @@
     "steps" : "Steps",
     "comingsoon" : "Coming Soon",
     "note" : "Note : ",
+    "clientnote" : "Your Note",
+    "mentornote" : "Mentor Note",
     "referance" : "Referance : ",
     "start" : "Start",
     "next" : "Next",

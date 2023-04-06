@@ -72,13 +72,13 @@ class _MyCalenderScreenState extends State<MyCalenderScreen> {
                         ).bookMeetingBottomSheet(
                           cancel: () {
                             if (item.type == Type.meeting) {
-                              bloc.cancelMeeting(item.meetingId).whenComplete(() async {
+                              bloc.cancelMeeting(item.meetingId!).whenComplete(() async {
                                 locator<MainContainerBloc>().getAppointmentsAndEvents();
 
                                 setState(() {});
                               });
                             } else if (item.type == Type.event) {
-                              bloc.cancelEvent(item.meetingId).whenComplete(() async {
+                              bloc.cancelEvent(item.meetingId!).whenComplete(() async {
                                 locator<MainContainerBloc>().getAppointmentsAndEvents();
                                 setState(() {});
                               });

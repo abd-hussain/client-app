@@ -73,18 +73,26 @@ class MainContainerBloc {
       if (value.data != null) {
         for (AppointmentData item in value.data!) {
           final newItem = CalenderMeetings(
-            meetingId: item.id!,
-            mentorPrefix: item.mentorPrefix!,
-            mentorFirstName: item.mentorFirstName!,
-            mentorLastName: item.mentorLastName!,
-            title: null,
-            profileImg: item.profileImg,
-            mentorId: item.mentorId!,
-            categoryName: item.categoryName!,
-            type: Type.meeting,
-            fromTime: DateTime.parse(item.dateFrom!),
-            toTime: DateTime.parse(item.dateTo!),
-          );
+              meetingId: item.id,
+              clientId: item.clientId,
+              mentorId: item.mentorId,
+              appointmentType: item.appointmentType,
+              priceBeforeDiscount: item.priceBeforeDiscount,
+              priceAfterDiscount: item.priceAfterDiscount,
+              state: item.state,
+              noteFromClient: item.noteFromClient,
+              noteFromMentor: item.noteFromMentor,
+              profileImg: item.profileImg,
+              mentorPrefix: item.mentorPrefix,
+              mentorFirstName: item.mentorFirstName,
+              mentorLastName: item.mentorLastName,
+              categoryId: item.categoryId,
+              categoryName: item.categoryName,
+              type: Type.meeting,
+              eventImg: null,
+              fromTime: DateTime.parse(item.dateFrom!),
+              toTime: DateTime.parse(item.dateTo!),
+              title: null);
           list.add(newItem);
         }
       }
@@ -101,16 +109,25 @@ class MainContainerBloc {
         for (EventAppointmentData item in value.data!) {
           list.add(CalenderMeetings(
             meetingId: item.eventId!,
-            mentorPrefix: item.suffixeName!,
-            mentorFirstName: item.firstName!,
-            mentorLastName: item.lastName!,
-            eventImg: item.image,
-            title: item.title!,
-            mentorId: item.mentorId!,
-            categoryName: item.categoryName!,
+            clientId: null,
+            mentorId: item.mentorId,
+            appointmentType: null,
+            priceBeforeDiscount: null,
+            priceAfterDiscount: null,
+            state: null,
+            noteFromClient: null,
+            noteFromMentor: null,
+            profileImg: null,
+            mentorPrefix: item.suffixeName,
+            mentorFirstName: item.firstName,
+            mentorLastName: item.lastName,
+            categoryId: null,
+            categoryName: item.categoryName,
             type: Type.event,
+            eventImg: item.image,
             fromTime: DateTime.parse(item.dateFrom!),
             toTime: DateTime.parse(item.dateTo!),
+            title: item.title!,
           ));
         }
       }
