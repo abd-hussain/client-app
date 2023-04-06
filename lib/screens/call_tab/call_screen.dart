@@ -50,9 +50,8 @@ class _CallScreenState extends State<CallScreen> {
                   timerStartNumberMin: timeDifference.minute,
                   timerStartNumberSec: timeDifference.second,
                   cancelMeetingTapped: () {
-                    bloc.cancelAppointment(id: appointment.meetingId!).then((value) {
-                      locator<MainContainerBloc>().getAppointmentsAndEvents();
-                      setState(() {});
+                    bloc.cancelAppointment(id: appointment.meetingId!).then((value) async {
+                      await locator<MainContainerBloc>().getAppointmentsAndEvents();
                     });
                   },
                   profileImage: appointment.type == Type.meeting ? appointment.profileImg! : appointment.eventImg!,
