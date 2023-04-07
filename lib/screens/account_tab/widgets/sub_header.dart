@@ -28,9 +28,9 @@ class ProfileSubHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             optionButton(
-              buttonTitle: AppLocalizations.of(context)!.messages,
-              icon: Icons.message,
-              onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.messagesScreen),
+              buttonTitle: AppLocalizations.of(context)!.notifications,
+              icon: Icons.notifications,
+              onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.notificationsScreen),
             ),
             isUserLoggedIn
                 ? Row(

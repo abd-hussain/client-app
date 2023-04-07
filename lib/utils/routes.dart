@@ -3,7 +3,6 @@ import 'package:client_app/screens/archive/archive_screen.dart';
 import 'package:client_app/screens/booking_meeting/booking_screen.dart';
 import 'package:client_app/screens/call_tab/call_screen.dart';
 import 'package:client_app/screens/categories_tab/categories_screen.dart';
-import 'package:client_app/screens/chat/chat_screen.dart';
 import 'package:client_app/screens/edit_profile/edit_profile_screen.dart';
 import 'package:client_app/screens/event_details/event_details_screen.dart';
 import 'package:client_app/screens/home_tab/home_screen.dart';
@@ -15,7 +14,6 @@ import 'package:client_app/screens/login/third_step/login_third_step_screen.dart
 import 'package:client_app/screens/loyality/loyality_screen.dart';
 import 'package:client_app/screens/main_contaner/main_container.dart';
 import 'package:client_app/screens/mentor_profile/mentor_profile_screen.dart';
-import 'package:client_app/screens/messages/messages_screen.dart';
 import 'package:client_app/screens/mycalender_tab/mycalender_screen.dart';
 import 'package:client_app/screens/notifications/notifications_screen.dart';
 import 'package:client_app/screens/report/report_screen.dart';
@@ -43,13 +41,11 @@ class RoutesConstants {
   static const String loyalityScreen = 'loyalityScreen';
   static const String editProfileScreen = 'editProfileScreen';
   static const String reportScreen = 'reportScreen';
-  static const String messagesScreen = 'messagesScreen';
   static const String archiveScreen = 'archiveScreen';
   static const String callScreen = 'callScreen';
   static const String mentorProfileScreen = 'mentorProfileScreen';
   static const String bookingScreen = 'bookingScreen';
   static const String eventDetailsScreen = 'eventDetailsScreen';
-  static const String chatScreen = 'chatScreen';
 }
 
 final Map<String, Widget> routes = {
@@ -70,11 +66,9 @@ final Map<String, Widget> routes = {
   RoutesConstants.loyalityScreen: const LoyalityScreen(),
   RoutesConstants.editProfileScreen: const EditProfileScreen(),
   RoutesConstants.reportScreen: const ReportScreen(),
-  RoutesConstants.messagesScreen: const MessagesScreen(),
   RoutesConstants.archiveScreen: const ArchiveScreen(),
   RoutesConstants.callScreen: const CallScreen(),
   RoutesConstants.mentorProfileScreen: const MentorProfileScreen(),
   RoutesConstants.bookingScreen: const BookingScreen(),
   RoutesConstants.eventDetailsScreen: const EventDetailsScreen(),
-  RoutesConstants.chatScreen: const ChatScreen(),
 };

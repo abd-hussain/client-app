@@ -13,7 +13,7 @@ class ProfileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 75,
+      height: 55,
       color: const Color(0xff034061),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -44,14 +44,6 @@ class ProfileHeader extends StatelessWidget {
                 ],
               ),
             ),
-            IconButton(
-                onPressed: () =>
-                    Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.notificationsScreen),
-                icon: const Icon(
-                  Icons.notifications_none,
-                  color: Colors.white,
-                  size: 30,
-                ))
           ],
         ),
       ),
