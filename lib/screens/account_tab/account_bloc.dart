@@ -101,9 +101,10 @@ class AccountBloc extends Bloc<AccountService> {
       ProfileOptions(
         icon: Ionicons.extension_puzzle,
         name: AppLocalizations.of(context)!.joinasmentor,
-        onTap: () {
-          //TODO:
-        },
+        onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen, arguments: {
+          AppConstant.webViewPageUrl: AppConstant.joinAsMentorLink,
+          AppConstant.pageTitle: AppLocalizations.of(context)!.joinasmentor
+        }),
       )
     ];
   }

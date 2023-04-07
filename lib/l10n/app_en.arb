@@ -195,7 +195,8 @@
     "sort" : "Sort",
     "experience" : "Experience",
     "category" : "Category",
-    "year" : "Year"
+    "year" : "Year",
+    "reportsendsuccessfully" : "Report Sent Successfully"
 
 
 

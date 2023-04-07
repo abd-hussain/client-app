@@ -31,30 +31,27 @@ class _AccountScreenState extends State<AccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xffFBFBFB),
-      body: Column(
-        children: [
-          ProfileHeader(
-            firstName: bloc.checkIfUserIsLoggedIn()
-                ? bloc.box.get(DatabaseFieldConstant.userFirstName)
-                : AppLocalizations.of(context)!.anonymous,
-          ),
-          ProfileSubHeader(isUserLoggedIn: bloc.checkIfUserIsLoggedIn()),
-          const SizedBox(height: 8),
-          ValueListenableBuilder<LoadingStatus>(
-              valueListenable: bloc.loadingStatus,
-              builder: (context, snapshot, child) {
-                return ListOfOptions(
-                  listOfSettingsOptions: bloc.listOfSettingsOptions(context),
-                  listOfReachOutUsOptions: bloc.listOfReachOutUsOptions(context),
-                  listOfSupportOptions: bloc.listOfSupportOptions(context),
-                  listOfAccountOptions: bloc.listOfAccountOptions(context),
-                  isItLoggedIn: bloc.checkIfUserIsLoggedIn(),
-                );
-              }),
-        ],
-      ),
+    return Column(
+      children: [
+        ProfileHeader(
+          firstName: bloc.checkIfUserIsLoggedIn()
+              ? bloc.box.get(DatabaseFieldConstant.userFirstName)
+              : AppLocalizations.of(context)!.anonymous,
+        ),
+        ProfileSubHeader(isUserLoggedIn: bloc.checkIfUserIsLoggedIn()),
+        const SizedBox(height: 8),
+        ValueListenableBuilder<LoadingStatus>(
+            valueListenable: bloc.loadingStatus,
+            builder: (context, snapshot, child) {
+              return ListOfOptions(
+                listOfSettingsOptions: bloc.listOfSettingsOptions(context),
+                listOfReachOutUsOptions: bloc.listOfReachOutUsOptions(context),
+                listOfSupportOptions: bloc.listOfSupportOptions(context),
+                listOfAccountOptions: bloc.listOfAccountOptions(context),
+                isItLoggedIn: bloc.checkIfUserIsLoggedIn(),
+              );
+            }),
+      ],
     );
   }
 }

@@ -195,7 +195,9 @@
     "sort" : "ترتيب",
     "experience" : "الخبرة",
     "category" : "التصنيف",
-    "year" : "سنة"
+    "year" : "سنة",
+    "reportsendsuccessfully" : "تم إرسال التقرير بنجاح"
+
 
 
 

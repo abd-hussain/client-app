@@ -5,7 +5,7 @@ import 'package:client_app/utils/repository/method_name_constractor.dart';
 import 'package:dio/dio.dart';
 
 class ReportService with Service {
-  Future<bool> addSuggestion({required ReportRequest reportData}) async {
+  Future<dynamic> addSuggestion({required ReportRequest reportData}) async {
     FormData? formData;
     String fileName1 = "";
     String fileName2 = "";
@@ -34,13 +34,11 @@ class ReportService with Service {
           : MultipartFile.fromString(""),
     });
 
-    await repository.callRequest(
+    return await repository.callRequest(
         requestType: RequestType.post, methodName: MethodNameConstant.reportSuggestion, formData: formData);
-
-    return true;
   }
 
-  Future<bool> addBugIssue({required ReportRequest reportData}) async {
+  Future<dynamic> addBugIssue({required ReportRequest reportData}) async {
     FormData? formData;
     String fileName1 = "";
     String fileName2 = "";
@@ -69,10 +67,8 @@ class ReportService with Service {
           : MultipartFile.fromString(""),
     });
 
-    await repository.callRequest(
+    return await repository.callRequest(
         requestType: RequestType.post, methodName: MethodNameConstant.reportIssue, formData: formData);
-
-    return true;
   }
 
   Future<dynamic> reportEvent({required int eventId}) async {

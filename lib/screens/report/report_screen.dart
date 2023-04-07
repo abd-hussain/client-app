@@ -86,6 +86,10 @@ class _ReportScreenState extends State<ReportScreen> {
                               enableButton: snapshot,
                               onTap: () {
                                 final navigator = Navigator.of(context);
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  duration: const Duration(seconds: 2),
+                                  content: Text(AppLocalizations.of(context)!.reportsendsuccessfully),
+                                ));
                                 bloc.callRequest(context).then((value) async {
                                   bloc.loadingStatus.value = LoadingStatus.finish;
                                   navigator.pop();

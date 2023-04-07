@@ -34,7 +34,7 @@ class ReportBloc extends Bloc<ReportService> {
     }
   }
 
-  Future<bool> callRequest(BuildContext context) async {
+  Future<dynamic> callRequest(BuildContext context) async {
     loadingStatus.value = LoadingStatus.inprogress;
     var box = Hive.box(DatabaseBoxConstant.userInfo);
 
