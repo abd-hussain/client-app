@@ -177,9 +177,13 @@ class AccountBloc extends Bloc<AccountService> {
             sure: () async {
               loadingStatus.value = LoadingStatus.inprogress;
               await box.put(DatabaseFieldConstant.countryFlag, p0.flagImage);
-              await box
-                  .put(DatabaseFieldConstant.countryId, p0.id)
-                  .then((value) => updateProfileCountry(context, p0.id!));
+              await box.put(DatabaseFieldConstant.countryId, p0.id).then((value) {
+                if (checkIfUserIsLoggedIn()) {
+                  updateProfileCountry(context, p0.id!);
+                } else {
+                  loadingStatus.value = LoadingStatus.finish;
+                }
+              });
             });
       });
     });
