@@ -18,8 +18,10 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   @override
   void didChangeDependencies() {
     logDebugMessage(message: 'Notifications init Called ...');
-    bloc.markNotificationReaded();
-    bloc.listOfNotifications();
+    if (bloc.checkIfUserIsLoggedIn()) {
+      bloc.markNotificationReaded();
+      bloc.listOfNotifications();
+    }
     super.didChangeDependencies();
   }
 
@@ -35,6 +37,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       appBar: customAppBar(title: AppLocalizations.of(context)!.notifications),
       body: NotificationsList(
         notificationsListNotifier: bloc.notificationsListNotifier,
+        isUserIsLoggedIn: bloc.checkIfUserIsLoggedIn(),
         onDelete: (p0) {
           bloc.notificationsListNotifier.value!.remove(p0);
           bloc.deleteNotification(p0.id!);

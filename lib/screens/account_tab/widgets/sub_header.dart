@@ -24,16 +24,17 @@ class ProfileSubHeader extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            optionButton(
-              buttonTitle: AppLocalizations.of(context)!.notifications,
-              icon: Icons.notifications,
-              onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.notificationsScreen),
-            ),
-            isUserLoggedIn
-                ? Row(
+        child: isUserLoggedIn
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  optionButton(
+                    buttonTitle: AppLocalizations.of(context)!.notifications,
+                    icon: Icons.notifications,
+                    onTap: () =>
+                        Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.notificationsScreen),
+                  ),
+                  Row(
                     children: [
                       Container(
                         decoration:
@@ -53,20 +54,25 @@ class ProfileSubHeader extends StatelessWidget {
                         width: 10,
                       ),
                     ],
-                  )
-                : optionButton(
+                  ),
+                  optionButton(
+                    buttonTitle: AppLocalizations.of(context)!.archive,
+                    icon: Icons.archive,
+                    onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.archiveScreen),
+                  ),
+                ],
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  optionButton(
                     buttonTitle: AppLocalizations.of(context)!.login_first_step_button,
                     icon: Icons.account_circle_outlined,
                     onTap: () =>
                         Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.loginFirstStepRoute),
                   ),
-            optionButton(
-              buttonTitle: AppLocalizations.of(context)!.archive,
-              icon: Icons.archive,
-              onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.archiveScreen),
-            ),
-          ],
-        ),
+                ],
+              ),
       ),
     );
   }

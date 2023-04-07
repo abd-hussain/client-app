@@ -6,8 +6,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NotificationsList extends StatefulWidget {
   final ValueNotifier<List<NotificationsResponseData>?> notificationsListNotifier;
+  final bool isUserIsLoggedIn;
   final Function(NotificationsResponseData) onDelete;
-  const NotificationsList({super.key, required this.notificationsListNotifier, required this.onDelete});
+  const NotificationsList(
+      {super.key, required this.notificationsListNotifier, required this.onDelete, required this.isUserIsLoggedIn});
 
   @override
   State<NotificationsList> createState() => _NotificationsListState();
@@ -16,25 +18,27 @@ class NotificationsList extends StatefulWidget {
 class _NotificationsListState extends State<NotificationsList> {
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<List<NotificationsResponseData>?>(
-        valueListenable: widget.notificationsListNotifier,
-        builder: (context, data, child) {
-          return data == null
-              ? const ShimmerNotificationsView()
-              : widget.notificationsListNotifier.value!.isNotEmpty
-                  ? ListView.builder(
-                      itemCount: data.length,
-                      itemBuilder: (ctx, index) {
-                        return notificationTile(context, data[index], index);
-                      })
-                  : Center(
-                      child: CustomText(
-                        title: AppLocalizations.of(context)!.noitem,
-                        fontSize: 16,
-                        textColor: const Color(0xff444444),
-                      ),
-                    );
-        });
+    return widget.isUserIsLoggedIn
+        ? ValueListenableBuilder<List<NotificationsResponseData>?>(
+            valueListenable: widget.notificationsListNotifier,
+            builder: (context, data, child) {
+              return data == null
+                  ? const ShimmerNotificationsView()
+                  : widget.notificationsListNotifier.value!.isNotEmpty
+                      ? ListView.builder(
+                          itemCount: data.length,
+                          itemBuilder: (ctx, index) {
+                            return notificationTile(context, data[index], index);
+                          })
+                      : Center(
+                          child: CustomText(
+                            title: AppLocalizations.of(context)!.noitem,
+                            fontSize: 16,
+                            textColor: const Color(0xff444444),
+                          ),
+                        );
+            })
+        : Container();
   }
 
   Widget notificationTile(BuildContext context, NotificationsResponseData item, int index) {

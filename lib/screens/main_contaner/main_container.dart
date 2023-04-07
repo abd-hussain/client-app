@@ -30,7 +30,9 @@ class _MainContainerState extends State<MainContainer> {
           return Scaffold(
             backgroundColor: const Color(0xffF5F6F7),
             resizeToAvoidBottomInset: false,
-            appBar: data == SelectedTab.account ? accountAppBar(context: context) : mainAppBar(context: context),
+            appBar: data == SelectedTab.account
+                ? accountAppBar(context: context)
+                : mainAppBar(context: context, isUserLoggedIn: _bloc.checkIfUserIsLoggedIn()),
             body: SafeArea(
               child: IndexedStack(
                 index: _bloc.getSelectedIndexDependOnTab(data),

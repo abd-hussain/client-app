@@ -5,15 +5,18 @@ import 'package:client_app/models/https/event_appointment.dart';
 import 'package:client_app/screens/main_contaner/widgets/tab_navigator.dart';
 import 'package:client_app/sevices/appointments_service.dart';
 import 'package:client_app/sevices/event_services.dart';
+import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/routes.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 enum SelectedTab { home, categories, call, calender, account }
 
 class MainContainerBloc {
   final ValueNotifier<SelectedTab> currentTabIndexNotifier = ValueNotifier<SelectedTab>(SelectedTab.home);
   final ValueNotifier<List<CalenderMeetings>> eventsMeetingsListNotifier = ValueNotifier<List<CalenderMeetings>>([]);
+  final box = Hive.box(DatabaseBoxConstant.userInfo);
 
   GlobalKey<ConvexAppBarState> appBarKey = GlobalKey<ConvexAppBarState>();
 
@@ -134,5 +137,15 @@ class MainContainerBloc {
     });
 
     return list;
+  }
+
+  bool checkIfUserIsLoggedIn() {
+    bool isItLoggedIn = false;
+
+    if (box.get(DatabaseFieldConstant.isUserLoggedIn) != null) {
+      isItLoggedIn = box.get(DatabaseFieldConstant.isUserLoggedIn);
+    }
+
+    return isItLoggedIn;
   }
 }
