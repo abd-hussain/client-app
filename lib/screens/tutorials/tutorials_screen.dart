@@ -1,7 +1,13 @@
 import 'package:client_app/screens/tutorials/widgets/dot_indicator_view.dart';
 import 'package:client_app/screens/tutorials/widgets/tut_view1.dart';
+import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+enum TutorialOpenFrom {
+  account,
+  firstInstall,
+}
 
 class TutorialsScreen extends StatefulWidget {
   const TutorialsScreen({super.key});
@@ -12,6 +18,13 @@ class TutorialsScreen extends StatefulWidget {
 
 class _TutorialsScreenState extends State<TutorialsScreen> {
   final PageController controller = PageController(initialPage: 0);
+  TutorialOpenFrom? openFrom;
+
+  @override
+  void didChangeDependencies() {
+    extractArguments(context);
+    super.didChangeDependencies();
+  }
 
   @override
   void dispose() {
@@ -19,9 +32,14 @@ class _TutorialsScreenState extends State<TutorialsScreen> {
     super.dispose();
   }
 
-  //TODO: handle showing tutorial first time you open the app
-  //TODO: handle dismiss to where
-  //TODO: put prober images
+  void extractArguments(BuildContext context) {
+    final arguments = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
+    if (arguments != null) {
+      openFrom = arguments["openFrom"] as TutorialOpenFrom;
+    }
+  }
+
+  //TODO: put proper images and description
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +51,7 @@ class _TutorialsScreenState extends State<TutorialsScreen> {
             children: [
               TutView(
                 title: AppLocalizations.of(context)!.tutorial1,
-                image: "assets/images/tutorials/1.png",
+                image: "assets/images/login_4.png",
               ),
               TutView(
                 title: AppLocalizations.of(context)!.tutorial2,
@@ -45,10 +63,6 @@ class _TutorialsScreenState extends State<TutorialsScreen> {
               ),
               TutView(
                 title: AppLocalizations.of(context)!.tutorial4,
-                image: "assets/images/login_4.png",
-              ),
-              TutView(
-                title: AppLocalizations.of(context)!.tutorial5,
                 image: "assets/images/login_4.png",
               ),
             ],
@@ -72,7 +86,12 @@ class _TutorialsScreenState extends State<TutorialsScreen> {
                     );
                   },
                   skipPressed: () {
-                    Navigator.pop(context);
+                    if (openFrom == TutorialOpenFrom.firstInstall) {
+                      Navigator.of(context, rootNavigator: true)
+                          .pushNamedAndRemoveUntil(RoutesConstants.mainContainer, (Route<dynamic> route) => false);
+                    } else {
+                      Navigator.pop(context);
+                    }
                   },
                 ),
               ),

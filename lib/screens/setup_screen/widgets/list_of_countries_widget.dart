@@ -1,3 +1,4 @@
+import 'package:client_app/screens/tutorials/tutorials_screen.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/shared_widgets/shimmers/shimmer_list.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
@@ -37,8 +38,9 @@ class ListOfCountriesWidget extends StatelessWidget {
           box.put(DatabaseFieldConstant.countryId, item.id.toString());
           box.put(DatabaseFieldConstant.countryFlag, item.flagImage);
 
-          Navigator.of(context, rootNavigator: true)
-              .pushNamedAndRemoveUntil(RoutesConstants.mainContainer, (Route<dynamic> route) => false);
+          Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
+              RoutesConstants.tutorialsScreen, (Route<dynamic> route) => false,
+              arguments: {"openFrom": TutorialOpenFrom.firstInstall});
         },
         child: Container(
           height: 50,
