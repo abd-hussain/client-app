@@ -29,6 +29,7 @@ class ListOfCountriesWidget extends StatelessWidget {
   }
 
   Widget countryTile(BuildContext context, Country item) {
+    final navigator = Navigator.of(context, rootNavigator: true);
     return Padding(
       padding: const EdgeInsets.only(left: 16, right: 16, bottom: 10),
       child: InkWell(
@@ -38,8 +39,7 @@ class ListOfCountriesWidget extends StatelessWidget {
           box.put(DatabaseFieldConstant.countryId, item.id.toString());
           box.put(DatabaseFieldConstant.countryFlag, item.flagImage);
 
-          Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
-              RoutesConstants.tutorialsScreen, (Route<dynamic> route) => false,
+          navigator.pushNamedAndRemoveUntil(RoutesConstants.tutorialsScreen, (Route<dynamic> route) => false,
               arguments: {"openFrom": TutorialOpenFrom.firstInstall});
         },
         child: Container(

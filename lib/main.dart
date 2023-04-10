@@ -17,16 +17,17 @@ void main() {
   runZonedGuarded(() async {
     logDebugMessage(message: 'Application Started ...');
     WidgetsFlutterBinding.ensureInitialized();
-    await setupLocator();
 
     await Hive.initFlutter();
     await MobileAds.instance.initialize();
     await Hive.openBox(DatabaseBoxConstant.userInfo);
 
+    await setupLocator();
     await SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+
     runApp(const MyApp());
   }, (error, stackTrace) {
     if (error is DioError) {

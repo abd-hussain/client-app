@@ -161,7 +161,7 @@ class _BookingScreenState extends State<BookingScreen> {
                     builder: (context, snapshot, child) {
                       return AppointmentDetailsView(
                         title: AppLocalizations.of(context)!.servicefee,
-                        desc: "\$0.0", //TODO: in future
+                        desc: "\$0.0",
                       );
                     }),
                 ValueListenableBuilder<String?>(

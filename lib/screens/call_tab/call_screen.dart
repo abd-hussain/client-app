@@ -68,7 +68,7 @@ class _CallScreenState extends State<CallScreen> {
                   mentorMeetingNote: appointment.noteFromMentor ?? "",
                 );
               } else {
-                return CallReadyView();
+                return const CallReadyView();
               }
             } else {
               return noCallView();
