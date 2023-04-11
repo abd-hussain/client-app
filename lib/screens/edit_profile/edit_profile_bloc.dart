@@ -82,7 +82,7 @@ class EditProfileBloc extends Bloc<AccountService> {
     } else {
       loadingStatus.value = LoadingStatus.inprogress;
 
-      int countryId = box.get(DatabaseFieldConstant.countryId);
+      int countryId = box.get(DatabaseFieldConstant.selectedCountryId);
 
       final body = UpdateAccountRequest(
         firstName: firstNameController.text,

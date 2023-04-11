@@ -76,7 +76,7 @@ class AccountBloc extends Bloc<AccountService> {
           height: 25,
           child: FadeInImage(
             placeholder: const AssetImage("assets/images/flagPlaceHolderImg.png"),
-            image: NetworkImage(box.get(DatabaseFieldConstant.countryFlag), scale: 1),
+            image: NetworkImage(box.get(DatabaseFieldConstant.selectedCountryFlag), scale: 1),
           ),
         ),
         onTap: () {
@@ -172,16 +172,22 @@ class AccountBloc extends Bloc<AccountService> {
     locator<FilterService>().countries().then((value) async {
       var listOfCountries = value.data!..sort((a, b) => a.id!.compareTo(b.id!));
       loadingStatus.value = LoadingStatus.finish;
-      await BottomSheetsUtil().countryBottomSheet(context, listOfCountries, (p0) async {
+      await BottomSheetsUtil().countryBottomSheet(context, listOfCountries, (item) async {
         await BottomSheetsUtil().areYouShoureButtomSheet(
             context: context,
             message: AppLocalizations.of(context)!.changecountrymessage,
             sure: () async {
               loadingStatus.value = LoadingStatus.inprogress;
-              await box.put(DatabaseFieldConstant.countryFlag, p0.flagImage);
-              await box.put(DatabaseFieldConstant.countryId, p0.id).then((value) {
+
+              await box.put(DatabaseFieldConstant.selectedCountryId, item.id.toString());
+              await box.put(DatabaseFieldConstant.selectedCountryFlag, item.flagImage);
+              await box.put(DatabaseFieldConstant.selectedCountryName, item.name);
+              await box.put(DatabaseFieldConstant.selectedCountryDialCode, item.dialCode);
+              await box.put(DatabaseFieldConstant.selectedCountryCurrency, item.currency);
+              await box.put(DatabaseFieldConstant.selectedCountryMinLenght, item.minLength.toString());
+              await box.put(DatabaseFieldConstant.selectedCountryMaxLenght, item.maxLength.toString()).then((value) {
                 if (checkIfUserIsLoggedIn()) {
-                  updateProfileCountry(context, p0.id!);
+                  updateProfileCountry(context, item.id!);
                 } else {
                   loadingStatus.value = LoadingStatus.finish;
                 }
@@ -201,14 +207,18 @@ class AccountBloc extends Bloc<AccountService> {
         context: context,
         message: AppLocalizations.of(context)!.areyousurelogout,
         sure: () async {
-          final box = await Hive.openBox(DatabaseBoxConstant.userInfo);
           box.deleteAll([
             DatabaseFieldConstant.apikey,
             DatabaseFieldConstant.token,
             DatabaseFieldConstant.language,
             DatabaseFieldConstant.userid,
-            DatabaseFieldConstant.countryId,
-            DatabaseFieldConstant.countryFlag,
+            DatabaseFieldConstant.selectedCountryId,
+            DatabaseFieldConstant.selectedCountryFlag,
+            DatabaseFieldConstant.selectedCountryName,
+            DatabaseFieldConstant.selectedCountryDialCode,
+            DatabaseFieldConstant.selectedCountryCurrency,
+            DatabaseFieldConstant.selectedCountryMinLenght,
+            DatabaseFieldConstant.selectedCountryMaxLenght,
             DatabaseFieldConstant.isUserLoggedIn,
             DatabaseFieldConstant.userFirstName,
           ]);
@@ -235,8 +245,13 @@ class AccountBloc extends Bloc<AccountService> {
                     DatabaseFieldConstant.token,
                     DatabaseFieldConstant.language,
                     DatabaseFieldConstant.userid,
-                    DatabaseFieldConstant.countryId,
-                    DatabaseFieldConstant.countryFlag,
+                    DatabaseFieldConstant.selectedCountryId,
+                    DatabaseFieldConstant.selectedCountryFlag,
+                    DatabaseFieldConstant.selectedCountryName,
+                    DatabaseFieldConstant.selectedCountryDialCode,
+                    DatabaseFieldConstant.selectedCountryCurrency,
+                    DatabaseFieldConstant.selectedCountryMinLenght,
+                    DatabaseFieldConstant.selectedCountryMaxLenght,
                     DatabaseFieldConstant.isUserLoggedIn,
                     DatabaseFieldConstant.userFirstName,
                   ]);

@@ -167,10 +167,20 @@ class _LoginFourthStepScreenState extends State<LoginFourthStepScreen> {
                                           .put(DatabaseFieldConstant.userFirstName, bloc.firstNameController.text);
                                       await bloc.box.put(DatabaseFieldConstant.userid, bloc.userId.toString());
                                       if (bloc.selectedCountry != null) {
+                                        await bloc.box.put(DatabaseFieldConstant.selectedCountryId,
+                                            bloc.selectedCountry!.id.toString());
+                                        await bloc.box.put(
+                                            DatabaseFieldConstant.selectedCountryFlag, bloc.selectedCountry!.flagImage);
                                         await bloc.box
-                                            .put(DatabaseFieldConstant.countryId, bloc.selectedCountry!.id.toString());
-                                        await bloc.box
-                                            .put(DatabaseFieldConstant.countryFlag, bloc.selectedCountry!.flagImage);
+                                            .put(DatabaseFieldConstant.selectedCountryName, bloc.selectedCountry!.name);
+                                        await bloc.box.put(DatabaseFieldConstant.selectedCountryDialCode,
+                                            bloc.selectedCountry!.dialCode);
+                                        await bloc.box.put(DatabaseFieldConstant.selectedCountryCurrency,
+                                            bloc.selectedCountry!.currency);
+                                        await bloc.box.put(DatabaseFieldConstant.selectedCountryMinLenght,
+                                            bloc.selectedCountry!.minLength.toString());
+                                        await bloc.box.put(DatabaseFieldConstant.selectedCountryMaxLenght,
+                                            bloc.selectedCountry!.maxLength.toString());
                                       }
                                       bloc.loadingStatus.value = LoadingStatus.finish;
 

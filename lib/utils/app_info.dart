@@ -10,7 +10,7 @@ class AppInfo {
   final myBox = Hive.box(DatabaseBoxConstant.userInfo);
 
   Future<AppinfoModel> get() async {
-    final countryId = myBox.get(DatabaseFieldConstant.countryId);
+    final countryId = myBox.get(DatabaseFieldConstant.selectedCountryId);
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
     String osVersion = "";

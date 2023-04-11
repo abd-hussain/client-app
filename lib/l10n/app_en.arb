@@ -194,7 +194,8 @@
     "experience" : "Experience",
     "category" : "Category",
     "year" : "Year",
-    "reportsendsuccessfully" : "Report Sent Successfully"
+    "reportsendsuccessfully" : "Report Sent Successfully",
+    "mobilenumbernotvalid" : "Entered Mobile Number is not valid"
 
 
 

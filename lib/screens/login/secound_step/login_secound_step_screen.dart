@@ -1,9 +1,11 @@
+import 'package:client_app/models/https/countries_model.dart';
 import 'package:client_app/screens/login/secound_step/login_secound_step_bloc.dart';
 import 'package:client_app/screens/login/widget/top_bar.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/shared_widgets/mobile_number_widget.dart';
 import 'package:client_app/utils/constants/constant.dart';
+import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/enums/loading_status.dart';
 import 'package:client_app/utils/logger.dart';
 import 'package:client_app/utils/routes.dart';
@@ -22,7 +24,7 @@ class _LoginSecoundStepScreenState extends State<LoginSecoundStepScreen> {
 
   @override
   void didChangeDependencies() {
-    bloc.controllerLisiner();
+    bloc.listOfCountries();
     super.didChangeDependencies();
   }
 
@@ -64,9 +66,14 @@ class _LoginSecoundStepScreenState extends State<LoginSecoundStepScreen> {
                           ),
                           const SizedBox(height: 20),
                           MobileNumberField(
-                            controller: bloc.controller,
-                            selectedCountry: (selectedCode) {
+                            initialCountry: bloc.returnSelectedCountryFromDatabase(),
+                            countryList: bloc.countriesList,
+                            enableVerifyBtn: bloc.enableVerifyBtn,
+                            selectedCountryCode: (selectedCode) {
                               bloc.countryCode = selectedCode;
+                            },
+                            enteredPhoneNumber: (mobileNumber) {
+                              bloc.mobileNumber = mobileNumber;
                             },
                           ),
                           const SizedBox(height: 20),
@@ -81,12 +88,10 @@ class _LoginSecoundStepScreenState extends State<LoginSecoundStepScreen> {
                                       bloc.callRequest().then((value) async {
                                         bloc.loadingStatus.value = LoadingStatus.finish;
                                         logger.wtf(value.data!.lastOtp);
-                                        if (bloc.controller.text[0] == "0") {
-                                          bloc.controller.text = bloc.controller.text.substring(1);
-                                        }
+
                                         await navigator.pushNamed(RoutesConstants.loginThirdStepRoute, arguments: {
                                           AppConstant.countryCode: bloc.countryCode,
-                                          AppConstant.mobileNumber: bloc.controller.text,
+                                          AppConstant.mobileNumber: bloc.mobileNumber,
                                           AppConstant.useridToPass: value.data!.id!,
                                           AppConstant.apikeyToPass: value.data!.apiKey!
                                         });

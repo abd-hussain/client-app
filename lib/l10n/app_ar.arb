@@ -194,7 +194,9 @@
     "experience" : "الخبرة",
     "category" : "التصنيف",
     "year" : "سنة",
-    "reportsendsuccessfully" : "تم إرسال التقرير بنجاح"
+    "reportsendsuccessfully" : "تم إرسال التقرير بنجاح",
+    "mobilenumbernotvalid" : "رقم الهاتف المدخل غير صحيح"
+
 
 
 

@@ -36,8 +36,13 @@ class ListOfCountriesWidget extends StatelessWidget {
         onTap: () async {
           var box = await Hive.openBox(DatabaseBoxConstant.userInfo);
 
-          box.put(DatabaseFieldConstant.countryId, item.id.toString());
-          box.put(DatabaseFieldConstant.countryFlag, item.flagImage);
+          await box.put(DatabaseFieldConstant.selectedCountryId, item.id.toString());
+          await box.put(DatabaseFieldConstant.selectedCountryFlag, item.flagImage);
+          await box.put(DatabaseFieldConstant.selectedCountryName, item.name);
+          await box.put(DatabaseFieldConstant.selectedCountryDialCode, item.dialCode);
+          await box.put(DatabaseFieldConstant.selectedCountryCurrency, item.currency);
+          await box.put(DatabaseFieldConstant.selectedCountryMinLenght, item.minLength.toString());
+          await box.put(DatabaseFieldConstant.selectedCountryMaxLenght, item.maxLength.toString());
 
           navigator.pushNamedAndRemoveUntil(RoutesConstants.tutorialsScreen, (Route<dynamic> route) => false,
               arguments: {"openFrom": TutorialOpenFrom.firstInstall});

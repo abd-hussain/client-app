@@ -136,7 +136,9 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
         email: emailController.text,
         referalCode: referalCodeController.text,
         gender: GenderFormat().convertStringToIndex(context, genderController.text),
-        countryId: selectedCountry != null ? selectedCountry!.id! : int.parse(box.get(DatabaseFieldConstant.countryId)),
+        countryId: selectedCountry != null
+            ? selectedCountry!.id!
+            : int.parse(box.get(DatabaseFieldConstant.selectedCountryId)),
         dateOfBirth: selectedDate,
         profileImage: profileImage,
       ),
