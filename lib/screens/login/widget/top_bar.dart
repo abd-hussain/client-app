@@ -5,22 +5,27 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class TopBarWidget extends StatelessWidget {
   final String? subtitle;
   final bool actionButton;
+  final bool backButton;
+
   final Function()? actionButtonPressed;
 
-  const TopBarWidget({this.subtitle, this.actionButton = false, this.actionButtonPressed, super.key});
+  const TopBarWidget(
+      {this.subtitle, this.backButton = true, this.actionButton = false, this.actionButtonPressed, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        IconButton(
-          onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            size: 25,
-            color: Colors.black,
-          ),
-        ),
+        backButton
+            ? IconButton(
+                onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
+                icon: const Icon(
+                  Icons.arrow_back_ios,
+                  size: 25,
+                  color: Colors.black,
+                ),
+              )
+            : const SizedBox(width: 50),
         const SizedBox(
           width: 14,
         ),
@@ -52,7 +57,8 @@ class TopBarWidget extends StatelessWidget {
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                   textColor: const Color(0xff444444),
-                ))
+                ),
+              )
             : const SizedBox(width: 50)
       ],
     );

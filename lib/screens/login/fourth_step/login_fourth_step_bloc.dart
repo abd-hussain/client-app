@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:client_app/locator.dart';
@@ -10,11 +9,9 @@ import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/enums/loading_status.dart';
 import 'package:client_app/utils/gender_format.dart';
 import 'package:client_app/utils/mixins.dart';
-import 'package:client_app/models/gender_model.dart';
 import 'package:client_app/models/https/countries_model.dart';
 import 'package:client_app/sevices/account_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class LoginFourthStepBloc extends Bloc<AccountService> {
@@ -37,32 +34,18 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
   ValueNotifier<bool> enableNextBtn = ValueNotifier<bool>(false);
 
   List<Country> listOfCountries = [];
-  List<Gender> listOfGenders = [];
   int userId = 0;
 
   String argumentToken = "";
   final box = Hive.box(DatabaseBoxConstant.userInfo);
 
   void extractArguments(BuildContext context) {
-    listOfGenders = [
-      Gender(
-          name: AppLocalizations.of(context)!.gendermale,
-          icon: const Icon(
-            Icons.male,
-            color: Color(0xff444444),
-          )),
-      Gender(name: AppLocalizations.of(context)!.genderfemale, icon: const Icon(Icons.female)),
-      Gender(name: AppLocalizations.of(context)!.genderother, icon: const Icon(Icons.align_horizontal_center))
-    ];
-
     final arguments = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
     if (arguments != null) {
       argumentToken = arguments[AppConstant.tokenToPass];
       userId = arguments[AppConstant.useridToPass];
     }
-
-    getAccountInformation(context);
-    getListOfCountries();
+    _getListOfCountries();
   }
 
   controllersHandler() {
@@ -80,17 +63,16 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
     }
     //Nothing is requierd
     loadingStatus.value = LoadingStatus.inprogress;
-
     loadingStatus.value = LoadingStatus.finish;
   }
 
-  void getListOfCountries() {
+  void _getListOfCountries() {
     locator<FilterService>().countries().then((value) {
       listOfCountries = value.data!..sort((a, b) => a.id!.compareTo(b.id!));
     });
   }
 
-  getAccountInformation(BuildContext context) {
+  void getAccountInformation(BuildContext context) {
     box.put(DatabaseFieldConstant.token, argumentToken);
 
     AccountService().getAccountInfo().then((value) {
@@ -115,6 +97,7 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
 
         if (value.data!.dateOfBirth != null) {
           selectedDate = value.data!.dateOfBirth!;
+          print("++++++++1+++++++++ ${selectedDate}");
         }
 
         if (value.data!.profileImg != null) {
