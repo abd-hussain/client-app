@@ -7,7 +7,8 @@ import 'package:client_app/sevices/auth_services.dart';
 import 'package:flutter/material.dart';
 
 class LoginThirdStepBloc extends Bloc<AuthService> {
-  final TextEditingController controller = TextEditingController();
+  final TextEditingController pinController = TextEditingController();
+
   Timer? timer;
   int timerStartNumberSec = 59;
   int timerStartNumberMin = 2;
@@ -36,16 +37,17 @@ class LoginThirdStepBloc extends Bloc<AuthService> {
 
   Future<VerifyOTPResponse> callVerifyRequset() async {
     return await service.verifyOTP(
-        countryCode: countryCode, mobileNumber: mobileNumber, otp: controller.text, apiKey: apikey, userId: userId);
+        countryCode: countryCode, mobileNumber: mobileNumber, otp: pinController.text, apiKey: apikey, userId: userId);
   }
 
-  Future<AuthDebugResponse> callRequest() async {
-    return await service.auth(countryCode: countryCode, mobileNumber: controller.text);
+  Future<AuthDebugResponse> callRequestOfAuthAgain() async {
+    return await service.auth(countryCode: countryCode, mobileNumber: mobileNumber);
   }
 
   @override
   onDispose() {
-    controller.dispose();
+    pinController.dispose();
+
     timer!.cancel();
     otpNotValid.dispose();
   }

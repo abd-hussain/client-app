@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:client_app/screens/login/third_step/login_third_step_bloc.dart';
+import 'package:client_app/screens/login/third_step/widgets/pin_field.dart';
 import 'package:client_app/screens/login/widget/top_bar.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
@@ -8,7 +9,6 @@ import 'package:client_app/utils/constants/constant.dart';
 import 'package:client_app/utils/logger.dart';
 import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginThirdStepScreen extends StatefulWidget {
@@ -47,13 +47,12 @@ class _LoginThirdStepScreenState extends State<LoginThirdStepScreen> {
   @override
   void didChangeDependencies() {
     startTimer();
-
-    bloc.controller.addListener(() {
-      if (bloc.controller.text.length == 6) {
-        bloc.callVerifyRequset().then((value) {
+    bloc.pinController.addListener(() {
+      if (bloc.pinController.text.length == 6) {
+        bloc.callVerifyRequset().then((value) async {
           if (value.data != null) {
             bloc.otpNotValid.value = false;
-            Navigator.of(context, rootNavigator: true).pushNamed(
+            await Navigator.of(context, rootNavigator: true).pushNamed(
               RoutesConstants.loginFourthStepRoute,
               arguments: {
                 AppConstant.tokenToPass: value.data!.token,
@@ -66,6 +65,7 @@ class _LoginThirdStepScreenState extends State<LoginThirdStepScreen> {
         });
       }
     });
+    bloc.extractArguments(context);
 
     super.didChangeDependencies();
   }
@@ -78,8 +78,6 @@ class _LoginThirdStepScreenState extends State<LoginThirdStepScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bloc.extractArguments(context);
-
     return Scaffold(
       body: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -93,39 +91,16 @@ class _LoginThirdStepScreenState extends State<LoginThirdStepScreen> {
                 const SizedBox(height: 20),
                 CustomText(
                   title: AppLocalizations.of(context)!.enteryourotpnumber,
-                  fontSize: 12,
+                  fontSize: 16,
                   textColor: Colors.black,
                 ),
                 CustomText(
                   title: AppLocalizations.of(context)!.enteryourotpnumberexample,
-                  fontSize: 8,
+                  fontSize: 11,
                   textColor: Colors.grey,
                 ),
                 const SizedBox(height: 20),
-                Container(
-                  height: 50,
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    border: Border.all(color: Colors.grey),
-                  ),
-                  child: TextField(
-                    maxLength: 6,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    controller: bloc.controller,
-                    decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.only(bottom: 0),
-                      border: InputBorder.none,
-                      counterText: "",
-                      floatingLabelAlignment: FloatingLabelAlignment.center,
-                      hintStyle: TextStyle(color: Colors.black54),
-                      hintText: "Your OTP Code",
-                    ),
-                  ),
-                ),
+                PinField(pinController: bloc.pinController),
                 const SizedBox(height: 10),
                 ValueListenableBuilder<bool>(
                     valueListenable: bloc.otpNotValid,
@@ -138,13 +113,13 @@ class _LoginThirdStepScreenState extends State<LoginThirdStepScreen> {
                             )
                           : Container();
                     }),
-                const SizedBox(height: 50),
+                const SizedBox(height: 20),
                 bloc.timerStartNumberMin == 0 && bloc.timerStartNumberSec == 0
                     ? CustomButton(
                         buttonTitle: "Resend Code",
                         enableButton: true,
                         onTap: () async {
-                          await bloc.callRequest().then((value) {
+                          await bloc.callRequestOfAuthAgain().then((value) {
                             bloc.resetTimer();
                             startTimer();
                             logger.wtf("value.data!.lastOtp");
