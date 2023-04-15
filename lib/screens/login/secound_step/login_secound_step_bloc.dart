@@ -21,6 +21,9 @@ class LoginSecoundStepBloc extends Bloc<AuthService> {
   Future<AuthDebugResponse> callRequest() async {
     loadingStatus.value = LoadingStatus.inprogress;
 
+    if (mobileNumber[0] == "0") {
+      mobileNumber = mobileNumber.substring(1);
+    }
     return await service.auth(countryCode: countryCode, mobileNumber: mobileNumber);
   }
 

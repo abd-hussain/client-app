@@ -1,11 +1,9 @@
-import 'package:client_app/models/https/countries_model.dart';
 import 'package:client_app/screens/login/secound_step/login_secound_step_bloc.dart';
 import 'package:client_app/screens/login/widget/top_bar.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/shared_widgets/mobile_number_widget.dart';
 import 'package:client_app/utils/constants/constant.dart';
-import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/enums/loading_status.dart';
 import 'package:client_app/utils/logger.dart';
 import 'package:client_app/utils/routes.dart';
@@ -86,15 +84,15 @@ class _LoginSecoundStepScreenState extends State<LoginSecoundStepScreen> {
                                     onTap: () {
                                       final navigator = Navigator.of(context, rootNavigator: true);
                                       bloc.callRequest().then((value) async {
-                                        bloc.loadingStatus.value = LoadingStatus.finish;
                                         logger.wtf(value.data!.lastOtp);
-
                                         await navigator.pushNamed(RoutesConstants.loginThirdStepRoute, arguments: {
                                           AppConstant.countryCode: bloc.countryCode,
                                           AppConstant.mobileNumber: bloc.mobileNumber,
                                           AppConstant.useridToPass: value.data!.id!,
                                           AppConstant.apikeyToPass: value.data!.apiKey!
                                         });
+                                        bloc.enableVerifyBtn.value = false;
+                                        bloc.loadingStatus.value = LoadingStatus.finish;
                                       });
                                     });
                               }),

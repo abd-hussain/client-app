@@ -11,7 +11,7 @@ class AuthService with Service {
     AppinfoModel appInfo = await AppInfo().get();
 
     final body = AuthDebugRequest(
-        mobileNumber: "00$countryCode$mobileNumber",
+        mobileNumber: "$countryCode$mobileNumber",
         osType: appInfo.osType,
         deviceTypeName: appInfo.deviceTypeName,
         osVersion: appInfo.osVersion,
