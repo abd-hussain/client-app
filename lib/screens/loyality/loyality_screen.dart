@@ -1,3 +1,4 @@
+import 'package:client_app/models/rules_of_loyality.dart';
 import 'package:client_app/screens/login/widget/top_bar.dart';
 import 'package:client_app/screens/loyality/loyality_bloc.dart';
 import 'package:client_app/screens/loyality/widgets/points_widget.dart';
@@ -22,8 +23,8 @@ class _LoyalityScreenState extends State<LoyalityScreen> {
 
   @override
   void didChangeDependencies() {
-    bloc.updatePoints();
-    bloc.getRulles();
+    bloc.getProfilePoint();
+    bloc.fillLoyality(context);
     super.didChangeDependencies();
   }
 
@@ -54,7 +55,7 @@ class _LoyalityScreenState extends State<LoyalityScreen> {
               ),
             ),
             RullesWidget(
-              loyalityRulles: bloc.loyalityRulles,
+              listOrRules: bloc.listOrRules,
               onTap: (action) {
                 handleWhereToGo(action);
               },
@@ -65,53 +66,59 @@ class _LoyalityScreenState extends State<LoyalityScreen> {
     );
   }
 
-  void handleWhereToGo(String action) {
-    //TODO : Handle add point after get back
-
-    switch (action) {
-      case "EDITPROFILE":
-        Navigator.of(context, rootNavigator: true).pushNamed(
-          RoutesConstants.editProfileScreen,
-        );
-        break;
-      case "INVITEFRIEND":
-        Navigator.of(context, rootNavigator: true).pushNamed(
-          RoutesConstants.inviteFriendScreen,
-        );
-        break;
-      case "REPORTSUGESTION":
-        Navigator.of(context, rootNavigator: true).pushNamed(
-          RoutesConstants.reportScreen,
-          arguments: {AppConstant.argument1: ReportPageType.suggestion},
-        );
-        break;
-      case "REPORTISSUE":
-        Navigator.of(context, rootNavigator: true).pushNamed(
-          RoutesConstants.reportScreen,
-          arguments: {AppConstant.argument1: ReportPageType.issue},
-        );
-        break;
-      case "REVIEW":
+  void handleWhereToGo(LoyalityRules rule) {
+    switch (rule.pageToOpen) {
+      case PageToOpenFromLoyality.appReview:
+        bloc.requestAddPoint(title: "user rate application", point: rule.numberOfPoint);
         WidgetsBinding.instance.addPostFrameCallback((_) async {
           RateMyApp().showRateDialog(context, noButton: "test");
         });
         break;
-      case "LIKEFACEBOOK":
+      case PageToOpenFromLoyality.editProfile:
+        bloc.requestAddPoint(title: "user fill his profile data", point: rule.numberOfPoint);
+        Navigator.of(context, rootNavigator: true).pushNamed(
+          RoutesConstants.editProfileScreen,
+        );
+        break;
+      case PageToOpenFromLoyality.inviteFriend:
+        bloc.requestAddPoint(title: "user want to add frind", point: rule.numberOfPoint);
+        Navigator.of(context, rootNavigator: true).pushNamed(
+          RoutesConstants.inviteFriendScreen,
+        );
+        break;
+      case PageToOpenFromLoyality.likeFacebook:
+        bloc.requestAddPoint(title: "user like page of facebook", point: rule.numberOfPoint);
         Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen, arguments: {
           AppConstant.webViewPageUrl: AppConstant.facebookLink,
           AppConstant.pageTitle: AppLocalizations.of(context)!.facebook
         });
         break;
-      case "LIKELINKEDIN":
+      case PageToOpenFromLoyality.likeLinkedIn:
+        bloc.requestAddPoint(title: "user like page of linkedin", point: rule.numberOfPoint);
         Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen, arguments: {
           AppConstant.webViewPageUrl: AppConstant.linkedinLink,
           AppConstant.pageTitle: AppLocalizations.of(context)!.linkedin
         });
         break;
-      case "REVIEWMENTOR":
-        //TODO
+      case PageToOpenFromLoyality.reportIssue:
+        bloc.requestAddPoint(title: "user add issue", point: rule.numberOfPoint);
+        Navigator.of(context, rootNavigator: true).pushNamed(
+          RoutesConstants.reportScreen,
+          arguments: {AppConstant.argument1: ReportPageType.issue},
+        );
+        break;
+      case PageToOpenFromLoyality.reportSuggestion:
+        bloc.requestAddPoint(title: "user add suggestion", point: rule.numberOfPoint);
+        Navigator.of(context, rootNavigator: true).pushNamed(
+          RoutesConstants.reportScreen,
+          arguments: {AppConstant.argument1: ReportPageType.suggestion},
+        );
+        break;
+      case PageToOpenFromLoyality.reviewMentor:
+        bloc.requestAddPoint(title: "user add review to the mentor", point: rule.numberOfPoint);
         break;
       default:
+        break;
     }
   }
 }

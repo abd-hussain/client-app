@@ -1,28 +1,24 @@
-import 'package:client_app/models/https/account_info_response.dart';
-import 'package:client_app/models/https/loyality_rules.dart';
+import 'package:client_app/models/https/loyality_point_request.dart';
+import 'package:client_app/models/https/loyality_point_response.dart';
 import 'package:client_app/utils/mixins.dart';
 import 'package:client_app/utils/repository/http_repository.dart';
 import 'package:client_app/utils/repository/method_name_constractor.dart';
-import 'package:dio/dio.dart';
 
 class LoyalityService with Service {
-  Future<LoyalityRules> rules() async {
+  Future<LoyalityPoint> getProfilePoints() async {
     final response = await repository.callRequest(
       requestType: RequestType.get,
-      methodName: MethodNameConstant.loyalityRules,
+      methodName: MethodNameConstant.loyality,
     );
-    return LoyalityRules.fromJson(response);
+    return LoyalityPoint.fromJson(response);
   }
 
-  Future<AccountInfo> updatePoints({int points = 0}) async {
-    FormData formData = FormData.fromMap({
-      "points": MultipartFile.fromString(points.toString()),
-    });
+  Future<dynamic> requestToAddPoint({required LoyalityPointRequest body}) async {
     final response = await repository.callRequest(
-      requestType: RequestType.put,
-      methodName: MethodNameConstant.loyalityPoints,
-      formData: formData,
+      requestType: RequestType.post,
+      methodName: MethodNameConstant.loyality,
+      postBody: body,
     );
-    return AccountInfo.fromJson(response);
+    return response;
   }
 }

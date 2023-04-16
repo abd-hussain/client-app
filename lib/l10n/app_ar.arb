@@ -195,7 +195,15 @@
     "category" : "التصنيف",
     "year" : "سنة",
     "reportsendsuccessfully" : "تم إرسال التقرير بنجاح",
-    "mobilenumbernotvalid" : "رقم الهاتف المدخل غير صحيح"
+    "mobilenumbernotvalid" : "رقم الهاتف المدخل غير صحيح",
+    "loyalityfillprofiledetails" : "املا جميع معلومات حسابك الشخصي",
+    "loyalityinviteFriend" : "لكل صديق تم اضافته وتسجيله عن طريق الكود الخاص بك",
+    "loyalityaddsuggestion" : "اضافة اقتراح لتطوير البرنامج",
+    "loyalityaddissue" : "اضافة مشكله في التطبيق لتطويره",
+    "loyalityaddgoodreviewfortheapp" : "اضافة تقيم جيد للبرنامج",
+    "loyalitylikefacebook" : "متابعة صفحتنا على فيسبوك",
+    "loyalitylikelinkedin" : " متابعة صفحتنا على لينكيدان",
+    "loyalityreviewmentor" : "اضافة تقيم للمدرب الذي قمت بالاتصال به"
 
 
 

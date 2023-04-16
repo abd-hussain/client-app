@@ -61,6 +61,7 @@ class ImageHolder extends StatelessWidget {
           },
           galleryCallBack: () async {
             image = await pickImage(ImageSource.gallery);
+
             if (image?.path.isEmpty ?? true) {
               return;
             }

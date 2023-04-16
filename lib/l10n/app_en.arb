@@ -195,16 +195,15 @@
     "category" : "Category",
     "year" : "Year",
     "reportsendsuccessfully" : "Report Sent Successfully",
-    "mobilenumbernotvalid" : "Entered Mobile Number is not valid"
-
-
-
-
-
-
-
-
-
+    "mobilenumbernotvalid" : "Entered Mobile Number is not valid",
+    "loyalityfillprofiledetails" : "Fill all of your profile details",
+    "loyalityinviteFriend" : "For each Friend Invited using your code",
+    "loyalityaddsuggestion" : "Add suggestions to improve the application",
+    "loyalityaddissue" : "Add issue to improve the application",
+    "loyalityaddgoodreviewfortheapp" : "Add good review to the application",
+    "loyalitylikefacebook" : "Like our Facebook page",
+    "loyalitylikelinkedin" : "Like our LinkedIn page",
+    "loyalityreviewmentor" : "Add review to mentor you call with"
 
 
 

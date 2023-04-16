@@ -13,8 +13,7 @@ class MethodNameConstant {
 
   static const String discount = "discount/";
 
-  static const String loyalityRules = "loyality/rules";
-  static const String loyalityPoints = "loyality/";
+  static const String loyality = "loyality/";
 
   static const String notifications = "notifications/client";
 

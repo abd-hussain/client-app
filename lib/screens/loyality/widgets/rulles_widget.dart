@@ -1,12 +1,16 @@
-import 'package:client_app/models/https/loyality_rules.dart';
+import 'package:client_app/models/rules_of_loyality.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
-import 'package:client_app/shared_widgets/shimmers/shimmer_list.dart';
 import 'package:flutter/material.dart';
 
 class RullesWidget extends StatelessWidget {
-  final ValueNotifier<List<LoyalityRulesData>?> loyalityRulles;
-  final Function(String) onTap;
-  const RullesWidget({required this.loyalityRulles, required this.onTap, super.key});
+  final List<LoyalityRules> listOrRules;
+  final Function(LoyalityRules) onTap;
+
+  const RullesWidget({
+    required this.onTap,
+    super.key,
+    required this.listOrRules,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,45 +30,31 @@ class RullesWidget extends StatelessWidget {
               ),
             ],
           ),
-          child: ValueListenableBuilder<List<LoyalityRulesData>?>(
-              valueListenable: loyalityRulles,
-              builder: (context, snapshot, child) {
-                if (snapshot != null) {
-                  return ListView.builder(
-                    itemCount: snapshot.length,
-                    itemBuilder: ((context, index) {
-                      return Column(
-                        children: [
-                          rullChild(
-                            context: context,
-                            content: snapshot[index].content!,
-                            points: snapshot[index].points.toString(),
-                            action: snapshot[index].action!,
-                          ),
-                          index != snapshot.length - 1
-                              ? Container(
-                                  height: 0.5,
-                                  color: const Color(0xff444444),
-                                )
-                              : Container()
-                        ],
-                      );
-                    }),
-                  );
-                } else {
-                  return const Padding(
-                    padding: EdgeInsets.all(12),
-                    child: ShimmerListView(count: 8),
-                  );
-                }
-              }),
+          child: ListView.builder(
+            itemCount: listOrRules.length,
+            itemBuilder: ((context, index) {
+              return Column(
+                children: [
+                  rullChild(
+                    context: context,
+                    roll: listOrRules[index],
+                  ),
+                  index != listOrRules.length - 1
+                      ? Container(
+                          height: 0.5,
+                          color: const Color(0xff444444),
+                        )
+                      : Container()
+                ],
+              );
+            }),
+          ),
         ),
       ),
     );
   }
 
-  Widget rullChild(
-      {required BuildContext context, required String content, required String points, required String action}) {
+  Widget rullChild({required BuildContext context, required LoyalityRules roll}) {
     return ListTile(
       title: Row(
         children: [
@@ -73,7 +63,7 @@ class RullesWidget extends StatelessWidget {
           SizedBox(
             width: MediaQuery.of(context).size.width - 140,
             child: CustomText(
-              title: content,
+              title: roll.content,
               fontSize: 14,
               textColor: const Color(0xff444444),
               maxLins: 10,
@@ -83,7 +73,7 @@ class RullesWidget extends StatelessWidget {
           Column(
             children: [
               CustomText(
-                title: points,
+                title: roll.numberOfPoint.toString(),
                 fontSize: 16,
                 textColor: const Color(0xff034061),
                 fontWeight: FontWeight.bold,
@@ -105,7 +95,7 @@ class RullesWidget extends StatelessWidget {
           const Icon(Icons.arrow_right),
         ],
       ),
-      onTap: () => onTap(action),
+      onTap: () => onTap(roll),
     );
   }
 }

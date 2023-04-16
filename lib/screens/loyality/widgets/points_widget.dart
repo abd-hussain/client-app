@@ -1,9 +1,8 @@
-import 'package:client_app/models/https/account_info_response.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class PointsWidget extends StatelessWidget {
-  final ValueNotifier<AccountInfo?> pointNotifier;
+  final ValueNotifier<int?> pointNotifier;
   const PointsWidget({required this.pointNotifier, super.key});
 
   @override
@@ -25,12 +24,12 @@ class PointsWidget extends StatelessWidget {
           ],
         ),
         child: Center(
-          child: ValueListenableBuilder<AccountInfo?>(
+          child: ValueListenableBuilder<int?>(
               valueListenable: pointNotifier,
               builder: (context, snapshot, child) {
                 if (snapshot != null) {
                   return CustomText(
-                    title: snapshot.data!.points.toString(),
+                    title: snapshot.toString(),
                     fontSize: 30,
                     textColor: const Color(0xff444444),
                     fontWeight: FontWeight.bold,
