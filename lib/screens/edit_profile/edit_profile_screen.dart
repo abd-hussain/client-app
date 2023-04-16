@@ -77,6 +77,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               deleteImageCallBack: () {
                                 bloc.profileImage = null;
                                 bloc.profileImageUrl = null;
+                                setState(() {});
                               }),
                         ),
                         const SizedBox(height: 10),

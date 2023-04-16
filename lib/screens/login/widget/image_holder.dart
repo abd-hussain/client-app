@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class ImageHolder extends StatelessWidget {
+class ImageHolder extends StatefulWidget {
   final Function(File image) addImageCallBack;
   final Function() deleteImageCallBack;
   final bool isFromNetwork;
@@ -25,28 +25,31 @@ class ImageHolder extends StatelessWidget {
     this.width = 100,
   });
 
+  @override
+  State<ImageHolder> createState() => _ImageHolderState();
+}
+
+class _ImageHolderState extends State<ImageHolder> {
   Future<File> pickImage(ImageSource source) async {
     final image = await ImagePicker().pickImage(source: source);
     return File(image?.path ?? "");
   }
 
+  ValueNotifier<File?> imageController = ValueNotifier<File?>(null);
+  File? image;
+
   @override
   Widget build(BuildContext context) {
-    ValueNotifier<File?> imageController = ValueNotifier<File?>(null);
-    File? image;
     return InkWell(
       onTap: () {
         BottomSheetsUtil().addImageBottomSheet(
           context,
-          image?.path.isNotEmpty ?? false || urlImage != null,
+          image?.path.isNotEmpty ?? false || widget.urlImage != null,
           deleteCallBack: () {
-            deleteImageCallBack();
-            // if (!isFromNetwork) {
             image = null;
-
-            imageController.value = image;
-
-            // }
+            imageController.value = null;
+            widget.deleteImageCallBack();
+            setState(() {});
             Navigator.pop(context);
           },
           cameraCallBack: () async {
@@ -54,10 +57,10 @@ class ImageHolder extends StatelessWidget {
             if (image?.path.isEmpty ?? true) {
               return;
             }
-            if (!isFromNetwork) {
+            if (!widget.isFromNetwork) {
               imageController.value = image;
             }
-            addImageCallBack(image!);
+            widget.addImageCallBack(image!);
           },
           galleryCallBack: () async {
             image = await pickImage(ImageSource.gallery);
@@ -65,16 +68,16 @@ class ImageHolder extends StatelessWidget {
             if (image?.path.isEmpty ?? true) {
               return;
             }
-            if (!isFromNetwork) {
+            if (!widget.isFromNetwork) {
               imageController.value = image;
             }
-            addImageCallBack(image!);
+            widget.addImageCallBack(image!);
           },
         );
       },
       child: Container(
-        height: hight,
-        width: width,
+        height: widget.hight,
+        width: widget.width,
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(8),
@@ -82,12 +85,12 @@ class ImageHolder extends StatelessWidget {
         child: ValueListenableBuilder<File?>(
           valueListenable: imageController,
           builder: (context, snapshot, child) {
-            return snapshot != null || urlImage != null
-                ? isFromNetwork
+            return snapshot != null || widget.urlImage != null
+                ? widget.isFromNetwork
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Image.network(
-                          AppConstant.imagesBaseURLForProfileImages + urlImage!,
+                          AppConstant.imagesBaseURLForProfileImages + widget.urlImage!,
                           width: 100,
                           height: 115,
                           fit: BoxFit.cover,

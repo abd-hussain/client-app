@@ -44,15 +44,18 @@ class AccountService with Service {
 
     if (account.profileImage != null) {
       String fileName = account.profileImage!.path.split('/').last;
-      updateMap["profile_picture"] = await MultipartFile.fromFile(account.profileImage!.path, filename: fileName);
+      print("+++++++ fileName   ${fileName}");
+      print("+++++++ filePath  ${account.profileImage!.path}");
+
+      updateMap["profile_picture"] = MultipartFile.fromFile(account.profileImage!.path, filename: fileName);
     }
 
     FormData formData = FormData.fromMap(updateMap);
 
-    final response = await repository.callRequest(
-        requestType: RequestType.put, methodName: MethodNameConstant.updateAccount, formData: formData);
+    // final response = await repository.callRequest(
+    //     requestType: RequestType.put, methodName: MethodNameConstant.updateAccount, formData: formData);
 
-    return AccountInfo.fromJson(response);
+    return AccountInfo.fromJson({});
   }
 
   Future<dynamic> removeAccount() async {
