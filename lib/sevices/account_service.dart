@@ -44,8 +44,7 @@ class AccountService with Service {
 
     if (account.profileImage != null) {
       String fileName = account.profileImage!.path.split('/').last;
-
-      updateMap["profile_picture"] = MultipartFile.fromFile(account.profileImage!.path, filename: fileName);
+      updateMap["profile_picture"] = await MultipartFile.fromFile(account.profileImage!.path, filename: fileName);
     }
 
     FormData formData = FormData.fromMap(updateMap);
