@@ -54,6 +54,16 @@ class _LoyalityScreenState extends State<LoyalityScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CustomText(
+                title: AppLocalizations.of(context)!.numberofpointdesc,
+                fontSize: 14,
+                maxLins: 2,
+                textAlign: TextAlign.center,
+                textColor: const Color(0xff444444),
+              ),
+            ),
             RullesWidget(
               listOrRules: bloc.listOrRules,
               onTap: (action) {

@@ -203,7 +203,9 @@
     "loyalityaddgoodreviewfortheapp" : "اضافة تقيم جيد للبرنامج",
     "loyalitylikefacebook" : "متابعة صفحتنا على فيسبوك",
     "loyalitylikelinkedin" : " متابعة صفحتنا على لينكيدان",
-    "loyalityreviewmentor" : "اضافة تقيم للمدرب الذي قمت بالاتصال به"
+    "loyalityreviewmentor" : "اضافة تقيم للمدرب الذي قمت بالاتصال به",
+    "numberofpointdesc" : "لا يتم احتساب النقطة على الفور في بعض الأحيان تحتاج إلى 30 يومًا"
+
 
 
 
