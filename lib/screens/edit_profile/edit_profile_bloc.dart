@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:client_app/models/gender_model.dart';
@@ -16,7 +18,6 @@ class EditProfileBloc extends Bloc<AccountService> {
   File? profileImage;
   String? profileImageUrl;
   String? selectedDate;
-  String? _referalCode;
   List<Gender> listOfGenders = [];
 
   TextEditingController firstNameController = TextEditingController();
@@ -28,34 +29,32 @@ class EditProfileBloc extends Bloc<AccountService> {
 
   final box = Hive.box(DatabaseBoxConstant.userInfo);
 
-  getAccountInformation(BuildContext context) {
+  getAccountInformation(BuildContext context) async {
     loadingStatus.value = LoadingStatus.inprogress;
-    fillGenderList(context);
-    service.getAccountInfo().then((value) {
-      if (value.data != null) {
-        firstNameController.text = value.data!.firstName ?? "";
-        lastNameController.text = value.data!.lastName ?? "";
-        if (value.data!.gender != null) {
-          genderController.text = GenderFormat().convertIndexToString(context, value.data!.gender!);
-        }
-        emailController.text = value.data!.email ?? "";
+    _fillGenderList(context);
+    final value = await service.getAccountInfo();
+    if (value.data != null) {
+      firstNameController.text = value.data!.firstName ?? "";
+      lastNameController.text = value.data!.lastName ?? "";
+      emailController.text = value.data!.email ?? "";
 
-        _referalCode = value.data!.referalCode;
-
-        if (value.data!.dateOfBirth != null) {
-          selectedDate = value.data!.dateOfBirth!;
-        }
-
-        if (value.data!.profileImg != null) {
-          profileImageUrl = value.data!.profileImg;
-        }
-
-        loadingStatus.value = LoadingStatus.finish;
+      if (value.data!.gender != null) {
+        genderController.text = GenderFormat().convertIndexToString(context, value.data!.gender!);
       }
-    });
+
+      if (value.data!.dateOfBirth != null) {
+        selectedDate = value.data!.dateOfBirth!;
+      }
+
+      if (value.data!.profileImg != null) {
+        profileImageUrl = value.data!.profileImg;
+      }
+
+      loadingStatus.value = LoadingStatus.finish;
+    }
   }
 
-  fillGenderList(BuildContext context) {
+  void _fillGenderList(BuildContext context) {
     listOfGenders = [
       Gender(
           name: AppLocalizations.of(context)!.gendermale,
@@ -82,15 +81,11 @@ class EditProfileBloc extends Bloc<AccountService> {
     } else {
       loadingStatus.value = LoadingStatus.inprogress;
 
-      int countryId = box.get(DatabaseFieldConstant.selectedCountryId);
-
       final body = UpdateAccountRequest(
         firstName: firstNameController.text,
         lastName: lastNameController.text,
         email: emailController.text,
-        referalCode: _referalCode,
         gender: GenderFormat().convertStringToIndex(context, genderController.text),
-        countryId: countryId,
         dateOfBirth: selectedDate,
         profileImage: profileImage,
       );

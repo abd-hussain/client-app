@@ -6,7 +6,7 @@ class UpdateAccountRequest {
   String? email;
   String? referalCode;
   int? gender;
-  int countryId;
+  int? countryId;
   String? dateOfBirth;
   File? profileImage;
 
@@ -16,7 +16,7 @@ class UpdateAccountRequest {
     this.email,
     this.referalCode,
     this.gender,
-    required this.countryId,
+    this.countryId,
     this.dateOfBirth,
     this.profileImage,
   });

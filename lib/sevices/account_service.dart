@@ -12,22 +12,42 @@ class AccountService with Service {
   }
 
   Future<AccountInfo> updateAccount({required UpdateAccountRequest account}) async {
-    String fileName = "";
-    if (account.profileImage != null) {
-      fileName = account.profileImage!.path.split('/').last;
+    Map<String, dynamic> updateMap = {};
+
+    if (account.gender != null) {
+      updateMap["gender"] = MultipartFile.fromString(account.gender.toString());
     }
-    FormData formData = FormData.fromMap({
-      "profile_picture": account.profileImage != null
-          ? await MultipartFile.fromFile(account.profileImage!.path, filename: fileName)
-          : MultipartFile.fromString(""),
-      "first_name": MultipartFile.fromString(account.firstName ?? ""),
-      "last_name": MultipartFile.fromString(account.lastName ?? ""),
-      "email": MultipartFile.fromString(account.email ?? ""), //TODO there is an issue with email
-      "referal_code": MultipartFile.fromString(account.referalCode ?? ""),
-      "date_of_birth": MultipartFile.fromString(account.dateOfBirth ?? ""),
-      "country_id": MultipartFile.fromString(account.countryId.toString()),
-      "gender": MultipartFile.fromString(account.gender != null ? account.gender.toString() : ""),
-    });
+
+    if (account.countryId != null) {
+      updateMap["country_id"] = MultipartFile.fromString(account.countryId.toString());
+    }
+
+    if (account.referalCode != null) {
+      updateMap["referal_code"] = MultipartFile.fromString(account.referalCode!);
+    }
+
+    if (account.firstName != null) {
+      updateMap["first_name"] = MultipartFile.fromString(account.firstName!);
+    }
+
+    if (account.lastName != null) {
+      updateMap["last_name"] = MultipartFile.fromString(account.lastName!);
+    }
+
+    if (account.email != null) {
+      updateMap["email"] = MultipartFile.fromString(account.email!);
+    }
+
+    if (account.dateOfBirth != null) {
+      updateMap["date_of_birth"] = MultipartFile.fromString(account.dateOfBirth!);
+    }
+
+    if (account.profileImage != null) {
+      String fileName = account.profileImage!.path.split('/').last;
+      updateMap["profile_picture"] = await MultipartFile.fromFile(account.profileImage!.path, filename: fileName);
+    }
+
+    FormData formData = FormData.fromMap(updateMap);
 
     final response = await repository.callRequest(
         requestType: RequestType.put, methodName: MethodNameConstant.updateAccount, formData: formData);
