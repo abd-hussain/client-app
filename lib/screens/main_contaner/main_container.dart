@@ -2,6 +2,8 @@ import 'package:client_app/locator.dart';
 import 'package:client_app/screens/main_contaner/main_container_bloc.dart';
 import 'package:client_app/screens/main_contaner/widgets/main_appbar.dart';
 import 'package:client_app/screens/main_contaner/widgets/account_appbar.dart';
+import 'package:client_app/utils/push_notifications/firebase_cloud_messaging_util.dart';
+import 'package:client_app/utils/push_notifications/notification_manager.dart';
 
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +21,15 @@ class _MainContainerState extends State<MainContainer> {
   @override
   void didChangeDependencies() {
     _bloc.getAppointmentsAndEvents();
+    NotificationManager.init(context: context);
+    _bloc.callRegisterTokenRequest();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(seconds: 2), () {
+        FirebaseCloudMessagingUtil.initConfigure(context);
+      });
+    });
+
     super.didChangeDependencies();
   }
 

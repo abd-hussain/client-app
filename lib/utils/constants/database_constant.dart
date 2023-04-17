@@ -17,4 +17,5 @@ class DatabaseFieldConstant {
 
   static const String isUserLoggedIn = "isUserLoggedIn";
   static const String userFirstName = "userFirstName";
+  static const String pushNotificationToken = "pushNotificationToken";
 }

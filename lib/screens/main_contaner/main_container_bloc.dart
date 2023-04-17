@@ -139,6 +139,11 @@ class MainContainerBloc {
     return list;
   }
 
+  void callRegisterTokenRequest() {
+    //TODO
+    // notificationService!.registerToken();
+  }
+
   bool checkIfUserIsLoggedIn() {
     bool isItLoggedIn = false;
 

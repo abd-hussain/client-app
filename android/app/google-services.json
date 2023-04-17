@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "939678755092",
+    "project_id": "helpera-3490d",
+    "storage_bucket": "helpera-3490d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:939678755092:android:3f3ec74eac9db3f0c4fa01",
+        "android_client_info": {
+          "package_name": "com.helpera.client_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "939678755092-m0bnok7khm87ja4hlhnbur263o59kt5s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJAtxmowOuxYlr5P30qxrkHRNakVbj0V4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "939678755092-m0bnok7khm87ja4hlhnbur263o59kt5s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

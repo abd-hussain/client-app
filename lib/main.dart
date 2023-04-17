@@ -12,6 +12,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:logger/logger.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 //TODO: handle Timing UTC
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() {
   runZonedGuarded(() async {
@@ -21,7 +23,9 @@ void main() {
     await Hive.initFlutter();
     await MobileAds.instance.initialize();
     await Hive.openBox(DatabaseBoxConstant.userInfo);
-
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
     await setupLocator();
     await SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
