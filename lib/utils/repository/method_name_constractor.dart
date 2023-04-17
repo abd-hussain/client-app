@@ -12,6 +12,7 @@ class MethodNameConstant {
   static const String cancelbookevent = "event/bookcancel";
 
   static const String discount = "discount/";
+  static const String archive = "archive/";
 
   static const String loyality = "loyality/";
 

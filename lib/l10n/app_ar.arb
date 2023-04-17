@@ -139,6 +139,7 @@
     "nocalltoday" : "لا يوجد لديك جلسة اليوم",
     "checkcallfromcalender" : "تحقق من مكالمتك القادمة من شاشة التقويم ، أو احجز مكالمتك الأولى الآن",
     "meetingnow" : "جلسة فورية",
+    "meetingshuduled" : "جلسة مجدولة",
     "meetingnowdesc" : "جلسات فورية للحالات الطارئة خلال ٦٠ دقيقة",
     "meetingshudule" : "جلسة مجدولة",
     "meetingshuduledesc" : "احجز موعدك مع المختص و الوقت المناسب لك",

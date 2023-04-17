@@ -1,4 +1,5 @@
 import 'package:client_app/screens/account_tab/account_screen.dart';
+import 'package:client_app/screens/archive/archive_details_screen.dart';
 import 'package:client_app/screens/archive/archive_screen.dart';
 import 'package:client_app/screens/booking_meeting/booking_screen.dart';
 import 'package:client_app/screens/call_tab/call_screen.dart';
@@ -42,6 +43,8 @@ class RoutesConstants {
   static const String editProfileScreen = 'editProfileScreen';
   static const String reportScreen = 'reportScreen';
   static const String archiveScreen = 'archiveScreen';
+  static const String archiveDetailsScreen = 'archiveDetailsScreen';
+
   static const String callScreen = 'callScreen';
   static const String mentorProfileScreen = 'mentorProfileScreen';
   static const String bookingScreen = 'bookingScreen';
@@ -67,6 +70,7 @@ final Map<String, Widget> routes = {
   RoutesConstants.editProfileScreen: const EditProfileScreen(),
   RoutesConstants.reportScreen: const ReportScreen(),
   RoutesConstants.archiveScreen: const ArchiveScreen(),
+  RoutesConstants.archiveDetailsScreen: const ArchiveDetailsScreen(),
   RoutesConstants.callScreen: const CallScreen(),
   RoutesConstants.mentorProfileScreen: const MentorProfileScreen(),
   RoutesConstants.bookingScreen: const BookingScreen(),

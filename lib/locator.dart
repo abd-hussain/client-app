@@ -1,5 +1,6 @@
 import 'package:client_app/screens/main_contaner/main_container_bloc.dart';
 import 'package:client_app/sevices/appointments_service.dart';
+import 'package:client_app/sevices/archive_service.dart';
 import 'package:client_app/sevices/discount_service.dart';
 import 'package:client_app/sevices/event_services.dart';
 import 'package:client_app/sevices/home_services.dart';
@@ -34,6 +35,7 @@ Future<void> setupLocator() async {
   locator.registerFactory<DiscountService>(() => DiscountService());
   locator.registerFactory<AppointmentsService>(() => AppointmentsService());
   locator.registerFactory<EventService>(() => EventService());
+  locator.registerFactory<ArchiveService>(() => ArchiveService());
 
   locator.registerFactory<Dio>(() => Dio());
   locator.registerFactory<HttpInterceptor>(() => HttpInterceptor());

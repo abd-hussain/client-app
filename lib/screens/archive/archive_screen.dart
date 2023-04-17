@@ -1,7 +1,10 @@
+import 'package:client_app/models/https/archive.dart';
 import 'package:client_app/screens/archive/archive_bloc.dart';
 import 'package:client_app/screens/archive/widgets/archive_tile_view.dart';
 import 'package:client_app/shared_widgets/custom_appbar.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
+import 'package:client_app/utils/logger.dart';
+import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lottie/lottie.dart';
@@ -15,9 +18,18 @@ class ArchiveScreen extends StatefulWidget {
 
 class _ArchiveScreenState extends State<ArchiveScreen> {
   final bloc = ArchiveBloc();
+
+  @override
+  void didChangeDependencies() {
+    logDebugMessage(message: 'Archive init Called ...');
+    if (bloc.checkIfUserIsLoggedIn()) {
+      bloc.listOfArchives();
+    }
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
-    //TODO : ArchiveScreen
     return Scaffold(
       appBar: customAppBar(title: AppLocalizations.of(context)!.archive),
       body: SafeArea(
@@ -36,25 +48,37 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                 maxLins: 5,
               ),
             ),
-            Expanded(
-              child: bloc.listOfArchive.isNotEmpty
-                  ? ListView.builder(
-                      itemCount: bloc.listOfArchive.length,
-                      itemBuilder: (context, index) {
-                        return ArchiveTileView(
-                          onTap: (p0) {},
-                        );
-                      },
-                    )
-                  : Center(
-                      child: CustomText(
-                        title: AppLocalizations.of(context)!.noitem,
-                        fontSize: 16,
-                        textColor: const Color(0xff554d56),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-            ),
+            ValueListenableBuilder<List<ArchiveData>>(
+                valueListenable: bloc.listOfArchiveNotifier,
+                builder: (context, snapshot, child) {
+                  return Expanded(
+                    child: snapshot.isNotEmpty
+                        ? ListView.builder(
+                            itemCount: snapshot.length,
+                            itemBuilder: (context, index) {
+                              return ArchiveTileView(
+                                data: snapshot[index],
+                                onTap: (p0) {
+                                  Navigator.of(context, rootNavigator: true).pushNamed(
+                                    RoutesConstants.archiveDetailsScreen,
+                                    arguments: {
+                                      "data": p0,
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                          )
+                        : Center(
+                            child: CustomText(
+                              title: AppLocalizations.of(context)!.noitem,
+                              fontSize: 16,
+                              textColor: const Color(0xff554d56),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                  );
+                }),
           ],
         ),
       ),

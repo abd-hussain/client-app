@@ -13,6 +13,8 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  chewie: ^1.4.0
+  video_player: ^2.6.1
 
   intl: ^0.17.0
   get_it: ^7.2.0

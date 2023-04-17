@@ -139,6 +139,7 @@
     "nocalltoday" : "You Dont' Have Any Session Today",
     "checkcallfromcalender" : "Check Your upcoming call from the calendar tab, or reserve your first one now",
     "meetingnow" : "Instant session",
+    "meetingshuduled" : "Scheduled session",
     "meetingnowdesc" : "Immediate emergency sessions within 60 minutes",
     "meetingshudule" : "Setup scheduled session",
     "meetingshuduledesc" : "Setup scheduled session",
