@@ -17,6 +17,7 @@ class MethodNameConstant {
   static const String loyality = "loyality/";
 
   static const String notifications = "notifications/client";
+  static const String registerTokenNotification = "notifications/client-register-token";
 
   static const String home = "client-home/";
   static const String event = "event/";

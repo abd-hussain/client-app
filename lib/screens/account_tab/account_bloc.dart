@@ -221,6 +221,7 @@ class AccountBloc extends Bloc<AccountService> {
             DatabaseFieldConstant.selectedCountryMaxLenght,
             DatabaseFieldConstant.isUserLoggedIn,
             DatabaseFieldConstant.userFirstName,
+            DatabaseFieldConstant.pushNotificationToken,
           ]);
 
           await nav.pushNamedAndRemoveUntil(RoutesConstants.initialRoute, (Route<dynamic> route) => true);
@@ -254,6 +255,7 @@ class AccountBloc extends Bloc<AccountService> {
                     DatabaseFieldConstant.selectedCountryMaxLenght,
                     DatabaseFieldConstant.isUserLoggedIn,
                     DatabaseFieldConstant.userFirstName,
+                    DatabaseFieldConstant.pushNotificationToken,
                   ]);
 
                   await nav.pushNamedAndRemoveUntil(RoutesConstants.initialRoute, (Route<dynamic> route) => true);

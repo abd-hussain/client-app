@@ -28,4 +28,13 @@ class NotificationsService with Service {
     );
     return true;
   }
+
+  Future<bool> registerToken(String token) async {
+    await repository.callRequest(
+      requestType: RequestType.put,
+      methodName: MethodNameConstant.registerTokenNotification,
+      queryParam: {"token": token},
+    );
+    return true;
+  }
 }

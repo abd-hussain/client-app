@@ -28,7 +28,7 @@ dependencies:
   connectivity_plus: ^2.3.0
   hive: ^2.0.4
   hive_flutter: ^1.1.0
-  convex_bottom_bar: ^3.0.0
+  convex_bottom_bar: ^3.2.0
   banner_carousel: ^1.2.1
   google_mobile_ads: ^2.3.0
   package_info_plus: ^1.4.3

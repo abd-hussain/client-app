@@ -5,6 +5,7 @@ import 'package:client_app/models/profile_options.dart';
 import 'package:client_app/utils/routes.dart';
 import 'package:client_app/utils/version.dart';
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -156,7 +157,7 @@ class ListOfOptions extends StatelessWidget {
               TextButton(
                 onPressed: () => _launchWhatsapp(context),
                 child: const Icon(
-                  Icons.whatsapp,
+                  Ionicons.logo_whatsapp,
                   color: Color(0xff444444),
                 ),
               ),

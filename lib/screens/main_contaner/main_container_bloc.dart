@@ -5,6 +5,7 @@ import 'package:client_app/models/https/event_appointment.dart';
 import 'package:client_app/screens/main_contaner/widgets/tab_navigator.dart';
 import 'package:client_app/sevices/appointments_service.dart';
 import 'package:client_app/sevices/event_services.dart';
+import 'package:client_app/sevices/noticitions_services.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/routes.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
@@ -139,9 +140,11 @@ class MainContainerBloc {
     return list;
   }
 
-  void callRegisterTokenRequest() {
-    //TODO
-    // notificationService!.registerToken();
+  Future<void> callRegisterTokenRequest() async {
+    final token = await box.get(DatabaseFieldConstant.pushNotificationToken);
+    if (token != null && token != "") {
+      await locator<NotificationsService>().registerToken(token);
+    }
   }
 
   bool checkIfUserIsLoggedIn() {
