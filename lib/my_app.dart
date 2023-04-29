@@ -45,10 +45,6 @@ class MyAppState extends State<MyApp> {
         Locale('en', ''),
         Locale('ar', ''),
       ],
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
       onGenerateRoute: (settings) {
         return PageRouteBuilder(
             transitionsBuilder: (BuildContext context, Animation<double> animation,
