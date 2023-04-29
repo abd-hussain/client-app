@@ -1,3 +1,5 @@
+import 'package:client_app/locator.dart';
+import 'package:client_app/main_context.dart';
 import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -28,6 +30,7 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    locator<MainContext>().setMainContext(context);
     return MaterialApp(
       onGenerateTitle: (BuildContext context) {
         return AppLocalizations.of(context)!.appTitle;

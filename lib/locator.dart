@@ -1,3 +1,4 @@
+import 'package:client_app/main_context.dart';
 import 'package:client_app/screens/main_contaner/main_container_bloc.dart';
 import 'package:client_app/sevices/appointments_service.dart';
 import 'package:client_app/sevices/archive_service.dart';
@@ -22,6 +23,8 @@ import 'package:get_it/get_it.dart';
 GetIt locator = GetIt.instance;
 
 Future<void> setupLocator() async {
+  locator.registerLazySingleton(() => MainContext());
+
   locator.registerSingleton<NetworkInfoService>(NetworkInfoService());
   locator.registerFactory<FilterService>(() => FilterService());
   locator.registerFactory<AccountService>(() => AccountService());

@@ -21,12 +21,12 @@ class _MainContainerState extends State<MainContainer> {
   @override
   void didChangeDependencies() {
     _bloc.getAppointmentsAndEvents();
-    NotificationManager.init(context: context);
+    NotificationManager();
     _bloc.callRegisterTokenRequest();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(seconds: 2), () {
-        FirebaseCloudMessagingUtil.initConfigure(context);
+        FirebaseCloudMessagingUtil.initConfigure();
       });
     });
 

@@ -11,9 +11,8 @@ import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:logger/logger.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-//TODO: handle Timing UTC
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+//TODO: handle Timing UTC
 
 void main() {
   runZonedGuarded(() async {
