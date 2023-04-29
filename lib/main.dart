@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:client_app/firebase_options.dart';
 import 'package:client_app/locator.dart';
 import 'package:client_app/my_app.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
@@ -22,7 +23,7 @@ void main() {
     await Hive.initFlutter();
     await MobileAds.instance.initialize();
     await Hive.openBox(DatabaseBoxConstant.userInfo);
-    await Firebase.initializeApp();
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
     await setupLocator();
     await SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
