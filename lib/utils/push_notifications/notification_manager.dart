@@ -1,8 +1,6 @@
 import 'package:client_app/utils/logger.dart';
 import 'package:flutter/material.dart';
 
-import '../../locator.dart';
-
 class NotificationManager {
   static BuildContext? context;
   static dynamic init({required BuildContext context}) {

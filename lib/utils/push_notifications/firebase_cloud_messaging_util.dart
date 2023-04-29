@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:client_app/my_app.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
@@ -18,32 +17,39 @@ class FirebaseCloudMessagingUtil {
       sound: true,
     );
 
-    //  _iosPermission();
-    if (Platform.isIOS) {
-      _fcm.requestPermission(sound: true, badge: true, alert: true);
+    NotificationSettings settings = await _fcm.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        RemoteNotification? notification = message.notification;
+        if (notification != null) {
+          NotificationManager.handleNotificationMsg(
+              buildContext!, {message.notification!.title: message.notification!.body});
+        }
+      });
+
+      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+        RemoteNotification? notification = message.notification;
+        if (notification != null) {
+          NotificationManager.handleNotificationMsg(buildContext!, message.data as Map<String?, String?>);
+        }
+      });
+
+      _fcm.getToken().then((value) async {
+        log('Token: $value');
+        final box = Hive.box(DatabaseBoxConstant.userInfo);
+        await box.put(DatabaseFieldConstant.pushNotificationToken, value);
+      });
     }
-    // _fcm.requestNotificationPermissions();
-    _fcm.setAutoInitEnabled(true);
-
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      RemoteNotification? notification = message.notification;
-      if (notification != null) {
-        return NotificationManager.handleNotificationMsg(
-            buildContext!, {message.notification!.title: message.notification!.body});
-      }
-    });
-
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      RemoteNotification? notification = message.notification;
-      if (notification != null) {
-        return NotificationManager.handleNotificationMsg(buildContext!, message.data as Map<String?, String?>);
-      }
-    });
-
-    _fcm.getToken().then((value) async {
-      log('Token: $value');
-      final box = Hive.box(DatabaseBoxConstant.userInfo);
-      await box.put(DatabaseFieldConstant.pushNotificationToken, value);
-    });
   }
+}
+
+Future _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print("Handling a background message: ${message.messageId}");
 }

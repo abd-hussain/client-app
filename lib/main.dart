@@ -23,9 +23,7 @@ void main() {
     await Hive.initFlutter();
     await MobileAds.instance.initialize();
     await Hive.openBox(DatabaseBoxConstant.userInfo);
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+    await Firebase.initializeApp();
     await setupLocator();
     await SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
