@@ -4,6 +4,11 @@ import 'package:client_app/utils/logger.dart';
 import 'package:flutter/material.dart';
 
 class NotificationManager {
+  static BuildContext? context;
+  static dynamic init({required BuildContext context}) {
+    context = context;
+  }
+
   //this method used when notification come and app is closed or in background and
   // user click on it, i will left it empty for you
   static dynamic handleDataMsg(Map<String, dynamic> data) {}
