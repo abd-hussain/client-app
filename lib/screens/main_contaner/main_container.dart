@@ -44,7 +44,10 @@ class _MainContainerState extends State<MainContainer> {
             resizeToAvoidBottomInset: false,
             appBar: data == SelectedTab.account
                 ? accountAppBar(context: context)
-                : mainAppBar(context: context, isUserLoggedIn: _bloc.checkIfUserIsLoggedIn()),
+                : mainAppBar(
+                    context: context,
+                    isUserLoggedIn: _bloc.checkIfUserIsLoggedIn(),
+                    isItCalenderTab: data == SelectedTab.calender),
             body: SafeArea(
               child: IndexedStack(
                 index: _bloc.getSelectedIndexDependOnTab(data),

@@ -1,4 +1,5 @@
 import 'package:client_app/models/https/appointment_request.dart';
+import 'package:client_app/models/https/note_appointment_request.dart';
 import 'package:client_app/utils/mixins.dart';
 import 'package:client_app/models/https/appointment.dart';
 import 'package:client_app/utils/repository/http_repository.dart';
@@ -38,6 +39,16 @@ class AppointmentsService with Service {
       requestType: RequestType.post,
       methodName: MethodNameConstant.cancelAppointment,
       queryParam: {"id": id},
+    );
+
+    return response;
+  }
+
+  Future<void> editNoteAppointment({required NoteAppointmentRequest noteAppointment}) async {
+    final response = await repository.callRequest(
+      requestType: RequestType.post,
+      methodName: MethodNameConstant.editNoteAppointment,
+      postBody: noteAppointment,
     );
 
     return response;

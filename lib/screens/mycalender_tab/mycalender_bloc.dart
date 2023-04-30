@@ -1,4 +1,5 @@
 import 'package:client_app/locator.dart';
+import 'package:client_app/models/https/note_appointment_request.dart';
 import 'package:client_app/sevices/appointments_service.dart';
 import 'package:client_app/sevices/event_services.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
@@ -14,6 +15,14 @@ class MyCalenderBloc extends Bloc<AppointmentsService> {
 
   Future<dynamic> cancelMeeting(int meetingId) async {
     return locator<AppointmentsService>().cancelAppointment(id: meetingId);
+  }
+
+  Future<dynamic> editNoteMeeting({required int meetingId, required String note}) async {
+    return locator<AppointmentsService>().editNoteAppointment(
+        noteAppointment: NoteAppointmentRequest(
+      id: meetingId,
+      comment: note,
+    ));
   }
 
   @override

@@ -61,14 +61,13 @@ class MainContainerBloc {
     }
   }
 
-  Future<List<CalenderMeetings>> getAppointmentsAndEvents() async {
+  Future<void> getAppointmentsAndEvents() async {
     List<CalenderMeetings> list = [];
     if (checkIfUserIsLoggedIn()) {
       list.addAll(await _getClientAppointments());
       list.addAll(await _getClientEventAppointments());
     }
     eventsMeetingsListNotifier.value = list;
-    return list;
   }
 
   Future<List<CalenderMeetings>> _getClientAppointments() async {

@@ -84,6 +84,18 @@ class _MyCalenderScreenState extends State<MyCalenderScreen> {
                               });
                             }
                           },
+                          editNote: () {
+                            CalenderBottomSheetsUtil(
+                              context: context,
+                              metingDetails: item,
+                              language: bloc.box.get(DatabaseFieldConstant.language),
+                            ).addNoteMeetingBottomSheet(confirm: (value) {
+                              bloc.editNoteMeeting(meetingId: item.meetingId!, note: value).whenComplete(() async {
+                                locator<MainContainerBloc>().getAppointmentsAndEvents();
+                                setState(() {});
+                              });
+                            });
+                          },
                           openEventDetails: () {
                             Navigator.of(context, rootNavigator: true)
                                 .pushNamed(RoutesConstants.eventDetailsScreen, arguments: {
