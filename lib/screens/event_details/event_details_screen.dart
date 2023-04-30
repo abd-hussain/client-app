@@ -133,6 +133,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                         onTap: () async {
                           if (bloc.checkIfUserIsLoggedIn()) {
                             if (bloc.isEventFree) {
+                              //TODO : handle cancel event
                               bloc.bookEventRequest(context).then((value) {
                                 if (value != null) {
                                   locator<MainContainerBloc>().getAppointmentsAndEvents();
@@ -140,6 +141,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                 }
                               });
                             } else {
+                              //TODO : handle cancel event
                               final bottomSheet = PaymentBottomSheetsUtil(
                                 context: context,
                                 language: bloc.box.get(DatabaseFieldConstant.language),
