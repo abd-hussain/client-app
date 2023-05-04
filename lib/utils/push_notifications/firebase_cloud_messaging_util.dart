@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/push_notifications/notification_manager.dart';

@@ -1,5 +1,4 @@
 import 'package:client_app/models/https/archive.dart';
-import 'package:client_app/screens/booking_meeting/widgets/appointment_details_view.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/utils/constants/constant.dart';
 import 'package:flutter/material.dart';

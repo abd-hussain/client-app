@@ -245,14 +245,17 @@ class ListOfOptions extends StatelessWidget {
   }
 
   void _launchWhatsapp(BuildContext context) async {
+    final localize = AppLocalizations.of(context)!;
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+
     var whatsapp = AppConstant.whatsappNumber;
     var whatsappAndroid = Uri.parse("whatsapp://send?phone=$whatsapp&text=hello");
     if (await canLaunchUrl(whatsappAndroid)) {
       await launchUrl(whatsappAndroid);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
+      scaffoldMessenger.showSnackBar(
         SnackBar(
-          content: Text(AppLocalizations.of(context)!.whatsappnotinstalled),
+          content: Text(localize.whatsappnotinstalled),
         ),
       );
     }

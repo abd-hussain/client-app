@@ -56,6 +56,7 @@ class _ListOfContactsWidgetState extends State<ListOfContactsWidget> {
             buttonTitle: AppLocalizations.of(context)!.sendsmsmessage,
             enableButton: listOfCheckboxInContact.contains(true) ? true : false,
             onTap: () async {
+              final localize = AppLocalizations.of(context)!;
               List<String> recipents = [];
 
               for (var i = 0; i <= listOfCheckboxInContact.length - 1; i++) {
@@ -65,7 +66,7 @@ class _ListOfContactsWidgetState extends State<ListOfContactsWidget> {
               }
 
               if (await canSendSMS()) {
-                String message = "${AppLocalizations.of(context)!.smsmessage} ${AppConstant.appLink}";
+                String message = "${localize.smsmessage} ${AppConstant.appLink}";
                 await sendSMS(message: message, recipients: recipents, sendDirect: false);
               }
             },

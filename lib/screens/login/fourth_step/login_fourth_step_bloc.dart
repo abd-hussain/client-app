@@ -97,7 +97,6 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
 
         if (value.data!.dateOfBirth != null) {
           selectedDate = value.data!.dateOfBirth!;
-          print("++++++++1+++++++++ ${selectedDate}");
         }
 
         if (value.data!.profileImg != null) {
