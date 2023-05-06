@@ -73,7 +73,7 @@ class EventDetailsBloc extends Bloc<EventService> {
       if (value.data != null) {
         eventName = value.data!.title!;
         eventPrice = value.data!.price!;
-        eventId = value.data!.id!;
+        // eventId = value.data!.id!;
         image = AppConstant.imagesBaseURLForEvents + value.data!.image!;
         final fromDateTime = DateTime.parse(value.data!.dateFrom!);
         final toDateTime = DateTime.parse(value.data!.dateTo!);
@@ -119,7 +119,21 @@ class EventDetailsBloc extends Bloc<EventService> {
         ));
       }
     }
-    return;
+    return 5;
+  }
+
+  Future<dynamic> cancelEventRequest(BuildContext context) async {
+    try {
+      final _ = await service.cancelbookedEvent(eventID: eventId);
+    } on DioError catch (error) {
+      final exception = error.error;
+      if (exception is HttpException) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(exception.message),
+        ));
+      }
+    }
+    return 5;
   }
 
   @override

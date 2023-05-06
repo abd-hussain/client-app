@@ -1,6 +1,4 @@
 import 'dart:async';
-
-import 'package:client_app/firebase_options.dart';
 import 'package:client_app/locator.dart';
 import 'package:client_app/my_app.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
@@ -23,7 +21,8 @@ void main() {
     logDebugMessage(message: 'Application Started ...');
     WidgetsFlutterBinding.ensureInitialized();
 
-    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    await Firebase.initializeApp();
+
     FlutterError.onError = (errorDetails) async {
       await FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
     };
@@ -38,14 +37,14 @@ void main() {
 
     await MobileAds.instance.initialize();
     // thing to add
-    await MobileAds.instance
-        .updateRequestConfiguration(RequestConfiguration(testDeviceIds: ['FA1E4A4C91519CDE5813ABB70A84651E']));
+    await MobileAds.instance.updateRequestConfiguration(
+      RequestConfiguration(testDeviceIds: ['FA1E4A4C91519CDE5813ABB70A84651E']),
+    );
 
     await setupLocator();
-    await SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
+    await SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
+    );
 
     runApp(const MyApp());
   }, (error, stackTrace) {

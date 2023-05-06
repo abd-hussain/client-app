@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:client_app/locator.dart';
 import 'package:client_app/models/https/appointment.dart';
 import 'package:client_app/models/https/calender_model.dart';
@@ -16,7 +18,8 @@ enum SelectedTab { home, categories, call, calender, account }
 
 class MainContainerBloc {
   final ValueNotifier<SelectedTab> currentTabIndexNotifier = ValueNotifier<SelectedTab>(SelectedTab.home);
-  final ValueNotifier<List<CalenderMeetings>> eventsMeetingsListNotifier = ValueNotifier<List<CalenderMeetings>>([]);
+  final StreamController<List<CalenderMeetings>> eventsMeetingsListStreamController =
+      StreamController<List<CalenderMeetings>>.broadcast();
   final box = Hive.box(DatabaseBoxConstant.userInfo);
 
   GlobalKey<ConvexAppBarState> appBarKey = GlobalKey<ConvexAppBarState>();
@@ -62,12 +65,13 @@ class MainContainerBloc {
   }
 
   Future<void> getAppointmentsAndEvents() async {
+    eventsMeetingsListStreamController.sink.add([]);
     List<CalenderMeetings> list = [];
     if (checkIfUserIsLoggedIn()) {
       list.addAll(await _getClientAppointments());
       list.addAll(await _getClientEventAppointments());
     }
-    eventsMeetingsListNotifier.value = list;
+    eventsMeetingsListStreamController.sink.add(list);
   }
 
   Future<List<CalenderMeetings>> _getClientAppointments() async {
@@ -112,7 +116,7 @@ class MainContainerBloc {
       if (value.data != null) {
         for (EventAppointmentData item in value.data!) {
           list.add(CalenderMeetings(
-            meetingId: item.eventId!,
+            meetingId: item.id!,
             clientId: null,
             mentorId: item.mentorId,
             appointmentType: null,

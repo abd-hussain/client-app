@@ -132,31 +132,38 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                             : AppLocalizations.of(context)!.registernow,
                         onTap: () async {
                           if (bloc.checkIfUserIsLoggedIn()) {
-                            if (bloc.isEventFree) {
-                              //TODO : handle cancel event
-                              bloc.bookEventRequest(context).then((value) {
+                            if (bloc.alreadyRegister) {
+                              bloc.cancelEventRequest(context).then((value) {
                                 if (value != null) {
                                   locator<MainContainerBloc>().getAppointmentsAndEvents();
                                   Navigator.of(context).pop();
                                 }
                               });
                             } else {
-                              //TODO : handle cancel event
-                              final bottomSheet = PaymentBottomSheetsUtil(
-                                context: context,
-                                language: bloc.box.get(DatabaseFieldConstant.language),
-                                totalAmount: bloc.eventPrice.toString(),
-                              );
-                              await bottomSheet.paymentBottomSheet(
-                                  faze: PaymentFaze.welcoming,
-                                  openNext: () async {
-                                    bloc.bookEventRequest(context).then((value) {
-                                      if (value != null) {
-                                        locator<MainContainerBloc>().getAppointmentsAndEvents();
-                                        Navigator.of(context).pop();
-                                      }
+                              if (bloc.isEventFree) {
+                                bloc.bookEventRequest(context).then((value) {
+                                  if (value != null) {
+                                    locator<MainContainerBloc>().getAppointmentsAndEvents();
+                                    Navigator.of(context).pop();
+                                  }
+                                });
+                              } else {
+                                final bottomSheet = PaymentBottomSheetsUtil(
+                                  context: context,
+                                  language: bloc.box.get(DatabaseFieldConstant.language),
+                                  totalAmount: bloc.eventPrice.toString(),
+                                );
+                                await bottomSheet.paymentBottomSheet(
+                                    faze: PaymentFaze.welcoming,
+                                    openNext: () async {
+                                      bloc.bookEventRequest(context).then((value) {
+                                        if (value != null) {
+                                          locator<MainContainerBloc>().getAppointmentsAndEvents();
+                                          Navigator.of(context).pop();
+                                        }
+                                      });
                                     });
-                                  });
+                              }
                             }
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(

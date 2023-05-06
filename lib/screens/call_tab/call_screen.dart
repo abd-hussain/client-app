@@ -34,50 +34,53 @@ class _CallScreenState extends State<CallScreen> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: ValueListenableBuilder<List<CalenderMeetings>>(
-        valueListenable: locator<MainContainerBloc>().eventsMeetingsListNotifier,
-        builder: (BuildContext context, List<CalenderMeetings> value, Widget? child) {
-          if (value.isNotEmpty) {
-            final appointment = bloc.checkIfThereIsAnyMeetingTodayAndReturnTheNearOne(value);
+      child: StreamBuilder<List<CalenderMeetings>>(
+          initialData: const [],
+          stream: locator<MainContainerBloc>().eventsMeetingsListStreamController.stream,
+          builder: (context, snapshot) {
+            if (snapshot.hasData || snapshot.data == []) {
+              final appointment = bloc.checkIfThereIsAnyMeetingTodayAndReturnTheNearOne(snapshot.data!);
 
-            if (appointment != null) {
-              final timeDifference = appointment.fromTime.subtract(Duration(
-                  days: 0, hours: DateTime.now().hour, minutes: DateTime.now().minute, seconds: DateTime.now().second));
+              if (appointment != null) {
+                final timeDifference = appointment.fromTime.subtract(Duration(
+                    days: 0,
+                    hours: DateTime.now().hour,
+                    minutes: DateTime.now().minute,
+                    seconds: DateTime.now().second));
 
-              if (timeDifference.hour > 0 || timeDifference.minute > 0 || timeDifference.second > 0) {
-                return WaitingCallView(
-                  timerStartNumberHour: timeDifference.hour,
-                  timerStartNumberMin: timeDifference.minute,
-                  timerStartNumberSec: timeDifference.second,
-                  cancelMeetingTapped: () {
-                    bloc.cancelAppointment(id: appointment.meetingId!).then((value) async {
-                      await locator<MainContainerBloc>().getAppointmentsAndEvents();
-                    });
-                  },
-                  profileImage: appointment.type == Type.meeting ? appointment.profileImg! : appointment.eventImg!,
-                  suffixeName: appointment.mentorPrefix!,
-                  firstName: appointment.mentorFirstName!,
-                  lastName: appointment.mentorLastName!,
-                  categoryName: appointment.categoryName!,
-                  meetingtime: DateFormat('hh:mm a').format(appointment.fromTime),
-                  meetingduration: "${appointment.toTime.difference(appointment.fromTime).inMinutes}",
-                  meetingday: bloc.box.get(DatabaseFieldConstant.language) == "en"
-                      ? DateFormat('EEEE').format(timeDifference)
-                      : DayTime().convertDayToArabic(DateFormat('EEEE').format(timeDifference)),
-                  clientMeetingNote: appointment.noteFromClient ?? "",
-                  mentorMeetingNote: appointment.noteFromMentor ?? "",
-                );
+                if (timeDifference.hour > 0 || timeDifference.minute > 0 || timeDifference.second > 0) {
+                  return WaitingCallView(
+                    timerStartNumberHour: timeDifference.hour,
+                    timerStartNumberMin: timeDifference.minute,
+                    timerStartNumberSec: timeDifference.second,
+                    cancelMeetingTapped: () {
+                      bloc.cancelAppointment(id: appointment.meetingId!).then((value) async {
+                        await locator<MainContainerBloc>().getAppointmentsAndEvents();
+                      });
+                    },
+                    profileImage: appointment.type == Type.meeting ? appointment.profileImg! : appointment.eventImg!,
+                    suffixeName: appointment.mentorPrefix!,
+                    firstName: appointment.mentorFirstName!,
+                    lastName: appointment.mentorLastName!,
+                    categoryName: appointment.categoryName!,
+                    meetingtime: DateFormat('hh:mm a').format(appointment.fromTime),
+                    meetingduration: "${appointment.toTime.difference(appointment.fromTime).inMinutes}",
+                    meetingday: bloc.box.get(DatabaseFieldConstant.language) == "en"
+                        ? DateFormat('EEEE').format(timeDifference)
+                        : DayTime().convertDayToArabic(DateFormat('EEEE').format(timeDifference)),
+                    clientMeetingNote: appointment.noteFromClient ?? "",
+                    mentorMeetingNote: appointment.noteFromMentor ?? "",
+                  );
+                } else {
+                  return const CallReadyView();
+                }
               } else {
-                return const CallReadyView();
+                return noCallView();
               }
             } else {
               return noCallView();
             }
-          } else {
-            return noCallView();
-          }
-        },
-      ),
+          }),
     );
   }
 

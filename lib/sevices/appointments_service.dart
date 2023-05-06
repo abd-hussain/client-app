@@ -34,7 +34,7 @@ class AppointmentsService with Service {
     return response;
   }
 
-  Future<void> cancelAppointment({required int id}) async {
+  Future<dynamic> cancelAppointment({required int id}) async {
     final response = await repository.callRequest(
       requestType: RequestType.post,
       methodName: MethodNameConstant.cancelAppointment,
@@ -44,7 +44,7 @@ class AppointmentsService with Service {
     return response;
   }
 
-  Future<void> editNoteAppointment({required NoteAppointmentRequest noteAppointment}) async {
+  Future<dynamic> editNoteAppointment({required NoteAppointmentRequest noteAppointment}) async {
     final response = await repository.callRequest(
       requestType: RequestType.post,
       methodName: MethodNameConstant.editNoteAppointment,
