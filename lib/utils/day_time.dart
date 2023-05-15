@@ -58,9 +58,24 @@ class DayTime {
     } else {
       String result = time.replaceAll("p.m", "");
       result = time.replaceAll(" pm", "");
-
       var parts = result.split(':');
       return _getHourPm(int.parse(parts[0].trim()));
+    }
+  }
+
+  int getMinFromTimeString(String time) {
+    if (time.contains("a.m") || time.contains("am")) {
+      String result = time.replaceAll(" a.m", "");
+      result = result.replaceAll(" am", "");
+
+      var parts = result.split(':');
+      return int.parse(parts.sublist(1).join(':').trim());
+    } else {
+      String result = time.replaceAll(" p.m", "");
+      result = time.replaceAll(" pm", "");
+      result = time.replaceAll("p.m", "");
+      var parts = result.split(':');
+      return int.parse(parts.sublist(1).join(':').trim());
     }
   }
 
@@ -91,22 +106,6 @@ class DayTime {
       return 23;
     } else {
       return 0;
-    }
-  }
-
-  int getMinFromTimeString(String time) {
-    if (time.contains("a.m") || time.contains("am")) {
-      String result = time.replaceAll(" a.m", "");
-      result = time.replaceAll(" am", "");
-      var parts = result.split(':');
-      return int.parse(parts.sublist(1).join(':').trim());
-    } else {
-      String result = time.replaceAll(" p.m", "");
-      result = time.replaceAll(" pm", "");
-      result = time.replaceAll("p.m", "");
-
-      var parts = result.split(':');
-      return int.parse(parts.sublist(1).join(':').trim());
     }
   }
 
