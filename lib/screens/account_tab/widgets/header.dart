@@ -12,7 +12,7 @@ class ProfileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 55,
+      height: 56,
       color: const Color(0xff034061),
       child: Padding(
         padding: const EdgeInsets.all(8.0),

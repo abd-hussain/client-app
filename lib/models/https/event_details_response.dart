@@ -23,6 +23,7 @@ class EventDetailsData with ModelChecker {
   String? title;
   int? joiningClients;
   bool? alreadyRegister;
+  int? appointmentsId;
   String? dateFrom;
   double? price;
   String? categoryName;
@@ -51,6 +52,7 @@ class EventDetailsData with ModelChecker {
     this.mentorLastName,
     this.mentorId,
     this.alreadyRegister,
+    this.appointmentsId,
   });
 
   EventDetailsData.fromJson(Map<String, dynamic> json) {
@@ -72,5 +74,6 @@ class EventDetailsData with ModelChecker {
     mentorLastName = convertToString(json['last_name']);
     mentorId = convertToInteger(json['owner_id']);
     alreadyRegister = json['already_register'];
+    appointmentsId = convertToInteger(json['appointments_id']);
   }
 }

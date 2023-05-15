@@ -30,9 +30,12 @@ class EventDetailsBloc extends Bloc<EventService> {
   String? eventDuration = "";
   String? eventDescripton = "";
   int eventId = 0;
+  int reservationId = 0;
+
   int maxNumberOfAttendance = 0;
   int joiningClients = 0;
   bool alreadyRegister = false;
+  int appointmentsId = 0;
 
   bool isEventFree = false;
 
@@ -74,6 +77,7 @@ class EventDetailsBloc extends Bloc<EventService> {
         eventName = value.data!.title!;
         eventPrice = value.data!.price!;
         // eventId = value.data!.id!;
+        reservationId = value.data!.id!;
         image = AppConstant.imagesBaseURLForEvents + value.data!.image!;
         final fromDateTime = DateTime.parse(value.data!.dateFrom!);
         final toDateTime = DateTime.parse(value.data!.dateTo!);
@@ -91,6 +95,8 @@ class EventDetailsBloc extends Bloc<EventService> {
         mentorId = value.data!.mentorId!;
         joiningClients = value.data!.joiningClients!;
         alreadyRegister = value.data!.alreadyRegister!;
+        appointmentsId = value.data!.appointmentsId!;
+
         maxNumberOfAttendance = value.data!.maxNumberOfAttendance!;
 
         loadingStatus.value = LoadingStatus.finish;
@@ -124,7 +130,7 @@ class EventDetailsBloc extends Bloc<EventService> {
 
   Future<dynamic> cancelEventRequest(BuildContext context) async {
     try {
-      final _ = await service.cancelbookedEvent(eventID: eventId);
+      final _ = await service.cancelbookedEvent(eventID: appointmentsId);
     } on DioError catch (error) {
       final exception = error.error;
       if (exception is HttpException) {

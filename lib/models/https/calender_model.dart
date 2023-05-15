@@ -1,6 +1,7 @@
 enum Type { event, meeting }
 
 class CalenderMeetings {
+  final int? reservationId;
   final int? meetingId;
   final int? clientId;
   final int? mentorId;
@@ -23,7 +24,8 @@ class CalenderMeetings {
   final String? title;
 
   const CalenderMeetings(
-      {required this.meetingId,
+      {required this.reservationId,
+      required this.meetingId,
       required this.clientId,
       required this.mentorId,
       required this.appointmentType,

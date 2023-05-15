@@ -103,7 +103,7 @@ class _MyCalenderScreenState extends State<MyCalenderScreen> {
                                   .pushNamed(RoutesConstants.eventDetailsScreen, arguments: {
                                 "event_details": MainEvent(
                                   title: item.title!,
-                                  id: item.meetingId,
+                                  id: item.reservationId,
                                   image: "",
                                   description: "",
                                   joiningClients: 0,

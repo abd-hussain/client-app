@@ -82,6 +82,7 @@ class MainContainerBloc {
         for (AppointmentData item in value.data!) {
           final newItem = CalenderMeetings(
               meetingId: item.id,
+              reservationId: null,
               clientId: item.clientId,
               mentorId: item.mentorId,
               appointmentType: item.appointmentType,
@@ -117,6 +118,7 @@ class MainContainerBloc {
         for (EventAppointmentData item in value.data!) {
           list.add(CalenderMeetings(
             meetingId: item.id!,
+            reservationId: item.eventId,
             clientId: null,
             mentorId: item.mentorId,
             appointmentType: null,
