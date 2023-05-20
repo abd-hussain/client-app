@@ -1,3 +1,5 @@
+import 'package:client_app/models/model_checker.dart';
+
 class MentorInfoAvaliableResponse {
   MentorInfoAvaliableResponseData? data;
   String? message;
@@ -10,7 +12,7 @@ class MentorInfoAvaliableResponse {
   }
 }
 
-class MentorInfoAvaliableResponseData {
+class MentorInfoAvaliableResponseData with ModelChecker {
   int? id;
   String? suffixeName;
   String? firstName;
@@ -46,11 +48,11 @@ class MentorInfoAvaliableResponseData {
     lastName = json['last_name'];
     gender = json['gender'];
     profileImg = json['profile_img'];
-    hourRate = json['hour_rate'];
+    hourRate = convertToDouble(json['hour_rate']);
     bio = json['bio'];
     date = json['date'];
     day = json['day'];
-    rate = json['rate'];
+    rate = convertToDouble(json['rate']);
     hour = json['hour'];
   }
 }

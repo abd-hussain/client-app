@@ -9,6 +9,7 @@ class FilterService with Service {
     final response = await repository.callRequest(
       requestType: RequestType.get,
       methodName: MethodNameConstant.countries,
+      queryParam: {"limit": 50},
     );
     return CountriesModel.fromJson(response);
   }

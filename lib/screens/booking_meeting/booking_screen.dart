@@ -185,6 +185,7 @@ class _BookingScreenState extends State<BookingScreen> {
                   enableButton: true,
                   buttonTitle: AppLocalizations.of(context)!.pay,
                   onTap: () async {
+                    //TODO : check if the user have a meeting in this date
                     final bottomSheet = PaymentBottomSheetsUtil(
                         context: context,
                         language: bloc.box.get(DatabaseFieldConstant.language),
@@ -198,10 +199,6 @@ class _BookingScreenState extends State<BookingScreen> {
                         faze: PaymentFaze.welcoming,
                         openNext: () async {
                           final parsedFromDate = DateTime.parse(bloc.meetingdate!);
-                          print(bloc.meetingtime!);
-
-                          print(DayTime().getHourFromTimeString(bloc.meetingtime!));
-                          print(DayTime().getMinFromTimeString(bloc.meetingtime!));
 
                           var fromDateTime = DateTime(
                               parsedFromDate.year,
