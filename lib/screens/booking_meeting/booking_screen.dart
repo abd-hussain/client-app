@@ -14,6 +14,8 @@ import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/currency.dart';
 import 'package:client_app/utils/day_time.dart';
+import 'package:client_app/utils/errors/exceptions.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -185,7 +187,6 @@ class _BookingScreenState extends State<BookingScreen> {
                   enableButton: true,
                   buttonTitle: AppLocalizations.of(context)!.pay,
                   onTap: () async {
-                    //TODO : check if the user have a meeting in this date
                     final bottomSheet = PaymentBottomSheetsUtil(
                         context: context,
                         language: bloc.box.get(DatabaseFieldConstant.language),
@@ -241,6 +242,15 @@ class _BookingScreenState extends State<BookingScreen> {
                               locator<MainContainerBloc>().getAppointmentsAndEvents();
                               locator<MainContainerBloc>().appBarKey.currentState!.animateTo(2);
                               locator<MainContainerBloc>().currentTabIndexNotifier.value = SelectedTab.call;
+                            }).catchError((error) {
+                              if (error is DioError) {
+                                final exception = error.error;
+                                if (exception is HttpException) {
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content: Text(exception.message),
+                                  ));
+                                }
+                              }
                             });
                           } else {
                             final appointment = AppointmentRequest(
