@@ -29,7 +29,10 @@ class CallBloc extends Bloc<FilterService> {
     final today = DateTime(now.year, now.month, now.day);
     List<CalenderMeetings> newList = [];
     for (var appointment in listOfData) {
-      if (DateTime(appointment.fromTime.year, appointment.fromTime.month, appointment.fromTime.day) == today) {
+      Duration diffrent =
+          today.difference(DateTime(appointment.fromTime.year, appointment.fromTime.month, appointment.fromTime.day));
+
+      if (diffrent.inHours <= 24) {
         newList.add(appointment);
       }
     }

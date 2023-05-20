@@ -170,6 +170,7 @@ class _WaitingCallViewState extends State<WaitingCallView> {
                         fit: BoxFit.fill,
                       ),
               ),
+              const SizedBox(width: 8),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
