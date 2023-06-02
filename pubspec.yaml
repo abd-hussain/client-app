@@ -50,6 +50,8 @@ dependencies:
   google_mobile_ads: ^2.4.0
   firebase_crashlytics: ^3.1.2
   firebase_analytics: ^10.2.1
+  agora_rtc_engine: ^6.2.0
+  permission_handler: ^10.2.0
   
 dev_dependencies:
   flutter_test:

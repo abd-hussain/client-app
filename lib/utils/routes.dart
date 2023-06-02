@@ -7,6 +7,7 @@ import 'package:client_app/screens/categories_tab/categories_screen.dart';
 import 'package:client_app/screens/edit_profile/edit_profile_screen.dart';
 import 'package:client_app/screens/event_details/event_details_screen.dart';
 import 'package:client_app/screens/home_tab/home_screen.dart';
+import 'package:client_app/screens/inside_call/inside_call_screen.dart';
 import 'package:client_app/screens/invite_friends/invite_friends_screen.dart';
 import 'package:client_app/screens/login/first_step/login_first_step_screen.dart';
 import 'package:client_app/screens/login/fourth_step/login_fourth_step_screen.dart';
@@ -46,6 +47,7 @@ class RoutesConstants {
   static const String archiveDetailsScreen = 'archiveDetailsScreen';
 
   static const String callScreen = 'callScreen';
+  static const String insideCallScreen = 'InsideCallScreen';
   static const String mentorProfileScreen = 'mentorProfileScreen';
   static const String bookingScreen = 'bookingScreen';
   static const String eventDetailsScreen = 'eventDetailsScreen';
@@ -75,4 +77,5 @@ final Map<String, Widget> routes = {
   RoutesConstants.mentorProfileScreen: const MentorProfileScreen(),
   RoutesConstants.bookingScreen: const BookingScreen(),
   RoutesConstants.eventDetailsScreen: const EventDetailsScreen(),
+  RoutesConstants.insideCallScreen: const InsideCallScreen()
 };

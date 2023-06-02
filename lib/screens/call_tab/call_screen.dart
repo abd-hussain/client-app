@@ -72,7 +72,13 @@ class _CallScreenState extends State<CallScreen> {
                     mentorMeetingNote: appointment.noteFromMentor ?? "",
                   );
                 } else {
-                  return const CallReadyView();
+                  return CallReadyView(
+                    cancelMeetingTapped: () {
+                      bloc.cancelAppointment(id: appointment.meetingId!).then((value) async {
+                        await locator<MainContainerBloc>().getAppointmentsAndEvents();
+                      });
+                    },
+                  );
                 }
               } else {
                 return noCallView();

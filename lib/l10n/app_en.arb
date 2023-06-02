@@ -206,7 +206,10 @@
     "loyalitylikelinkedin" : "Like our LinkedIn page",
     "loyalityreviewmentor" : "Add review to mentor you call with",
     "editnote" : "Edit Your Note",
-    "numberofpointdesc" : "Point not calculated instantly, sometimes it takes 30 days to reflect"
+    "numberofpointdesc" : "Point not calculated instantly, sometimes it takes 30 days to reflect",
+    "waitingyoutojoin" : "Waiting you to join",
+    "waitingyoutojoindesc" : "Your Mentor waiting you to join, this call will be canceled if you late more than 7 min",
+    "joinnow" : "Join Now"
 
 
 

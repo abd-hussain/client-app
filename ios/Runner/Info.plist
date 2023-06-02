@@ -73,15 +73,15 @@
 	</array>
 	<key>UIRequiresFullScreen</key>
 	<true/>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
 	<key>io.flutter.embedded_views_preview</key>
 	<true/>
 	<key>NSContactsUsageDescription</key>
-     <string>We need to access your contact list to allow you invite your friends</string>
+	<string>We need to access your contact list to allow you invite your friends</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Please allow access to camera in order to register your profile pictures</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Please allow access to gallery in order to register your profile pictures</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Please allow access to camera in order to have a call with sound</string>
 </dict>
 </plist>
