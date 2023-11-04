@@ -67,11 +67,13 @@ class _MyCalenderScreenState extends State<MyCalenderScreen> {
                         if (calendarTapDetails.appointments != null &&
                             calendarTapDetails.targetElement == CalendarElement.appointment) {
                           final item = calendarTapDetails.appointments![0] as CalenderMeetings;
-                          CalenderBottomSheetsUtil(
+                          final soso = CalenderBottomSheetsUtil(
                             context: context,
                             metingDetails: item,
                             language: bloc.box.get(DatabaseFieldConstant.language),
-                          ).bookMeetingBottomSheet(
+                          );
+
+                          soso.bookMeetingBottomSheet(
                             cancel: () {
                               if (item.type == Type.meeting) {
                                 bloc.cancelMeeting(item.meetingId!).whenComplete(() async {
@@ -87,11 +89,7 @@ class _MyCalenderScreenState extends State<MyCalenderScreen> {
                               }
                             },
                             editNote: () {
-                              CalenderBottomSheetsUtil(
-                                context: context,
-                                metingDetails: item,
-                                language: bloc.box.get(DatabaseFieldConstant.language),
-                              ).addNoteMeetingBottomSheet(confirm: (value) {
+                              soso.addNoteMeetingBottomSheet(confirm: (value) {
                                 bloc.editNoteMeeting(meetingId: item.meetingId!, note: value).whenComplete(() async {
                                   locator<MainContainerBloc>().getAppointmentsAndEvents();
                                   setState(() {});

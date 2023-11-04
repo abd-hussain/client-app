@@ -29,6 +29,7 @@ class MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     locator<MainContext>().setMainContext(context);
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       onGenerateTitle: (BuildContext context) {
         return AppLocalizations.of(context)!.appTitle;
       },

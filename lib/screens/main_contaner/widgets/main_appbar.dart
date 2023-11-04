@@ -1,6 +1,7 @@
 import 'package:client_app/locator.dart';
 import 'package:client_app/screens/main_contaner/main_container_bloc.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
+import 'package:client_app/utils/constants/constant.dart';
 import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ PreferredSizeWidget mainAppBar(
     title: Row(
       children: [
         const CustomText(
-          title: "HelpEra",
+          title: AppConstant.appName,
           fontSize: 30,
           textColor: Colors.white,
           fontWeight: FontWeight.bold,

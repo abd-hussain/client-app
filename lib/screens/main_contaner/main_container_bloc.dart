@@ -148,7 +148,7 @@ class MainContainerBloc {
 
   Future<void> callRegisterTokenRequest() async {
     if (checkIfUserIsLoggedIn()) {
-      final token = await box.get(DatabaseFieldConstant.pushNotificationToken);
+      final token = box.get(DatabaseFieldConstant.pushNotificationToken);
       if (token != null && token != "") {
         await locator<NotificationsService>().registerToken(token);
       }

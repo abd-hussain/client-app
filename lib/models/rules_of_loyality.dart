@@ -4,7 +4,6 @@ enum PageToOpenFromLoyality {
   reportSuggestion,
   reportIssue,
   appReview,
-  likeFacebook,
   likeLinkedIn,
   reviewMentor,
 }

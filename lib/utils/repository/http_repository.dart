@@ -1,4 +1,5 @@
 import 'package:client_app/locator.dart';
+import 'package:client_app/utils/constants/constant.dart';
 import 'package:client_app/utils/exceptions.dart';
 import 'package:client_app/utils/mixins.dart';
 import 'package:client_app/utils/repository/http_interceptor.dart';
@@ -16,7 +17,8 @@ class HttpRepository {
       FormData? formData,
       String contentType = Headers.jsonContentType}) async {
     Response response;
-    const baseUrl = 'https://www.helpera.app/';
+    const baseUrl = AppConstant.applicationMainURL;
+
     if (await locator<NetworkInfoService>().isConnected()) {
       final dioClient = locator<Dio>()
         ..options = BaseOptions(

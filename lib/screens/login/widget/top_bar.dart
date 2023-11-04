@@ -1,4 +1,5 @@
 import 'package:client_app/shared_widgets/custom_text.dart';
+import 'package:client_app/utils/constants/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -33,7 +34,7 @@ class TopBarWidget extends StatelessWidget {
         Column(
           children: [
             const CustomText(
-              title: "HelpEra",
+              title: AppConstant.appName,
               fontSize: 30,
               textColor: Color(0xff444444),
               fontWeight: FontWeight.bold,

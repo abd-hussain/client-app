@@ -138,23 +138,6 @@ class ListOfOptions extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextButton(
-                onPressed: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen,
-                    arguments: {
-                      AppConstant.webViewPageUrl: AppConstant.facebookLink,
-                      AppConstant.pageTitle: AppLocalizations.of(context)!.facebook
-                    }),
-                child: const Icon(
-                  Icons.facebook,
-                  color: Color(0xff444444),
-                ),
-              ),
-              const CustomText(
-                title: "|",
-                fontSize: 16,
-                textColor: Color(0xff444444),
-                fontWeight: FontWeight.bold,
-              ),
-              TextButton(
                 onPressed: () => _launchWhatsapp(context),
                 child: const Icon(
                   Ionicons.logo_whatsapp,
@@ -248,8 +231,7 @@ class ListOfOptions extends StatelessWidget {
     final localize = AppLocalizations.of(context)!;
     final scaffoldMessenger = ScaffoldMessenger.of(context);
 
-    var whatsapp = AppConstant.whatsappNumber;
-    var whatsappAndroid = Uri.parse("whatsapp://send?phone=$whatsapp&text=hello");
+    var whatsappAndroid = Uri.parse("whatsapp://send?phone=${AppConstant.whatsappNumber}&text=hello");
     if (await canLaunchUrl(whatsappAndroid)) {
       await launchUrl(whatsappAndroid);
     } else {

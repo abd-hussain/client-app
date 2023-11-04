@@ -37,11 +37,6 @@ class LoyalityBloc extends Bloc<LoyalityService> {
         numberOfPoint: 5,
       ),
       LoyalityRules(
-        pageToOpen: PageToOpenFromLoyality.likeFacebook,
-        content: AppLocalizations.of(context)!.loyalitylikefacebook,
-        numberOfPoint: 1,
-      ),
-      LoyalityRules(
         pageToOpen: PageToOpenFromLoyality.likeLinkedIn,
         content: AppLocalizations.of(context)!.loyalitylikelinkedin,
         numberOfPoint: 1,

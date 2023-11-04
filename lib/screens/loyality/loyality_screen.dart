@@ -96,13 +96,6 @@ class _LoyalityScreenState extends State<LoyalityScreen> {
           RoutesConstants.inviteFriendScreen,
         );
         break;
-      case PageToOpenFromLoyality.likeFacebook:
-        bloc.requestAddPoint(title: "user like page of facebook", point: rule.numberOfPoint);
-        Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen, arguments: {
-          AppConstant.webViewPageUrl: AppConstant.facebookLink,
-          AppConstant.pageTitle: AppLocalizations.of(context)!.facebook
-        });
-        break;
       case PageToOpenFromLoyality.likeLinkedIn:
         bloc.requestAddPoint(title: "user like page of linkedin", point: rule.numberOfPoint);
         Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen, arguments: {
