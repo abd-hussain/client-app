@@ -69,7 +69,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           child: ImageHolder(
                               width: 120,
                               hight: 120,
-                              isFromNetwork: bloc.profileImageUrl != null,
+                              isFromNetwork: bloc.profileImageUrl != "",
                               urlImage: bloc.profileImageUrl == "" ? null : bloc.profileImageUrl,
                               addImageCallBack: (file) {
                                 bloc.profileImage = file;
@@ -92,7 +92,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   LengthLimitingTextInputFormatter(45),
                                 ],
                               ),
-                              const SizedBox(height: 10),
+                              const SizedBox(height: 16),
                               CustomTextField(
                                 controller: bloc.lastNameController,
                                 hintText: AppLocalizations.of(context)!.lastnameprofile,
@@ -101,9 +101,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   LengthLimitingTextInputFormatter(45),
                                 ],
                               ),
-                              const SizedBox(height: 10),
+                              const SizedBox(height: 16),
                               _genderField(),
-                              const SizedBox(height: 10),
+                              const SizedBox(height: 16),
                               Padding(
                                 padding: const EdgeInsets.only(left: 16, right: 16),
                                 child: CustomText(
@@ -115,7 +115,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               ),
                               const SizedBox(height: 10),
                               _dateBirthField(),
-                              const SizedBox(height: 10),
+                              const SizedBox(height: 16),
                               CustomTextField(
                                 controller: bloc.emailController,
                                 hintText: AppLocalizations.of(context)!.emailprofile,
@@ -123,6 +123,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 inputFormatters: [
                                   LengthLimitingTextInputFormatter(35),
                                 ],
+                                onChange: (text) => {},
+                              ),
+                              const SizedBox(height: 16),
+                              CustomTextField(
+                                controller: bloc.mobileNumberController,
+                                enabled: false,
+                                hintText: AppLocalizations.of(context)!.mobilenumber,
                                 onChange: (text) => {},
                               ),
                             ],

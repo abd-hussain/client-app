@@ -34,6 +34,7 @@
     "facebook" : "Facebook",
     "logout" : "Logout",
     "entermobilenumber" : "Enter Mobile Number",
+    "mobilenumber" : "Mobile Number",
     "verify" : "Verify",
     "enteryourphonenumber" : "Enter your phone Number in the field below",
     "enteryourphonenumberexample" : "Example on the acceptable numbers 795190663",

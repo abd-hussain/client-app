@@ -97,21 +97,22 @@ class _MyCalenderScreenState extends State<MyCalenderScreen> {
                               });
                             },
                             openEventDetails: () {
-                              Navigator.of(context, rootNavigator: true)
-                                  .pushNamed(RoutesConstants.eventDetailsScreen, arguments: {
-                                "event_details": MainEvent(
-                                  title: item.title!,
-                                  id: item.reservationId,
-                                  image: "",
-                                  description: "",
-                                  joiningClients: 0,
-                                  maxNumberOfAttendance: 0,
-                                  dateFrom: item.fromTime.toString(),
-                                  dateTo: item.toTime.toString(),
-                                  price: 0,
-                                  state: 0,
-                                )
-                              });
+                              //TODO
+                              // Navigator.of(context, rootNavigator: true)
+                              //     .pushNamed(RoutesConstants.eventDetailsScreen, arguments: {
+                              //   "event_details": MainEvent(
+                              //     title: item.title!,
+                              //     id: item.reservationId,
+                              //     image: "",
+                              //     description: "",
+                              //     joiningClients: 0,
+                              //     maxNumberOfAttendance: 0,
+                              //     dateFrom: item.fromTime.toString(),
+                              //     dateTo: item.toTime.toString(),
+                              //     price: 0,
+                              //     state: 0,
+                              //   )
+                              // });
                             },
                           );
                         }

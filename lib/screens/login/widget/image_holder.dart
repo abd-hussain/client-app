@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class ImageHolder extends StatefulWidget {
+class ImageHolder extends StatelessWidget {
   final Function(File image) addImageCallBack;
   final Function() deleteImageCallBack;
   final bool isFromNetwork;
@@ -19,65 +19,58 @@ class ImageHolder extends StatefulWidget {
     super.key,
     required this.addImageCallBack,
     required this.deleteImageCallBack,
-    this.isFromNetwork = false,
+    required this.isFromNetwork,
     this.urlImage,
     this.hight = 116,
     this.width = 100,
   });
 
-  @override
-  State<ImageHolder> createState() => _ImageHolderState();
-}
-
-class _ImageHolderState extends State<ImageHolder> {
-  Future<File> pickImage(ImageSource source) async {
+  Future<File> _pickImage(ImageSource source) async {
     final image = await ImagePicker().pickImage(source: source);
     return File(image?.path ?? "");
   }
 
-  ValueNotifier<File?> imageController = ValueNotifier<File?>(null);
-  File? image;
-
   @override
   Widget build(BuildContext context) {
+    ValueNotifier<File?> imageController = ValueNotifier<File?>(null);
+    File? image;
     return InkWell(
       onTap: () {
         BottomSheetsUtil().addImageBottomSheet(
           context,
-          image?.path.isNotEmpty ?? false || widget.urlImage != null,
+          image?.path.isNotEmpty ?? false || urlImage != null,
           deleteCallBack: () {
+            deleteImageCallBack();
             image = null;
-            imageController.value = null;
-            widget.deleteImageCallBack();
-            setState(() {});
+            imageController.value = image;
             Navigator.pop(context);
           },
           cameraCallBack: () async {
-            image = await pickImage(ImageSource.camera);
+            image = await _pickImage(ImageSource.camera);
             if (image?.path.isEmpty ?? true) {
               return;
             }
-            if (!widget.isFromNetwork) {
+            if (!isFromNetwork) {
               imageController.value = image;
             }
-            widget.addImageCallBack(image!);
+            addImageCallBack(image!);
           },
           galleryCallBack: () async {
-            image = await pickImage(ImageSource.gallery);
+            image = await _pickImage(ImageSource.gallery);
 
             if (image?.path.isEmpty ?? true) {
               return;
             }
-            if (!widget.isFromNetwork) {
+            if (!isFromNetwork) {
               imageController.value = image;
             }
-            widget.addImageCallBack(image!);
+            addImageCallBack(image!);
           },
         );
       },
       child: Container(
-        height: widget.hight,
-        width: widget.width,
+        height: hight,
+        width: width,
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(8),
@@ -85,12 +78,12 @@ class _ImageHolderState extends State<ImageHolder> {
         child: ValueListenableBuilder<File?>(
           valueListenable: imageController,
           builder: (context, snapshot, child) {
-            return snapshot != null || widget.urlImage != null
-                ? widget.isFromNetwork
+            return snapshot != null || urlImage != null
+                ? isFromNetwork
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Image.network(
-                          AppConstant.imagesBaseURLForProfileImages + widget.urlImage!,
+                          AppConstant.imagesBaseURLForProfileImages + urlImage!,
                           width: 100,
                           height: 115,
                           fit: BoxFit.cover,

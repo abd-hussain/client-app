@@ -13,7 +13,6 @@ import 'package:client_app/utils/day_time.dart';
 import 'package:client_app/utils/repository/http_interceptor.dart';
 import 'package:client_app/utils/repository/http_repository.dart';
 import 'package:client_app/sevices/account_service.dart';
-import 'package:client_app/sevices/loyality_service.dart';
 import 'package:client_app/sevices/auth_services.dart';
 import 'package:client_app/sevices/filter_services.dart';
 import 'package:client_app/sevices/general/network_info_service.dart';
@@ -33,7 +32,6 @@ Future<void> setupLocator() async {
   locator.registerFactory<MentorService>(() => MentorService());
   locator.registerFactory<NotificationsService>(() => NotificationsService());
   locator.registerFactory<SettingService>(() => SettingService());
-  locator.registerFactory<LoyalityService>(() => LoyalityService());
   locator.registerFactory<HomeService>(() => HomeService());
   locator.registerFactory<DiscountService>(() => DiscountService());
   locator.registerFactory<AppointmentsService>(() => AppointmentsService());

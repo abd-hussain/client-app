@@ -12,42 +12,40 @@ class AccountService with Service {
   }
 
   Future<AccountInfo> updateAccount({required UpdateAccountRequest account}) async {
-    Map<String, dynamic> updateMap = {};
-
+    FormData formData = FormData();
     if (account.gender != null) {
-      updateMap["gender"] = MultipartFile.fromString(account.gender.toString());
+      formData.fields.add(MapEntry("gender", account.gender.toString()));
     }
-
     if (account.countryId != null) {
-      updateMap["country_id"] = MultipartFile.fromString(account.countryId.toString());
+      formData.fields.add(MapEntry("country_id", account.countryId.toString()));
     }
-
     if (account.referalCode != null) {
-      updateMap["referal_code"] = MultipartFile.fromString(account.referalCode!);
+      formData.fields.add(MapEntry("referal_code", account.referalCode!));
     }
-
     if (account.firstName != null) {
-      updateMap["first_name"] = MultipartFile.fromString(account.firstName!);
+      formData.fields.add(MapEntry("first_name", account.firstName!));
     }
-
     if (account.lastName != null) {
-      updateMap["last_name"] = MultipartFile.fromString(account.lastName!);
+      formData.fields.add(MapEntry("last_name", account.lastName!));
     }
-
     if (account.email != null) {
-      updateMap["email"] = MultipartFile.fromString(account.email!);
+      formData.fields.add(MapEntry("email", account.email!));
     }
-
     if (account.dateOfBirth != null) {
-      updateMap["date_of_birth"] = MultipartFile.fromString(account.dateOfBirth!);
+      formData.fields.add(MapEntry("date_of_birth", account.dateOfBirth!));
     }
 
     if (account.profileImage != null) {
-      String fileName = account.profileImage!.path.split('/').last;
-      updateMap["profile_picture"] = await MultipartFile.fromFile(account.profileImage!.path, filename: fileName);
+      formData.files.add(
+        MapEntry(
+          "profile_picture",
+          MultipartFile.fromFileSync(
+            account.profileImage!.path,
+            filename: account.profileImage!.path.split('/').last,
+          ),
+        ),
+      );
     }
-
-    FormData formData = FormData.fromMap(updateMap);
 
     final response = await repository.callRequest(
         requestType: RequestType.put, methodName: MethodNameConstant.updateAccount, formData: formData);

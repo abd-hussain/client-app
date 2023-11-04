@@ -35,7 +35,7 @@ class ListOfOptions extends StatelessWidget {
           children: [
             const AddMobBanner(),
             isItLoggedIn ? titleOptionCollection(title: AppLocalizations.of(context)!.accountsettings) : Container(),
-            isItLoggedIn ? optionCollectionItem(listOfAccountOptions, containerHight: 260) : Container(),
+            isItLoggedIn ? optionCollectionItem(listOfAccountOptions, containerHight: 200) : Container(),
             titleOptionCollection(title: AppLocalizations.of(context)!.generalsettings),
             optionCollectionItem(listOfSettingsOptions, containerHight: 200),
             titleOptionCollection(title: AppLocalizations.of(context)!.reachouttous),
@@ -230,7 +230,6 @@ class ListOfOptions extends StatelessWidget {
   void _launchWhatsapp(BuildContext context) async {
     final localize = AppLocalizations.of(context)!;
     final scaffoldMessenger = ScaffoldMessenger.of(context);
-
     var whatsappAndroid = Uri.parse("whatsapp://send?phone=${AppConstant.whatsappNumber}&text=hello");
     if (await canLaunchUrl(whatsappAndroid)) {
       await launchUrl(whatsappAndroid);

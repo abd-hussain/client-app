@@ -16,8 +16,6 @@ class MethodNameConstant {
   static const String discount = "discount/";
   static const String archive = "archive/";
 
-  static const String loyality = "loyality/";
-
   static const String notifications = "notifications/client";
   static const String registerTokenNotification = "notifications/client-register-token";
 

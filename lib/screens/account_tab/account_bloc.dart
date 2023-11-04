@@ -24,14 +24,9 @@ class AccountBloc extends Bloc<AccountService> {
   List<ProfileOptions> listOfAccountOptions(BuildContext context) {
     return [
       ProfileOptions(
-        icon: Icons.account_box,
-        name: AppLocalizations.of(context)!.editprofileinformations,
-        onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.editProfileScreen),
-      ),
-      ProfileOptions(
-        icon: Icons.loyalty,
-        name: AppLocalizations.of(context)!.loyalitypoints,
-        onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.loyalityScreen),
+        icon: Icons.archive,
+        name: AppLocalizations.of(context)!.archive,
+        onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.archiveScreen),
       ),
       ProfileOptions(
         icon: Icons.logout,

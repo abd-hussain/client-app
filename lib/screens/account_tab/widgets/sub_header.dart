@@ -26,39 +26,13 @@ class ProfileSubHeader extends StatelessWidget {
         padding: const EdgeInsets.all(10.0),
         child: isUserLoggedIn
             ? Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   optionButton(
-                    buttonTitle: AppLocalizations.of(context)!.notifications,
-                    icon: Icons.notifications,
+                    buttonTitle: AppLocalizations.of(context)!.editprofile,
+                    icon: Icons.account_box,
                     onTap: () =>
-                        Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.notificationsScreen),
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        decoration:
-                            BoxDecoration(color: const Color(0xff4CB6EA), borderRadius: BorderRadius.circular(5)),
-                        height: 10,
-                        width: 10,
-                      ),
-                      Container(
-                        color: const Color(0xff4CB6EA),
-                        height: 3,
-                        width: 50,
-                      ),
-                      Container(
-                        decoration:
-                            BoxDecoration(color: const Color(0xff4CB6EA), borderRadius: BorderRadius.circular(5)),
-                        height: 10,
-                        width: 10,
-                      ),
-                    ],
-                  ),
-                  optionButton(
-                    buttonTitle: AppLocalizations.of(context)!.archive,
-                    icon: Icons.archive,
-                    onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.archiveScreen),
+                        Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.editProfileScreen),
                   ),
                 ],
               )

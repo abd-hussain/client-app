@@ -24,6 +24,7 @@ class EditProfileBloc extends Bloc<AccountService> {
   TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController genderController = TextEditingController();
+  TextEditingController mobileNumberController = TextEditingController();
 
   ValueNotifier<LoadingStatus> loadingStatus = ValueNotifier<LoadingStatus>(LoadingStatus.idle);
 
@@ -37,6 +38,7 @@ class EditProfileBloc extends Bloc<AccountService> {
       firstNameController.text = value.data!.firstName ?? "";
       lastNameController.text = value.data!.lastName ?? "";
       emailController.text = value.data!.email ?? "";
+      mobileNumberController.text = value.data!.mobileNumber ?? "";
 
       if (value.data!.gender != null) {
         genderController.text = GenderFormat().convertIndexToString(context, value.data!.gender!);
