@@ -5,9 +5,9 @@ import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/errors/exceptions.dart';
 import 'package:client_app/utils/logger.dart';
 import 'package:dio/dio.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/foundation.dart';
+// import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -21,16 +21,16 @@ void main() {
     logDebugMessage(message: 'Application Started ...');
     WidgetsFlutterBinding.ensureInitialized();
 
-    await Firebase.initializeApp();
+    // await Firebase.initializeApp();
 
-    FlutterError.onError = (errorDetails) async {
-      await FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-    };
+    // FlutterError.onError = (errorDetails) async {
+    //   await FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+    // };
 
-    PlatformDispatcher.instance.onError = (error, stack) {
-      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-      return true;
-    };
+    // PlatformDispatcher.instance.onError = (error, stack) {
+    //   FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    //   return true;
+    // };
 
     await Hive.initFlutter();
     await Hive.openBox(DatabaseBoxConstant.userInfo);

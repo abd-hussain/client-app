@@ -3,7 +3,7 @@ import 'package:client_app/main_context.dart';
 import 'package:client_app/screens/main_contaner/main_container_bloc.dart';
 import 'package:client_app/screens/main_contaner/widgets/main_appbar.dart';
 import 'package:client_app/screens/main_contaner/widgets/account_appbar.dart';
-import 'package:client_app/utils/push_notifications/firebase_cloud_messaging_util.dart';
+// import 'package:client_app/utils/push_notifications/firebase_cloud_messaging_util.dart';
 import 'package:client_app/utils/push_notifications/notification_manager.dart';
 
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
@@ -27,9 +27,9 @@ class _MainContainerState extends State<MainContainer> {
     NotificationManager.init(context: context);
     _bloc.callRegisterTokenRequest();
 
-    Future.delayed(const Duration(seconds: 2), () {
-      FirebaseCloudMessagingUtil.initConfigure();
-    });
+    // Future.delayed(const Duration(seconds: 2), () {
+    //   FirebaseCloudMessagingUtil.initConfigure();
+    // });
 
     super.didChangeDependencies();
   }

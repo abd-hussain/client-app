@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.clientApp</string>
+	<string>com.helpera.clientApp</string>
 	<key>PROJECT_ID</key>
 	<string>helpera-9bef4</string>
 	<key>STORAGE_BUCKET</key>

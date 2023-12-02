@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.client_app_dev"
+    package="com.helpera.client_app_dev"
     xmlns:tools="http://schemas.android.com/tools">
 
 
