@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:929349489874:android:6b8f47b7ecb231fa2fc90b",
+        "mobilesdk_app_id": "1:929349489874:android:802219c2abca076f2fc90b",
         "android_client_info": {
-          "package_name": "com.helpera.client_app"
+          "package_name": "com.helpera.client_app_dev"
         }
       },
       "oauth_client": [

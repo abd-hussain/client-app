@@ -7,7 +7,7 @@ class AppConstant {
   static const String useridToPass = "useridToPass";
   static const String apikeyToPass = "apikeyToPass";
   static const String tokenToPass = "tokenToPass";
-  static const String applicationMainURL = "http://127.0.0.1:8000/"; //'https://www.helpera.app/'
+  static const String applicationMainURL = "https://www.helpera.app/"; //'http://127.0.0.1:8000/'
 
   static const String imagesBaseURLForCountries = "${AppConstant.applicationMainURL}static/countries/";
   static const String imagesBaseURLForCategories = "${AppConstant.applicationMainURL}static/categories/";
