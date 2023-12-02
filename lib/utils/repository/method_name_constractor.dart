@@ -10,9 +10,6 @@ class MethodNameConstant {
   static const String cancelAppointment = "client-appointment/cancel";
   static const String editNoteAppointment = "client-appointment/comment";
 
-  static const String bookevent = "event/book";
-  static const String cancelbookevent = "event/bookcancel";
-
   static const String discount = "discount/";
   static const String archive = "archive/";
 
@@ -20,10 +17,6 @@ class MethodNameConstant {
   static const String registerTokenNotification = "notifications/client-register-token";
 
   static const String home = "client-home/";
-  static const String event = "event/";
-  static const String clientEvent = "event/client";
-
-  static const String reportEvent = "report/event";
 
   static const String uploadContactList = "settings/leads";
   static const String auth = "client-auth";

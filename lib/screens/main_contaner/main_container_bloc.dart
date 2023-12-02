@@ -3,10 +3,8 @@ import 'dart:async';
 import 'package:client_app/locator.dart';
 import 'package:client_app/models/https/appointment.dart';
 import 'package:client_app/models/https/calender_model.dart';
-import 'package:client_app/models/https/event_appointment.dart';
 import 'package:client_app/screens/main_contaner/widgets/tab_navigator.dart';
 import 'package:client_app/sevices/appointments_service.dart';
-import 'package:client_app/sevices/event_services.dart';
 import 'package:client_app/sevices/noticitions_services.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/routes.dart';
@@ -69,7 +67,6 @@ class MainContainerBloc {
     List<CalenderMeetings> list = [];
     if (checkIfUserIsLoggedIn()) {
       list.addAll(await _getClientAppointments());
-      list.addAll(await _getClientEventAppointments());
     }
     eventsMeetingsListStreamController.sink.add(list);
   }
@@ -103,42 +100,6 @@ class MainContainerBloc {
               toTime: DateTime.parse(item.dateTo!),
               title: null);
           list.add(newItem);
-        }
-      }
-    });
-
-    return list;
-  }
-
-  Future<List<CalenderMeetings>> _getClientEventAppointments() async {
-    List<CalenderMeetings> list = [];
-
-    await locator<EventService>().getclientEventAppointments().then((value) {
-      if (value.data != null) {
-        for (EventAppointmentData item in value.data!) {
-          list.add(CalenderMeetings(
-            meetingId: item.id!,
-            reservationId: item.eventId,
-            clientId: null,
-            mentorId: item.mentorId,
-            appointmentType: null,
-            priceBeforeDiscount: null,
-            priceAfterDiscount: null,
-            state: null,
-            noteFromClient: null,
-            noteFromMentor: null,
-            profileImg: null,
-            mentorPrefix: item.suffixeName,
-            mentorFirstName: item.firstName,
-            mentorLastName: item.lastName,
-            categoryId: null,
-            categoryName: item.categoryName,
-            type: Type.event,
-            eventImg: item.image,
-            fromTime: DateTime.parse(item.dateFrom!),
-            toTime: DateTime.parse(item.dateTo!),
-            title: item.title!,
-          ));
         }
       }
     });
