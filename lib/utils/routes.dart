@@ -15,7 +15,6 @@ import 'package:client_app/screens/login/third_step/login_third_step_screen.dart
 import 'package:client_app/screens/main_contaner/main_container.dart';
 import 'package:client_app/screens/mentor_profile/mentor_profile_screen.dart';
 import 'package:client_app/screens/mycalender_tab/mycalender_screen.dart';
-import 'package:client_app/screens/notifications/notifications_screen.dart';
 import 'package:client_app/screens/report/report_screen.dart';
 import 'package:client_app/screens/setup_screen/setup_screen.dart';
 import 'package:client_app/screens/tutorials/tutorials_screen.dart';
@@ -34,7 +33,6 @@ class RoutesConstants {
   static const String categoriesScreen = 'categoriesScreen';
   static const String calenderScreen = 'calenderScreen';
   static const String accountScreen = 'accountScreen';
-  static const String notificationsScreen = 'notificationsScreen';
   static const String webViewScreen = 'webViewScreen';
   static const String inviteFriendScreen = 'inviteFriendScreen';
   static const String tutorialsScreen = 'tutorialsScreen';
@@ -47,7 +45,6 @@ class RoutesConstants {
   static const String insideCallScreen = 'InsideCallScreen';
   static const String mentorProfileScreen = 'mentorProfileScreen';
   static const String bookingScreen = 'bookingScreen';
-  static const String eventDetailsScreen = 'eventDetailsScreen';
 }
 
 final Map<String, Widget> routes = {
@@ -61,7 +58,6 @@ final Map<String, Widget> routes = {
   RoutesConstants.categoriesScreen: const CategoriesScreen(),
   RoutesConstants.calenderScreen: const MyCalenderScreen(),
   RoutesConstants.accountScreen: const AccountScreen(),
-  RoutesConstants.notificationsScreen: const NotificationsScreen(),
   RoutesConstants.webViewScreen: const WebViewScreen(),
   RoutesConstants.inviteFriendScreen: const InviteFriendsScreen(),
   RoutesConstants.tutorialsScreen: const TutorialsScreen(),

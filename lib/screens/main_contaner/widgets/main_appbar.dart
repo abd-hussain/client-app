@@ -2,7 +2,6 @@ import 'package:client_app/locator.dart';
 import 'package:client_app/screens/main_contaner/main_container_bloc.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/utils/constants/constant.dart';
-import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
 
 PreferredSizeWidget mainAppBar(
@@ -25,17 +24,6 @@ PreferredSizeWidget mainAppBar(
                 },
                 icon: const Icon(
                   Icons.refresh,
-                  color: Colors.white,
-                  size: 30,
-                ),
-              )
-            : Container(),
-        isUserLoggedIn
-            ? IconButton(
-                onPressed: () =>
-                    Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.notificationsScreen),
-                icon: const Icon(
-                  Icons.notifications_none,
                   color: Colors.white,
                   size: 30,
                 ),
