@@ -70,7 +70,9 @@ class _LoginFourthStepScreenState extends State<LoginFourthStepScreen> {
                             children: [
                               ImageHolder(
                                   isFromNetwork: bloc.profileImageUrl != null,
-                                  urlImage: bloc.profileImageUrl == "" ? null : bloc.profileImageUrl,
+                                  urlImage: bloc.profileImageUrl == ""
+                                      ? null
+                                      : bloc.profileImageUrl,
                                   addImageCallBack: (file) {
                                     bloc.profileImage = file;
                                     bloc.validateFields();
@@ -85,12 +87,14 @@ class _LoginFourthStepScreenState extends State<LoginFourthStepScreen> {
                                   children: [
                                     NameField(
                                       controller: bloc.firstNameController,
-                                      hintText: AppLocalizations.of(context)!.firstnameprofile,
+                                      hintText: AppLocalizations.of(context)!
+                                          .firstnameprofile,
                                     ),
                                     const SizedBox(height: 10),
                                     NameField(
                                       controller: bloc.lastNameController,
-                                      hintText: AppLocalizations.of(context)!.lastnameprofile,
+                                      hintText: AppLocalizations.of(context)!
+                                          .lastnameprofile,
                                     ),
                                   ],
                                 ),
@@ -147,7 +151,8 @@ class _LoginFourthStepScreenState extends State<LoginFourthStepScreen> {
                                 controller: bloc.referalCodeController,
                                 readOnly: !snapshot,
                                 enabled: snapshot,
-                                hintText: AppLocalizations.of(context)!.referalcodeprofile,
+                                hintText: AppLocalizations.of(context)!
+                                    .referalcodeprofile,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
                                   LengthLimitingTextInputFormatter(6),
@@ -160,36 +165,63 @@ class _LoginFourthStepScreenState extends State<LoginFourthStepScreen> {
                             valueListenable: bloc.enableNextBtn,
                             builder: (context, snapshot, child) {
                               return CustomButton(
-                                  buttonTitle: AppLocalizations.of(context)!.submit,
+                                  buttonTitle:
+                                      AppLocalizations.of(context)!.submit,
                                   enableButton: snapshot,
                                   onTap: () {
                                     final navigator = Navigator.of(context);
 
-                                    bloc.callRequest(context).then((value) async {
-                                      await bloc.box.put(DatabaseFieldConstant.isUserLoggedIn, true);
-                                      await bloc.box
-                                          .put(DatabaseFieldConstant.userFirstName, bloc.firstNameController.text);
-                                      await bloc.box.put(DatabaseFieldConstant.userid, bloc.userId.toString());
+                                    bloc
+                                        .callRequest(context)
+                                        .then((value) async {
+                                      await bloc.box.put(
+                                          DatabaseFieldConstant.isUserLoggedIn,
+                                          true);
+                                      await bloc.box.put(
+                                          DatabaseFieldConstant.userFirstName,
+                                          bloc.firstNameController.text);
+                                      await bloc.box.put(
+                                          DatabaseFieldConstant.userid,
+                                          bloc.userId.toString());
                                       if (bloc.selectedCountry != null) {
-                                        await bloc.box.put(DatabaseFieldConstant.selectedCountryId,
-                                            bloc.selectedCountry!.id.toString());
                                         await bloc.box.put(
-                                            DatabaseFieldConstant.selectedCountryFlag, bloc.selectedCountry!.flagImage);
-                                        await bloc.box
-                                            .put(DatabaseFieldConstant.selectedCountryName, bloc.selectedCountry!.name);
-                                        await bloc.box.put(DatabaseFieldConstant.selectedCountryDialCode,
+                                            DatabaseFieldConstant
+                                                .selectedCountryId,
+                                            bloc.selectedCountry!.id
+                                                .toString());
+                                        await bloc.box.put(
+                                            DatabaseFieldConstant
+                                                .selectedCountryFlag,
+                                            bloc.selectedCountry!.flagImage);
+                                        await bloc.box.put(
+                                            DatabaseFieldConstant
+                                                .selectedCountryName,
+                                            bloc.selectedCountry!.name);
+                                        await bloc.box.put(
+                                            DatabaseFieldConstant
+                                                .selectedCountryDialCode,
                                             bloc.selectedCountry!.dialCode);
-                                        await bloc.box.put(DatabaseFieldConstant.selectedCountryCurrency,
+                                        await bloc.box.put(
+                                            DatabaseFieldConstant
+                                                .selectedCountryCurrency,
                                             bloc.selectedCountry!.currency);
-                                        await bloc.box.put(DatabaseFieldConstant.selectedCountryMinLenght,
-                                            bloc.selectedCountry!.minLength.toString());
-                                        await bloc.box.put(DatabaseFieldConstant.selectedCountryMaxLenght,
-                                            bloc.selectedCountry!.maxLength.toString());
+                                        await bloc.box.put(
+                                            DatabaseFieldConstant
+                                                .selectedCountryMinLenght,
+                                            bloc.selectedCountry!.minLength
+                                                .toString());
+                                        await bloc.box.put(
+                                            DatabaseFieldConstant
+                                                .selectedCountryMaxLenght,
+                                            bloc.selectedCountry!.maxLength
+                                                .toString());
                                       }
-                                      bloc.loadingStatus.value = LoadingStatus.finish;
+                                      bloc.loadingStatus.value =
+                                          LoadingStatus.finish;
 
                                       await navigator.pushNamedAndRemoveUntil(
-                                          RoutesConstants.mainContainer, (route) => false);
+                                          RoutesConstants.mainContainer,
+                                          (route) => false);
                                     });
                                   });
                             }),

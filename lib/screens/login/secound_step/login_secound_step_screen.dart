@@ -52,19 +52,22 @@ class _LoginSecoundStepScreenState extends State<LoginSecoundStepScreen> {
                           Image.asset("assets/images/login_2.png"),
                           const SizedBox(height: 20),
                           CustomText(
-                            title: AppLocalizations.of(context)!.enteryourphonenumber,
+                            title: AppLocalizations.of(context)!
+                                .enteryourphonenumber,
                             fontSize: 14,
                             textColor: Colors.black,
                           ),
                           const SizedBox(height: 8),
                           CustomText(
-                            title: AppLocalizations.of(context)!.enteryourphonenumberexample,
+                            title: AppLocalizations.of(context)!
+                                .enteryourphonenumberexample,
                             fontSize: 10,
                             textColor: Colors.grey,
                           ),
                           const SizedBox(height: 20),
                           MobileNumberField(
-                            initialCountry: bloc.returnSelectedCountryFromDatabase(),
+                            initialCountry:
+                                bloc.returnSelectedCountryFromDatabase(),
                             countryList: bloc.countriesList,
                             enableVerifyBtn: bloc.enableVerifyBtn,
                             selectedCountryCode: (selectedCode) {
@@ -79,20 +82,29 @@ class _LoginSecoundStepScreenState extends State<LoginSecoundStepScreen> {
                               valueListenable: bloc.enableVerifyBtn,
                               builder: (context, snapshot, child) {
                                 return CustomButton(
-                                    buttonTitle: AppLocalizations.of(context)!.verify,
+                                    buttonTitle:
+                                        AppLocalizations.of(context)!.verify,
                                     enableButton: snapshot,
                                     onTap: () {
-                                      final navigator = Navigator.of(context, rootNavigator: true);
+                                      final navigator = Navigator.of(context,
+                                          rootNavigator: true);
                                       bloc.callRequest().then((value) async {
                                         logger.wtf(value.data!.lastOtp);
-                                        await navigator.pushNamed(RoutesConstants.loginThirdStepRoute, arguments: {
-                                          AppConstant.countryCode: bloc.countryCode,
-                                          AppConstant.mobileNumber: bloc.mobileNumber,
-                                          AppConstant.useridToPass: value.data!.id!,
-                                          AppConstant.apikeyToPass: value.data!.apiKey!
-                                        });
+                                        await navigator.pushNamed(
+                                            RoutesConstants.loginThirdStepRoute,
+                                            arguments: {
+                                              AppConstant.countryCode:
+                                                  bloc.countryCode,
+                                              AppConstant.mobileNumber:
+                                                  bloc.mobileNumber,
+                                              AppConstant.useridToPass:
+                                                  value.data!.id!,
+                                              AppConstant.apikeyToPass:
+                                                  value.data!.apiKey!
+                                            });
                                         bloc.enableVerifyBtn.value = false;
-                                        bloc.loadingStatus.value = LoadingStatus.finish;
+                                        bloc.loadingStatus.value =
+                                            LoadingStatus.finish;
                                       });
                                     });
                               }),

@@ -39,10 +39,6 @@
 	</array>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-3940256099942544~1458002511</string>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
@@ -64,11 +60,12 @@
 		<key>NSAllowsArbitraryLoadsInWebContent</key>
 		<true/>
 	</dict>
+	<key>UISupportsDocumentBrowser</key>
+	<true/>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Please authorize to use the app</string>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>fetch</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UIRequiresFullScreen</key>
@@ -82,6 +79,6 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Please allow access to gallery in order to register your profile pictures</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Please allow access to camera in order to have a call with sound</string>
+	<string>We Need This Permission to hear your voice when you talk to the client</string>
 </dict>
 </plist>

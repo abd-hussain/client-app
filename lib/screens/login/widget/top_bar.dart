@@ -11,7 +11,11 @@ class TopBarWidget extends StatelessWidget {
   final Function()? actionButtonPressed;
 
   const TopBarWidget(
-      {this.subtitle, this.backButton = true, this.actionButton = false, this.actionButtonPressed, super.key});
+      {this.subtitle,
+      this.backButton = true,
+      this.actionButton = false,
+      this.actionButtonPressed,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +23,8 @@ class TopBarWidget extends StatelessWidget {
       children: [
         backButton
             ? IconButton(
-                onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
+                onPressed: () =>
+                    Navigator.of(context, rootNavigator: true).pop(),
                 icon: const Icon(
                   Icons.arrow_back_ios,
                   size: 25,

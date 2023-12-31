@@ -7,7 +7,8 @@ class CategoriesList extends StatefulWidget {
   final ValueNotifier<List<Category>> categoriesListNotifier;
   final Function(Category) onTap;
 
-  const CategoriesList({super.key, required this.categoriesListNotifier, required this.onTap});
+  const CategoriesList(
+      {super.key, required this.categoriesListNotifier, required this.onTap});
 
   @override
   State<CategoriesList> createState() => _CategoriesListState();
@@ -50,7 +51,11 @@ class _CategoriesListState extends State<CategoriesList> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(5),
-                  border: Border.all(width: 3, color: snapshot == index ? const Color(0xff4CB6EA) : Colors.white),
+                  border: Border.all(
+                      width: 3,
+                      color: snapshot == index
+                          ? const Color(0xff4CB6EA)
+                          : Colors.white),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(top: 8, bottom: 8),
@@ -61,7 +66,8 @@ class _CategoriesListState extends State<CategoriesList> {
                         width: 30,
                         height: 30,
                         child: FadeInImage(
-                          placeholder: const AssetImage("assets/images/flagPlaceHolderImg.png"),
+                          placeholder: const AssetImage(
+                              "assets/images/flagPlaceHolderImg.png"),
                           image: NetworkImage(item.icon!, scale: 1),
                         ),
                       ),

@@ -108,8 +108,10 @@ class MentorProfileFooterView extends StatelessWidget {
                           await bottomSheet.bookMeetingBottomSheet(
                             faze: BookingFaze.three,
                             openNext: () => null,
-                            doneSelection: (meetingduration, meetingtime, meetingdate, meetingday, meetingcost) {
-                              Navigator.of(context, rootNavigator: true).pushNamed(
+                            doneSelection: (meetingduration, meetingtime,
+                                meetingdate, meetingday, meetingcost) {
+                              Navigator.of(context, rootNavigator: true)
+                                  .pushNamed(
                                 RoutesConstants.bookingScreen,
                                 arguments: {
                                   "bookingType": BookingType.schudule,
@@ -129,15 +131,20 @@ class MentorProfileFooterView extends StatelessWidget {
                             },
                           );
                         },
-                        doneSelection: (meetingdate, meetingduration, meetingtime, meetingday, meetingcost) => null,
+                        doneSelection: (meetingdate, meetingduration,
+                                meetingtime, meetingday, meetingcost) =>
+                            null,
                       );
                     },
-                    doneSelection: (meetingdate, meetingduration, meetingtime, meetingday, meetingcost) => null,
+                    doneSelection: (meetingdate, meetingduration, meetingtime,
+                            meetingday, meetingcost) =>
+                        null,
                   );
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(AppLocalizations.of(context)!.youhavetobeloggedintodothat),
+                      content: Text(AppLocalizations.of(context)!
+                          .youhavetobeloggedintodothat),
                     ),
                   );
                 }

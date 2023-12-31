@@ -12,7 +12,8 @@ import 'package:flutter_multi_select_items/flutter_multi_select_items.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class MentorProfileBloc extends Bloc<MentorService> {
-  ValueNotifier<LoadingStatus> loadingStatus = ValueNotifier<LoadingStatus>(LoadingStatus.idle);
+  ValueNotifier<LoadingStatus> loadingStatus =
+      ValueNotifier<LoadingStatus>(LoadingStatus.idle);
   String? profileImageUrl;
   String? firstName;
   String? lastName;
@@ -43,7 +44,8 @@ class MentorProfileBloc extends Bloc<MentorService> {
   List<AppointmentData> listOfAppointments = [];
   final box = Hive.box(DatabaseBoxConstant.userInfo);
 
-  void handleReadingArguments(BuildContext context, {required Object? arguments}) {
+  void handleReadingArguments(BuildContext context,
+      {required Object? arguments}) {
     if (arguments != null) {
       final newArguments = arguments as Map<String, dynamic>;
       int mentorId = newArguments["id"] as int;

@@ -25,7 +25,8 @@ class BottomSheetsUtil {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       CustomText(
-                        title: AppLocalizations.of(context)!.profilephotosetting,
+                        title:
+                            AppLocalizations.of(context)!.profilephotosetting,
                         textColor: Colors.black,
                         fontSize: 18,
                       ),
@@ -42,7 +43,8 @@ class BottomSheetsUtil {
                             ),
                             const SizedBox(width: 10),
                             CustomText(
-                              title: AppLocalizations.of(context)!.pickimageremoveimage,
+                              title: AppLocalizations.of(context)!
+                                  .pickimageremoveimage,
                               textColor: Colors.red,
                               fontSize: 16,
                             ),
@@ -85,7 +87,8 @@ class BottomSheetsUtil {
                                     const SizedBox(width: 8),
                                     Expanded(
                                       child: CustomText(
-                                        title: AppLocalizations.of(context)!.pickimagefromstudio,
+                                        title: AppLocalizations.of(context)!
+                                            .pickimagefromstudio,
                                         fontSize: 16,
                                         textColor: const Color(0xff444444),
                                       ),
@@ -117,7 +120,8 @@ class BottomSheetsUtil {
                                     const SizedBox(width: 8),
                                     Expanded(
                                       child: CustomText(
-                                        title: AppLocalizations.of(context)!.pickimagefromcamera,
+                                        title: AppLocalizations.of(context)!
+                                            .pickimagefromcamera,
                                         fontSize: 16,
                                         textColor: const Color(0xff444444),
                                       ),
@@ -140,7 +144,8 @@ class BottomSheetsUtil {
         });
   }
 
-  Future genderBottomSheet(BuildContext context, List<Gender> listOfGender, Function(Gender) selectedGender) {
+  Future genderBottomSheet(BuildContext context, List<Gender> listOfGender,
+      Function(Gender) selectedGender) {
     return showModalBottomSheet(
         isScrollControlled: true,
         backgroundColor: Colors.white,
@@ -178,7 +183,10 @@ class BottomSheetsUtil {
                           height: 50,
                           child: Row(
                             children: [
-                              SizedBox(width: 40, height: 40, child: listOfGender[index].icon),
+                              SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: listOfGender[index].icon),
                               const SizedBox(width: 8),
                               Expanded(
                                 child: CustomText(
@@ -205,7 +213,8 @@ class BottomSheetsUtil {
         });
   }
 
-  Future countryBottomSheet(BuildContext context, List<Country> listOfCountries, Function(Country) selectedCountry) {
+  Future countryBottomSheet(BuildContext context, List<Country> listOfCountries,
+      Function(Country) selectedCountry) {
     return showModalBottomSheet(
       isScrollControlled: true,
       backgroundColor: Colors.white,
@@ -247,8 +256,11 @@ class BottomSheetsUtil {
                                 width: 30,
                                 height: 30,
                                 child: FadeInImage(
-                                    placeholder: const AssetImage("assets/images/flagPlaceHolderImg.png"),
-                                    image: NetworkImage(listOfCountries[index].flagImage!, scale: 1))),
+                                    placeholder: const AssetImage(
+                                        "assets/images/flagPlaceHolderImg.png"),
+                                    image: NetworkImage(
+                                        listOfCountries[index].flagImage!,
+                                        scale: 1))),
                             const SizedBox(width: 8),
                             Expanded(
                               child: CustomText(
@@ -276,7 +288,10 @@ class BottomSheetsUtil {
     );
   }
 
-  Future areYouShoureButtomSheet({required BuildContext context, required String message, required VoidCallback sure}) {
+  Future areYouShoureButtomSheet(
+      {required BuildContext context,
+      required String message,
+      required VoidCallback sure}) {
     return showModalBottomSheet(
       enableDrag: false,
       useRootNavigator: true,

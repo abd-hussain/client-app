@@ -7,13 +7,17 @@ import 'package:client_app/utils/mixins.dart';
 import 'package:flutter/material.dart';
 
 class CategoriesBloc extends Bloc<FilterService> {
-  final ValueNotifier<List<Category>> categoriesListNotifier = ValueNotifier<List<Category>>([]);
-  final ValueNotifier<Category?> selectedCategoryNotifier = ValueNotifier<Category?>(null);
-  final ValueNotifier<List<MentorsModelData>?> mentorsListNotifier = ValueNotifier<List<MentorsModelData>?>(null);
+  final ValueNotifier<List<Category>> categoriesListNotifier =
+      ValueNotifier<List<Category>>([]);
+  final ValueNotifier<Category?> selectedCategoryNotifier =
+      ValueNotifier<Category?>(null);
+  final ValueNotifier<List<MentorsModelData>?> mentorsListNotifier =
+      ValueNotifier<List<MentorsModelData>?>(null);
 
   void listOfCategories() {
     service.categories().then((value) {
-      categoriesListNotifier.value = value.data!..sort((a, b) => a.id!.compareTo(b.id!));
+      categoriesListNotifier.value = value.data!
+        ..sort((a, b) => a.id!.compareTo(b.id!));
       selectedCategoryNotifier.value = categoriesListNotifier.value[0];
       listOfMentors(categoryID: categoriesListNotifier.value[0].id!);
     });
@@ -22,7 +26,8 @@ class CategoriesBloc extends Bloc<FilterService> {
   void listOfMentors({required int categoryID}) {
     locator<MentorService>().mentors(categoryID).then((value) {
       if (value.data != null) {
-        mentorsListNotifier.value = value.data!..sort((a, b) => a.id!.compareTo(b.id!));
+        mentorsListNotifier.value = value.data!
+          ..sort((a, b) => a.id!.compareTo(b.id!));
       } else {
         mentorsListNotifier.value = [];
       }

@@ -44,7 +44,8 @@ class BookingBloc extends Bloc<DiscountService> {
       ValueNotifier<AvaliableMentorStatus>(AvaliableMentorStatus.searching);
   final box = Hive.box(DatabaseBoxConstant.userInfo);
 
-  void handleReadingArguments(BuildContext context, {required Object? arguments}) {
+  void handleReadingArguments(BuildContext context,
+      {required Object? arguments}) {
     if (arguments != null) {
       final newArguments = arguments as Map<String, dynamic>;
       mentorProfileImageUrl = newArguments["profileImageUrl"] as String?;
@@ -101,7 +102,8 @@ class BookingBloc extends Bloc<DiscountService> {
   }
 
   String calculateTotalAmount(double amount, double discount) {
-    return Currency().calculateHourRate(calculateTotalAmountDouble(amount, discount), Timing.hour);
+    return Currency().calculateHourRate(
+        calculateTotalAmountDouble(amount, discount), Timing.hour);
   }
 
   double calculateTotalAmountDouble(double amount, double discount) {
@@ -112,7 +114,9 @@ class BookingBloc extends Bloc<DiscountService> {
 
   _checkingAvaliableMentors(int catID) {
     checkingAvaliableMentors.value = AvaliableMentorStatus.searching;
-    locator<MentorService>().getmentorAvaliable(categoryID: catID).then((value) {
+    locator<MentorService>()
+        .getmentorAvaliable(categoryID: catID)
+        .then((value) {
       if (value.data != null) {
         mentorProfileImageUrl = value.data!.profileImg;
         mentorSuffixName = value.data!.suffixeName!;
@@ -144,8 +148,10 @@ class BookingBloc extends Bloc<DiscountService> {
     });
   }
 
-  Future<dynamic> bookMeetingRequest({required AppointmentRequest appointment}) async {
-    return await locator<AppointmentsService>().bookNewAppointments(appointment: appointment);
+  Future<dynamic> bookMeetingRequest(
+      {required AppointmentRequest appointment}) async {
+    return await locator<AppointmentsService>()
+        .bookNewAppointments(appointment: appointment);
   }
 
   @override

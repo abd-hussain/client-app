@@ -33,7 +33,8 @@ class _TutorialsScreenState extends State<TutorialsScreen> {
   }
 
   void extractArguments(BuildContext context) {
-    final arguments = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
     if (arguments != null) {
       openFrom = arguments["openFrom"] as TutorialOpenFrom;
     }
@@ -88,7 +89,9 @@ class _TutorialsScreenState extends State<TutorialsScreen> {
                   skipPressed: () {
                     if (openFrom == TutorialOpenFrom.firstInstall) {
                       Navigator.of(context, rootNavigator: true)
-                          .pushNamedAndRemoveUntil(RoutesConstants.mainContainer, (Route<dynamic> route) => false);
+                          .pushNamedAndRemoveUntil(
+                              RoutesConstants.mainContainer,
+                              (Route<dynamic> route) => false);
                     } else {
                       Navigator.pop(context);
                     }

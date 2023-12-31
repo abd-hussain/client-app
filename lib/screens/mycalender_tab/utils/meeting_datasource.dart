@@ -22,9 +22,7 @@ class MeetingDataSource extends CalendarDataSource {
 
   @override
   String getSubject(int index) {
-    return appointments![index].type == Type.meeting
-        ? "${appointments![index].categoryName} ${AppLocalizations.of(context)!.withword} ${appointments![index].mentorPrefix} ${appointments![index].mentorFirstName} ${appointments![index].mentorLastName}"
-        : "${appointments![index].title}";
+    return "${appointments![index].categoryName} ${AppLocalizations.of(context)!.withword} ${appointments![index].mentorPrefix} ${appointments![index].mentorFirstName} ${appointments![index].mentorLastName}";
   }
 
   @override

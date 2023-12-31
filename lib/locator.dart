@@ -24,6 +24,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => MainContext());
 
   locator.registerSingleton<NetworkInfoService>(NetworkInfoService());
+
   locator.registerFactory<FilterService>(() => FilterService());
   locator.registerFactory<AccountService>(() => AccountService());
   locator.registerFactory<AuthService>(() => AuthService());

@@ -6,7 +6,11 @@ class MentorGridItem extends StatelessWidget {
   final String value;
   final Widget icon;
 
-  const MentorGridItem({required this.title, required this.value, required this.icon, super.key});
+  const MentorGridItem(
+      {required this.title,
+      required this.value,
+      required this.icon,
+      super.key});
 
   @override
   Widget build(BuildContext context) {

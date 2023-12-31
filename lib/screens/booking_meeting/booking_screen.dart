@@ -31,7 +31,8 @@ class _BookingScreenState extends State<BookingScreen> {
 
   @override
   void didChangeDependencies() {
-    bloc.handleReadingArguments(context, arguments: ModalRoute.of(context)!.settings.arguments);
+    bloc.handleReadingArguments(context,
+        arguments: ModalRoute.of(context)!.settings.arguments);
     bloc.handleLisinnerOfDiscountController();
     super.didChangeDependencies();
   }
@@ -57,7 +58,8 @@ class _BookingScreenState extends State<BookingScreen> {
                 ValueListenableBuilder<AvaliableMentorStatus>(
                     valueListenable: bloc.checkingAvaliableMentors,
                     builder: (context, snapshot, child) {
-                      return bloc.bookingType == BookingType.schudule || snapshot == AvaliableMentorStatus.found
+                      return bloc.bookingType == BookingType.schudule ||
+                              snapshot == AvaliableMentorStatus.found
                           ? MentorProfileInfoView(
                               suffixeName: bloc.mentorSuffixName!,
                               firstName: bloc.mentorFirstName!,
@@ -86,7 +88,8 @@ class _BookingScreenState extends State<BookingScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: CustomText(
-                    title: "-- ${AppLocalizations.of(context)!.appointmentdetails} --",
+                    title:
+                        "-- ${AppLocalizations.of(context)!.appointmentdetails} --",
                     fontSize: 16,
                     textColor: const Color(0xff554d56),
                   ),
@@ -96,7 +99,8 @@ class _BookingScreenState extends State<BookingScreen> {
                     builder: (context, snapshot, child) {
                       return AppointmentDetailsView(
                         title: AppLocalizations.of(context)!.meetingdate,
-                        desc: bloc.bookingType == BookingType.schudule || snapshot == AvaliableMentorStatus.found
+                        desc: bloc.bookingType == BookingType.schudule ||
+                                snapshot == AvaliableMentorStatus.found
                             ? bloc.meetingdate!
                             : "-----",
                       );
@@ -106,8 +110,10 @@ class _BookingScreenState extends State<BookingScreen> {
                     builder: (context, snapshot, child) {
                       return AppointmentDetailsView(
                         title: AppLocalizations.of(context)!.meetingday,
-                        desc: bloc.bookingType == BookingType.schudule || snapshot == AvaliableMentorStatus.found
-                            ? bloc.box.get(DatabaseFieldConstant.language) == "en"
+                        desc: bloc.bookingType == BookingType.schudule ||
+                                snapshot == AvaliableMentorStatus.found
+                            ? bloc.box.get(DatabaseFieldConstant.language) ==
+                                    "en"
                                 ? bloc.meetingday!
                                 : DayTime().convertDayToArabic(bloc.meetingday!)
                             : "-----",
@@ -118,7 +124,8 @@ class _BookingScreenState extends State<BookingScreen> {
                     builder: (context, snapshot, child) {
                       return AppointmentDetailsView(
                         title: AppLocalizations.of(context)!.meetingtime,
-                        desc: bloc.bookingType == BookingType.schudule || snapshot == AvaliableMentorStatus.found
+                        desc: bloc.bookingType == BookingType.schudule ||
+                                snapshot == AvaliableMentorStatus.found
                             ? bloc.meetingtime!
                             : "-----",
                         forceView: true,
@@ -126,7 +133,8 @@ class _BookingScreenState extends State<BookingScreen> {
                     }),
                 AppointmentDetailsView(
                   title: AppLocalizations.of(context)!.meetingduration,
-                  desc: "${bloc.meetingduration!} ${AppLocalizations.of(context)!.min}",
+                  desc:
+                      "${bloc.meetingduration!} ${AppLocalizations.of(context)!.min}",
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 16, left: 16),
@@ -171,7 +179,9 @@ class _BookingScreenState extends State<BookingScreen> {
                     builder: (context, snapshot, child) {
                       return AppointmentDetailsView(
                         title: AppLocalizations.of(context)!.discount,
-                        desc: snapshot == null || snapshot == "error" ? "0 %" : "$snapshot %",
+                        desc: snapshot == null || snapshot == "error"
+                            ? "0 %"
+                            : "$snapshot %",
                       );
                     }),
                 ValueListenableBuilder<String?>(
@@ -180,8 +190,12 @@ class _BookingScreenState extends State<BookingScreen> {
                       return AppointmentDetailsView(
                           title: AppLocalizations.of(context)!.totalamount,
                           desc: bloc.calculateTotalAmount(
-                              double.parse(Currency().getHourRateWithoutCurrency(bloc.meetingcost!)),
-                              snapshot == null || snapshot == "error" ? 0 : double.parse(snapshot)));
+                              double.parse(Currency()
+                                  .getHourRateWithoutCurrency(
+                                      bloc.meetingcost!)),
+                              snapshot == null || snapshot == "error"
+                                  ? 0
+                                  : double.parse(snapshot)));
                     }),
                 CustomButton(
                   enableButton: true,
@@ -191,35 +205,49 @@ class _BookingScreenState extends State<BookingScreen> {
                         context: context,
                         language: bloc.box.get(DatabaseFieldConstant.language),
                         totalAmount: bloc.calculateTotalAmount(
-                            double.parse(Currency().getHourRateWithoutCurrency(bloc.meetingcost!)),
-                            bloc.discountErrorMessage.value == null || bloc.discountErrorMessage.value == "error"
+                            double.parse(Currency()
+                                .getHourRateWithoutCurrency(bloc.meetingcost!)),
+                            bloc.discountErrorMessage.value == null ||
+                                    bloc.discountErrorMessage.value == "error"
                                 ? 0
-                                : double.parse(bloc.discountErrorMessage.value!)));
+                                : double.parse(
+                                    bloc.discountErrorMessage.value!)));
 
                     await bottomSheet.paymentBottomSheet(
                         faze: PaymentFaze.welcoming,
                         openNext: () async {
-                          final parsedFromDate = DateTime.parse(bloc.meetingdate!);
+                          final parsedFromDate =
+                              DateTime.parse(bloc.meetingdate!);
 
                           var fromDateTime = DateTime(
                               parsedFromDate.year,
                               parsedFromDate.month,
                               parsedFromDate.day,
-                              DayTime().getHourFromTimeString(bloc.meetingtime!),
-                              DayTime().getMinFromTimeString(bloc.meetingtime!));
+                              DayTime()
+                                  .getHourFromTimeString(bloc.meetingtime!),
+                              DayTime()
+                                  .getMinFromTimeString(bloc.meetingtime!));
 
-                          var toDateTime = fromDateTime.add(Duration(minutes: int.parse(bloc.meetingduration!)));
+                          var toDateTime = fromDateTime.add(Duration(
+                              minutes: int.parse(bloc.meetingduration!)));
 
                           if (bloc.bookingType == BookingType.schudule) {
                             final appointment = AppointmentRequest(
                               mentorId: bloc.mentorId!,
-                              priceBeforeDiscount:
-                                  double.parse(Currency().getHourRateWithoutCurrency(bloc.meetingcost!)),
-                              priceAfterDiscount: bloc.calculateTotalAmountDouble(
-                                  double.parse(Currency().getHourRateWithoutCurrency(bloc.meetingcost!)),
-                                  bloc.discountErrorMessage.value == null || bloc.discountErrorMessage.value == "error"
-                                      ? 0
-                                      : double.parse(bloc.discountErrorMessage.value!)),
+                              priceBeforeDiscount: double.parse(Currency()
+                                  .getHourRateWithoutCurrency(
+                                      bloc.meetingcost!)),
+                              priceAfterDiscount:
+                                  bloc.calculateTotalAmountDouble(
+                                      double.parse(Currency()
+                                          .getHourRateWithoutCurrency(
+                                              bloc.meetingcost!)),
+                                      bloc.discountErrorMessage.value == null ||
+                                              bloc.discountErrorMessage.value ==
+                                                  "error"
+                                          ? 0
+                                          : double.parse(bloc
+                                              .discountErrorMessage.value!)),
                               type: "schudule",
                               dateFrom: CustomDate(
                                   year: fromDateTime.year,
@@ -233,20 +261,30 @@ class _BookingScreenState extends State<BookingScreen> {
                                   day: toDateTime.day,
                                   hour: toDateTime.hour,
                                   min: toDateTime.minute),
-                              note: bloc.noteController.text.isEmpty ? null : bloc.noteController.text,
+                              note: bloc.noteController.text.isEmpty
+                                  ? null
+                                  : bloc.noteController.text,
                             );
 
-                            bloc.bookMeetingRequest(appointment: appointment).then((value) {
+                            bloc
+                                .bookMeetingRequest(appointment: appointment)
+                                .then((value) {
                               Navigator.of(context).pop();
                               Navigator.of(context).pop();
-                              locator<MainContainerBloc>().getAppointmentsAndEvents();
-                              locator<MainContainerBloc>().appBarKey.currentState!.animateTo(2);
-                              locator<MainContainerBloc>().currentTabIndexNotifier.value = SelectedTab.call;
+                              locator<MainContainerBloc>().getAppointments();
+                              locator<MainContainerBloc>()
+                                  .appBarKey
+                                  .currentState!
+                                  .animateTo(2);
+                              locator<MainContainerBloc>()
+                                  .currentTabIndexNotifier
+                                  .value = SelectedTab.call;
                             }).catchError((error) {
                               if (error is DioError) {
                                 final exception = error.error;
                                 if (exception is HttpException) {
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
                                     content: Text(exception.message),
                                   ));
                                 }
@@ -255,13 +293,20 @@ class _BookingScreenState extends State<BookingScreen> {
                           } else {
                             final appointment = AppointmentRequest(
                               mentorId: bloc.mentorId!,
-                              priceBeforeDiscount:
-                                  double.parse(Currency().getHourRateWithoutCurrency(bloc.meetingcost!)),
-                              priceAfterDiscount: bloc.calculateTotalAmountDouble(
-                                  double.parse(Currency().getHourRateWithoutCurrency(bloc.meetingcost!)),
-                                  bloc.discountErrorMessage.value == null || bloc.discountErrorMessage.value == "error"
-                                      ? 0
-                                      : double.parse(bloc.discountErrorMessage.value!)),
+                              priceBeforeDiscount: double.parse(Currency()
+                                  .getHourRateWithoutCurrency(
+                                      bloc.meetingcost!)),
+                              priceAfterDiscount:
+                                  bloc.calculateTotalAmountDouble(
+                                      double.parse(Currency()
+                                          .getHourRateWithoutCurrency(
+                                              bloc.meetingcost!)),
+                                      bloc.discountErrorMessage.value == null ||
+                                              bloc.discountErrorMessage.value ==
+                                                  "error"
+                                          ? 0
+                                          : double.parse(bloc
+                                              .discountErrorMessage.value!)),
                               type: "instant",
                               dateFrom: CustomDate(
                                   year: fromDateTime.year,
@@ -275,11 +320,15 @@ class _BookingScreenState extends State<BookingScreen> {
                                   day: toDateTime.day,
                                   hour: toDateTime.hour,
                                   min: toDateTime.minute),
-                              note: bloc.noteController.text.isEmpty ? null : bloc.noteController.text,
+                              note: bloc.noteController.text.isEmpty
+                                  ? null
+                                  : bloc.noteController.text,
                             );
 
-                            bloc.bookMeetingRequest(appointment: appointment).then((value) {
-                              locator<MainContainerBloc>().getAppointmentsAndEvents();
+                            bloc
+                                .bookMeetingRequest(appointment: appointment)
+                                .then((value) {
+                              locator<MainContainerBloc>().getAppointments();
                               Navigator.of(context).pop();
                             });
                           }

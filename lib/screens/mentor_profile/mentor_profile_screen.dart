@@ -24,7 +24,8 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
 
   @override
   void didChangeDependencies() {
-    bloc.handleReadingArguments(context, arguments: ModalRoute.of(context)!.settings.arguments);
+    bloc.handleReadingArguments(context,
+        arguments: ModalRoute.of(context)!.settings.arguments);
     super.didChangeDependencies();
   }
 
@@ -56,8 +57,11 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
                             borderRadius: BorderRadius.circular(20),
                             child: bloc.profileImageUrl != ""
                                 ? FadeInImage(
-                                    placeholder: const AssetImage("assets/images/avatar.jpeg"),
-                                    image: NetworkImage(AppConstant.imagesBaseURLForMentors + bloc.profileImageUrl!,
+                                    placeholder: const AssetImage(
+                                        "assets/images/avatar.jpeg"),
+                                    image: NetworkImage(
+                                        AppConstant.imagesBaseURLForMentors +
+                                            bloc.profileImageUrl!,
                                         scale: 1),
                                   )
                                 : Image.asset(
@@ -71,7 +75,8 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
                       ),
                       const SizedBox(height: 20),
                       CustomText(
-                        title: "${bloc.suffixeName!} ${bloc.firstName!} ${bloc.lastName!}",
+                        title:
+                            "${bloc.suffixeName!} ${bloc.firstName!} ${bloc.lastName!}",
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         textColor: const Color(0xff554d56),
@@ -81,7 +86,8 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CustomText(
-                            title: "${AppLocalizations.of(context)!.category} :",
+                            title:
+                                "${AppLocalizations.of(context)!.category} :",
                             fontSize: 12,
                             textColor: const Color(0xff554d56),
                           ),
@@ -125,7 +131,9 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
                                   title: AppLocalizations.of(context)!.gender,
                                   value: bloc.gender!,
                                   icon: Icon(
-                                    bloc.genderIndex == 1 ? Icons.male : Icons.female,
+                                    bloc.genderIndex == 1
+                                        ? Icons.male
+                                        : Icons.female,
                                     color: const Color(0xff444444),
                                   ),
                                 ),
@@ -135,19 +143,24 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 MentorGridItem(
-                                  title: AppLocalizations.of(context)!.countryprofile,
+                                  title: AppLocalizations.of(context)!
+                                      .countryprofile,
                                   value: bloc.countryName!,
                                   icon: SizedBox(
                                     width: 30,
                                     child: FadeInImage(
-                                      placeholder: const AssetImage("assets/images/flagPlaceHolderImg.png"),
-                                      image: NetworkImage(AppConstant.imagesBaseURLForCountries + bloc.countryFlag!),
+                                      placeholder: const AssetImage(
+                                          "assets/images/flagPlaceHolderImg.png"),
+                                      image: NetworkImage(AppConstant
+                                              .imagesBaseURLForCountries +
+                                          bloc.countryFlag!),
                                     ),
                                   ),
                                 ),
                                 const SizedBox(height: 20),
                                 MentorGridItem(
-                                  title: AppLocalizations.of(context)!.experience,
+                                  title:
+                                      AppLocalizations.of(context)!.experience,
                                   value:
                                       "${bloc.calculateExperience(bloc.experienceSince)} ${AppLocalizations.of(context)!.year}",
                                   icon: const Icon(
@@ -163,7 +176,8 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: CustomText(
-                          title: "-- ${AppLocalizations.of(context)!.specialist} --",
+                          title:
+                              "-- ${AppLocalizations.of(context)!.specialist} --",
                           fontSize: 14,
                           maxLins: 5,
                           textColor: const Color(0xff554d56),
@@ -171,12 +185,15 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: MultiSelectContainer(items: bloc.majors, onChange: (allSelectedItems, selectedItem) {}),
+                        child: MultiSelectContainer(
+                            items: bloc.majors,
+                            onChange: (allSelectedItems, selectedItem) {}),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: CustomText(
-                          title: "-- ${AppLocalizations.of(context)!.ratingandreview} --",
+                          title:
+                              "-- ${AppLocalizations.of(context)!.ratingandreview} --",
                           fontSize: 14,
                           maxLins: 5,
                           textColor: const Color(0xff554d56),

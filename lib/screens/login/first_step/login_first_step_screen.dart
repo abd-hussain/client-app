@@ -33,9 +33,11 @@ class LoginFirstStepScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             CustomButton(
-              buttonTitle: AppLocalizations.of(context)!.login_first_step_button,
+              buttonTitle:
+                  AppLocalizations.of(context)!.login_first_step_button,
               enableButton: true,
-              onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.loginSecoundStepRoute),
+              onTap: () => Navigator.of(context, rootNavigator: true)
+                  .pushNamed(RoutesConstants.loginSecoundStepRoute),
             ),
             const SizedBox(height: 20),
             CustomText(
@@ -44,10 +46,11 @@ class LoginFirstStepScreen extends StatelessWidget {
               textColor: const Color(0xff444444),
             ),
             TextButton(
-              onPressed: () =>
-                  Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen, arguments: {
+              onPressed: () => Navigator.of(context, rootNavigator: true)
+                  .pushNamed(RoutesConstants.webViewScreen, arguments: {
                 AppConstant.webViewPageUrl: AppConstant.termsLink,
-                AppConstant.pageTitle: AppLocalizations.of(context)!.termsandconditions
+                AppConstant.pageTitle:
+                    AppLocalizations.of(context)!.termsandconditions
               }),
               child: CustomText(
                 title: AppLocalizations.of(context)!.termsandconditions,

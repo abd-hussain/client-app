@@ -12,7 +12,8 @@ class MyCalenderBloc extends Bloc<AppointmentsService> {
     return locator<AppointmentsService>().cancelAppointment(id: meetingId);
   }
 
-  Future<dynamic> editNoteMeeting({required int meetingId, required String note}) async {
+  Future<dynamic> editNoteMeeting(
+      {required int meetingId, required String note}) async {
     return locator<AppointmentsService>().editNoteAppointment(
         noteAppointment: NoteAppointmentRequest(
       id: meetingId,

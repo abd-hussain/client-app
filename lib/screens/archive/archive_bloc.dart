@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class ArchiveBloc extends Bloc<ArchiveService> {
-  final ValueNotifier<List<ArchiveData>> listOfArchiveNotifier = ValueNotifier<List<ArchiveData>>([]);
+  final ValueNotifier<List<ArchiveData>> listOfArchiveNotifier =
+      ValueNotifier<List<ArchiveData>>([]);
   final box = Hive.box(DatabaseBoxConstant.userInfo);
 
   void listOfArchives() {

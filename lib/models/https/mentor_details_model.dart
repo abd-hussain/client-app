@@ -5,7 +5,9 @@ class MentorDetailsResponse {
   MentorDetailsResponse({this.data, this.message});
 
   MentorDetailsResponse.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? MentorDetailsResponseData.fromJson(json['data']) : null;
+    data = json['data'] != null
+        ? MentorDetailsResponseData.fromJson(json['data'])
+        : null;
     message = json['message'];
   }
 }

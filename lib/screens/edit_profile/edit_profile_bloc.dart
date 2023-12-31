@@ -26,7 +26,8 @@ class EditProfileBloc extends Bloc<AccountService> {
   TextEditingController genderController = TextEditingController();
   TextEditingController mobileNumberController = TextEditingController();
 
-  ValueNotifier<LoadingStatus> loadingStatus = ValueNotifier<LoadingStatus>(LoadingStatus.idle);
+  ValueNotifier<LoadingStatus> loadingStatus =
+      ValueNotifier<LoadingStatus>(LoadingStatus.idle);
 
   final box = Hive.box(DatabaseBoxConstant.userInfo);
 
@@ -41,7 +42,8 @@ class EditProfileBloc extends Bloc<AccountService> {
       mobileNumberController.text = value.data!.mobileNumber ?? "";
 
       if (value.data!.gender != null) {
-        genderController.text = GenderFormat().convertIndexToString(context, value.data!.gender!);
+        genderController.text =
+            GenderFormat().convertIndexToString(context, value.data!.gender!);
       }
 
       if (value.data!.dateOfBirth != null) {
@@ -64,8 +66,12 @@ class EditProfileBloc extends Bloc<AccountService> {
             Icons.male,
             color: Color(0xff444444),
           )),
-      Gender(name: AppLocalizations.of(context)!.genderfemale, icon: const Icon(Icons.female)),
-      Gender(name: AppLocalizations.of(context)!.genderother, icon: const Icon(Icons.align_horizontal_center))
+      Gender(
+          name: AppLocalizations.of(context)!.genderfemale,
+          icon: const Icon(Icons.female)),
+      Gender(
+          name: AppLocalizations.of(context)!.genderother,
+          icon: const Icon(Icons.align_horizontal_center))
     ];
   }
 
@@ -87,7 +93,8 @@ class EditProfileBloc extends Bloc<AccountService> {
         firstName: firstNameController.text,
         lastName: lastNameController.text,
         email: emailController.text,
-        gender: GenderFormat().convertStringToIndex(context, genderController.text),
+        gender:
+            GenderFormat().convertStringToIndex(context, genderController.text),
         dateOfBirth: selectedDate,
         profileImage: profileImage,
       );

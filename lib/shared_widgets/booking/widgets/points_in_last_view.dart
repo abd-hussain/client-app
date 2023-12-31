@@ -5,7 +5,8 @@ class PointsInLastViewBooking extends StatelessWidget {
   final String number;
   final String text;
 
-  const PointsInLastViewBooking({required this.number, required this.text, super.key});
+  const PointsInLastViewBooking(
+      {required this.number, required this.text, super.key});
 
   @override
   Widget build(BuildContext context) {

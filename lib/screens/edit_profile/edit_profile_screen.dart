@@ -58,8 +58,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               bloc.callRequest(context).then((value) async {
                                 bloc.loadingStatus.value = LoadingStatus.finish;
                                 if (value != null) {
-                                  await bloc.box
-                                      .put(DatabaseFieldConstant.userFirstName, bloc.firstNameController.text);
+                                  await bloc.box.put(
+                                      DatabaseFieldConstant.userFirstName,
+                                      bloc.firstNameController.text);
                                   navigator.pop();
                                 }
                               });
@@ -70,7 +71,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               width: 120,
                               hight: 120,
                               isFromNetwork: bloc.profileImageUrl != "",
-                              urlImage: bloc.profileImageUrl == "" ? null : bloc.profileImageUrl,
+                              urlImage: bloc.profileImageUrl == ""
+                                  ? null
+                                  : bloc.profileImageUrl,
                               addImageCallBack: (file) {
                                 bloc.profileImage = file;
                               },
@@ -86,7 +89,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             children: [
                               CustomTextField(
                                 controller: bloc.firstNameController,
-                                hintText: AppLocalizations.of(context)!.firstnameprofile,
+                                hintText: AppLocalizations.of(context)!
+                                    .firstnameprofile,
                                 keyboardType: TextInputType.name,
                                 inputFormatters: [
                                   LengthLimitingTextInputFormatter(45),
@@ -95,7 +99,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               const SizedBox(height: 16),
                               CustomTextField(
                                 controller: bloc.lastNameController,
-                                hintText: AppLocalizations.of(context)!.lastnameprofile,
+                                hintText: AppLocalizations.of(context)!
+                                    .lastnameprofile,
                                 keyboardType: TextInputType.name,
                                 inputFormatters: [
                                   LengthLimitingTextInputFormatter(45),
@@ -105,9 +110,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               _genderField(),
                               const SizedBox(height: 16),
                               Padding(
-                                padding: const EdgeInsets.only(left: 16, right: 16),
+                                padding:
+                                    const EdgeInsets.only(left: 16, right: 16),
                                 child: CustomText(
-                                  title: AppLocalizations.of(context)!.dbprofile,
+                                  title:
+                                      AppLocalizations.of(context)!.dbprofile,
                                   textAlign: TextAlign.start,
                                   fontSize: 14,
                                   textColor: const Color(0xff384048),
@@ -118,7 +125,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               const SizedBox(height: 16),
                               CustomTextField(
                                 controller: bloc.emailController,
-                                hintText: AppLocalizations.of(context)!.emailprofile,
+                                hintText:
+                                    AppLocalizations.of(context)!.emailprofile,
                                 keyboardType: TextInputType.emailAddress,
                                 inputFormatters: [
                                   LengthLimitingTextInputFormatter(35),
@@ -129,7 +137,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               CustomTextField(
                                 controller: bloc.mobileNumberController,
                                 enabled: false,
-                                hintText: AppLocalizations.of(context)!.mobilenumber,
+                                hintText:
+                                    AppLocalizations.of(context)!.mobilenumber,
                                 onChange: (text) => {},
                               ),
                             ],
@@ -169,7 +178,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
         InkWell(
           onTap: () async {
-            await BottomSheetsUtil().genderBottomSheet(context, bloc.listOfGenders, (selectedGender) {
+            await BottomSheetsUtil().genderBottomSheet(
+                context, bloc.listOfGenders, (selectedGender) {
               bloc.genderController.text = selectedGender.name;
             });
           },

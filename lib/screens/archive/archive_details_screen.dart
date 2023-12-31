@@ -16,11 +16,13 @@ class ArchiveDetailsScreen extends StatefulWidget {
 }
 
 class _ArchiveDetailsScreenState extends State<ArchiveDetailsScreen> {
-  final ValueNotifier<ArchiveData?> archiveNotifier = ValueNotifier<ArchiveData?>(null);
+  final ValueNotifier<ArchiveData?> archiveNotifier =
+      ValueNotifier<ArchiveData?>(null);
 
   @override
   void didChangeDependencies() {
-    handleReadingArguments(context, arguments: ModalRoute.of(context)!.settings.arguments);
+    handleReadingArguments(context,
+        arguments: ModalRoute.of(context)!.settings.arguments);
     super.didChangeDependencies();
   }
 
@@ -30,7 +32,8 @@ class _ArchiveDetailsScreenState extends State<ArchiveDetailsScreen> {
     super.dispose();
   }
 
-  void handleReadingArguments(BuildContext context, {required Object? arguments}) {
+  void handleReadingArguments(BuildContext context,
+      {required Object? arguments}) {
     if (arguments != null) {
       final newArguments = arguments as Map<String, dynamic>;
       archiveNotifier.value = (newArguments["data"] as ArchiveData?)!;
@@ -52,9 +55,11 @@ class _ArchiveDetailsScreenState extends State<ArchiveDetailsScreen> {
                 var parsedFromDate = DateTime.parse(snapshot!.dateFrom!);
                 var parsedToDate = DateTime.parse(snapshot.dateTo!);
                 final DateFormat formatter = DateFormat('yyyy-MM-dd');
-                final String formattedFromDate = formatter.format(parsedFromDate);
+                final String formattedFromDate =
+                    formatter.format(parsedFromDate);
                 var duration = parsedToDate.difference(parsedFromDate);
-                String durationString = duration.toString().replaceAll(".000000", "");
+                String durationString =
+                    duration.toString().replaceAll(".000000", "");
                 return Column(
                   children: [
                     Center(
@@ -65,8 +70,11 @@ class _ArchiveDetailsScreenState extends State<ArchiveDetailsScreen> {
                           borderRadius: BorderRadius.circular(20),
                           child: snapshot.profileImg != ""
                               ? FadeInImage(
-                                  placeholder: const AssetImage("assets/images/avatar.jpeg"),
-                                  image: NetworkImage(AppConstant.imagesBaseURLForMentors + snapshot.profileImg!,
+                                  placeholder: const AssetImage(
+                                      "assets/images/avatar.jpeg"),
+                                  image: NetworkImage(
+                                      AppConstant.imagesBaseURLForMentors +
+                                          snapshot.profileImg!,
                                       scale: 1),
                                 )
                               : Image.asset(
@@ -80,7 +88,8 @@ class _ArchiveDetailsScreenState extends State<ArchiveDetailsScreen> {
                     ),
                     const SizedBox(height: 8),
                     CustomText(
-                      title: "${snapshot.suffixeName!} ${snapshot.firstName!} ${snapshot.lastName!}",
+                      title:
+                          "${snapshot.suffixeName!} ${snapshot.firstName!} ${snapshot.lastName!}",
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       textColor: const Color(0xff554d56),

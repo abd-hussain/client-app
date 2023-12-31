@@ -10,7 +10,8 @@ import 'package:client_app/sevices/filter_services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class LoginSecoundStepBloc extends Bloc<AuthService> {
-  ValueNotifier<LoadingStatus> loadingStatus = ValueNotifier<LoadingStatus>(LoadingStatus.idle);
+  ValueNotifier<LoadingStatus> loadingStatus =
+      ValueNotifier<LoadingStatus>(LoadingStatus.idle);
   List<Country> countriesList = [];
 
   String countryCode = "";
@@ -24,7 +25,8 @@ class LoginSecoundStepBloc extends Bloc<AuthService> {
     if (mobileNumber[0] == "0") {
       mobileNumber = mobileNumber.substring(1);
     }
-    return await service.auth(countryCode: countryCode, mobileNumber: mobileNumber);
+    return await service.auth(
+        countryCode: countryCode, mobileNumber: mobileNumber);
   }
 
   void listOfCountries() {
@@ -43,8 +45,10 @@ class LoginSecoundStepBloc extends Bloc<AuthService> {
         name: box.get(DatabaseFieldConstant.selectedCountryName),
         currency: box.get(DatabaseFieldConstant.selectedCountryCurrency),
         dialCode: box.get(DatabaseFieldConstant.selectedCountryDialCode),
-        maxLength: int.parse(box.get(DatabaseFieldConstant.selectedCountryMaxLenght)),
-        minLength: int.parse(box.get(DatabaseFieldConstant.selectedCountryMinLenght)));
+        maxLength:
+            int.parse(box.get(DatabaseFieldConstant.selectedCountryMaxLenght)),
+        minLength:
+            int.parse(box.get(DatabaseFieldConstant.selectedCountryMinLenght)));
   }
 
   @override

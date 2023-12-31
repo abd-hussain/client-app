@@ -1,4 +1,3 @@
-import 'package:client_app/shared_widgets/booking/cancel_booking_bottom_sheet.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/utils/permission.dart';
@@ -9,18 +8,26 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class CallReadyView extends StatelessWidget {
-  final Function() cancelMeetingTapped;
+  final String channelId;
+  final int appointmentId;
+  final int meetingDurationInMin;
+  final Function callEnd;
 
-  const CallReadyView({super.key, required this.cancelMeetingTapped});
+  const CallReadyView(
+      {super.key,
+      required this.channelId,
+      required this.appointmentId,
+      required this.callEnd,
+      required this.meetingDurationInMin});
 
   @override
   Widget build(BuildContext context) {
-    final ctx = context;
-
     return Column(
       children: [
         const SizedBox(height: 20),
-        Lottie.network("https://assets8.lottiefiles.com/packages/lf20_WZQ5gTEaXA.json", height: 200),
+        Lottie.network(
+            "https://assets8.lottiefiles.com/packages/lf20_WZQ5gTEaXA.json",
+            height: 200),
         const SizedBox(height: 20),
         Padding(
           padding: const EdgeInsets.all(8),
@@ -68,27 +75,23 @@ class CallReadyView extends StatelessWidget {
                       buttonTitle: AppLocalizations.of(context)!.joinnow,
                       enableButton: true,
                       onTap: () async {
-                        PermissionHandler().handlePermission(Permission.camera).whenComplete(() {
-                          PermissionHandler().handlePermission(Permission.microphone).whenComplete(() {
-                            //TODO : handleChannelName
-                            Navigator.of(ctx, rootNavigator: true)
-                                .pushNamed(RoutesConstants.insideCallScreen, arguments: {
-                              "channelName": "test079",
+                        PermissionHandler()
+                            .handlePermission(Permission.camera)
+                            .whenComplete(() {
+                          PermissionHandler()
+                              .handlePermission(Permission.microphone)
+                              .whenComplete(() {
+                            Navigator.of(context, rootNavigator: true)
+                                .pushNamed(RoutesConstants.insideCallScreen,
+                                    arguments: {
+                                  "channelName": channelId,
+                                  "callID": appointmentId,
+                                  "durations": meetingDurationInMin,
+                                }).then((value) {
+                              callEnd();
                             });
                           });
                         });
-                      }),
-                  CustomButton(
-                      padding: const EdgeInsets.all(8),
-                      buttonTitle: AppLocalizations.of(context)!.cancelappointment,
-                      buttonColor: const Color(0xffda1100),
-                      enableButton: true,
-                      onTap: () {
-                        CancelBookingBottomSheetsUtil(context: context).bookMeetingBottomSheet(
-                          confirm: () {
-                            cancelMeetingTapped();
-                          },
-                        );
                       }),
                 ],
               ),

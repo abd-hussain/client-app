@@ -21,13 +21,17 @@ class InstantBookingBottomSheetsUtil {
   });
 
   ValueNotifier<String?> selectedCategories = ValueNotifier<String?>(null);
-  ValueNotifier<Timing> selectedMeetingDuration = ValueNotifier<Timing>(Timing.halfHour);
+  ValueNotifier<Timing> selectedMeetingDuration =
+      ValueNotifier<Timing>(Timing.halfHour);
   int selectedCategoryID = 0;
 
   Future bookMeetingBottomSheet({
     required BookingFaze faze,
     required Function() openNext,
-    required Function({required int categoryID, required String categoryName, required String meetingduration})
+    required Function(
+            {required int categoryID,
+            required String categoryName,
+            required String meetingduration})
         doneSelection,
   }) async {
     return await showModalBottomSheet(
@@ -44,7 +48,8 @@ class InstantBookingBottomSheetsUtil {
       clipBehavior: Clip.antiAliasWithSaveLayer,
       builder: (context) {
         return Padding(
-          padding: const EdgeInsets.only(top: 10, left: 16, right: 16, bottom: 20),
+          padding:
+              const EdgeInsets.only(top: 10, left: 16, right: 16, bottom: 20),
           child: Wrap(children: [
             Row(
               children: [
@@ -85,7 +90,8 @@ class InstantBookingBottomSheetsUtil {
                     doneSelection: () => doneSelection(
                         categoryID: selectedCategoryID,
                         categoryName: selectedCategories.value!,
-                        meetingduration: ParserTimer().getTime(selectedMeetingDuration.value)),
+                        meetingduration: ParserTimer()
+                            .getTime(selectedMeetingDuration.value)),
                   ),
           ]),
         );
@@ -94,7 +100,9 @@ class InstantBookingBottomSheetsUtil {
   }
 
   Widget faze1View(
-      {required BuildContext context, required List<Category> listOfCategories, required Function() openNext}) {
+      {required BuildContext context,
+      required List<Category> listOfCategories,
+      required Function() openNext}) {
     return Column(
       children: [
         const SizedBox(height: 10),
@@ -111,15 +119,19 @@ class InstantBookingBottomSheetsUtil {
               builder: (context, snapshot, child) {
                 return GridView.builder(
                     gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, mainAxisExtent: 50),
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3, mainAxisExtent: 50),
                     shrinkWrap: true,
                     itemCount: listOfCategories.length,
                     itemBuilder: (context, index) {
                       return BookingCell(
                         title: listOfCategories[index].name!,
-                        isSelected: snapshot != null ? snapshot == listOfCategories[index].name! : false,
+                        isSelected: snapshot != null
+                            ? snapshot == listOfCategories[index].name!
+                            : false,
                         onPress: () {
-                          selectedCategories.value = listOfCategories[index].name!;
+                          selectedCategories.value =
+                              listOfCategories[index].name!;
                           selectedCategoryID = listOfCategories[index].id!;
                         },
                       );
@@ -155,7 +167,8 @@ class InstantBookingBottomSheetsUtil {
                   ),
                   BookingCell(
                     title: "45 ${AppLocalizations.of(context)!.min}",
-                    isSelected: (snapshot ?? Timing.hour) == Timing.threeQuarter,
+                    isSelected:
+                        (snapshot ?? Timing.hour) == Timing.threeQuarter,
                     onPress: () {
                       selectedMeetingDuration.value = Timing.threeQuarter;
                     },
@@ -174,7 +187,8 @@ class InstantBookingBottomSheetsUtil {
                         return footerBottomSheet(
                           context: context,
                           selectedMeetingDuration: snapshot,
-                          isButtonEnable: selectedCategoriesSnapshot != null ? true : false,
+                          isButtonEnable:
+                              selectedCategoriesSnapshot != null ? true : false,
                           openNext: () {
                             Navigator.pop(context);
                             openNext();
@@ -188,14 +202,17 @@ class InstantBookingBottomSheetsUtil {
     );
   }
 
-  Widget faze2View({required BuildContext context, required Function() doneSelection}) {
+  Widget faze2View(
+      {required BuildContext context, required Function() doneSelection}) {
     return Column(
       children: [
         const SizedBox(height: 20),
         Center(
           child: Container(
             padding: const EdgeInsets.all(30),
-            decoration: BoxDecoration(color: const Color(0xffE4E9EF), borderRadius: BorderRadius.circular(50)),
+            decoration: BoxDecoration(
+                color: const Color(0xffE4E9EF),
+                borderRadius: BorderRadius.circular(50)),
             child: const Icon(
               Icons.security,
               color: Color(0xff444444),

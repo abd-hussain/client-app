@@ -25,8 +25,12 @@ class _GenderFieldState extends State<GenderField> {
             Icons.male,
             color: Color(0xff444444),
           )),
-      Gender(name: AppLocalizations.of(context)!.genderfemale, icon: const Icon(Icons.female)),
-      Gender(name: AppLocalizations.of(context)!.genderother, icon: const Icon(Icons.align_horizontal_center))
+      Gender(
+          name: AppLocalizations.of(context)!.genderfemale,
+          icon: const Icon(Icons.female)),
+      Gender(
+          name: AppLocalizations.of(context)!.genderother,
+          icon: const Icon(Icons.align_horizontal_center))
     ];
     super.didChangeDependencies();
   }
@@ -49,7 +53,8 @@ class _GenderFieldState extends State<GenderField> {
         ),
         InkWell(
           onTap: () async {
-            await BottomSheetsUtil().genderBottomSheet(context, listOfGenders, (selectedGender) {
+            await BottomSheetsUtil().genderBottomSheet(context, listOfGenders,
+                (selectedGender) {
               widget.controller.text = selectedGender.name;
             });
           },

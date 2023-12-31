@@ -59,7 +59,8 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                               return ArchiveTileView(
                                 data: snapshot[index],
                                 onTap: (p0) {
-                                  Navigator.of(context, rootNavigator: true).pushNamed(
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pushNamed(
                                     RoutesConstants.archiveDetailsScreen,
                                     arguments: {
                                       "data": p0,

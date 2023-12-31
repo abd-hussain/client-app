@@ -7,7 +7,9 @@ class MainBannerHomePage extends StatelessWidget {
   final List<MainBanner> bannerList;
   final Function(String?) onPress;
 
-  const MainBannerHomePage({required this.bannerList, required this.onPress, Key? key}) : super(key: key);
+  const MainBannerHomePage(
+      {required this.bannerList, required this.onPress, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

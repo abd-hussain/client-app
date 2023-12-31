@@ -7,7 +7,8 @@ class ReviewHeaderView extends StatelessWidget {
   final int ratesCount;
   final double totalRates;
 
-  const ReviewHeaderView({required this.ratesCount, required this.totalRates, super.key});
+  const ReviewHeaderView(
+      {required this.ratesCount, required this.totalRates, super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -42,9 +42,12 @@ class ReviewBodyView extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                           child: reviews[index].clientProfileImg != ""
                               ? FadeInImage(
-                                  placeholder: const AssetImage("assets/images/avatar.jpeg"),
+                                  placeholder: const AssetImage(
+                                      "assets/images/avatar.jpeg"),
                                   image: NetworkImage(
-                                      AppConstant.imagesBaseURLForProfileImages + reviews[index].clientProfileImg!,
+                                      AppConstant
+                                              .imagesBaseURLForProfileImages +
+                                          reviews[index].clientProfileImg!,
                                       scale: 1),
                                 )
                               : Image.asset(
@@ -60,13 +63,15 @@ class ReviewBodyView extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           CustomText(
-                            title: "${reviews[index].clientFirstName!} ${reviews[index].clientLastName!}",
+                            title:
+                                "${reviews[index].clientFirstName!} ${reviews[index].clientLastName!}",
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                             textColor: const Color(0xff554d56),
                           ),
                           CustomText(
-                            title: DayTime().dateFormatter(reviews[index].createdAt!),
+                            title: DayTime()
+                                .dateFormatter(reviews[index].createdAt!),
                             fontSize: 10,
                             textColor: const Color(0xff554d56),
                           ),

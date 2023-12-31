@@ -7,7 +7,10 @@ class DateOfBirthField extends StatefulWidget {
   final String? selectedDate;
   final Function(String) selectedDateCallBack;
   const DateOfBirthField(
-      {super.key, required this.savedLanguage, this.selectedDate, required this.selectedDateCallBack});
+      {super.key,
+      required this.savedLanguage,
+      this.selectedDate,
+      required this.selectedDateCallBack});
 
   @override
   State<DateOfBirthField> createState() => _DateOfBirthFieldState();

@@ -40,7 +40,8 @@ class PaymentBottomSheetsUtil {
         clipBehavior: Clip.antiAliasWithSaveLayer,
         builder: (context) {
           return Padding(
-            padding: const EdgeInsets.only(top: 20, left: 16, right: 16, bottom: 20),
+            padding:
+                const EdgeInsets.only(top: 20, left: 16, right: 16, bottom: 20),
             child: Wrap(
               children: [
                 Row(
@@ -107,7 +108,8 @@ class PaymentBottomSheetsUtil {
                           context: context,
                           containerColor: const Color(0xffE8E8E8),
                           title: AppLocalizations.of(context)!.applypay,
-                          desc: "${AppLocalizations.of(context)!.paymentuse} ${AppLocalizations.of(context)!.applypay}",
+                          desc:
+                              "${AppLocalizations.of(context)!.paymentuse} ${AppLocalizations.of(context)!.applypay}",
                           icon: Icons.apple,
                           onPress: () => openNext(),
                         ),
@@ -118,7 +120,8 @@ class PaymentBottomSheetsUtil {
                     context: context,
                     containerColor: const Color(0xffE8E8E8),
                     title: AppLocalizations.of(context)!.paypal,
-                    desc: "${AppLocalizations.of(context)!.paymentuse} ${AppLocalizations.of(context)!.paypal}",
+                    desc:
+                        "${AppLocalizations.of(context)!.paymentuse} ${AppLocalizations.of(context)!.paypal}",
                     icon: Icons.paypal,
                     onPress: () => openNext(),
                   ),
@@ -176,7 +179,9 @@ class PaymentBottomSheetsUtil {
             ],
           ),
           const Expanded(child: SizedBox()),
-          language == "en" ? const Icon(Icons.arrow_left_outlined) : const Icon(Icons.arrow_right_outlined)
+          language == "en"
+              ? const Icon(Icons.arrow_left_outlined)
+              : const Icon(Icons.arrow_right_outlined)
         ],
       ),
     );

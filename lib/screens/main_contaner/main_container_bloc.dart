@@ -15,9 +15,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 enum SelectedTab { home, categories, call, calender, account }
 
 class MainContainerBloc {
-  final ValueNotifier<SelectedTab> currentTabIndexNotifier = ValueNotifier<SelectedTab>(SelectedTab.home);
-  final StreamController<List<CalenderMeetings>> eventsMeetingsListStreamController =
-      StreamController<List<CalenderMeetings>>.broadcast();
+  final ValueNotifier<SelectedTab> currentTabIndexNotifier =
+      ValueNotifier<SelectedTab>(SelectedTab.home);
+  final ValueNotifier<List<CalenderMeetings>> meetingsListNotifier =
+      ValueNotifier<List<CalenderMeetings>>([]);
   final box = Hive.box(DatabaseBoxConstant.userInfo);
 
   GlobalKey<ConvexAppBarState> appBarKey = GlobalKey<ConvexAppBarState>();
@@ -62,49 +63,59 @@ class MainContainerBloc {
     }
   }
 
-  Future<void> getAppointmentsAndEvents() async {
-    eventsMeetingsListStreamController.sink.add([]);
-    List<CalenderMeetings> list = [];
+  Future<void> getAppointments() async {
     if (checkIfUserIsLoggedIn()) {
-      list.addAll(await _getClientAppointments());
+      await _getClientAppointments();
     }
-    eventsMeetingsListStreamController.sink.add(list);
   }
 
-  Future<List<CalenderMeetings>> _getClientAppointments() async {
+  Future<void> _getClientAppointments() async {
     List<CalenderMeetings> list = [];
 
     await locator<AppointmentsService>().getClientAppointments().then((value) {
       if (value.data != null) {
         for (AppointmentData item in value.data!) {
           final newItem = CalenderMeetings(
-              meetingId: item.id,
-              reservationId: null,
-              clientId: item.clientId,
-              mentorId: item.mentorId,
-              appointmentType: item.appointmentType,
-              priceBeforeDiscount: item.priceBeforeDiscount,
-              priceAfterDiscount: item.priceAfterDiscount,
-              state: item.state,
-              noteFromClient: item.noteFromClient,
-              noteFromMentor: item.noteFromMentor,
-              profileImg: item.profileImg,
-              mentorPrefix: item.mentorPrefix,
-              mentorFirstName: item.mentorFirstName,
-              mentorLastName: item.mentorLastName,
-              categoryId: item.categoryId,
-              categoryName: item.categoryName,
-              type: Type.meeting,
-              eventImg: null,
-              fromTime: DateTime.parse(item.dateFrom!),
-              toTime: DateTime.parse(item.dateTo!),
-              title: null);
+            meetingId: item.id,
+            clientId: item.clientId,
+            mentorId: item.mentorId,
+            appointmentType: item.appointmentType,
+            priceBeforeDiscount: item.priceBeforeDiscount,
+            priceAfterDiscount: item.priceAfterDiscount,
+            state: handleMeetingState(item.state!),
+            noteFromClient: item.noteFromClient,
+            noteFromMentor: item.noteFromMentor,
+            profileImg: item.profileImg,
+            mentorPrefix: item.mentorPrefix,
+            mentorFirstName: item.mentorFirstName,
+            mentorLastName: item.mentorLastName,
+            categoryId: item.categoryId,
+            categoryName: item.categoryName,
+            fromTime: DateTime.parse(item.dateFrom!),
+            toTime: DateTime.parse(item.dateTo!),
+            channelId: item.channelId,
+          );
           list.add(newItem);
         }
       }
     });
+    meetingsListNotifier.value = list;
+  }
 
-    return list;
+  AppointmentsState handleMeetingState(int index) {
+    if (index == 1) {
+      return AppointmentsState.active;
+    } else if (index == 2) {
+      return AppointmentsState.mentorCancel;
+    } else if (index == 3) {
+      return AppointmentsState.clientCancel;
+    } else if (index == 4) {
+      return AppointmentsState.clientMiss;
+    } else if (index == 5) {
+      return AppointmentsState.mentorMiss;
+    } else {
+      return AppointmentsState.completed;
+    }
   }
 
   Future<void> callRegisterTokenRequest() async {

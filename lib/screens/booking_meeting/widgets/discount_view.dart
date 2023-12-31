@@ -42,9 +42,13 @@ class DiscountView extends StatelessWidget {
                 builder: (context, snapshot, child) {
                   return snapshot != null
                       ? Padding(
-                          padding: const EdgeInsets.only(top: 2, left: 8, right: 8),
+                          padding:
+                              const EdgeInsets.only(top: 2, left: 8, right: 8),
                           child: CustomText(
-                            title: snapshot == "error" ? AppLocalizations.of(context)!.notvaliddiscountcode : "",
+                            title: snapshot == "error"
+                                ? AppLocalizations.of(context)!
+                                    .notvaliddiscountcode
+                                : "",
                             fontSize: 14,
                             textColor: Colors.red,
                           ),

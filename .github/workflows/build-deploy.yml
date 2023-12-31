@@ -65,7 +65,7 @@ jobs:
         - name: Setup Fastlane
           uses: ruby/setup-ruby@v1
           with:
-              ruby-version: 2.6
+              ruby-version: 3.2.2
               rubygems: latest
       
         - name: Build and Deploy
@@ -75,27 +75,4 @@ jobs:
           env:
               MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
               MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.GIT_BASIC_AUTHORIZATION }}
-          
-          
-  tag:
-      runs-on: ubuntu-latest
-      needs: [android, ios]
-                    
-      steps:
-        - name: Checkout Code
-          uses: actions/checkout@v3
-                    
-        - name: Get Flutter Version
-          run: |
-            versionName=`cat pubspec.yaml | grep -o 'version:[^:]*' | cut -f2 -d":" | xargs`
-            echo "VERSION_NAME=v$versionName" >> $GITHUB_ENV
-                    
-        - name: Create Tag and Release
-          uses: "marvinpinto/action-automatic-releases@latest"
-          with:
-            repo_token: ${{ secrets.GITHUB_TOKEN }}
-            title: ${{ vars.VERSION_NAME }}
-            automatic_release_tag: ${{ vars.VERSION_NAME }}
-            draft: false
-            prerelease: false
               

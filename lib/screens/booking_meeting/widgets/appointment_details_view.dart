@@ -6,7 +6,11 @@ class AppointmentDetailsView extends StatelessWidget {
   final String desc;
   final bool forceView;
 
-  const AppointmentDetailsView({required this.title, required this.desc, this.forceView = false, super.key});
+  const AppointmentDetailsView(
+      {required this.title,
+      required this.desc,
+      this.forceView = false,
+      super.key});
 
   @override
   Widget build(BuildContext context) {

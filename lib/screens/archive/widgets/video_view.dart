@@ -13,7 +13,8 @@ class VideoView extends StatefulWidget {
 
 class _VideoViewState extends State<VideoView> {
   late VideoPlayerController videoPlayerController;
-  final ValueNotifier<ChewieController?> chewieControllerNotifier = ValueNotifier<ChewieController?>(null);
+  final ValueNotifier<ChewieController?> chewieControllerNotifier =
+      ValueNotifier<ChewieController?>(null);
 
   @override
   void initState() {
@@ -22,8 +23,8 @@ class _VideoViewState extends State<VideoView> {
   }
 
   void _initPlayer() async {
-    videoPlayerController =
-        VideoPlayerController.network(AppConstant.imagesBaseURLForAttachmentArchive + widget.videoUrl);
+    videoPlayerController = VideoPlayerController.network(
+        AppConstant.imagesBaseURLForAttachmentArchive + widget.videoUrl);
     await videoPlayerController.initialize().whenComplete(() {
       chewieControllerNotifier.value = ChewieController(
         videoPlayerController: videoPlayerController,

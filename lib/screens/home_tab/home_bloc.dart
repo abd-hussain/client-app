@@ -9,8 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class HomeBloc extends Bloc<HomeService> {
-  final ValueNotifier<List<MainBanner>?> bannerListNotifier = ValueNotifier<List<MainBanner>?>(null);
-  final ValueNotifier<List<NotificationsResponseData>?> notificationsListNotifier =
+  final ValueNotifier<List<MainBanner>?> bannerListNotifier =
+      ValueNotifier<List<MainBanner>?>(null);
+  final ValueNotifier<List<NotificationsResponseData>?>
+      notificationsListNotifier =
       ValueNotifier<List<NotificationsResponseData>?>(null);
   final box = Hive.box(DatabaseBoxConstant.userInfo);
 

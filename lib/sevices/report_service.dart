@@ -24,18 +24,23 @@ class ReportService with Service {
       "content": MultipartFile.fromString(reportData.content),
       "client_user_id": MultipartFile.fromString(reportData.userId ?? ""),
       "attach1": reportData.image1 != null
-          ? await MultipartFile.fromFile(reportData.image1!.path, filename: fileName1)
+          ? await MultipartFile.fromFile(reportData.image1!.path,
+              filename: fileName1)
           : MultipartFile.fromString(""),
       "attach2": reportData.image2 != null
-          ? await MultipartFile.fromFile(reportData.image2!.path, filename: fileName2)
+          ? await MultipartFile.fromFile(reportData.image2!.path,
+              filename: fileName2)
           : MultipartFile.fromString(""),
       "attach3": reportData.image3 != null
-          ? await MultipartFile.fromFile(reportData.image3!.path, filename: fileName3)
+          ? await MultipartFile.fromFile(reportData.image3!.path,
+              filename: fileName3)
           : MultipartFile.fromString(""),
     });
 
     return await repository.callRequest(
-        requestType: RequestType.post, methodName: MethodNameConstant.reportSuggestion, formData: formData);
+        requestType: RequestType.post,
+        methodName: MethodNameConstant.reportSuggestion,
+        formData: formData);
   }
 
   Future<dynamic> addBugIssue({required ReportRequest reportData}) async {
@@ -57,17 +62,22 @@ class ReportService with Service {
       "content": MultipartFile.fromString(reportData.content),
       "client_user_id": MultipartFile.fromString(reportData.userId ?? ""),
       "attach1": reportData.image1 != null
-          ? await MultipartFile.fromFile(reportData.image1!.path, filename: fileName1)
+          ? await MultipartFile.fromFile(reportData.image1!.path,
+              filename: fileName1)
           : MultipartFile.fromString(""),
       "attach2": reportData.image2 != null
-          ? await MultipartFile.fromFile(reportData.image2!.path, filename: fileName2)
+          ? await MultipartFile.fromFile(reportData.image2!.path,
+              filename: fileName2)
           : MultipartFile.fromString(""),
       "attach3": reportData.image3 != null
-          ? await MultipartFile.fromFile(reportData.image3!.path, filename: fileName3)
+          ? await MultipartFile.fromFile(reportData.image3!.path,
+              filename: fileName3)
           : MultipartFile.fromString(""),
     });
 
     return await repository.callRequest(
-        requestType: RequestType.post, methodName: MethodNameConstant.reportIssue, formData: formData);
+        requestType: RequestType.post,
+        methodName: MethodNameConstant.reportIssue,
+        formData: formData);
   }
 }

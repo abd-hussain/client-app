@@ -7,11 +7,13 @@ import 'package:dio/dio.dart';
 
 class AccountService with Service {
   Future<AccountInfo> getAccountInfo() async {
-    final response = await repository.callRequest(requestType: RequestType.get, methodName: MethodNameConstant.account);
+    final response = await repository.callRequest(
+        requestType: RequestType.get, methodName: MethodNameConstant.account);
     return AccountInfo.fromJson(response);
   }
 
-  Future<AccountInfo> updateAccount({required UpdateAccountRequest account}) async {
+  Future<AccountInfo> updateAccount(
+      {required UpdateAccountRequest account}) async {
     FormData formData = FormData();
     if (account.gender != null) {
       formData.fields.add(MapEntry("gender", account.gender.toString()));
@@ -48,7 +50,9 @@ class AccountService with Service {
     }
 
     final response = await repository.callRequest(
-        requestType: RequestType.put, methodName: MethodNameConstant.updateAccount, formData: formData);
+        requestType: RequestType.put,
+        methodName: MethodNameConstant.updateAccount,
+        formData: formData);
 
     return AccountInfo.fromJson(response);
   }

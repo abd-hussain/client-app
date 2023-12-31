@@ -7,7 +7,9 @@ class MentorInfoAvaliableResponse {
   MentorInfoAvaliableResponse({this.data, this.message});
 
   MentorInfoAvaliableResponse.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? MentorInfoAvaliableResponseData.fromJson(json['data']) : null;
+    data = json['data'] != null
+        ? MentorInfoAvaliableResponseData.fromJson(json['data'])
+        : null;
     message = json['message'];
   }
 }

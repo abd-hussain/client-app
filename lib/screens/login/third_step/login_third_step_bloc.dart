@@ -21,7 +21,8 @@ class LoginThirdStepBloc extends Bloc<AuthService> {
   String apikey = "";
 
   void extractArguments(BuildContext context) {
-    final arguments = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
     if (arguments != null) {
       countryCode = arguments[AppConstant.countryCode];
       mobileNumber = arguments[AppConstant.mobileNumber];
@@ -37,11 +38,16 @@ class LoginThirdStepBloc extends Bloc<AuthService> {
 
   Future<VerifyOTPResponse> callVerifyRequset() async {
     return await service.verifyOTP(
-        countryCode: countryCode, mobileNumber: mobileNumber, otp: pinController.text, apiKey: apikey, userId: userId);
+        countryCode: countryCode,
+        mobileNumber: mobileNumber,
+        otp: pinController.text,
+        apiKey: apikey,
+        userId: userId);
   }
 
   Future<AuthDebugResponse> callRequestOfAuthAgain() async {
-    return await service.auth(countryCode: countryCode, mobileNumber: mobileNumber);
+    return await service.auth(
+        countryCode: countryCode, mobileNumber: mobileNumber);
   }
 
   @override

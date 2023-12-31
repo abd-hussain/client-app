@@ -7,6 +7,7 @@ import 'package:client_app/screens/call_tab/widgets/no_call_view.dart';
 import 'package:client_app/screens/main_contaner/main_container_bloc.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/day_time.dart';
+import 'package:client_app/utils/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -22,6 +23,7 @@ class _CallScreenState extends State<CallScreen> {
 
   @override
   void didChangeDependencies() {
+    logDebugMessage(message: 'Call init Called ...');
     super.didChangeDependencies();
   }
 
@@ -34,60 +36,78 @@ class _CallScreenState extends State<CallScreen> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: StreamBuilder<List<CalenderMeetings>>(
-          initialData: const [],
-          stream: locator<MainContainerBloc>().eventsMeetingsListStreamController.stream,
-          builder: (context, snapshot) {
-            if (snapshot.hasData || snapshot.data == []) {
-              final appointment = bloc.checkIfThereIsAnyMeetingTodayAndReturnTheNearOne(snapshot.data!);
+      child: ValueListenableBuilder<List<CalenderMeetings>>(
+          valueListenable: locator<MainContainerBloc>().meetingsListNotifier,
+          builder: (context, snapshot, child) {
+            if (snapshot.isEmpty) {
+              return noCallView();
+            }
 
-              if (appointment != null) {
-                final timeDifference = appointment.fromTime.subtract(Duration(
-                    days: 0,
-                    hours: DateTime.now().hour,
-                    minutes: DateTime.now().minute,
-                    seconds: DateTime.now().second));
+            final appointment = bloc.getNearestMeetingToday(snapshot);
 
-                if (timeDifference.hour > 0 || timeDifference.minute > 0 || timeDifference.second > 0) {
-                  return WaitingCallView(
-                    timerStartNumberHour: timeDifference.hour,
-                    timerStartNumberMin: timeDifference.minute,
-                    timerStartNumberSec: timeDifference.second,
-                    cancelMeetingTapped: () {
-                      bloc.cancelAppointment(id: appointment.meetingId!).then((value) async {
-                        await locator<MainContainerBloc>().getAppointmentsAndEvents();
-                      });
-                    },
-                    profileImage: appointment.type == Type.meeting ? appointment.profileImg! : appointment.eventImg!,
-                    suffixeName: appointment.mentorPrefix!,
-                    firstName: appointment.mentorFirstName!,
-                    lastName: appointment.mentorLastName!,
-                    categoryName: appointment.categoryName!,
-                    meetingtime: DateFormat('hh:mm a').format(appointment.fromTime),
-                    meetingduration: "${appointment.toTime.difference(appointment.fromTime).inMinutes}",
-                    meetingday: bloc.box.get(DatabaseFieldConstant.language) == "en"
-                        ? DateFormat('EEEE').format(timeDifference)
-                        : DayTime().convertDayToArabic(DateFormat('EEEE').format(timeDifference)),
-                    clientMeetingNote: appointment.noteFromClient ?? "",
-                    mentorMeetingNote: appointment.noteFromMentor ?? "",
-                  );
-                } else {
-                  return CallReadyView(
-                    cancelMeetingTapped: () {
-                      bloc.cancelAppointment(id: appointment.meetingId!).then((value) async {
-                        await locator<MainContainerBloc>().getAppointmentsAndEvents();
-                      });
-                    },
-                  );
-                }
-              } else {
-                return noCallView();
-              }
+            if (appointment == null) {
+              return noCallView();
+            }
+
+            DateTime now = DateTime.now();
+            DateTime timeDifference = appointment.fromTime.isAfter(now)
+                ? appointment.fromTime.subtract(Duration(
+                    hours: now.hour,
+                    minutes: now.minute,
+                    seconds: now.second,
+                  ))
+                : DateTime(now.year, now.month, now.day);
+
+            if (bloc.isTimeDifferencePositive(timeDifference)) {
+              return WaitingCallView(
+                timerStartNumberHour: timeDifference.hour,
+                timerStartNumberMin: timeDifference.minute,
+                timerStartNumberSec: timeDifference.second,
+                metingDetails: appointment,
+                meetingtime: DateFormat('hh:mm a').format(appointment.fromTime),
+                meetingduration:
+                    "${appointment.toTime.difference(appointment.fromTime).inMinutes}",
+                meetingday: bloc.box.get(DatabaseFieldConstant.language) == "en"
+                    ? DateFormat('EEEE').format(timeDifference)
+                    : DayTime().convertDayToArabic(
+                        DateFormat('EEEE').format(timeDifference)),
+                cancelMeetingTapped: () {
+                  bloc
+                      .cancelAppointment(id: appointment.meetingId!)
+                      .then((value) async {
+                    await locator<MainContainerBloc>().getAppointments();
+                  });
+                },
+                timesup: () {
+                  setState(() {});
+                },
+              );
+            }
+
+            if (chechIfMentorNotExiedTheTimeAllowedToEnter(
+                appointmentFromDate: appointment.fromTime)) {
+              return CallReadyView(
+                channelId: appointment.channelId!,
+                appointmentId: appointment.meetingId!,
+                meetingDurationInMin: appointment.toTime
+                    .difference(appointment.fromTime)
+                    .inMinutes,
+                callEnd: () {
+                  locator<MainContainerBloc>().getAppointments();
+                },
+              );
             } else {
               return noCallView();
             }
           }),
     );
+  }
+
+  bool chechIfMentorNotExiedTheTimeAllowedToEnter(
+      {required DateTime appointmentFromDate}) {
+    final currentDate = DateTime.now();
+    final difference = currentDate.difference(appointmentFromDate).inMinutes;
+    return difference < 10;
   }
 
   Widget noCallView() {

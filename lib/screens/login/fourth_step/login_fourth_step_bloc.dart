@@ -22,7 +22,8 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
   Country? selectedCountry;
   TextEditingController genderController = TextEditingController();
   TextEditingController referalCodeController = TextEditingController();
-  ValueNotifier<LoadingStatus> loadingStatus = ValueNotifier<LoadingStatus>(LoadingStatus.idle);
+  ValueNotifier<LoadingStatus> loadingStatus =
+      ValueNotifier<LoadingStatus>(LoadingStatus.idle);
 
   ValueNotifier<bool> enableReferalCode = ValueNotifier<bool>(true);
 
@@ -40,7 +41,8 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
   final box = Hive.box(DatabaseBoxConstant.userInfo);
 
   void extractArguments(BuildContext context) {
-    final arguments = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
     if (arguments != null) {
       argumentToken = arguments[AppConstant.tokenToPass];
       userId = arguments[AppConstant.useridToPass];
@@ -80,7 +82,8 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
         firstNameController.text = value.data!.firstName ?? "";
         lastNameController.text = value.data!.lastName ?? "";
         if (value.data!.gender != null) {
-          genderController.text = GenderFormat().convertIndexToString(context, value.data!.gender!);
+          genderController.text =
+              GenderFormat().convertIndexToString(context, value.data!.gender!);
         }
         emailController.text = value.data!.email ?? "";
 
@@ -90,7 +93,8 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
         }
 
         if (value.data!.countryId != null) {
-          Iterable<Country> country = listOfCountries.where((element) => element.id! == value.data!.countryId!);
+          Iterable<Country> country = listOfCountries
+              .where((element) => element.id! == value.data!.countryId!);
           countryController.text = country.first.name!;
           selectedCountry = country.first;
         }
@@ -117,7 +121,8 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
         lastName: lastNameController.text,
         email: emailController.text,
         referalCode: referalCodeController.text,
-        gender: GenderFormat().convertStringToIndex(context, genderController.text),
+        gender:
+            GenderFormat().convertStringToIndex(context, genderController.text),
         countryId: selectedCountry != null
             ? selectedCountry!.id!
             : int.parse(box.get(DatabaseFieldConstant.selectedCountryId)),

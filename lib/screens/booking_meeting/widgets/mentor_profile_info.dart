@@ -28,8 +28,11 @@ class MentorProfileInfoView extends StatelessWidget {
               borderRadius: BorderRadius.circular(25),
               child: profileImg != ""
                   ? FadeInImage(
-                      placeholder: const AssetImage("assets/images/avatar.jpeg"),
-                      image: NetworkImage(AppConstant.imagesBaseURLForMentors + profileImg, scale: 1),
+                      placeholder:
+                          const AssetImage("assets/images/avatar.jpeg"),
+                      image: NetworkImage(
+                          AppConstant.imagesBaseURLForMentors + profileImg,
+                          scale: 1),
                     )
                   : Image.asset(
                       'assets/images/avatar.jpeg',

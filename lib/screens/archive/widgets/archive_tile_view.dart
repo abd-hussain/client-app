@@ -52,8 +52,12 @@ class ArchiveTileView extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                       child: data.profileImg != ""
                           ? FadeInImage(
-                              placeholder: const AssetImage("assets/images/avatar.jpeg"),
-                              image: NetworkImage(AppConstant.imagesBaseURLForMentors + data.profileImg!, scale: 1),
+                              placeholder:
+                                  const AssetImage("assets/images/avatar.jpeg"),
+                              image: NetworkImage(
+                                  AppConstant.imagesBaseURLForMentors +
+                                      data.profileImg!,
+                                  scale: 1),
                             )
                           : Image.asset(
                               'assets/images/avatar.jpeg',
@@ -66,7 +70,8 @@ class ArchiveTileView extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 CustomText(
-                  title: "${data.suffixeName!} ${data.firstName!} ${data.lastName!}",
+                  title:
+                      "${data.suffixeName!} ${data.firstName!} ${data.lastName!}",
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                   textColor: const Color(0xff554d56),
@@ -132,7 +137,8 @@ class ArchiveTileView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CustomText(
-                      title: "${AppLocalizations.of(context)!.meetingduration} :",
+                      title:
+                          "${AppLocalizations.of(context)!.meetingduration} :",
                       fontSize: 14,
                       textColor: const Color(0xff554d56),
                     ),

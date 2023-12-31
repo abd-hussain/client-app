@@ -42,8 +42,10 @@ class BookingBottomSheetsUtil {
     this.language = "en",
   });
 
-  ValueNotifier<Timing> selectedMeetingDuration = ValueNotifier<Timing>(Timing.halfHour);
-  ValueNotifier<DateTime> selectedMeetingDate = ValueNotifier<DateTime>(DateTime.now());
+  ValueNotifier<Timing> selectedMeetingDuration =
+      ValueNotifier<Timing>(Timing.halfHour);
+  ValueNotifier<DateTime> selectedMeetingDate =
+      ValueNotifier<DateTime>(DateTime.now());
   ValueNotifier<int?> selectedMeetingTime = ValueNotifier<int?>(null);
 
   Future bookMeetingBottomSheet({
@@ -55,8 +57,7 @@ class BookingBottomSheetsUtil {
       String meetingdate,
       String meetingday,
       String meetingcost,
-    )
-        doneSelection,
+    ) doneSelection,
   }) async {
     return await showModalBottomSheet(
       isScrollControlled: true,
@@ -72,7 +73,8 @@ class BookingBottomSheetsUtil {
       clipBehavior: Clip.antiAliasWithSaveLayer,
       builder: (context) {
         return Padding(
-          padding: const EdgeInsets.only(top: 20, left: 16, right: 16, bottom: 20),
+          padding:
+              const EdgeInsets.only(top: 20, left: 16, right: 16, bottom: 20),
           child: Wrap(children: [
             Row(
               children: [
@@ -97,7 +99,8 @@ class BookingBottomSheetsUtil {
             ),
             Center(
               child: CustomText(
-                title: "${faze == BookingFaze.one ? 1 : faze == BookingFaze.two ? 2 : 3} / 3",
+                title:
+                    "${faze == BookingFaze.one ? 1 : faze == BookingFaze.two ? 2 : 3} / 3",
                 textColor: const Color(0xff444444),
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -122,9 +125,12 @@ class BookingBottomSheetsUtil {
                         doneSelection: () => doneSelection(
                           ParserTimer().getTime(selectedMeetingDuration.value),
                           ParserTimer().getHours(selectedMeetingTime.value!),
-                          DayTime().dateFormatter(selectedMeetingDate.value.toString()),
-                          DayTime().dayFormatter(selectedMeetingDate.value.toString()),
-                          Currency().calculateHourRate(hourRate, selectedMeetingDuration.value),
+                          DayTime().dateFormatter(
+                              selectedMeetingDate.value.toString()),
+                          DayTime().dayFormatter(
+                              selectedMeetingDate.value.toString()),
+                          Currency().calculateHourRate(
+                              hourRate, selectedMeetingDuration.value),
                         ),
                       ),
           ]),
@@ -133,7 +139,10 @@ class BookingBottomSheetsUtil {
     );
   }
 
-  Widget faze1View({required BuildContext context, required double hourRate, required Function() openNext}) {
+  Widget faze1View(
+      {required BuildContext context,
+      required double hourRate,
+      required Function() openNext}) {
     return Column(
       children: [
         const SizedBox(height: 20),
@@ -165,7 +174,8 @@ class BookingBottomSheetsUtil {
                   ),
                   BookingCell(
                     title: "45  ${AppLocalizations.of(context)!.min}",
-                    isSelected: (snapshot ?? Timing.hour) == Timing.threeQuarter,
+                    isSelected:
+                        (snapshot ?? Timing.hour) == Timing.threeQuarter,
                     onPress: () {
                       selectedMeetingDuration.value = Timing.threeQuarter;
                     },
@@ -180,12 +190,17 @@ class BookingBottomSheetsUtil {
                   const SizedBox(height: 8),
                   ValueListenableBuilder<Timing?>(
                       valueListenable: selectedMeetingDuration,
-                      builder: (context, selectedMeetingDurationSnapshot, child) {
+                      builder:
+                          (context, selectedMeetingDurationSnapshot, child) {
                         return footerBottomSheet(
                           context: context,
                           hourRate: hourRate,
-                          selectedMeetingDuration: selectedMeetingDurationSnapshot,
-                          isButtonEnable: selectedMeetingDurationSnapshot != null ? true : false,
+                          selectedMeetingDuration:
+                              selectedMeetingDurationSnapshot,
+                          isButtonEnable:
+                              selectedMeetingDurationSnapshot != null
+                                  ? true
+                                  : false,
                           openNext: () {
                             Navigator.pop(context);
                             openNext();
@@ -199,7 +214,10 @@ class BookingBottomSheetsUtil {
     );
   }
 
-  Widget faze2View({required BuildContext context, required double hourRate, required Function() openNext}) {
+  Widget faze2View(
+      {required BuildContext context,
+      required double hourRate,
+      required Function() openNext}) {
     return Column(
       children: [
         const SizedBox(height: 20),
@@ -250,7 +268,8 @@ class BookingBottomSheetsUtil {
                           context: context,
                           hourRate: hourRate,
                           isButtonEnable: snapshot2 != null,
-                          selectedMeetingDuration: selectedMeetingDuration.value,
+                          selectedMeetingDuration:
+                              selectedMeetingDuration.value,
                           openNext: () {
                             Navigator.pop(context);
                             openNext();
@@ -264,14 +283,19 @@ class BookingBottomSheetsUtil {
     );
   }
 
-  Widget faze3View({required BuildContext context, required double hourRate, required Function() doneSelection}) {
+  Widget faze3View(
+      {required BuildContext context,
+      required double hourRate,
+      required Function() doneSelection}) {
     return Column(
       children: [
         const SizedBox(height: 20),
         Center(
           child: Container(
             padding: const EdgeInsets.all(30),
-            decoration: BoxDecoration(color: const Color(0xffE4E9EF), borderRadius: BorderRadius.circular(50)),
+            decoration: BoxDecoration(
+                color: const Color(0xffE4E9EF),
+                borderRadius: BorderRadius.circular(50)),
             child: const Icon(
               Icons.security,
               color: Color(0xff444444),
@@ -335,7 +359,8 @@ class BookingBottomSheetsUtil {
                   CustomText(
                     title: selectedMeetingDuration == null
                         ? "00 JD"
-                        : Currency().calculateHourRate(hourRate, selectedMeetingDuration),
+                        : Currency().calculateHourRate(
+                            hourRate, selectedMeetingDuration),
                     textColor: const Color(0xff444444),
                     fontWeight: FontWeight.bold,
                     fontSize: 20,

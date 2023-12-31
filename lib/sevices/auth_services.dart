@@ -7,7 +7,8 @@ import 'package:client_app/utils/repository/http_repository.dart';
 import 'package:client_app/utils/repository/method_name_constractor.dart';
 
 class AuthService with Service {
-  Future<AuthDebugResponse> auth({required String countryCode, required String mobileNumber}) async {
+  Future<AuthDebugResponse> auth(
+      {required String countryCode, required String mobileNumber}) async {
     AppinfoModel appInfo = await AppInfo().get();
 
     final body = AuthDebugRequest(
@@ -19,7 +20,9 @@ class AuthService with Service {
         countryId: appInfo.countryId);
 
     final response = await repository.callRequest(
-        requestType: RequestType.post, methodName: MethodNameConstant.authDebuging, postBody: body);
+        requestType: RequestType.post,
+        methodName: MethodNameConstant.authDebuging,
+        postBody: body);
 
     return AuthDebugResponse.fromJson(response);
   }
@@ -45,7 +48,9 @@ class AuthService with Service {
 
     try {
       final response = await repository.callRequest(
-          requestType: RequestType.post, methodName: MethodNameConstant.authVerify, postBody: body);
+          requestType: RequestType.post,
+          methodName: MethodNameConstant.authVerify,
+          postBody: body);
       return VerifyOTPResponse.fromJson(response);
     } catch (error) {
       return VerifyOTPResponse();

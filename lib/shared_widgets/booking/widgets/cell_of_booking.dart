@@ -6,7 +6,11 @@ class BookingCell extends StatelessWidget {
   final bool isSelected;
   final Function() onPress;
 
-  const BookingCell({required this.title, required this.isSelected, required this.onPress, super.key});
+  const BookingCell(
+      {required this.title,
+      required this.isSelected,
+      required this.onPress,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +22,10 @@ class BookingCell extends StatelessWidget {
           height: 40,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: isSelected ? const Color(0xff034061) : const Color(0xffE4E9EF)),
+            border: Border.all(
+                color: isSelected
+                    ? const Color(0xff034061)
+                    : const Color(0xffE4E9EF)),
             color: const Color(0xffE4E9EF),
           ),
           child: Center(

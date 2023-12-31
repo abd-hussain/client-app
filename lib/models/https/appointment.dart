@@ -29,6 +29,7 @@ class AppointmentData with ModelChecker {
   int? state;
   String? noteFromClient;
   String? noteFromMentor;
+  String? channelId;
   String? profileImg;
   String? mentorPrefix;
   String? mentorFirstName;
@@ -48,6 +49,7 @@ class AppointmentData with ModelChecker {
       this.state,
       this.noteFromClient,
       this.noteFromMentor,
+      this.channelId,
       this.profileImg,
       this.mentorPrefix,
       this.mentorFirstName,
@@ -67,6 +69,7 @@ class AppointmentData with ModelChecker {
     state = json['state'] as int?;
     noteFromClient = json['note_from_client'] as String?;
     noteFromMentor = json['note_from_mentor'] as String?;
+    channelId = json['channel_id'] as String?;
     profileImg = json['profile_img'] as String?;
     mentorPrefix = json['suffixe_name'] as String?;
     mentorFirstName = json['first_name'] as String?;

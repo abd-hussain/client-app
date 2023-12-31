@@ -1,3 +1,4 @@
+import 'package:client_app/models/https/calender_model.dart';
 import 'package:client_app/screens/booking_meeting/widgets/appointment_details_view.dart';
 import 'package:client_app/shared_widgets/booking/cancel_booking_bottom_sheet.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
@@ -12,35 +13,24 @@ class WaitingCallView extends StatefulWidget {
   final int timerStartNumberHour;
   final int timerStartNumberMin;
   final int timerStartNumberSec;
-  final String profileImage;
-  final String suffixeName;
-  final String firstName;
-  final String lastName;
-  final String categoryName;
   final String meetingduration;
   final String meetingtime;
   final String meetingday;
-  final String clientMeetingNote;
-  final String mentorMeetingNote;
-
+  final CalenderMeetings metingDetails;
   final Function() cancelMeetingTapped;
+  final Function() timesup;
 
   const WaitingCallView({
     super.key,
-    required this.suffixeName,
-    required this.firstName,
-    required this.lastName,
-    required this.profileImage,
     required this.timerStartNumberHour,
     required this.timerStartNumberMin,
     required this.timerStartNumberSec,
-    required this.categoryName,
     required this.cancelMeetingTapped,
     required this.meetingduration,
     required this.meetingtime,
     required this.meetingday,
-    required this.clientMeetingNote,
-    required this.mentorMeetingNote,
+    required this.metingDetails,
+    required this.timesup,
   });
 
   @override
@@ -48,26 +38,34 @@ class WaitingCallView extends StatefulWidget {
 }
 
 class _WaitingCallViewState extends State<WaitingCallView> {
-  Timer? timer;
-  int timerStartNumberSec = 59;
+  ValueNotifier<int> loadingForTimer = ValueNotifier<int>(0);
+  int timerStartNumberSec = 0;
   int timerStartNumberMin = 0;
-  int timerStartNumberHour = 23;
+  int timerStartNumberHour = 0;
 
   @override
   void didChangeDependencies() {
     timerStartNumberSec = widget.timerStartNumberSec;
     timerStartNumberMin = widget.timerStartNumberMin;
     timerStartNumberHour = widget.timerStartNumberHour;
+    loadingForTimer.value = timerStartNumberSec;
 
     startTimer();
     super.didChangeDependencies();
   }
 
   @override
+  void dispose() {
+    loadingForTimer.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Lottie.asset('assets/lottie/115245-medical-heart-pressure-timer.zip', height: 200),
+        Lottie.asset('assets/lottie/115245-medical-heart-pressure-timer.zip',
+            height: 200),
         Padding(
           padding: const EdgeInsets.only(bottom: 8),
           child: CustomText(
@@ -77,16 +75,20 @@ class _WaitingCallViewState extends State<WaitingCallView> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        Directionality(
-          textDirection: TextDirection.ltr,
-          child: CustomText(
-            title:
-                "${timerStartNumberHour > 9 ? "$timerStartNumberHour" : "0$timerStartNumberHour"} : ${timerStartNumberMin > 9 ? "$timerStartNumberMin" : "0$timerStartNumberMin"} : ${timerStartNumberSec > 9 ? "$timerStartNumberSec" : "0$timerStartNumberSec"}",
-            fontSize: 30,
-            textColor: const Color(0xff554d56),
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        ValueListenableBuilder<int>(
+            valueListenable: loadingForTimer,
+            builder: (context, snapshot, child) {
+              return Directionality(
+                textDirection: TextDirection.ltr,
+                child: CustomText(
+                  title:
+                      "${timerStartNumberHour > 9 ? "$timerStartNumberHour" : "0$timerStartNumberHour"} : ${timerStartNumberMin > 9 ? "$timerStartNumberMin" : "0$timerStartNumberMin"} : ${timerStartNumberSec > 9 ? "$timerStartNumberSec" : "0$timerStartNumberSec"}",
+                  fontSize: 30,
+                  textColor: const Color(0xff554d56),
+                  fontWeight: FontWeight.bold,
+                ),
+              );
+            }),
         const SizedBox(height: 8),
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -107,24 +109,29 @@ class _WaitingCallViewState extends State<WaitingCallView> {
         ),
         AppointmentDetailsView(
           title: AppLocalizations.of(context)!.meetingduration,
-          desc: "${widget.meetingduration} ${AppLocalizations.of(context)!.min}",
+          desc:
+              "${widget.meetingduration} ${AppLocalizations.of(context)!.min}",
         ),
         AppointmentDetailsView(
           title: AppLocalizations.of(context)!.clientnote,
-          desc: widget.clientMeetingNote,
+          desc: widget.metingDetails.noteFromClient ?? "",
         ),
         AppointmentDetailsView(
           title: AppLocalizations.of(context)!.mentornote,
-          desc: widget.mentorMeetingNote,
+          desc: widget.metingDetails.noteFromMentor ?? "",
         ),
-        mentorBoxView(),
+        mentorBoxView(metingDetails: widget.metingDetails),
         CustomButton(
-            enableButton: true,
+            enableButton:
+                DateTime.now().isBefore(widget.metingDetails.fromTime) &&
+                    widget.metingDetails.state == AppointmentsState.active,
+            padding: const EdgeInsets.all(8.0),
             buttonTitle: AppLocalizations.of(context)!.cancelappointment,
             width: MediaQuery.of(context).size.width / 2,
             buttonColor: const Color(0xffda1100),
             onTap: () {
-              CancelBookingBottomSheetsUtil(context: context).bookMeetingBottomSheet(
+              CancelBookingBottomSheetsUtil(context: context)
+                  .bookMeetingBottomSheet(
                 confirm: () {
                   widget.cancelMeetingTapped();
                 },
@@ -135,7 +142,7 @@ class _WaitingCallViewState extends State<WaitingCallView> {
     );
   }
 
-  Widget mentorBoxView() {
+  Widget mentorBoxView({required CalenderMeetings metingDetails}) {
     return Padding(
       padding: const EdgeInsets.only(left: 16, right: 16, top: 8),
       child: Container(
@@ -160,10 +167,15 @@ class _WaitingCallViewState extends State<WaitingCallView> {
               SizedBox(
                 width: 75,
                 height: 75,
-                child: widget.profileImage != ""
+                child: (metingDetails.profileImg != null &&
+                        metingDetails.profileImg != "")
                     ? FadeInImage(
-                        placeholder: const AssetImage("assets/images/avatar.jpeg"),
-                        image: NetworkImage(AppConstant.imagesBaseURLForMentors + widget.profileImage, scale: 1),
+                        placeholder:
+                            const AssetImage("assets/images/avatar.jpeg"),
+                        image: NetworkImage(
+                            AppConstant.imagesBaseURLForMentors +
+                                metingDetails.profileImg!,
+                            scale: 1),
                       )
                     : Image.asset(
                         'assets/images/avatar.jpeg',
@@ -175,7 +187,8 @@ class _WaitingCallViewState extends State<WaitingCallView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CustomText(
-                    title: "${widget.suffixeName} ${widget.firstName} ${widget.lastName}",
+                    title:
+                        "${metingDetails.mentorPrefix} ${metingDetails.mentorFirstName} ${metingDetails.mentorLastName}",
                     fontSize: 14,
                     textAlign: TextAlign.center,
                     fontWeight: FontWeight.bold,
@@ -193,7 +206,7 @@ class _WaitingCallViewState extends State<WaitingCallView> {
                       ),
                       const SizedBox(width: 8),
                       CustomText(
-                        title: widget.categoryName,
+                        title: metingDetails.categoryName ?? "",
                         fontSize: 12,
                         textColor: const Color(0xff554d56),
                       ),
@@ -210,30 +223,36 @@ class _WaitingCallViewState extends State<WaitingCallView> {
 
   void startTimer() {
     const oneSec = Duration(seconds: 1);
-    timer = Timer.periodic(
+    Timer.periodic(
       oneSec,
       (Timer timer) {
-        if (timerStartNumberHour == 0 && timerStartNumberMin == 0 && timerStartNumberSec == 0) {
-          setState(() {
-            timer.cancel();
-          });
+        if (_isTimerFinished()) {
+          timer.cancel();
+          widget.timesup();
         } else {
-          setState(() {
-            if (timerStartNumberSec > 0) {
-              timerStartNumberSec = timerStartNumberSec - 1;
-            } else {
-              if (timerStartNumberMin > 0) {
-                timerStartNumberMin = timerStartNumberMin - 1;
-                timerStartNumberSec = 59;
-              } else {
-                timerStartNumberHour = timerStartNumberHour - 1;
-                timerStartNumberMin = 59;
-                timerStartNumberSec = 59;
-              }
-            }
-          });
+          _decrementTimer();
+          loadingForTimer.value = timerStartNumberSec - 1;
         }
       },
     );
+  }
+
+  void _decrementTimer() {
+    if (timerStartNumberSec > 0) {
+      timerStartNumberSec--;
+    } else if (timerStartNumberMin > 0) {
+      timerStartNumberMin--;
+      timerStartNumberSec = 59;
+    } else if (timerStartNumberHour > 0) {
+      timerStartNumberHour--;
+      timerStartNumberMin = 59;
+      timerStartNumberSec = 59;
+    }
+  }
+
+  bool _isTimerFinished() {
+    return timerStartNumberHour == 0 &&
+        timerStartNumberMin == 0 &&
+        timerStartNumberSec == 0;
   }
 }

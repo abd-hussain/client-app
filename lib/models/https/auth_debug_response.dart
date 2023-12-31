@@ -6,7 +6,9 @@ class AuthDebugResponse {
   AuthDebugResponse({this.data, this.message, this.requestId});
 
   AuthDebugResponse.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? AuthDebugResponseData.fromJson(json['data']) : null;
+    data = json['data'] != null
+        ? AuthDebugResponseData.fromJson(json['data'])
+        : null;
     message = json['message'];
     requestId = json['request_id'];
   }
@@ -21,7 +23,13 @@ class AuthDebugResponseData {
 
   String? lastOtp;
 
-  AuthDebugResponseData({this.id, this.apiKey, this.blocked, this.firstName, this.lastName, this.lastOtp});
+  AuthDebugResponseData(
+      {this.id,
+      this.apiKey,
+      this.blocked,
+      this.firstName,
+      this.lastName,
+      this.lastOtp});
 
   AuthDebugResponseData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -40,7 +48,9 @@ class VerifyOTPResponse {
   VerifyOTPResponse({this.data, this.message});
 
   VerifyOTPResponse.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? VerifyOTPResponseData.fromJson(json['data']) : null;
+    data = json['data'] != null
+        ? VerifyOTPResponseData.fromJson(json['data'])
+        : null;
     message = json['message'];
   }
 }

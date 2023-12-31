@@ -39,7 +39,12 @@ class CustomDate {
   int hour;
   int min;
 
-  CustomDate({required this.year, required this.month, required this.day, required this.hour, required this.min});
+  CustomDate(
+      {required this.year,
+      required this.month,
+      required this.day,
+      required this.hour,
+      required this.min});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};

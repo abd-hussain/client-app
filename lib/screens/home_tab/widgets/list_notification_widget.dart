@@ -5,11 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NotificationsList extends StatefulWidget {
-  final ValueNotifier<List<NotificationsResponseData>?> notificationsListNotifier;
+  final ValueNotifier<List<NotificationsResponseData>?>
+      notificationsListNotifier;
   final bool isUserIsLoggedIn;
   final Function(NotificationsResponseData) onDelete;
   const NotificationsList(
-      {super.key, required this.notificationsListNotifier, required this.onDelete, required this.isUserIsLoggedIn});
+      {super.key,
+      required this.notificationsListNotifier,
+      required this.onDelete,
+      required this.isUserIsLoggedIn});
 
   @override
   State<NotificationsList> createState() => _NotificationsListState();
@@ -28,7 +32,8 @@ class _NotificationsListState extends State<NotificationsList> {
                       ? ListView.builder(
                           itemCount: data.length,
                           itemBuilder: (ctx, index) {
-                            return notificationTile(context, data[index], index);
+                            return notificationTile(
+                                context, data[index], index);
                           })
                       : Center(
                           child: CustomText(
@@ -41,7 +46,8 @@ class _NotificationsListState extends State<NotificationsList> {
         : Container();
   }
 
-  Widget notificationTile(BuildContext context, NotificationsResponseData item, int index) {
+  Widget notificationTile(
+      BuildContext context, NotificationsResponseData item, int index) {
     var parsedDate = DateTime.parse(item.createdAt!);
     var dateLocal = parsedDate.toLocal();
 
@@ -88,7 +94,8 @@ class _NotificationsListState extends State<NotificationsList> {
                       color: Color(0xff444444),
                     ),
                     CustomText(
-                      title: "${dateLocal.year}/${dateLocal.month}/${dateLocal.day}",
+                      title:
+                          "${dateLocal.year}/${dateLocal.month}/${dateLocal.day}",
                       fontSize: 9,
                       textColor: const Color(0xff444444),
                     ),

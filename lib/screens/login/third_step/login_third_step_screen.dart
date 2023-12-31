@@ -95,7 +95,8 @@ class _LoginThirdStepScreenState extends State<LoginThirdStepScreen> {
                   textColor: Colors.black,
                 ),
                 CustomText(
-                  title: AppLocalizations.of(context)!.enteryourotpnumberexample,
+                  title:
+                      AppLocalizations.of(context)!.enteryourotpnumberexample,
                   fontSize: 11,
                   textColor: Colors.grey,
                 ),
@@ -132,7 +133,8 @@ class _LoginThirdStepScreenState extends State<LoginThirdStepScreen> {
                             ? "0${bloc.timerStartNumberMin}:${bloc.timerStartNumberSec}"
                             : "0${bloc.timerStartNumberMin}:0${bloc.timerStartNumberSec}",
                         fontSize: 18,
-                        textColor: bloc.timerStartNumberMin == 0 && bloc.timerStartNumberSec <= 10
+                        textColor: bloc.timerStartNumberMin == 0 &&
+                                bloc.timerStartNumberSec <= 10
                             ? Colors.red
                             : const Color(0xff4CB6EA),
                       ),

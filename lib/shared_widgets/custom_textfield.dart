@@ -42,13 +42,16 @@ class CustomTextField extends StatelessWidget {
           autocorrect: false,
           maxLines: maxLine,
           controller: controller,
-          style: CustomTextStyle()
-              .regular(color: enabled ? const Color(0xff191C1F) : const Color(0xffA2A3A4), size: fontSize),
+          style: CustomTextStyle().regular(
+              color:
+                  enabled ? const Color(0xff191C1F) : const Color(0xffA2A3A4),
+              size: fontSize),
           cursorColor: const Color(0xff100C31),
           decoration: InputDecoration(
             suffix: suffixWidget,
             labelText: hintText,
-            labelStyle: CustomTextStyle().regular(color: const Color(0xff384048), size: 14),
+            labelStyle: CustomTextStyle()
+                .regular(color: const Color(0xff384048), size: 14),
             enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Color(0xffE8E8E8)),
             ),

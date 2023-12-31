@@ -24,11 +24,14 @@ class MeetingTimeView extends StatelessWidget {
     List<int> list = workingHours;
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
-    if (DateTime(selectedMeetingDate.year, selectedMeetingDate.month, selectedMeetingDate.day) == today) {
+    if (DateTime(selectedMeetingDate.year, selectedMeetingDate.month,
+            selectedMeetingDate.day) ==
+        today) {
       list = filterListWithCurrentTime(list);
     }
 
-    list = _chackifTheDateSelectedExsistInAppotmentsList(selectedDateTime: selectedMeetingDate, workingHours: list);
+    list = _chackifTheDateSelectedExsistInAppotmentsList(
+        selectedDateTime: selectedMeetingDate, workingHours: list);
 
     return SizedBox(
       height: 200,
@@ -53,7 +56,8 @@ class MeetingTimeView extends StatelessWidget {
         valueListenable: selectedMeetingTime,
         builder: (context, snapshot, child) {
           return GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, mainAxisExtent: 50),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3, mainAxisExtent: 50),
             shrinkWrap: true,
             itemCount: list.length,
             itemBuilder: (context, index) {
@@ -99,8 +103,10 @@ class MeetingTimeView extends StatelessWidget {
 
     for (var appointment in listOfAppointments) {
       var parsedDateFrom = DateTime.parse(appointment.dateFrom!);
-      if (DateTime(selectedMeetingDate.year, selectedMeetingDate.month, selectedMeetingDate.day) ==
-          DateTime(parsedDateFrom.year, parsedDateFrom.month, parsedDateFrom.day)) {
+      if (DateTime(selectedMeetingDate.year, selectedMeetingDate.month,
+              selectedMeetingDate.day) ==
+          DateTime(
+              parsedDateFrom.year, parsedDateFrom.month, parsedDateFrom.day)) {
         newListOFHours.add(parsedDateFrom.hour);
       }
     }

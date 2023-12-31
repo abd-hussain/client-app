@@ -14,7 +14,11 @@ class NoCallView extends StatelessWidget {
   final bool isUserLoggedIn;
   final String language;
   final List<Category> listOfCategories;
-  const NoCallView({required this.isUserLoggedIn, required this.language, required this.listOfCategories, super.key});
+  const NoCallView(
+      {required this.isUserLoggedIn,
+      required this.language,
+      required this.listOfCategories,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -78,8 +82,12 @@ class NoCallView extends StatelessWidget {
                         await bottomSheet.bookMeetingBottomSheet(
                           faze: BookingFaze.two,
                           openNext: () => null,
-                          doneSelection: ({required categoryID, required categoryName, required meetingduration}) {
-                            Navigator.of(context, rootNavigator: true).pushNamed(
+                          doneSelection: (
+                              {required categoryID,
+                              required categoryName,
+                              required meetingduration}) {
+                            Navigator.of(context, rootNavigator: true)
+                                .pushNamed(
                               RoutesConstants.bookingScreen,
                               arguments: {
                                 "bookingType": BookingType.instant,
@@ -91,12 +99,17 @@ class NoCallView extends StatelessWidget {
                           },
                         );
                       },
-                      doneSelection: ({required categoryID, required categoryName, required meetingduration}) => null,
+                      doneSelection: (
+                              {required categoryID,
+                              required categoryName,
+                              required meetingduration}) =>
+                          null,
                     );
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text(AppLocalizations.of(context)!.youhavetobeloggedintodothat),
+                        content: Text(AppLocalizations.of(context)!
+                            .youhavetobeloggedintodothat),
                       ),
                     );
                   }
@@ -112,8 +125,12 @@ class NoCallView extends StatelessWidget {
                 desc: AppLocalizations.of(context)!.meetingshuduledesc,
                 icon: Icons.calendar_month_outlined,
                 onPress: () {
-                  locator<MainContainerBloc>().appBarKey.currentState!.animateTo(1);
-                  locator<MainContainerBloc>().currentTabIndexNotifier.value = SelectedTab.categories;
+                  locator<MainContainerBloc>()
+                      .appBarKey
+                      .currentState!
+                      .animateTo(1);
+                  locator<MainContainerBloc>().currentTabIndexNotifier.value =
+                      SelectedTab.categories;
                 },
               ),
             ],
@@ -164,7 +181,9 @@ class NoCallView extends StatelessWidget {
             ],
           ),
           const Expanded(child: SizedBox()),
-          language == "en" ? const Icon(Icons.arrow_left_outlined) : const Icon(Icons.arrow_right_outlined)
+          language == "en"
+              ? const Icon(Icons.arrow_left_outlined)
+              : const Icon(Icons.arrow_right_outlined)
         ],
       ),
     );
