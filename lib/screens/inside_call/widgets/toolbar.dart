@@ -5,7 +5,8 @@ class CallToolBarView extends StatefulWidget {
   final RtcEngine engine;
   final Function callEnd;
 
-  const CallToolBarView({super.key, required this.engine, required this.callEnd});
+  const CallToolBarView(
+      {super.key, required this.engine, required this.callEnd});
 
   @override
   State<CallToolBarView> createState() => _CallToolBarViewState();

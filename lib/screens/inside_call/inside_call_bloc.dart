@@ -15,7 +15,8 @@ class InsideCallBloc {
   ValueNotifier<int?> remoteUidStatus = ValueNotifier<int?>(null);
   final infoStrings = <String>[];
 
-  void handleReadingArguments(BuildContext context, {required Object? arguments}) {
+  void handleReadingArguments(BuildContext context,
+      {required Object? arguments}) {
     if (arguments != null) {
       final newArguments = arguments as Map<String, dynamic>;
       channelName = newArguments["channelName"] as String;
@@ -29,8 +30,8 @@ class InsideCallBloc {
 
     _addAgoraEventHandlers();
 
-    VideoEncoderConfiguration configuration =
-        const VideoEncoderConfiguration(dimensions: VideoDimensions(width: 1920, height: 1080));
+    VideoEncoderConfiguration configuration = const VideoEncoderConfiguration(
+        dimensions: VideoDimensions(width: 1920, height: 1080));
     await engine.setVideoEncoderConfiguration(configuration);
     await engine.joinChannel(
       token: generatedCallToken,
@@ -66,19 +67,24 @@ class InsideCallBloc {
           debugPrint("remote user $remoteUid joined");
           remoteUidStatus.value = remoteUid;
         },
-        onUserOffline: (RtcConnection connection, int remoteUid, UserOfflineReasonType reason) {
+        onUserOffline: (RtcConnection connection, int remoteUid,
+            UserOfflineReasonType reason) {
           debugPrint("remote user $remoteUid left channel");
           remoteUidStatus.value = null;
         },
         onTokenPrivilegeWillExpire: (RtcConnection connection, String token) {
-          debugPrint('[onTokenPrivilegeWillExpire] connection: ${connection.toJson()}, token: $token');
+          debugPrint(
+              '[onTokenPrivilegeWillExpire] connection: ${connection.toJson()}, token: $token');
         },
       ),
     );
   }
 
-  Future<void> joinAppointment({required int id, required String channelName}) async {
-    locator<AppointmentsService>().joinCall(id: id, channelName: channelName).then((value) {
+  Future<void> joinAppointment(
+      {required int id, required String channelName}) async {
+    locator<AppointmentsService>()
+        .joinCall(id: id, channelName: channelName)
+        .then((value) {
       generatedCallToken = value["data"];
 
       initializeCall();

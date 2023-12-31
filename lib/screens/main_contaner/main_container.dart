@@ -64,14 +64,26 @@ class _MainContainerState extends State<MainContainer> {
               height: 50,
               style: TabStyle.fixedCircle,
               items: [
-                TabItem(icon: Icons.home, title: AppLocalizations.of(context)!.containerHomeIconTitle),
                 TabItem(
-                    icon: Icons.category_rounded, title: AppLocalizations.of(context)!.containerCategoriesIconTitle),
+                    icon: Icons.home,
+                    title:
+                        AppLocalizations.of(context)!.containerHomeIconTitle),
+                TabItem(
+                    icon: Icons.category_rounded,
+                    title: AppLocalizations.of(context)!
+                        .containerCategoriesIconTitle),
                 const TabItem(icon: Icons.call),
-                TabItem(icon: Icons.calendar_month, title: AppLocalizations.of(context)!.containerCalenderIconTitle),
-                TabItem(icon: Icons.person, title: AppLocalizations.of(context)!.containerAccountIconTitle),
+                TabItem(
+                    icon: Icons.calendar_month,
+                    title: AppLocalizations.of(context)!
+                        .containerCalenderIconTitle),
+                TabItem(
+                    icon: Icons.person,
+                    title: AppLocalizations.of(context)!
+                        .containerAccountIconTitle),
               ],
-              onTap: (int index) => _bloc.currentTabIndexNotifier.value = _bloc.returnSelectedtypeDependOnIndex(index),
+              onTap: (int index) => _bloc.currentTabIndexNotifier.value =
+                  _bloc.returnSelectedtypeDependOnIndex(index),
             ),
           );
         });
