@@ -34,19 +34,11 @@ class ListOfOptions extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const AddMobBanner(),
-            isItLoggedIn
-                ? titleOptionCollection(
-                    title: AppLocalizations.of(context)!.accountsettings)
-                : Container(),
-            isItLoggedIn
-                ? optionCollectionItem(listOfAccountOptions,
-                    containerHight: 200)
-                : Container(),
-            titleOptionCollection(
-                title: AppLocalizations.of(context)!.generalsettings),
+            isItLoggedIn ? titleOptionCollection(title: AppLocalizations.of(context)!.accountsettings) : Container(),
+            isItLoggedIn ? optionCollectionItem(listOfAccountOptions, containerHight: 200) : Container(),
+            titleOptionCollection(title: AppLocalizations.of(context)!.generalsettings),
             optionCollectionItem(listOfSettingsOptions, containerHight: 200),
-            titleOptionCollection(
-                title: AppLocalizations.of(context)!.reachouttous),
+            titleOptionCollection(title: AppLocalizations.of(context)!.reachouttous),
             optionCollectionItem(listOfReachOutUsOptions, containerHight: 200),
             titleOptionCollection(title: AppLocalizations.of(context)!.support),
             optionCollectionItem(listOfSupportOptions, containerHight: 125),
@@ -72,8 +64,7 @@ class ListOfOptions extends StatelessWidget {
     );
   }
 
-  Widget optionCollectionItem(List<ProfileOptions> listOfOptions,
-      {required double containerHight}) {
+  Widget optionCollectionItem(List<ProfileOptions> listOfOptions, {required double containerHight}) {
     return Container(
       height: containerHight,
       decoration: BoxDecoration(
@@ -160,11 +151,11 @@ class ListOfOptions extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
               TextButton(
-                onPressed: () => Navigator.of(context, rootNavigator: true)
-                    .pushNamed(RoutesConstants.webViewScreen, arguments: {
-                  AppConstant.webViewPageUrl: AppConstant.linkedinLink,
-                  AppConstant.pageTitle: AppLocalizations.of(context)!.linkedin
-                }),
+                onPressed: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen,
+                    arguments: {
+                      AppConstant.webViewPageUrl: AppConstant.linkedinLink,
+                      AppConstant.pageTitle: AppLocalizations.of(context)!.linkedin
+                    }),
                 child: Image.asset(
                   "assets/images/linkedinLogo.png",
                 ),
@@ -174,29 +165,33 @@ class ListOfOptions extends StatelessWidget {
           TextButton(
             onPressed: () {
               WidgetsBinding.instance.addPostFrameCallback((_) async {
-                RateMyApp().showRateDialog(context, noButton: "test");
+                RateMyApp().showRateDialog(
+                  context,
+                  title: AppLocalizations.of(context)!.rateapponstore,
+                  message: AppLocalizations.of(context)!.rateapponstoremessage,
+                  rateButton: AppLocalizations.of(context)!.rateapp,
+                  laterButton: AppLocalizations.of(context)!.later,
+                  noButton: AppLocalizations.of(context)!.close,
+                );
               });
             },
             child: _footerTextWidget(AppLocalizations.of(context)!.rateapp),
           ),
           TextButton(
-            onPressed: () => Navigator.of(context, rootNavigator: true)
-                .pushNamed(RoutesConstants.webViewScreen, arguments: {
+            onPressed: () =>
+                Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen, arguments: {
               AppConstant.webViewPageUrl: AppConstant.termsLink,
-              AppConstant.pageTitle:
-                  AppLocalizations.of(context)!.termsandconditions
+              AppConstant.pageTitle: AppLocalizations.of(context)!.termsandconditions
             }),
-            child: _footerTextWidget(
-                AppLocalizations.of(context)!.termsandconditions),
+            child: _footerTextWidget(AppLocalizations.of(context)!.termsandconditions),
           ),
           TextButton(
-            onPressed: () => Navigator.of(context, rootNavigator: true)
-                .pushNamed(RoutesConstants.webViewScreen, arguments: {
+            onPressed: () =>
+                Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen, arguments: {
               AppConstant.webViewPageUrl: AppConstant.privacypolicyLink,
               AppConstant.pageTitle: AppLocalizations.of(context)!.privacypolicy
             }),
-            child:
-                _footerTextWidget(AppLocalizations.of(context)!.privacypolicy),
+            child: _footerTextWidget(AppLocalizations.of(context)!.privacypolicy),
           ),
           const SizedBox(height: 16),
           FutureBuilder<String>(
@@ -204,8 +199,7 @@ class ListOfOptions extends StatelessWidget {
               future: Version().getApplicationVersion(),
               builder: (context, snapshot) {
                 return CustomText(
-                  title:
-                      "${AppLocalizations.of(context)!.version} ${snapshot.data}",
+                  title: "${AppLocalizations.of(context)!.version} ${snapshot.data}",
                   fontSize: 12,
                   textColor: const Color(0xffBFBFBF),
                 );
@@ -243,8 +237,9 @@ class ListOfOptions extends StatelessWidget {
   void _launchWhatsapp(BuildContext context) async {
     final localize = AppLocalizations.of(context)!;
     final scaffoldMessenger = ScaffoldMessenger.of(context);
-    var whatsappAndroid = Uri.parse(
-        "whatsapp://send?phone=${AppConstant.whatsappNumber}&text=hello");
+
+    var whatsapp = AppConstant.whatsappNumber;
+    var whatsappAndroid = Uri.parse("whatsapp://send?phone=$whatsapp&text=hello");
     if (await canLaunchUrl(whatsappAndroid)) {
       await launchUrl(whatsappAndroid);
     } else {

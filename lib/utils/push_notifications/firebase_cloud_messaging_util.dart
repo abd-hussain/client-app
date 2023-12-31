@@ -1,37 +1,50 @@
-// import 'dart:developer';
-
-// import 'package:client_app/utils/constants/database_constant.dart';
-// import 'package:client_app/utils/push_notifications/notification_manager.dart';
-// import 'package:firebase_messaging/firebase_messaging.dart';
-// import 'package:hive_flutter/hive_flutter.dart';
+import 'dart:developer';
+import 'package:client_app/utils/constants/database_constant.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'notification_manager.dart';
 
 class FirebaseCloudMessagingUtil {
-  // static final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+  static final FirebaseMessaging _fcm = FirebaseMessaging.instance;
 
-  // static dynamic initConfigure() async {
-  //   // if (Platform.isIOS) {
-  //   await _fcm.requestPermission(sound: true, badge: true, alert: true);
-  //   // }
-  //   await _fcm.setAutoInitEnabled(true);
+  static dynamic initConfigure(BuildContext context) async {
+    await _fcm.setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
 
-  //   _fcm.getToken().then((value) async {
-  //     log('Token: $value');
-  //     final box = Hive.box(DatabaseBoxConstant.userInfo);
-  //     await box.put(DatabaseFieldConstant.pushNotificationToken, value);
-  //   });
+    _fcm.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
 
-  //   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-  //     RemoteNotification? notification = message.notification;
-  //     if (notification != null) {
-  //       NotificationManager.handleNotificationMsg({message.notification!.title: message.notification!.body});
-  //     }
-  //   });
+    _fcm.setAutoInitEnabled(true);
 
-  //   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-  //     RemoteNotification? notification = message.notification;
-  //     if (notification != null) {
-  //       NotificationManager.handleNotificationMsg(message.data as Map<String?, String?>);
-  //     }
-  //   });
-  // }
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      if (notification != null) {
+        NotificationManager.handleNotificationMsg({message.notification!.title: message.notification!.body});
+      }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      if (notification != null) {
+        NotificationManager.handleNotificationMsg(message.data as Map<String?, String?>);
+      }
+    });
+
+    _fcm.getToken().then((value) async {
+      log('Token: $value');
+      final box = Hive.box(DatabaseBoxConstant.userInfo);
+      await box.put(DatabaseFieldConstant.pushNotificationToken, value);
+    });
+  }
 }

@@ -26,8 +26,10 @@
     "aboutus" : "About Us",
     "support" : "Support",
     "version" : "Version",
-    "rightsreserved" : "@ 2022 HelpEra.app. All right reserved.",
+    "rightsreserved" : "@ 2024 HelpEra.app. All right reserved.",
     "rateapp" : "Rate Application",
+    "rateapponstore" : "Rate Application on Store",
+    "rateapponstoremessage" : "If you like this app, please take a little bit of your time to review it ! It really helps us and it shouldn't take you more than one minute.",
     "privacypolicy" : "Privacy Policy",
     "whatsappnotinstalled" : "WhatsApp is not installed on the device",
     "linkedin" : "LinkedIn",
@@ -210,7 +212,10 @@
     "numberofpointdesc" : "Point not calculated instantly, sometimes it takes 30 days to reflect",
     "waitingyoutojoin" : "Waiting you to join",
     "waitingyoutojoindesc" : "Your Mentor waiting you to join, this call will be canceled if you late more than 7 min",
-    "joinnow" : "Join Now"
+    "joinnow" : "Join Now",
+    "later" : "Later",
+    "close" : "close",
+    "metingendwihin" : "call will be end until"
 
 
 

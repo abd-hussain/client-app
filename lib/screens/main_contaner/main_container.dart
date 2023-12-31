@@ -3,6 +3,7 @@ import 'package:client_app/main_context.dart';
 import 'package:client_app/screens/main_contaner/main_container_bloc.dart';
 import 'package:client_app/screens/main_contaner/widgets/main_appbar.dart';
 import 'package:client_app/screens/main_contaner/widgets/account_appbar.dart';
+import 'package:client_app/utils/push_notifications/firebase_cloud_messaging_util.dart';
 import 'package:client_app/utils/push_notifications/notification_manager.dart';
 
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
@@ -21,7 +22,11 @@ class _MainContainerState extends State<MainContainer> {
   @override
   void didChangeDependencies() {
     locator<MainContext>().mainContext = context;
-
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(seconds: 2), () {
+        FirebaseCloudMessagingUtil.initConfigure(context);
+      });
+    });
     _bloc.getAppointments();
     NotificationManager.init(context: context);
     _bloc.callRegisterTokenRequest();
@@ -59,26 +64,14 @@ class _MainContainerState extends State<MainContainer> {
               height: 50,
               style: TabStyle.fixedCircle,
               items: [
+                TabItem(icon: Icons.home, title: AppLocalizations.of(context)!.containerHomeIconTitle),
                 TabItem(
-                    icon: Icons.home,
-                    title:
-                        AppLocalizations.of(context)!.containerHomeIconTitle),
-                TabItem(
-                    icon: Icons.category_rounded,
-                    title: AppLocalizations.of(context)!
-                        .containerCategoriesIconTitle),
+                    icon: Icons.category_rounded, title: AppLocalizations.of(context)!.containerCategoriesIconTitle),
                 const TabItem(icon: Icons.call),
-                TabItem(
-                    icon: Icons.calendar_month,
-                    title: AppLocalizations.of(context)!
-                        .containerCalenderIconTitle),
-                TabItem(
-                    icon: Icons.person,
-                    title: AppLocalizations.of(context)!
-                        .containerAccountIconTitle),
+                TabItem(icon: Icons.calendar_month, title: AppLocalizations.of(context)!.containerCalenderIconTitle),
+                TabItem(icon: Icons.person, title: AppLocalizations.of(context)!.containerAccountIconTitle),
               ],
-              onTap: (int index) => _bloc.currentTabIndexNotifier.value =
-                  _bloc.returnSelectedtypeDependOnIndex(index),
+              onTap: (int index) => _bloc.currentTabIndexNotifier.value = _bloc.returnSelectedtypeDependOnIndex(index),
             ),
           );
         });

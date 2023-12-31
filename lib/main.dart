@@ -15,6 +15,8 @@ import 'package:logger/logger.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 //TODO: handle Timing UTC
+//TODO: Rate Mentor when you finish call
+//TODO: User should add majors and note before resrve call
 
 void main() {
   runZonedGuarded(() async {
@@ -29,8 +31,7 @@ void main() {
     if (!kIsWeb) {
       await MobileAds.instance.initialize();
       await MobileAds.instance.updateRequestConfiguration(
-        RequestConfiguration(
-            testDeviceIds: ['FA1E4A4C91519CDE5813ABB70A84651E']),
+        RequestConfiguration(testDeviceIds: ['FA1E4A4C91519CDE5813ABB70A84651E']),
       );
       await _setupFirebase();
     }
@@ -62,8 +63,7 @@ Future<bool> _setupFirebase() async {
   if (hasConnectivity) {
     await Firebase.initializeApp();
   } else {
-    networkInfoService.firebaseInitNetworkStateStreamControler.stream
-        .listen((event) async {
+    networkInfoService.firebaseInitNetworkStateStreamControler.stream.listen((event) async {
       if (event && Firebase.apps.isEmpty) {
         await Firebase.initializeApp();
       }

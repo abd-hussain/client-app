@@ -65,7 +65,7 @@ jobs:
         - name: Setup Fastlane
           uses: ruby/setup-ruby@v1
           with:
-              ruby-version: 3.2.2
+              ruby-version: 2.6
               rubygems: latest
       
         - name: Build and Deploy
@@ -75,4 +75,3 @@ jobs:
           env:
               MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
               MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.GIT_BASIC_AUTHORIZATION }}
-              

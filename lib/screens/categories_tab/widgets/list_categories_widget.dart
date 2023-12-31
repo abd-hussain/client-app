@@ -7,8 +7,7 @@ class CategoriesList extends StatefulWidget {
   final ValueNotifier<List<Category>> categoriesListNotifier;
   final Function(Category) onTap;
 
-  const CategoriesList(
-      {super.key, required this.categoriesListNotifier, required this.onTap});
+  const CategoriesList({super.key, required this.categoriesListNotifier, required this.onTap});
 
   @override
   State<CategoriesList> createState() => _CategoriesListState();
@@ -20,7 +19,7 @@ class _CategoriesListState extends State<CategoriesList> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 110,
+      width: 100,
       child: ValueListenableBuilder<List<Category>>(
           valueListenable: widget.categoriesListNotifier,
           builder: (context, data, child) {
@@ -37,7 +36,7 @@ class _CategoriesListState extends State<CategoriesList> {
 
   Widget categoriesTile(BuildContext context, Category item, int index) {
     return Padding(
-      padding: const EdgeInsets.only(top: 5, left: 8, right: 8, bottom: 5),
+      padding: const EdgeInsets.only(left: 4, right: 4, bottom: 8),
       child: InkWell(
         onTap: () {
           selectedIndex.value = index;
@@ -47,15 +46,11 @@ class _CategoriesListState extends State<CategoriesList> {
             valueListenable: selectedIndex,
             builder: (context, snapshot, child) {
               return Container(
-                height: 90,
+                height: 100,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                      width: 3,
-                      color: snapshot == index
-                          ? const Color(0xff4CB6EA)
-                          : Colors.white),
+                  border: Border.all(width: 3, color: snapshot == index ? const Color(0xff4CB6EA) : Colors.white),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(top: 8, bottom: 8),
@@ -66,8 +61,7 @@ class _CategoriesListState extends State<CategoriesList> {
                         width: 30,
                         height: 30,
                         child: FadeInImage(
-                          placeholder: const AssetImage(
-                              "assets/images/flagPlaceHolderImg.png"),
+                          placeholder: const AssetImage("assets/images/flagPlaceHolderImg.png"),
                           image: NetworkImage(item.icon!, scale: 1),
                         ),
                       ),
@@ -78,7 +72,7 @@ class _CategoriesListState extends State<CategoriesList> {
                           fontSize: 14,
                           textAlign: TextAlign.center,
                           textColor: const Color(0xff034061),
-                          maxLins: 2,
+                          maxLins: 4,
                         ),
                       ),
                     ],
