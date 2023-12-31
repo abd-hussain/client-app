@@ -64,8 +64,7 @@ class _WaitingCallViewState extends State<WaitingCallView> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Lottie.asset('assets/lottie/115245-medical-heart-pressure-timer.zip',
-            height: 200),
+        Lottie.asset('assets/lottie/115245-medical-heart-pressure-timer.zip', height: 200),
         Padding(
           padding: const EdgeInsets.only(bottom: 8),
           child: CustomText(
@@ -101,6 +100,7 @@ class _WaitingCallViewState extends State<WaitingCallView> {
         AppointmentDetailsView(
           title: AppLocalizations.of(context)!.meetingday,
           desc: widget.meetingday,
+          forceView: true,
         ),
         AppointmentDetailsView(
           title: AppLocalizations.of(context)!.meetingtime,
@@ -109,29 +109,29 @@ class _WaitingCallViewState extends State<WaitingCallView> {
         ),
         AppointmentDetailsView(
           title: AppLocalizations.of(context)!.meetingduration,
-          desc:
-              "${widget.meetingduration} ${AppLocalizations.of(context)!.min}",
+          desc: "${widget.meetingduration} ${AppLocalizations.of(context)!.min}",
+          forceView: true,
         ),
         AppointmentDetailsView(
           title: AppLocalizations.of(context)!.clientnote,
           desc: widget.metingDetails.noteFromClient ?? "",
+          forceView: true,
         ),
         AppointmentDetailsView(
           title: AppLocalizations.of(context)!.mentornote,
           desc: widget.metingDetails.noteFromMentor ?? "",
+          forceView: true,
         ),
         mentorBoxView(metingDetails: widget.metingDetails),
         CustomButton(
-            enableButton:
-                DateTime.now().isBefore(widget.metingDetails.fromTime) &&
-                    widget.metingDetails.state == AppointmentsState.active,
+            enableButton: DateTime.now().isBefore(widget.metingDetails.fromTime) &&
+                widget.metingDetails.state == AppointmentsState.active,
             padding: const EdgeInsets.all(8.0),
             buttonTitle: AppLocalizations.of(context)!.cancelappointment,
             width: MediaQuery.of(context).size.width / 2,
             buttonColor: const Color(0xffda1100),
             onTap: () {
-              CancelBookingBottomSheetsUtil(context: context)
-                  .bookMeetingBottomSheet(
+              CancelBookingBottomSheetsUtil(context: context).bookMeetingBottomSheet(
                 confirm: () {
                   widget.cancelMeetingTapped();
                 },
@@ -167,15 +167,10 @@ class _WaitingCallViewState extends State<WaitingCallView> {
               SizedBox(
                 width: 75,
                 height: 75,
-                child: (metingDetails.profileImg != null &&
-                        metingDetails.profileImg != "")
+                child: (metingDetails.profileImg != null && metingDetails.profileImg != "")
                     ? FadeInImage(
-                        placeholder:
-                            const AssetImage("assets/images/avatar.jpeg"),
-                        image: NetworkImage(
-                            AppConstant.imagesBaseURLForMentors +
-                                metingDetails.profileImg!,
-                            scale: 1),
+                        placeholder: const AssetImage("assets/images/avatar.jpeg"),
+                        image: NetworkImage(AppConstant.imagesBaseURLForMentors + metingDetails.profileImg!, scale: 1),
                       )
                     : Image.asset(
                         'assets/images/avatar.jpeg',
@@ -251,8 +246,6 @@ class _WaitingCallViewState extends State<WaitingCallView> {
   }
 
   bool _isTimerFinished() {
-    return timerStartNumberHour == 0 &&
-        timerStartNumberMin == 0 &&
-        timerStartNumberSec == 0;
+    return timerStartNumberHour == 0 && timerStartNumberMin == 0 && timerStartNumberSec == 0;
   }
 }

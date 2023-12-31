@@ -3,20 +3,20 @@ class MethodNameConstant {
   static const String categories = "categories";
   static const String mentors = "mentor-list/";
   static const String mentorDetails = "mentors-details/";
-  static const String mentorAppointments =
-      "client-appointment/mentor-appointment";
+  static const String mentorAppointments = "client-appointment/mentor-appointment";
   static const String clientAppointments = "client-appointment/";
   static const String mentoravaliable = "mentors-details/mentor-avaliable";
   static const String bookAppointment = "client-appointment/book";
   static const String cancelAppointment = "client-appointment/cancel";
   static const String editNoteAppointment = "client-appointment/comment";
+  static const String joinCallAppointment = "client-appointment/join-call";
+  static const String exitCallAppointment = "client-appointment/end-call";
 
   static const String discount = "discount/";
   static const String archive = "archive/";
 
   static const String notifications = "notifications/client";
-  static const String registerTokenNotification =
-      "notifications/client-register-token";
+  static const String registerTokenNotification = "notifications/client-register-token";
 
   static const String home = "client-home/";
 

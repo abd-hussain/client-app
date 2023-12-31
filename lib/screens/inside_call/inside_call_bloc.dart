@@ -1,21 +1,26 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:client_app/locator.dart';
+import 'package:client_app/sevices/appointments_service.dart';
 import 'package:flutter/material.dart';
 
 class InsideCallBloc {
   late RtcEngine engine;
   String channelName = "";
+  int callID = 0;
+  int meetingDurationInMin = 0;
   String? appId = "67fa993d64a346e1a2587f4a8b96f569";
-  String tempToken =
-      "007eJxTYOiU1ufQkPbJ8rrkfdBzTaCeTBTbasvAbm6td8KBT1Y0iigwmJmnJVpaGqeYmSQam5ilGiYamVqYp5kkWiRZmqWZmlmqT+pJbQhkZDjMbMnACIUgPgtDYnFxMQMDALwSGiQ=";
-  ValueNotifier<bool> localUserJoinedStatus = ValueNotifier<bool>(false);
+  String generatedCallToken = "";
+
+  // ValueNotifier<bool> localUserJoinedStatus = ValueNotifier<bool>(false);
   ValueNotifier<int?> remoteUidStatus = ValueNotifier<int?>(null);
   final infoStrings = <String>[];
 
-  void handleReadingArguments(BuildContext context,
-      {required Object? arguments}) {
+  void handleReadingArguments(BuildContext context, {required Object? arguments}) {
     if (arguments != null) {
       final newArguments = arguments as Map<String, dynamic>;
       channelName = newArguments["channelName"] as String;
+      callID = newArguments["callID"] as int;
+      meetingDurationInMin = newArguments["durations"] as int;
     }
   }
 
@@ -24,12 +29,11 @@ class InsideCallBloc {
 
     _addAgoraEventHandlers();
 
-    VideoEncoderConfiguration encoderConfiguration =
-        const VideoEncoderConfiguration(
-            dimensions: VideoDimensions(width: 1920, height: 1080));
-    await engine.setVideoEncoderConfiguration(encoderConfiguration);
+    VideoEncoderConfiguration configuration =
+        const VideoEncoderConfiguration(dimensions: VideoDimensions(width: 1920, height: 1080));
+    await engine.setVideoEncoderConfiguration(configuration);
     await engine.joinChannel(
-      token: tempToken,
+      token: generatedCallToken,
       channelId: channelName,
       uid: 0,
       options: const ChannelMediaOptions(),
@@ -43,7 +47,7 @@ class InsideCallBloc {
       channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
     ));
 
-    await engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
+    await engine.setClientRole(role: ClientRoleType.clientRoleAudience);
     await engine.enableVideo();
     await engine.startPreview();
   }
@@ -53,7 +57,6 @@ class InsideCallBloc {
       RtcEngineEventHandler(
         onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
           debugPrint("local user ${connection.localUid} joined");
-          localUserJoinedStatus.value = true;
         },
         onLeaveChannel: (connection, stats) {
           debugPrint("local user ${connection.localUid} Leave");
@@ -63,16 +66,26 @@ class InsideCallBloc {
           debugPrint("remote user $remoteUid joined");
           remoteUidStatus.value = remoteUid;
         },
-        onUserOffline: (RtcConnection connection, int remoteUid,
-            UserOfflineReasonType reason) {
+        onUserOffline: (RtcConnection connection, int remoteUid, UserOfflineReasonType reason) {
           debugPrint("remote user $remoteUid left channel");
           remoteUidStatus.value = null;
         },
         onTokenPrivilegeWillExpire: (RtcConnection connection, String token) {
-          debugPrint(
-              '[onTokenPrivilegeWillExpire] connection: ${connection.toJson()}, token: $token');
+          debugPrint('[onTokenPrivilegeWillExpire] connection: ${connection.toJson()}, token: $token');
         },
       ),
     );
+  }
+
+  Future<void> joinAppointment({required int id, required String channelName}) async {
+    locator<AppointmentsService>().joinCall(id: id, channelName: channelName).then((value) {
+      generatedCallToken = value["data"];
+
+      initializeCall();
+    });
+  }
+
+  Future<void> exitAppointment({required int id}) {
+    return locator<AppointmentsService>().exitCall(id: id);
   }
 }

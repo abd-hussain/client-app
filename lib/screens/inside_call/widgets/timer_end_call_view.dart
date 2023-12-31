@@ -1,29 +1,23 @@
 import 'dart:async';
-
-import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class MentorCameraView extends StatefulWidget {
-  final RtcEngine rtcEngine;
-  final String channelName;
-  final ValueNotifier<int?> remoteUidStatus;
+class TimerEndCallView extends StatefulWidget {
   final Function() timesup;
+  final int meetingDurationInMin;
 
-  const MentorCameraView({
+  const TimerEndCallView({
     super.key,
-    required this.remoteUidStatus,
-    required this.rtcEngine,
-    required this.channelName,
     required this.timesup,
+    required this.meetingDurationInMin,
   });
 
   @override
-  State<MentorCameraView> createState() => _MentorCameraViewState();
+  State<TimerEndCallView> createState() => _TimerEndCallViewState();
 }
 
-class _MentorCameraViewState extends State<MentorCameraView> {
+class _TimerEndCallViewState extends State<TimerEndCallView> {
   ValueNotifier<int> loadingForTimer = ValueNotifier<int>(0);
   int timerStartNumberSec = 0;
   int timerStartNumberMin = 0;
@@ -31,7 +25,7 @@ class _MentorCameraViewState extends State<MentorCameraView> {
   @override
   void initState() {
     timerStartNumberSec = 0;
-    timerStartNumberMin = 10;
+    timerStartNumberMin = widget.meetingDurationInMin;
     loadingForTimer.value = timerStartNumberSec;
 
     startTimer();
@@ -47,43 +41,16 @@ class _MentorCameraViewState extends State<MentorCameraView> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: ValueListenableBuilder<int?>(
-          valueListenable: widget.remoteUidStatus,
-          builder: (context, snapshot, child) {
-            return _remoteVideo(snapshot);
-          }),
-    );
-  }
-
-  Widget _remoteVideo(int? remoteUid) {
-    if (remoteUid != null) {
-      return AgoraVideoView(
-        controller: VideoViewController.remote(
-          rtcEngine: widget.rtcEngine,
-          canvas: VideoCanvas(uid: remoteUid),
-          connection: RtcConnection(channelId: widget.channelName),
-        ),
-      );
-    } else {
-      return Padding(
-        padding: const EdgeInsets.only(left: 16, right: 16),
+        child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Align(
+        alignment: Alignment.topRight,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CustomText(
-              title: AppLocalizations.of(context)!.pleasewaitformentor,
+              title: AppLocalizations.of(context)!.metingendwihin,
               textAlign: TextAlign.center,
               fontSize: 16,
-              textColor: const Color(0xff444444),
-            ),
-            const SizedBox(height: 8),
-            const CircularProgressIndicator(),
-            const SizedBox(height: 8),
-            CustomText(
-              title: AppLocalizations.of(context)!.pleasewaitformentordesc,
-              textAlign: TextAlign.center,
-              fontSize: 12,
-              maxLins: 5,
               textColor: const Color(0xff444444),
             ),
             const SizedBox(height: 8),
@@ -103,8 +70,8 @@ class _MentorCameraViewState extends State<MentorCameraView> {
                 }),
           ],
         ),
-      );
-    }
+      ),
+    ));
   }
 
   void startTimer() {

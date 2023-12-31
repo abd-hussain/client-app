@@ -27,17 +27,14 @@ class CallBloc extends Bloc<FilterService> {
   CalenderMeetings? getNearestMeetingToday(List<CalenderMeetings> meetings) {
     final now = DateTime.now();
 
-    var activeMeetings =
-        meetings.where((meeting) => meeting.state == 1).toList();
-    var removeOldMeetingFromTheList =
-        activeMeetings.where((meeting) => meeting.toTime.isAfter(now)).toList();
+    var activeMeetings = meetings.where((meeting) => meeting.state == AppointmentsState.active).toList();
+    var removeOldMeetingFromTheList = activeMeetings.where((meeting) => meeting.toTime.isAfter(now)).toList();
     var filtermeetingavaliablewithing24Hour = removeOldMeetingFromTheList
-        .where((meeting) =>
-            meeting.fromTime.isBefore(now.add(const Duration(hours: 24))))
+        .where((meeting) => meeting.fromTime.isBefore(now.add(const Duration(hours: 24))))
         .toList();
     return filtermeetingavaliablewithing24Hour.isNotEmpty
-        ? filtermeetingavaliablewithing24Hour.reduce((closest, current) =>
-            current.fromTime.isBefore(closest.fromTime) ? current : closest)
+        ? filtermeetingavaliablewithing24Hour
+            .reduce((closest, current) => current.fromTime.isBefore(closest.fromTime) ? current : closest)
         : null;
   }
 
@@ -52,9 +49,7 @@ class CallBloc extends Bloc<FilterService> {
   }
 
   bool isTimeDifferencePositive(DateTime timeDifference) {
-    return timeDifference.hour > 0 ||
-        timeDifference.minute > 0 ||
-        timeDifference.second > 0;
+    return timeDifference.hour > 0 || timeDifference.minute > 0 || timeDifference.second > 0;
   }
 
   @override

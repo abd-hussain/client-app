@@ -65,16 +65,12 @@ class _CallScreenState extends State<CallScreen> {
                 timerStartNumberSec: timeDifference.second,
                 metingDetails: appointment,
                 meetingtime: DateFormat('hh:mm a').format(appointment.fromTime),
-                meetingduration:
-                    "${appointment.toTime.difference(appointment.fromTime).inMinutes}",
+                meetingduration: "${appointment.toTime.difference(appointment.fromTime).inMinutes}",
                 meetingday: bloc.box.get(DatabaseFieldConstant.language) == "en"
                     ? DateFormat('EEEE').format(timeDifference)
-                    : DayTime().convertDayToArabic(
-                        DateFormat('EEEE').format(timeDifference)),
+                    : DayTime().convertDayToArabic(DateFormat('EEEE').format(timeDifference)),
                 cancelMeetingTapped: () {
-                  bloc
-                      .cancelAppointment(id: appointment.meetingId!)
-                      .then((value) async {
+                  bloc.cancelAppointment(id: appointment.meetingId!).then((value) async {
                     await locator<MainContainerBloc>().getAppointments();
                   });
                 },
@@ -84,14 +80,11 @@ class _CallScreenState extends State<CallScreen> {
               );
             }
 
-            if (chechIfMentorNotExiedTheTimeAllowedToEnter(
-                appointmentFromDate: appointment.fromTime)) {
+            if (chechIfClientNotExiedTheTimeAllowedToEnter(appointmentFromDate: appointment.fromTime)) {
               return CallReadyView(
                 channelId: appointment.channelId!,
                 appointmentId: appointment.meetingId!,
-                meetingDurationInMin: appointment.toTime
-                    .difference(appointment.fromTime)
-                    .inMinutes,
+                meetingDurationInMin: appointment.toTime.difference(appointment.fromTime).inMinutes,
                 callEnd: () {
                   locator<MainContainerBloc>().getAppointments();
                 },
@@ -103,8 +96,7 @@ class _CallScreenState extends State<CallScreen> {
     );
   }
 
-  bool chechIfMentorNotExiedTheTimeAllowedToEnter(
-      {required DateTime appointmentFromDate}) {
+  bool chechIfClientNotExiedTheTimeAllowedToEnter({required DateTime appointmentFromDate}) {
     final currentDate = DateTime.now();
     final difference = currentDate.difference(appointmentFromDate).inMinutes;
     return difference < 10;

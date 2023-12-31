@@ -1,6 +1,7 @@
 import 'package:client_app/screens/inside_call/inside_call_bloc.dart';
 import 'package:client_app/screens/inside_call/widgets/mentor_camera_view.dart';
 import 'package:client_app/screens/inside_call/widgets/my_camera_view.dart';
+import 'package:client_app/screens/inside_call/widgets/timer_end_call_view.dart';
 import 'package:client_app/screens/inside_call/widgets/toolbar.dart';
 import 'package:flutter/material.dart';
 
@@ -16,16 +17,14 @@ class _InsideCallScreenState extends State<InsideCallScreen> {
 
   @override
   void didChangeDependencies() {
-    bloc.handleReadingArguments(context,
-        arguments: ModalRoute.of(context)!.settings.arguments);
-    bloc.initializeCall();
+    bloc.handleReadingArguments(context, arguments: ModalRoute.of(context)!.settings.arguments);
+    bloc.joinAppointment(id: bloc.callID, channelName: bloc.channelName);
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
     bloc.engine.leaveChannel();
-
     super.dispose();
   }
 
@@ -39,11 +38,37 @@ class _InsideCallScreenState extends State<InsideCallScreen> {
               rtcEngine: bloc.engine,
               remoteUidStatus: bloc.remoteUidStatus,
               channelName: bloc.channelName,
+              timesup: () async {
+                await bloc.exitAppointment(id: bloc.callID);
+                if (context.mounted) {
+                  Navigator.pop(context);
+                }
+              },
             ),
-            MyCameraView(
-                rtcEngine: bloc.engine,
-                localUserJoinedStatus: bloc.localUserJoinedStatus),
-            CallToolBarView(engine: bloc.engine),
+            MyCameraView(rtcEngine: bloc.engine),
+            ValueListenableBuilder<int?>(
+                valueListenable: bloc.remoteUidStatus,
+                builder: (context, snapshot, child) {
+                  if (snapshot != null) {
+                    return TimerEndCallView(
+                      meetingDurationInMin: bloc.meetingDurationInMin,
+                      timesup: () async {
+                        await bloc.exitAppointment(id: bloc.callID);
+                        if (context.mounted) {
+                          Navigator.pop(context);
+                        }
+                      },
+                    );
+                  } else {
+                    return Container();
+                  }
+                }),
+            CallToolBarView(
+              engine: bloc.engine,
+              callEnd: () {
+                Navigator.pop(context);
+              },
+            ),
           ],
         ),
       ),
