@@ -1,5 +1,4 @@
 {
-    "appTitle": "هيلب ايرا",
     "selectCountry" : "اختر البلد",
     "containerHomeIconTitle" : "الرئيسية",
     "containerCategoriesIconTitle" : "التصنيفات",
@@ -26,7 +25,7 @@
     "aboutus" : "من نحن",
     "support" : "الدعم",
     "version" : "الاصدار",
-    "rightsreserved" : "@ 2024 HelpEra.app. جميع الحقوق محفوظة.",
+    "rightsreserved" : "@ 2024 LegalzHub. جميع الحقوق محفوظة.",
     "rateapponstore" : "تقييم التطبيق على المتجر",
     "rateapponstoremessage" : "إذا أعجبك هذا التطبيق، فيرجى قضاء بعض الوقت في مراجعته! إنه يساعدنا حقًا ولا ينبغي أن يستغرق الأمر أكثر من دقيقة واحدة.",
     "rateapp" : "تقييم التطبيق",

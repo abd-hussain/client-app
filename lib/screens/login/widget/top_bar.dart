@@ -1,5 +1,4 @@
 import 'package:client_app/shared_widgets/custom_text.dart';
-import 'package:client_app/utils/constants/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -38,11 +37,10 @@ class TopBarWidget extends StatelessWidget {
         Expanded(child: Container()),
         Column(
           children: [
-            const CustomText(
-              title: AppConstant.appName,
-              fontSize: 30,
-              textColor: Color(0xff444444),
-              fontWeight: FontWeight.bold,
+            Image.asset(
+              "assets/images/logo.png",
+              width: 150,
+              height: 100,
             ),
             subtitle != null
                 ? CustomText(

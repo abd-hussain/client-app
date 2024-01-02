@@ -1,5 +1,6 @@
 import 'package:client_app/locator.dart';
 import 'package:client_app/main_context.dart';
+import 'package:client_app/utils/constants/constant.dart';
 import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -31,7 +32,7 @@ class MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       onGenerateTitle: (BuildContext context) {
-        return AppLocalizations.of(context)!.appTitle;
+        return AppConstant.appName;
       },
       locale: myBox.get(DatabaseFieldConstant.language) != null
           ? Locale(myBox.get(DatabaseFieldConstant.language))

@@ -1,7 +1,6 @@
 import 'package:client_app/locator.dart';
 import 'package:client_app/screens/main_contaner/main_container_bloc.dart';
-import 'package:client_app/shared_widgets/custom_text.dart';
-import 'package:client_app/utils/constants/constant.dart';
+
 import 'package:flutter/material.dart';
 
 PreferredSizeWidget mainAppBar(
@@ -12,11 +11,9 @@ PreferredSizeWidget mainAppBar(
     backgroundColor: const Color(0xff034061),
     title: Row(
       children: [
-        const CustomText(
-          title: AppConstant.appName,
-          fontSize: 30,
-          textColor: Colors.white,
-          fontWeight: FontWeight.bold,
+        Image.asset(
+          "assets/images/logo.png",
+          width: 100,
         ),
         Expanded(child: Container()),
         isItCalenderTab && isUserLoggedIn

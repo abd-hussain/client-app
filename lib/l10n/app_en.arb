@@ -1,5 +1,4 @@
 {
-    "appTitle": "HelpEra",
     "selectCountry" : "Select Country",
     "containerHomeIconTitle" : "Home",
     "containerCategoriesIconTitle" : "Categories",
@@ -26,7 +25,7 @@
     "aboutus" : "About Us",
     "support" : "Support",
     "version" : "Version",
-    "rightsreserved" : "@ 2024 HelpEra.app. All right reserved.",
+    "rightsreserved" : "@ 2024 LegalzHub. All right reserved.",
     "rateapp" : "Rate Application",
     "rateapponstore" : "Rate Application on Store",
     "rateapponstoremessage" : "If you like this app, please take a little bit of your time to review it ! It really helps us and it shouldn't take you more than one minute.",

@@ -8,7 +8,7 @@ class AppConstant {
   static const String apikeyToPass = "apikeyToPass";
   static const String tokenToPass = "tokenToPass";
   static const String applicationMainURL =
-      "https://www.helpera.app/"; //'http://127.0.0.1:8000/'
+      "http://167.99.212.137/"; //'http://127.0.0.1:8000/'
 
   static const String imagesBaseURLForCountries =
       "${AppConstant.applicationMainURL}static/countries/";
@@ -34,7 +34,7 @@ class AppConstant {
       "${AppConstant.applicationMainURL}static/web/privacypolicy.html";
   static const String joinAsMentorLink =
       "${AppConstant.applicationMainURL}static/web/joinasmentor.html";
-  static const String appName = "HelpEra";
+  static const String appName = "LegalzHub";
   static const String whatsappNumber = "+962795190663";
   static const String linkedinLink = "https://www.linkedin.com/in/aboudmasoud/";
 
