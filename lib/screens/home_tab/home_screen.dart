@@ -83,7 +83,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: snapshot.data!.isEmpty
                                 ? Center(
                                     child: CustomText(
-                                      title: AppLocalizations.of(context)!.noitem,
+                                      title:
+                                          AppLocalizations.of(context)!.noitem,
                                       fontSize: 18,
                                       textColor: const Color(0xff444444),
                                       fontWeight: FontWeight.bold,

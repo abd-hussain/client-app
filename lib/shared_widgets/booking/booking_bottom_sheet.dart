@@ -130,7 +130,7 @@ class BookingBottomSheetsUtil {
                           DayTime().dayFormatter(
                               selectedMeetingDate.value.toString()),
                           Currency().calculateHourRate(
-                              hourRate, selectedMeetingDuration.value),
+                              hourRate, selectedMeetingDuration.value, "JD"),
                         ),
                       ),
           ]),
@@ -360,7 +360,7 @@ class BookingBottomSheetsUtil {
                     title: selectedMeetingDuration == null
                         ? "00 JD"
                         : Currency().calculateHourRate(
-                            hourRate, selectedMeetingDuration),
+                            hourRate, selectedMeetingDuration, "JD"),
                     textColor: const Color(0xff444444),
                     fontWeight: FontWeight.bold,
                     fontSize: 20,

@@ -29,6 +29,10 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
     super.didChangeDependencies();
   }
 
+  //TODO HERE:
+
+  // TODO Mentor 14 not open
+
   @override
   void dispose() {
     bloc.onDispose();
@@ -50,24 +54,19 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
                     children: [
                       const SizedBox(height: 20),
                       Center(
-                        child: CircleAvatar(
-                          backgroundColor: const Color(0xff034061),
-                          radius: 50,
+                        child: SizedBox(
+                          width: 150,
+                          height: 150,
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(75),
                             child: bloc.profileImageUrl != ""
-                                ? FadeInImage(
-                                    placeholder: const AssetImage(
-                                        "assets/images/avatar.jpeg"),
-                                    image: NetworkImage(
-                                        AppConstant.imagesBaseURLForMentors +
-                                            bloc.profileImageUrl!,
-                                        scale: 1),
+                                ? Image.network(
+                                    AppConstant.imagesBaseURLForMentors +
+                                        bloc.profileImageUrl!,
+                                    fit: BoxFit.fill,
                                   )
                                 : Image.asset(
                                     'assets/images/avatar.jpeg',
-                                    width: 110.0,
-                                    height: 110.0,
                                     fit: BoxFit.fill,
                                   ),
                           ),
@@ -75,8 +74,13 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
                       ),
                       const SizedBox(height: 20),
                       CustomText(
-                        title:
-                            "${bloc.suffixeName!} ${bloc.firstName!} ${bloc.lastName!}",
+                        title: bloc.suffixeName!,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        textColor: const Color(0xff554d56),
+                      ),
+                      CustomText(
+                        title: "${bloc.firstName!} ${bloc.lastName!}",
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         textColor: const Color(0xff554d56),
@@ -94,14 +98,14 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
                           const SizedBox(width: 8),
                           CustomText(
                             title: bloc.categoryName!,
-                            fontSize: 12,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
                             textColor: const Color(0xff554d56),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 10),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(16),
                         child: CustomText(
                           title: bloc.bio!.toString(),
                           fontSize: 12,
@@ -109,7 +113,6 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
                           textColor: const Color(0xff554d56),
                         ),
                       ),
-                      const SizedBox(height: 8),
                       Padding(
                         padding: const EdgeInsets.all(16),
                         child: Row(

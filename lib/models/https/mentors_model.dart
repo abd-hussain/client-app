@@ -29,35 +29,37 @@ class MentorsModelData {
   List<String>? languages;
   String? countryName;
   String? countryFlag;
-  int? numberOfReviewr;
+  String? currency;
+  int? numberOfReviewers;
 
-  MentorsModelData({
-    this.rate,
-    this.id,
-    this.categoryName,
-    this.suffixeName,
-    this.firstName,
-    this.lastName,
-    this.hourRate,
-    this.profileImg,
-    this.languages,
-    this.countryName,
-    this.countryFlag,
-    this.numberOfReviewr,
-  });
+  MentorsModelData(
+      {this.id,
+      this.categoryName,
+      this.suffixeName,
+      this.firstName,
+      this.lastName,
+      this.rate,
+      this.hourRate,
+      this.profileImg,
+      this.languages,
+      this.countryName,
+      this.countryFlag,
+      this.currency,
+      this.numberOfReviewers});
 
   MentorsModelData.fromJson(Map<String, dynamic> json) {
-    rate = json['rate'];
-    categoryName = json['category_name'];
     id = json['id'];
+    categoryName = json['category_name'];
     suffixeName = json['suffixe_name'];
     firstName = json['first_name'];
     lastName = json['last_name'];
+    rate = json['rate'];
     hourRate = json['hour_rate'];
-    profileImg = json['profile_img'];
+    profileImg = AppConstant.imagesBaseURLForMentors + json['profile_img'];
     languages = json['languages'].cast<String>();
     countryName = json['country_name'];
     countryFlag = AppConstant.imagesBaseURLForCountries + json['country_flag'];
-    numberOfReviewr = json['number_of_reviewr'];
+    currency = json['currency'];
+    numberOfReviewers = json['number_of_reviewers'];
   }
 }

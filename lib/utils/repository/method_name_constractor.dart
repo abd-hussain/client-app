@@ -1,14 +1,16 @@
 class MethodNameConstant {
   static const String countries = "countries";
   static const String home = "client-home/";
-  static const String registerTokenNotification = "notifications/register-token";
+  static const String registerTokenNotification =
+      "notifications/register-token";
   static const String notifications = "notifications/";
-
-  //TODO: Checked API's
   static const String categories = "categories";
   static const String mentors = "mentor-list/";
   static const String mentorDetails = "mentors-details/";
-  static const String mentorAppointments = "client-appointment/mentor-appointment";
+
+  //TODO: Checked API's
+  static const String mentorAppointments =
+      "client-appointment/mentor-appointment";
   static const String clientAppointments = "client-appointment/";
   static const String mentoravaliable = "mentors-details/mentor-avaliable";
   static const String bookAppointment = "client-appointment/book";

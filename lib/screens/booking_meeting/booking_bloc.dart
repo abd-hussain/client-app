@@ -65,7 +65,8 @@ class BookingBloc extends Bloc<DiscountService> {
               ? Timing.hour
               : meetingduration == "30"
                   ? Timing.halfHour
-                  : Timing.quarterHour);
+                  : Timing.quarterHour,
+          "JD");
 
       bookingType = newArguments["bookingType"] as BookingType;
       int? categoryID = newArguments["categoryID"] as int?;
@@ -103,7 +104,7 @@ class BookingBloc extends Bloc<DiscountService> {
 
   String calculateTotalAmount(double amount, double discount) {
     return Currency().calculateHourRate(
-        calculateTotalAmountDouble(amount, discount), Timing.hour);
+        calculateTotalAmountDouble(amount, discount), Timing.hour, "JD");
   }
 
   double calculateTotalAmountDouble(double amount, double discount) {
@@ -132,7 +133,8 @@ class BookingBloc extends Bloc<DiscountService> {
                     ? Timing.threeQuarter
                     : meetingduration == "30"
                         ? Timing.halfHour
-                        : Timing.quarterHour);
+                        : Timing.quarterHour,
+            "JD");
 
         meetingtime = DayTime().convertingTimingToRealTime(value.data!.hour!);
         meetingdate = value.data!.date!;

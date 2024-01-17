@@ -15,6 +15,7 @@ class MentorProfileBloc extends Bloc<MentorService> {
   ValueNotifier<LoadingStatus> loadingStatus =
       ValueNotifier<LoadingStatus>(LoadingStatus.idle);
   String? profileImageUrl;
+
   String? firstName;
   String? lastName;
   String? suffixeName;
@@ -29,6 +30,8 @@ class MentorProfileBloc extends Bloc<MentorService> {
   String? countryFlag;
   String? dateOfBirth;
   String? experienceSince;
+  String? currency;
+  bool? freeCall;
 
   List<MultiSelectCard<String>> majors = [];
   List<Reviews> reviews = [];
@@ -56,6 +59,7 @@ class MentorProfileBloc extends Bloc<MentorService> {
   }
 
   void _getMentorAppointments(int id) {
+    //TODO
     locator<AppointmentsService>().getMentorAppointments(id).then((value) {
       if (value.data != null) {
         listOfAppointments = value.data!;
@@ -73,9 +77,11 @@ class MentorProfileBloc extends Bloc<MentorService> {
         suffixeName = value.data!.suffixeName!;
         categoryName = value.data!.categoryName;
         totalRate = value.data!.totalRate!;
-        hourRate = value.data!.hourRateByJD!;
+        hourRate = value.data!.hourRate!;
         bio = value.data!.bio;
         mentorId = id;
+        // freeCall = value.data!.freeCall!;
+        // currency = value.data!.currency!;
         speakingLanguage = value.data!.speakingLanguage.toString();
         genderIndex = value.data!.gender!;
         gender = GenderFormat().convertIndexToString(context, genderIndex!);

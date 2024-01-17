@@ -14,7 +14,10 @@ class CategoryMainView extends StatefulWidget {
   final Category selectedCategory;
   final List<MentorsModelData>? mentorsListNotifier;
 
-  const CategoryMainView({required this.selectedCategory, required this.mentorsListNotifier, super.key});
+  const CategoryMainView(
+      {required this.selectedCategory,
+      required this.mentorsListNotifier,
+      super.key});
 
   @override
   State<CategoryMainView> createState() => _CategoryMainViewState();
@@ -39,7 +42,8 @@ class _CategoryMainViewState extends State<CategoryMainView> {
                       : ListView.builder(
                           itemCount: widget.mentorsListNotifier!.length,
                           itemBuilder: (context, index) {
-                            return _item(context, index, widget.mentorsListNotifier!.length);
+                            return _item(context, index,
+                                widget.mentorsListNotifier!.length);
                           },
                         ),
             ),
@@ -72,7 +76,8 @@ class _CategoryMainViewState extends State<CategoryMainView> {
                         text: AppLocalizations.of(context)!.price,
                         icon: Ionicons.logo_bitcoin,
                         onPress: () {
-                          widget.mentorsListNotifier!.sort((a, b) => a.hourRate!.compareTo(b.hourRate!));
+                          widget.mentorsListNotifier!.sort(
+                              (a, b) => a.hourRate!.compareTo(b.hourRate!));
                           setState(() {});
                         }),
                     const SizedBox(width: 3),
@@ -80,7 +85,8 @@ class _CategoryMainViewState extends State<CategoryMainView> {
                         text: AppLocalizations.of(context)!.rate,
                         icon: Ionicons.star_half_outline,
                         onPress: () {
-                          widget.mentorsListNotifier!.sort((a, b) => b.rate!.compareTo(a.rate!));
+                          widget.mentorsListNotifier!
+                              .sort((a, b) => b.rate!.compareTo(a.rate!));
                           setState(() {});
                         }),
                     const SizedBox(width: 3),
@@ -88,7 +94,8 @@ class _CategoryMainViewState extends State<CategoryMainView> {
                         text: AppLocalizations.of(context)!.countryprofile,
                         icon: Ionicons.navigate_circle_outline,
                         onPress: () {
-                          widget.mentorsListNotifier!.sort((a, b) => a.countryName!.compareTo(b.countryName!));
+                          widget.mentorsListNotifier!.sort((a, b) =>
+                              a.countryName!.compareTo(b.countryName!));
                           setState(() {});
                         }),
                   ],
@@ -101,7 +108,10 @@ class _CategoryMainViewState extends State<CategoryMainView> {
     );
   }
 
-  Widget filterIcon({required String text, required IoniconsData icon, required Function onPress}) {
+  Widget filterIcon(
+      {required String text,
+      required IoniconsData icon,
+      required Function onPress}) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -176,8 +186,9 @@ class _CategoryMainViewState extends State<CategoryMainView> {
   Widget _card(BuildContext context, MentorsModelData data) {
     return InkWell(
       onTap: () {
-        Navigator.of(context, rootNavigator: true)
-            .pushNamed(RoutesConstants.mentorProfileScreen, arguments: {"id": data.id ?? 0});
+        Navigator.of(context, rootNavigator: true).pushNamed(
+            RoutesConstants.mentorProfileScreen,
+            arguments: {"id": data.id ?? 0});
       },
       child: Container(
         decoration: BoxDecoration(
@@ -206,10 +217,12 @@ class _CategoryMainViewState extends State<CategoryMainView> {
                     width: 75,
                     height: 100,
                     child: Center(
-                      child: data.profileImg != ""
+                      child: data.profileImg !=
+                              AppConstant.imagesBaseURLForMentors
                           ? FadeInImage(
-                              placeholder: const AssetImage("assets/images/avatar.jpeg"),
-                              image: NetworkImage(AppConstant.imagesBaseURLForMentors + data.profileImg!),
+                              placeholder:
+                                  const AssetImage("assets/images/avatar.jpeg"),
+                              image: NetworkImage(data.profileImg!),
                               fit: BoxFit.fill,
                             )
                           : Image.asset(
@@ -248,8 +261,10 @@ class _CategoryMainViewState extends State<CategoryMainView> {
                                 width: 20,
                                 height: 20,
                                 fit: BoxFit.cover,
-                                placeholder: const AssetImage("assets/images/flagPlaceHolderImg.png"),
-                                image: NetworkImage(data.countryFlag!, scale: 1)),
+                                placeholder: const AssetImage(
+                                    "assets/images/flagPlaceHolderImg.png"),
+                                image:
+                                    NetworkImage(data.countryFlag!, scale: 1)),
                           ),
                           const SizedBox(width: 8),
                           CustomText(
@@ -293,7 +308,8 @@ class _CategoryMainViewState extends State<CategoryMainView> {
                                         padding: const EdgeInsets.all(2),
                                         child: Center(
                                           child: CustomText(
-                                            title: data.languages![index], //== "English" ? "E" : "ع",
+                                            title: data.languages![
+                                                index], //== "English" ? "E" : "ع",
                                             fontSize: 10,
                                             fontWeight: FontWeight.w600,
                                             textColor: const Color(0xff444444),
@@ -330,7 +346,7 @@ class _CategoryMainViewState extends State<CategoryMainView> {
                           ),
                           const SizedBox(width: 2),
                           CustomText(
-                            title: "${data.numberOfReviewr} ",
+                            title: "${data.numberOfReviewers} ",
                             fontSize: 10,
                             fontWeight: FontWeight.w600,
                             textColor: const Color(0xff444444),
@@ -349,7 +365,10 @@ class _CategoryMainViewState extends State<CategoryMainView> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
-                              title: Currency().calculateHourRate(data.hourRate!, Timing.halfHour),
+                              title: Currency().calculateHourRate(
+                                  data.hourRate!,
+                                  Timing.halfHour,
+                                  data.currency!),
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                               textColor: const Color(0xff034061),

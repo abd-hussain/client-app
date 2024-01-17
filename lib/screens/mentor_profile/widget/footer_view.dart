@@ -60,7 +60,8 @@ class MentorProfileFooterView extends StatelessWidget {
         child: Row(
           children: [
             CustomText(
-              title: Currency().calculateHourRate(hourRate, Timing.halfHour),
+              title:
+                  Currency().calculateHourRate(hourRate, Timing.halfHour, "JD"),
               fontSize: 18,
               fontWeight: FontWeight.bold,
               textColor: const Color(0xff034061),

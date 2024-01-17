@@ -51,8 +51,6 @@
 	<true/>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
-	<key>MinimumOSVersion</key>
-	<string>11.0</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -62,8 +60,6 @@
 	</dict>
 	<key>UISupportsDocumentBrowser</key>
 	<true/>
-	<key>NSFaceIDUsageDescription</key>
-	<string>Please authorize to use the app</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
@@ -80,5 +76,7 @@
 	<string>Please allow access to gallery in order to register your profile pictures</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We Need This Permission to hear your voice when you talk to the client</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Please authorize to use the app</string>
 </dict>
 </plist>

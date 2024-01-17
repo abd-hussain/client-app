@@ -6,18 +6,16 @@ enum Timing { hour, threeQuarter, halfHour, quarterHour }
 class Currency {
   final box = Hive.box(DatabaseBoxConstant.userInfo);
 
-  String calculateHourRate(double hourRate, Timing timing) {
-    String currency = "\$";
-
+  String calculateHourRate(double hourRate, Timing timing, String currency) {
     switch (timing) {
       case Timing.hour:
-        return "$currency${hourRate.toStringAsFixed(2)}";
+        return "${hourRate.toStringAsFixed(2)}$currency";
       case Timing.threeQuarter:
-        return "$currency${(hourRate - (hourRate / 4)).toStringAsFixed(2)}";
+        return "${(hourRate - (hourRate / 4)).toStringAsFixed(2)}$currency";
       case Timing.halfHour:
-        return "$currency${(hourRate / 2).toStringAsFixed(2)}";
+        return "${(hourRate / 2).toStringAsFixed(2)}$currency";
       case Timing.quarterHour:
-        return "$currency${(hourRate / 4).toStringAsFixed(2)}";
+        return "${(hourRate / 4).toStringAsFixed(2)}$currency";
     }
   }
 

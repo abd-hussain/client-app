@@ -1,3 +1,5 @@
+import 'package:client_app/models/model_checker.dart';
+
 class MentorDetailsResponse {
   MentorDetailsResponseData? data;
   String? message;
@@ -12,13 +14,16 @@ class MentorDetailsResponse {
   }
 }
 
-class MentorDetailsResponseData {
+class MentorDetailsResponseData with ModelChecker {
+  int? id;
   String? suffixeName;
   String? firstName;
   String? lastName;
   String? bio;
   List<String>? speakingLanguage;
-  double? hourRateByJD;
+  double? hourRate;
+  bool? freeCall;
+  String? currency;
   double? totalRate;
   int? gender;
   String? profileImg;
@@ -38,12 +43,15 @@ class MentorDetailsResponseData {
   List<Reviews>? reviews;
 
   MentorDetailsResponseData(
-      {this.suffixeName,
+      {this.id,
+      this.suffixeName,
       this.firstName,
       this.lastName,
       this.bio,
       this.speakingLanguage,
-      this.hourRateByJD,
+      this.hourRate,
+      this.freeCall,
+      this.currency,
       this.totalRate,
       this.gender,
       this.profileImg,
@@ -63,20 +71,23 @@ class MentorDetailsResponseData {
       this.reviews});
 
   MentorDetailsResponseData.fromJson(Map<String, dynamic> json) {
-    suffixeName = json['suffixe_name'];
-    firstName = json['first_name'];
-    lastName = json['last_name'];
-    bio = json['bio'];
+    id = json['id'];
+    suffixeName = convertToString(json['suffixe_name']);
+    firstName = convertToString(json['first_name']);
+    lastName = convertToString(json['last_name']);
+    bio = convertToString(json['bio']);
     speakingLanguage = json['speaking_language'].cast<String>();
-    hourRateByJD = json['hour_rate'];
-    totalRate = json['total_rate'];
+    hourRate = convertToDouble(json['hour_rate']);
+    freeCall = convertToBoolean(json['free_call']);
+    currency = convertToString(json['currency']);
+    totalRate = convertToDouble(json['total_rate']);
     gender = json['gender'];
-    profileImg = json['profile_img'];
-    dateOfBirth = json['date_of_birth'];
-    experienceSince = json['experience_since'];
-    categoryName = json['category_name'];
-    country = json['country'];
-    countryFlag = json['country_flag'];
+    profileImg = convertToString(json['profile_img']);
+    dateOfBirth = convertToString(json['date_of_birth']);
+    experienceSince = convertToString(json['experience_since']);
+    categoryName = convertToString(json['category_name']);
+    country = convertToString(json['country']);
+    countryFlag = convertToString(json['country_flag']);
     major = json['major'].cast<String>();
     workingHoursSaturday = json['working_hours_saturday'].cast<int>();
     workingHoursSunday = json['working_hours_sunday'].cast<int>();
@@ -85,16 +96,14 @@ class MentorDetailsResponseData {
     workingHoursWednesday = json['working_hours_wednesday'].cast<int>();
     workingHoursThursday = json['working_hours_thursday'].cast<int>();
     workingHoursFriday = json['working_hours_friday'].cast<int>();
-    if (json['reviews'] != null) {
-      reviews = <Reviews>[];
-      json['reviews'].forEach((v) {
-        reviews!.add(Reviews.fromJson(v));
-      });
-    }
+    reviews = <Reviews>[];
+    json['reviews'].forEach((v) {
+      reviews!.add(Reviews.fromJson(v));
+    });
   }
 }
 
-class Reviews {
+class Reviews with ModelChecker {
   int? id;
   String? clientFirstName;
   String? clientLastName;
@@ -102,6 +111,8 @@ class Reviews {
   int? mentorId;
   double? stars;
   String? comments;
+  String? mentorResponse;
+  String? flagImage;
   String? createdAt;
 
   Reviews(
@@ -112,16 +123,20 @@ class Reviews {
       this.mentorId,
       this.stars,
       this.comments,
+      this.mentorResponse,
+      this.flagImage,
       this.createdAt});
 
   Reviews.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    clientFirstName = json['client_first_name'];
-    clientLastName = json['client_last_name'];
-    clientProfileImg = json['client_profile_img'];
+    clientFirstName = convertToString(json['client_first_name']);
+    clientLastName = convertToString(json['client_last_name']);
+    clientProfileImg = convertToString(json['client_profile_img']);
     mentorId = json['mentor_id'];
-    stars = json['stars'];
-    comments = json['comments'];
-    createdAt = json['created_at'];
+    stars = convertToDouble(json['stars']);
+    comments = convertToString(json['comments']);
+    mentorResponse = convertToString(json['mentor_response']);
+    flagImage = convertToString(json['flag_image']);
+    createdAt = convertToString(json['created_at']);
   }
 }
