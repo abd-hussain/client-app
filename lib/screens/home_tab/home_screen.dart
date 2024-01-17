@@ -1,12 +1,15 @@
 import 'package:client_app/models/https/home_response.dart';
+import 'package:client_app/models/https/notifications_response.dart';
 import 'package:client_app/screens/home_tab/home_bloc.dart';
-import 'package:client_app/screens/home_tab/widgets/list_notification_widget.dart';
+import 'package:client_app/screens/home_tab/widgets/announcements_view.dart';
 import 'package:client_app/screens/home_tab/widgets/main_banner.dart';
 import 'package:client_app/shared_widgets/admob_banner.dart';
-
+import 'package:client_app/shared_widgets/custom_text.dart';
+import 'package:client_app/shared_widgets/loading_view.dart';
+import 'package:client_app/shared_widgets/shimmers/shimmer_notifications.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:client_app/utils/logger.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -21,11 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void didChangeDependencies() {
     logDebugMessage(message: 'Home init Called ...');
-    _bloc.getHome();
-    if (_bloc.checkIfUserIsLoggedIn()) {
-      _bloc.markNotificationReaded();
-      _bloc.listOfNotifications();
-    }
     super.didChangeDependencies();
   }
 
@@ -39,37 +37,76 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 16),
-          ValueListenableBuilder<List<MainBanner>?>(
-              valueListenable: _bloc.bannerListNotifier,
-              builder: (context, snapshot, child) {
-                if (snapshot != null && snapshot.isNotEmpty) {
-                  return MainBannerHomePage(
-                    bannerList: snapshot,
-                    onPress: (link) async {
-                      if (link != null) {
-                        await launchUrl(Uri.parse(link));
-                      }
-                    },
-                  );
+          FutureBuilder<List<MainBannerData>?>(
+              initialData: const [],
+              future: _bloc.getHome(),
+              builder: (context, snapshot) {
+                if (snapshot.data == null && snapshot.hasData) {
+                  return const SizedBox(height: 250, child: LoadingView());
                 } else {
-                  return const SizedBox();
+                  return MainBannerHomePage(bannerList: snapshot.data ?? []);
                 }
               }),
-          SizedBox(
-            height: MediaQuery.of(context).size.height - 400,
-            child: NotificationsList(
-              notificationsListNotifier: _bloc.notificationsListNotifier,
-              isUserIsLoggedIn: _bloc.checkIfUserIsLoggedIn(),
-              onDelete: (p0) {
-                _bloc.notificationsListNotifier.value!.remove(p0);
-                _bloc.deleteNotification(p0.id!);
-              },
-            ),
-          ),
           const AddMobBanner(),
           const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16),
+            child: CustomText(
+              title: AppLocalizations.of(context)!.notifications,
+              fontSize: 18,
+              textColor: const Color(0xff444444),
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          _bloc.checkIfUserIsLoggedIn()
+              ? FutureBuilder<List<NotificationsResponseData>?>(
+                  initialData: null,
+                  future: _bloc.listOfNotifications(),
+                  builder: (context, snapshot) {
+                    if (snapshot.data == null) {
+                      return const SizedBox(
+                        height: 300,
+                        child: ShimmerNotificationsView(),
+                      );
+                    } else {
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 16, right: 16),
+                        child: SizedBox(
+                          height: MediaQuery.of(context).size.height - 550,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                            ),
+                            child: snapshot.data!.isEmpty
+                                ? Center(
+                                    child: CustomText(
+                                      title: AppLocalizations.of(context)!.noitem,
+                                      fontSize: 18,
+                                      textColor: const Color(0xff444444),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )
+                                : AnnouncementsView(
+                                    notificationsList: snapshot.data ?? [],
+                                  ),
+                          ),
+                        ),
+                      );
+                    }
+                  })
+              : SizedBox(
+                  height: 300,
+                  child: Center(
+                    child: CustomText(
+                      title: AppLocalizations.of(context)!.noitem,
+                      fontSize: 16,
+                      textColor: const Color(0xff444444),
+                    ),
+                  ),
+                ),
         ],
       ),
     );

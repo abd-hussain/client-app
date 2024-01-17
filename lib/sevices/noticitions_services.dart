@@ -8,32 +8,16 @@ class NotificationsService with Service {
     final response = await repository.callRequest(
       requestType: RequestType.get,
       methodName: MethodNameConstant.notifications,
+      queryParam: {"userType": "client"},
     );
     return NotificationsResponse.fromJson(response);
-  }
-
-  Future<bool> markAllNotificationsReaded() async {
-    await repository.callRequest(
-      requestType: RequestType.put,
-      methodName: MethodNameConstant.notifications,
-    );
-    return true;
-  }
-
-  Future<bool> deleteNotification(int id) async {
-    await repository.callRequest(
-      requestType: RequestType.delete,
-      methodName: MethodNameConstant.notifications,
-      queryParam: {"id": id},
-    );
-    return true;
   }
 
   Future<bool> registerToken(String token) async {
     await repository.callRequest(
       requestType: RequestType.put,
       methodName: MethodNameConstant.registerTokenNotification,
-      queryParam: {"token": token},
+      queryParam: {"token": token, "userType": "client"},
     );
     return true;
   }
