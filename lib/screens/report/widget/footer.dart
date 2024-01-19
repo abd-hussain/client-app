@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ReportFooterView extends StatelessWidget {
-  const ReportFooterView({Key? key}) : super(key: key);
+  const ReportFooterView({super.key});
 
   @override
   Widget build(BuildContext context) {

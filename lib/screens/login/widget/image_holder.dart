@@ -39,6 +39,8 @@ class ImageHolder extends StatelessWidget {
         BottomSheetsUtil().addImageBottomSheet(
           context,
           image?.path.isNotEmpty ?? false || urlImage != null,
+          "title1", //TODO
+          "title2", //TODO
           deleteCallBack: () {
             deleteImageCallBack();
             image = null;

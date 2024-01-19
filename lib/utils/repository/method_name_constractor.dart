@@ -8,6 +8,8 @@ class MethodNameConstant {
   static const String mentors = "mentor-list/";
   static const String mentorDetails = "mentors-details/";
   static const String uploadContactList = "settings/leads";
+  static const String reportIssue = "report/issue";
+  static const String reportSuggestion = "report/suggestion";
 
   //TODO: Checked API's
   static const String mentorAppointments =
@@ -29,6 +31,4 @@ class MethodNameConstant {
   static const String account = "client-account/";
   static const String deleteAccount = "client-account/delete";
   static const String updateAccount = "client-account/update";
-  static const String reportIssue = "report/issue";
-  static const String reportSuggestion = "report/suggestion";
 }

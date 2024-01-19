@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class ReportBloc extends Bloc<ReportService> {
+  var box = Hive.box(DatabaseBoxConstant.userInfo);
+
   TextEditingController textController = TextEditingController();
   ReportPageType? pageType;
   ValueNotifier<bool> enableSubmitBtn = ValueNotifier<bool>(false);
@@ -36,12 +38,9 @@ class ReportBloc extends Bloc<ReportService> {
   }
 
   Future<dynamic> callRequest(BuildContext context) async {
-    loadingStatus.value = LoadingStatus.inprogress;
-    var box = Hive.box(DatabaseBoxConstant.userInfo);
-
     final model = ReportRequest(
       content: textController.text,
-      userId: box.get(DatabaseFieldConstant.userid),
+      userId: box.get(DatabaseFieldConstant.userid).toString(),
       image1: attach1,
       image2: attach2,
       image3: attach3,
@@ -56,6 +55,9 @@ class ReportBloc extends Bloc<ReportService> {
 
   @override
   onDispose() {
+    attach1 = null;
+    attach2 = null;
+    attach3 = null;
     textController.dispose();
     enableSubmitBtn.dispose();
     loadingStatus.dispose();
