@@ -47,8 +47,6 @@ class MyAppState extends State<MyApp> {
         Locale('en', ''),
         Locale('ar', ''),
       ],
-      theme: ThemeData(
-          colorScheme: const ColorScheme.light(primary: Color(0xff034061))),
       onGenerateRoute: (settings) {
         return PageRouteBuilder(
             transitionsBuilder: (BuildContext context,
