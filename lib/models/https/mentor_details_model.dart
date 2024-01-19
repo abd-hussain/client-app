@@ -22,7 +22,7 @@ class MentorDetailsResponseData with ModelChecker {
   String? bio;
   List<String>? speakingLanguage;
   double? hourRate;
-  bool? freeCall;
+  int? freeCall;
   String? currency;
   double? totalRate;
   int? gender;
@@ -78,7 +78,7 @@ class MentorDetailsResponseData with ModelChecker {
     bio = convertToString(json['bio']);
     speakingLanguage = json['speaking_language'].cast<String>();
     hourRate = convertToDouble(json['hour_rate']);
-    freeCall = convertToBoolean(json['free_call']);
+    freeCall = json['free_call'];
     currency = convertToString(json['currency']);
     totalRate = convertToDouble(json['total_rate']);
     gender = json['gender'];

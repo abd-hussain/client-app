@@ -1,7 +1,5 @@
-import 'package:client_app/locator.dart';
 import 'package:client_app/models/https/appointment.dart';
 import 'package:client_app/models/https/mentor_details_model.dart';
-import 'package:client_app/sevices/appointments_service.dart';
 import 'package:client_app/sevices/mentor_service.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/enums/loading_status.dart';
@@ -31,7 +29,7 @@ class MentorProfileBloc extends Bloc<MentorService> {
   String? dateOfBirth;
   String? experienceSince;
   String? currency;
-  bool? freeCall;
+  bool freeCall = false;
 
   List<MultiSelectCard<String>> majors = [];
   List<Reviews> reviews = [];
@@ -59,12 +57,12 @@ class MentorProfileBloc extends Bloc<MentorService> {
   }
 
   void _getMentorAppointments(int id) {
-    //TODO
-    locator<AppointmentsService>().getMentorAppointments(id).then((value) {
-      if (value.data != null) {
-        listOfAppointments = value.data!;
-      }
-    });
+    // //TODO
+    // locator<AppointmentsService>().getMentorAppointments(id).then((value) {
+    //   if (value.data != null) {
+    //     listOfAppointments = value.data!;
+    //   }
+    // });
   }
 
   void _getMentorInformation(BuildContext context, int id) {
@@ -80,8 +78,8 @@ class MentorProfileBloc extends Bloc<MentorService> {
         hourRate = value.data!.hourRate!;
         bio = value.data!.bio;
         mentorId = id;
-        // freeCall = value.data!.freeCall!;
-        // currency = value.data!.currency!;
+        freeCall = handleFreeCallType(value.data!.freeCall);
+        currency = value.data!.currency!;
         speakingLanguage = value.data!.speakingLanguage.toString();
         genderIndex = value.data!.gender!;
         gender = GenderFormat().convertIndexToString(context, genderIndex!);
@@ -103,6 +101,18 @@ class MentorProfileBloc extends Bloc<MentorService> {
         loadingStatus.value = LoadingStatus.finish;
       }
     });
+  }
+
+  bool handleFreeCallType(int? freeCallFlag) {
+    if (freeCallFlag == null) {
+      return false;
+    }
+
+    if (freeCallFlag == 2) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   String calculateExperience(String? experienceSince) {

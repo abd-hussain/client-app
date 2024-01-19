@@ -43,79 +43,90 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffFAFAFA),
-      appBar: customAppBar(title: ""),
+      appBar: customAppBar(title: AppLocalizations.of(context)!.mentorprofile),
       body: SafeArea(
         child: SingleChildScrollView(
           child: ValueListenableBuilder<LoadingStatus>(
               valueListenable: bloc.loadingStatus,
               builder: (context, loadingsnapshot, child) {
                 if (loadingsnapshot != LoadingStatus.inprogress) {
-                  return Column(
-                    children: [
-                      const SizedBox(height: 20),
-                      Center(
-                        child: SizedBox(
-                          width: 150,
-                          height: 150,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(75),
-                            child: bloc.profileImageUrl != ""
-                                ? Image.network(
-                                    AppConstant.imagesBaseURLForMentors +
-                                        bloc.profileImageUrl!,
-                                    fit: BoxFit.fill,
-                                  )
-                                : Image.asset(
-                                    'assets/images/avatar.jpeg',
-                                    fit: BoxFit.fill,
+                  return Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 120,
+                              height: 120,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(50),
+                                child: bloc.profileImageUrl != ""
+                                    ? Image.network(
+                                        AppConstant.imagesBaseURLForMentors +
+                                            bloc.profileImageUrl!,
+                                        fit: BoxFit.fill,
+                                      )
+                                    : Image.asset(
+                                        'assets/images/avatar.jpeg',
+                                        fit: BoxFit.fill,
+                                      ),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CustomText(
+                                  title: bloc.suffixeName!,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  textColor: const Color(0xff554d56),
+                                ),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width - 160,
+                                  child: CustomText(
+                                    title:
+                                        "${bloc.firstName!} ${bloc.lastName!}",
+                                    fontSize: 18,
+                                    maxLins: 3,
+                                    fontWeight: FontWeight.bold,
+                                    textColor: const Color(0xff554d56),
                                   ),
-                          ),
+                                ),
+                                const SizedBox(height: 4),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    CustomText(
+                                      title:
+                                          "${AppLocalizations.of(context)!.category} :",
+                                      fontSize: 12,
+                                      textColor: const Color(0xff554d56),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    CustomText(
+                                      title: bloc.categoryName!,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      textColor: const Color(0xff554d56),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                      ),
-                      const SizedBox(height: 20),
-                      CustomText(
-                        title: bloc.suffixeName!,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        textColor: const Color(0xff554d56),
-                      ),
-                      CustomText(
-                        title: "${bloc.firstName!} ${bloc.lastName!}",
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        textColor: const Color(0xff554d56),
-                      ),
-                      const SizedBox(height: 4),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CustomText(
-                            title:
-                                "${AppLocalizations.of(context)!.category} :",
-                            fontSize: 12,
-                            textColor: const Color(0xff554d56),
-                          ),
-                          const SizedBox(width: 8),
-                          CustomText(
-                            title: bloc.categoryName!,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            textColor: const Color(0xff554d56),
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: CustomText(
+                        const SizedBox(height: 10),
+                        CustomText(
                           title: bloc.bio!.toString(),
                           fontSize: 12,
                           maxLins: 5,
                           textColor: const Color(0xff554d56),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Row(
+                        const SizedBox(height: 10),
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Column(
@@ -129,7 +140,7 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
                                     color: Color(0xff444444),
                                   ),
                                 ),
-                                const SizedBox(height: 20),
+                                const SizedBox(height: 10),
                                 MentorGridItem(
                                   title: AppLocalizations.of(context)!.gender,
                                   value: bloc.gender!,
@@ -138,6 +149,15 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
                                         ? Icons.male
                                         : Icons.female,
                                     color: const Color(0xff444444),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                MentorGridItem(
+                                  title: AppLocalizations.of(context)!.hourrate,
+                                  value: "${bloc.hourRate} ${bloc.currency}",
+                                  icon: const Icon(
+                                    Ionicons.wallet_outline,
+                                    color: Color(0xff444444),
                                   ),
                                 ),
                               ],
@@ -160,7 +180,7 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
                                     ),
                                   ),
                                 ),
-                                const SizedBox(height: 20),
+                                const SizedBox(height: 10),
                                 MentorGridItem(
                                   title:
                                       AppLocalizations.of(context)!.experience,
@@ -171,46 +191,55 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
                                     color: Color(0xff444444),
                                   ),
                                 ),
+                                const SizedBox(height: 10),
+                                MentorGridItem(
+                                  title: AppLocalizations.of(context)!
+                                      .freecallexsist,
+                                  value: bloc.freeCall
+                                      ? AppLocalizations.of(context)!.avaliable
+                                      : AppLocalizations.of(context)!
+                                          .notavaliable,
+                                  icon: const Icon(
+                                    Ionicons.magnet_outline,
+                                    color: Color(0xff444444),
+                                  ),
+                                ),
                               ],
                             ),
                           ],
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CustomText(
+                        const SizedBox(height: 10),
+                        CustomText(
                           title:
                               "-- ${AppLocalizations.of(context)!.specialist} --",
                           fontSize: 14,
-                          maxLins: 5,
                           textColor: const Color(0xff554d56),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: MultiSelectContainer(
-                            items: bloc.majors,
-                            onChange: (allSelectedItems, selectedItem) {}),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CustomText(
+                        const SizedBox(height: 10),
+                        MultiSelectContainer(
+                          items: bloc.majors,
+                          singleSelectedItem: true,
+                          highlightColor: const Color(0xff034061),
+                          splashColor: const Color(0xff034061),
+                          onChange: (allSelectedItems, selectedItem) {},
+                        ),
+                        const SizedBox(height: 10),
+                        CustomText(
                           title:
                               "-- ${AppLocalizations.of(context)!.ratingandreview} --",
                           fontSize: 14,
-                          maxLins: 5,
                           textColor: const Color(0xff554d56),
                         ),
-                      ),
-                      ReviewHeaderView(
-                        ratesCount: bloc.reviews.length,
-                        totalRates: bloc.totalRate,
-                      ),
-                      SizedBox(
-                        height: bloc.reviews.isEmpty ? 20 : 400,
-                        child: ReviewBodyView(reviews: bloc.reviews),
-                      ),
-                    ],
+                        ReviewHeaderView(
+                          ratesCount: bloc.reviews.length,
+                          totalRates: bloc.totalRate,
+                        ),
+                        SizedBox(
+                          height: bloc.reviews.isEmpty ? 20 : 400,
+                          child: ReviewBodyView(reviews: bloc.reviews),
+                        ),
+                      ],
+                    ),
                   );
                 } else {
                   return const SizedBox(
