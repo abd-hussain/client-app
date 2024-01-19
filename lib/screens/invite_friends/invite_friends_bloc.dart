@@ -1,52 +1,74 @@
+import 'package:client_app/locator.dart';
+import 'package:client_app/models/https/contact_list_upload.dart';
+import 'package:client_app/sevices/account_service.dart';
 import 'package:client_app/sevices/settings_service.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/mixins.dart';
-import 'package:client_app/models/https/contact_list_upload.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class InviteFriendsBloc extends Bloc<SettingService> {
-  bool permissionDenied = true;
-  ValueNotifier<List<Contact>> contactsNotifier =
-      ValueNotifier<List<Contact>>([]);
+  ValueNotifier<String> invitationCodeNotifier = ValueNotifier<String>("");
+
   final box = Hive.box(DatabaseBoxConstant.userInfo);
 
   Future fetchContacts() async {
-    if (await FlutterContacts.requestPermission()) {
-      contactsNotifier.value = await FlutterContacts.getContacts(
-          withProperties: true, withPhoto: true);
-      permissionDenied = false;
-      uploadContactsListToServer();
-    } else {
-      contactsNotifier.value = [];
-      permissionDenied = true;
+    if (await FlutterContacts.requestPermission(readonly: true)) {
+      uploadContactsListToServer(await FlutterContacts.getContacts(
+          withProperties: true, withPhoto: true));
     }
   }
 
-  Future<void> uploadContactsListToServer() async {
+  Future<void> uploadContactsListToServer(List<Contact> contatctList) async {
     var listOfContacts = UploadContact(list: []);
 
-    String usedId = box.get(DatabaseFieldConstant.userid);
-
-    for (var item in contactsNotifier.value) {
+    for (var item in contatctList) {
       String contactName = item.displayName != ""
           ? item.displayName
           : ("${item.name.first} ${item.name.last}");
       String phoneNumber = item.phones.isNotEmpty ? item.phones[0].number : "";
       String email = item.emails.isNotEmpty ? item.emails[0].address : "";
-      listOfContacts.list.add(MyContact(
+
+      //TODO check mentor app this keep return 422
+
+      listOfContacts.list.add(
+        MyContact(
           fullName: contactName,
-          mobileNumber: phoneNumber,
+          mobileNumber: phoneNumber.replaceAll(" ", ""),
           email: email,
-          clientownerid: usedId == "" ? null : int.parse(usedId)));
+          clientownerid: box.get(DatabaseFieldConstant.userid),
+        ),
+      );
     }
 
-    await service.uploadContactList(contacts: listOfContacts);
+    if (listOfContacts.list.isNotEmpty) {
+      await service.uploadContactList(contacts: listOfContacts);
+    }
+  }
+
+  bool checkIfUserIsLoggedIn() {
+    bool isItLoggedIn = false;
+
+    if (box.get(DatabaseFieldConstant.isUserLoggedIn) != null) {
+      isItLoggedIn = box.get(DatabaseFieldConstant.isUserLoggedIn);
+    }
+
+    return isItLoggedIn;
+  }
+
+  void getProfileInformations() async {
+    locator<AccountService>().getAccountInfo().then((value) {
+      final data = value.data;
+      //TODO : Test Again
+      if (data != null) {
+        invitationCodeNotifier.value = data.invitationCode ?? "";
+      }
+    });
   }
 
   @override
   onDispose() {
-    contactsNotifier.dispose();
+    invitationCodeNotifier.dispose();
   }
 }

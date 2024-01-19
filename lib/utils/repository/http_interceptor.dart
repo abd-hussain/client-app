@@ -42,7 +42,8 @@ class HttpInterceptor extends InterceptorsWrapper {
   }
 
   Future<bool> validateResponse<T extends Model, TR>(Response response) async {
-    logger.wtf("status code ${response.statusCode}");
+    logger.wtf(
+        "status code ${response.requestOptions.baseUrl}${response.requestOptions.path} - ${response.statusCode}");
     switch (response.statusCode) {
       case 200:
         return true;

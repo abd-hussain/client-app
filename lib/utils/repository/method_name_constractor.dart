@@ -7,6 +7,7 @@ class MethodNameConstant {
   static const String categories = "categories";
   static const String mentors = "mentor-list/";
   static const String mentorDetails = "mentors-details/";
+  static const String uploadContactList = "settings/leads";
 
   //TODO: Checked API's
   static const String mentorAppointments =
@@ -22,7 +23,6 @@ class MethodNameConstant {
   static const String discount = "discount/";
   static const String archive = "archive/";
 
-  static const String uploadContactList = "settings/leads";
   static const String auth = "client-auth";
   static const String authDebuging = "client-auth-debug";
   static const String authVerify = "client-auth-verify";

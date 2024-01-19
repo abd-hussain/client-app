@@ -42,7 +42,7 @@ class ChangeLanguageWidget extends StatelessWidget {
             borderRadius: 4.0,
             horizontalPadding: const EdgeInsets.all(20.0),
             verticalOffset: 8.0,
-            onSegmentChosen: (index) async {
+            onSegmentTapped: (index) async {
               segmentChange(index);
             },
           ),

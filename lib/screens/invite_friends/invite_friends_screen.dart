@@ -1,14 +1,12 @@
 import 'package:client_app/screens/invite_friends/invite_friends_bloc.dart';
-import 'package:client_app/screens/invite_friends/widgets/list_of_contacts_widget.dart';
+import 'package:client_app/screens/invite_friends/widgets/client_share_view.dart';
+import 'package:client_app/screens/invite_friends/widgets/mentor_share_view.dart';
 import 'package:client_app/shared_widgets/custom_appbar.dart';
-import 'package:client_app/shared_widgets/custom_text.dart';
-import 'package:client_app/shared_widgets/shimmers/shimmer_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class InviteFriendsScreen extends StatefulWidget {
-  const InviteFriendsScreen({Key? key}) : super(key: key);
+  const InviteFriendsScreen({super.key});
 
   @override
   State<InviteFriendsScreen> createState() => _InviteFriendsScreenState();
@@ -20,6 +18,9 @@ class _InviteFriendsScreenState extends State<InviteFriendsScreen> {
   @override
   void didChangeDependencies() {
     _bloc.fetchContacts();
+    if (_bloc.checkIfUserIsLoggedIn()) {
+      _bloc.getProfileInformations();
+    }
     super.didChangeDependencies();
   }
 
@@ -33,37 +34,23 @@ class _InviteFriendsScreenState extends State<InviteFriendsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(title: AppLocalizations.of(context)!.invite_friends),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ValueListenableBuilder<List<Contact>>(
-            valueListenable: _bloc.contactsNotifier,
-            builder: (context, snapshot, child) {
-              if (_bloc.permissionDenied) {
-                return Column(
-                  children: [
-                    const SizedBox(height: 50),
-                    Center(
-                      child: CustomText(
-                        title: AppLocalizations.of(context)!.permision_denied,
-                        fontSize: 20,
-                        textColor: Colors.black,
-                      ),
-                    ),
-                  ],
-                );
-              } else {
-                return snapshot != []
-                    ? ListOfContactsWidget(
-                        contacts: snapshot,
-                      )
-                    : const ShimmerListView(
-                        count: 15,
-                      );
-              }
-            },
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: ValueListenableBuilder<String>(
+                valueListenable: _bloc.invitationCodeNotifier,
+                builder: (context, snapshot, child) {
+                  return Column(
+                    children: [
+                      MentorShareView(invitationCode: snapshot),
+                      const SizedBox(height: 10),
+                      ClientShareView(invitationCode: snapshot),
+                    ],
+                  );
+                }),
           ),
-        ],
+        ),
       ),
     );
   }

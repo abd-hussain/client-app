@@ -19,6 +19,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 //TODO: User should add majors and note before resrve call
 //TODO handle web
 //TODO fix ioS notifications
+//TODO check web pages // Joint as mentor
 
 void main() {
   runZonedGuarded(() async {
