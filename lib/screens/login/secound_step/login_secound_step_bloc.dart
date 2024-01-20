@@ -14,7 +14,9 @@ class LoginSecoundStepBloc extends Bloc<AuthService> {
       ValueNotifier<LoadingStatus>(LoadingStatus.idle);
   List<Country> countriesList = [];
 
+  int countryId = 0;
   String countryCode = "";
+
   String mobileNumber = "";
   ValueNotifier<bool> enableVerifyBtn = ValueNotifier<bool>(false);
   final box = Hive.box(DatabaseBoxConstant.userInfo);
@@ -26,7 +28,10 @@ class LoginSecoundStepBloc extends Bloc<AuthService> {
       mobileNumber = mobileNumber.substring(1);
     }
     return await service.auth(
-        countryCode: countryCode, mobileNumber: mobileNumber);
+      countryId: countryId,
+      countryCode: countryCode,
+      mobileNumber: mobileNumber,
+    );
   }
 
   void listOfCountries() {
@@ -39,8 +44,9 @@ class LoginSecoundStepBloc extends Bloc<AuthService> {
   }
 
   Country returnSelectedCountryFromDatabase() {
+    countryId = int.parse(box.get(DatabaseFieldConstant.selectedCountryId));
     return Country(
-        id: int.parse(box.get(DatabaseFieldConstant.selectedCountryId)),
+        id: countryId,
         flagImage: box.get(DatabaseFieldConstant.selectedCountryFlag),
         name: box.get(DatabaseFieldConstant.selectedCountryName),
         currency: box.get(DatabaseFieldConstant.selectedCountryCurrency),

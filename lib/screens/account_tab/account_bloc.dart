@@ -19,14 +19,16 @@ import 'package:ionicons/ionicons.dart';
 
 class AccountBloc extends Bloc<AccountService> {
   final box = Hive.box(DatabaseBoxConstant.userInfo);
-  ValueNotifier<LoadingStatus> loadingStatus = ValueNotifier<LoadingStatus>(LoadingStatus.idle);
+  ValueNotifier<LoadingStatus> loadingStatus =
+      ValueNotifier<LoadingStatus>(LoadingStatus.idle);
 
   List<ProfileOptions> listOfAccountOptions(BuildContext context) {
     return [
       ProfileOptions(
         icon: Icons.archive,
         name: AppLocalizations.of(context)!.archive,
-        onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.archiveScreen),
+        onTap: () => Navigator.of(context, rootNavigator: true)
+            .pushNamed(RoutesConstants.archiveScreen),
       ),
       ProfileOptions(
         icon: Icons.logout,
@@ -52,13 +54,16 @@ class AccountBloc extends Bloc<AccountService> {
       ProfileOptions(
         icon: Icons.menu_book_rounded,
         name: AppLocalizations.of(context)!.usertutorials,
-        onTap: () => Navigator.of(context, rootNavigator: true)
-            .pushNamed(RoutesConstants.tutorialsScreen, arguments: {"openFrom": TutorialOpenFrom.account}),
+        onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(
+            RoutesConstants.tutorialsScreen,
+            arguments: {"openFrom": TutorialOpenFrom.account}),
       ),
       ProfileOptions(
         icon: Icons.translate,
         name: AppLocalizations.of(context)!.language,
-        selectedItem: box.get(DatabaseFieldConstant.language) == "en" ? "English" : "العربية",
+        selectedItem: box.get(DatabaseFieldConstant.language) == "en"
+            ? "English"
+            : "العربية",
         onTap: () {
           _changeLanguage(context);
         },
@@ -70,8 +75,11 @@ class AccountBloc extends Bloc<AccountService> {
           width: 30,
           height: 25,
           child: FadeInImage(
-            placeholder: const AssetImage("assets/images/flagPlaceHolderImg.png"),
-            image: NetworkImage(box.get(DatabaseFieldConstant.selectedCountryFlag), scale: 1),
+            placeholder:
+                const AssetImage("assets/images/flagPlaceHolderImg.png"),
+            image: NetworkImage(
+                box.get(DatabaseFieldConstant.selectedCountryFlag),
+                scale: 1),
           ),
         ),
         onTap: () {
@@ -86,22 +94,26 @@ class AccountBloc extends Bloc<AccountService> {
       ProfileOptions(
         icon: Icons.bug_report,
         name: AppLocalizations.of(context)!.reportproblem,
-        onTap: () => Navigator.of(context, rootNavigator: true)
-            .pushNamed(RoutesConstants.reportScreen, arguments: {AppConstant.argument1: ReportPageType.issue}),
+        onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(
+            RoutesConstants.reportScreen,
+            arguments: {AppConstant.argument1: ReportPageType.issue}),
       ),
       ProfileOptions(
         icon: Ionicons.balloon,
         name: AppLocalizations.of(context)!.reportsuggestion,
-        onTap: () => Navigator.of(context, rootNavigator: true)
-            .pushNamed(RoutesConstants.reportScreen, arguments: {AppConstant.argument1: ReportPageType.suggestion}),
+        onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(
+            RoutesConstants.reportScreen,
+            arguments: {AppConstant.argument1: ReportPageType.suggestion}),
       ),
       ProfileOptions(
         icon: Ionicons.extension_puzzle,
         name: AppLocalizations.of(context)!.joinasmentor,
-        onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen, arguments: {
-          AppConstant.webViewPageUrl: box.get(DatabaseFieldConstant.language) == "ar"
-              ? AppConstant.joinAsMentorLinkAR
-              : AppConstant.joinAsMentorLink,
+        onTap: () => Navigator.of(context, rootNavigator: true)
+            .pushNamed(RoutesConstants.webViewScreen, arguments: {
+          AppConstant.webViewPageUrl:
+              box.get(DatabaseFieldConstant.language) == "ar"
+                  ? AppConstant.joinAsMentorLinkAR
+                  : AppConstant.joinAsMentorLink,
           AppConstant.pageTitle: AppLocalizations.of(context)!.joinasmentor
         }),
       )
@@ -138,15 +150,19 @@ class AccountBloc extends Bloc<AccountService> {
   }
 
   void _openAboutUs(BuildContext context) {
-    Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen, arguments: {
+    Navigator.of(context, rootNavigator: true)
+        .pushNamed(RoutesConstants.webViewScreen, arguments: {
       AppConstant.webViewPageUrl:
-          box.get(DatabaseFieldConstant.language) == "ar" ? AppConstant.aboutusLinkAR : AppConstant.aboutusLink,
+          box.get(DatabaseFieldConstant.language) == "ar"
+              ? AppConstant.aboutusLinkAR
+              : AppConstant.aboutusLink,
       AppConstant.pageTitle: AppLocalizations.of(context)!.aboutus
     });
   }
 
   void _openInviteFriends(BuildContext context) {
-    Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.inviteFriendScreen);
+    Navigator.of(context, rootNavigator: true)
+        .pushNamed(RoutesConstants.inviteFriendScreen);
   }
 
   void _changeLanguage(BuildContext context) async {
@@ -170,20 +186,30 @@ class AccountBloc extends Bloc<AccountService> {
     locator<FilterService>().countries().then((value) async {
       var listOfCountries = value.data!..sort((a, b) => a.id!.compareTo(b.id!));
       loadingStatus.value = LoadingStatus.finish;
-      await BottomSheetsUtil().countryBottomSheet(context, listOfCountries, (item) async {
+      await BottomSheetsUtil().countryBottomSheet(context, listOfCountries,
+          (item) async {
         await BottomSheetsUtil().areYouShoureButtomSheet(
             context: context,
             message: AppLocalizations.of(context)!.changecountrymessage,
             sure: () async {
               loadingStatus.value = LoadingStatus.inprogress;
 
-              await box.put(DatabaseFieldConstant.selectedCountryId, item.id.toString());
-              await box.put(DatabaseFieldConstant.selectedCountryFlag, item.flagImage);
-              await box.put(DatabaseFieldConstant.selectedCountryName, item.name);
-              await box.put(DatabaseFieldConstant.selectedCountryDialCode, item.dialCode);
-              await box.put(DatabaseFieldConstant.selectedCountryCurrency, item.currency);
-              await box.put(DatabaseFieldConstant.selectedCountryMinLenght, item.minLength.toString());
-              await box.put(DatabaseFieldConstant.selectedCountryMaxLenght, item.maxLength.toString()).then((value) {
+              await box.put(
+                  DatabaseFieldConstant.selectedCountryId, item.id.toString());
+              await box.put(
+                  DatabaseFieldConstant.selectedCountryFlag, item.flagImage);
+              await box.put(
+                  DatabaseFieldConstant.selectedCountryName, item.name);
+              await box.put(
+                  DatabaseFieldConstant.selectedCountryDialCode, item.dialCode);
+              await box.put(
+                  DatabaseFieldConstant.selectedCountryCurrency, item.currency);
+              await box.put(DatabaseFieldConstant.selectedCountryMinLenght,
+                  item.minLength.toString());
+              await box
+                  .put(DatabaseFieldConstant.selectedCountryMaxLenght,
+                      item.maxLength.toString())
+                  .then((value) {
                 if (checkIfUserIsLoggedIn()) {
                   updateProfileCountry(context, item.id!);
                 } else {
@@ -222,7 +248,8 @@ class AccountBloc extends Bloc<AccountService> {
             DatabaseFieldConstant.pushNotificationToken,
           ]);
 
-          await nav.pushNamedAndRemoveUntil(RoutesConstants.initialRoute, (Route<dynamic> route) => true);
+          await nav.pushNamedAndRemoveUntil(
+              RoutesConstants.initialRoute, (Route<dynamic> route) => true);
         });
   }
 
@@ -235,7 +262,8 @@ class AccountBloc extends Bloc<AccountService> {
         sure: () async {
           BottomSheetsUtil().areYouShoureButtomSheet(
               context: context,
-              message: AppLocalizations.of(context)!.accountInformationwillbedeleted,
+              message:
+                  AppLocalizations.of(context)!.accountInformationwillbedeleted,
               sure: () async {
                 service.removeAccount().whenComplete(() async {
                   final box = await Hive.openBox(DatabaseBoxConstant.userInfo);
@@ -256,7 +284,9 @@ class AccountBloc extends Bloc<AccountService> {
                     DatabaseFieldConstant.pushNotificationToken,
                   ]);
 
-                  await nav.pushNamedAndRemoveUntil(RoutesConstants.initialRoute, (Route<dynamic> route) => true);
+                  await nav.pushNamedAndRemoveUntil(
+                      RoutesConstants.initialRoute,
+                      (Route<dynamic> route) => true);
                 });
               });
         });

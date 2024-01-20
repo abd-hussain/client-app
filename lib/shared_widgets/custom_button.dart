@@ -31,9 +31,13 @@ class CustomButton extends StatelessWidget {
           height: 45,
           width: width,
           child: Center(
-            child: Text(buttonTitle == "Submit"
-                ? AppLocalizations.of(context)!.submit
-                : buttonTitle),
+            child: Text(
+              buttonTitle == "Submit"
+                  ? AppLocalizations.of(context)!.submit
+                  : buttonTitle,
+              style: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold),
+            ),
           ),
         ),
       ),

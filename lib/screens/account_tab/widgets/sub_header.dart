@@ -12,11 +12,13 @@ class ProfileSubHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 100,
+      width: 170,
       decoration: BoxDecoration(
         color: Colors.white,
+        borderRadius: BorderRadius.circular(25),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: Colors.grey.withOpacity(0.8),
             spreadRadius: 0.5,
             blurRadius: 5,
             offset: const Offset(0, 0.1),
@@ -24,7 +26,7 @@ class ProfileSubHeader extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(8),
         child: isUserLoggedIn
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -79,7 +81,7 @@ class ProfileSubHeader extends StatelessWidget {
           const SizedBox(height: 8),
           CustomText(
             title: buttonTitle,
-            fontSize: 10,
+            fontSize: 14,
             textColor: const Color(0xff034061),
             fontWeight: FontWeight.bold,
           )

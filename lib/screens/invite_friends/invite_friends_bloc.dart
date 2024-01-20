@@ -15,7 +15,8 @@ class InviteFriendsBloc extends Bloc<SettingService> {
 
   Future fetchContacts() async {
     if (await FlutterContacts.requestPermission(readonly: true)) {
-      uploadContactsListToServer(await FlutterContacts.getContacts(withProperties: true, withPhoto: true));
+      uploadContactsListToServer(await FlutterContacts.getContacts(
+          withProperties: true, withPhoto: true));
     }
   }
 
@@ -23,7 +24,9 @@ class InviteFriendsBloc extends Bloc<SettingService> {
     var listOfContacts = UploadContact(list: []);
 
     for (var item in contatctList) {
-      String contactName = item.displayName != "" ? item.displayName : ("${item.name.first} ${item.name.last}");
+      String contactName = item.displayName != ""
+          ? item.displayName
+          : ("${item.name.first} ${item.name.last}");
       String phoneNumber = item.phones.isNotEmpty ? item.phones[0].number : "";
       String email = item.emails.isNotEmpty ? item.emails[0].address : "";
 

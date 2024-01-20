@@ -13,6 +13,7 @@ class LoginThirdStepBloc extends Bloc<AuthService> {
   int timerStartNumberSec = 59;
   int timerStartNumberMin = 2;
 
+  int countryId = 0;
   String countryCode = "";
   ValueNotifier<bool> otpNotValid = ValueNotifier<bool>(false);
 
@@ -24,7 +25,9 @@ class LoginThirdStepBloc extends Bloc<AuthService> {
     final arguments =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
     if (arguments != null) {
+      countryId = arguments[AppConstant.countryId];
       countryCode = arguments[AppConstant.countryCode];
+
       mobileNumber = arguments[AppConstant.mobileNumber];
       apikey = arguments[AppConstant.apikeyToPass];
       userId = arguments[AppConstant.useridToPass];
@@ -47,7 +50,10 @@ class LoginThirdStepBloc extends Bloc<AuthService> {
 
   Future<AuthDebugResponse> callRequestOfAuthAgain() async {
     return await service.auth(
-        countryCode: countryCode, mobileNumber: mobileNumber);
+      countryId: countryId,
+      countryCode: countryCode,
+      mobileNumber: mobileNumber,
+    );
   }
 
   @override

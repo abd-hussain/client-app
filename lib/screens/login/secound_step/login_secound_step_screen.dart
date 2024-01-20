@@ -54,24 +54,26 @@ class _LoginSecoundStepScreenState extends State<LoginSecoundStepScreen> {
                           CustomText(
                             title: AppLocalizations.of(context)!
                                 .enteryourphonenumber,
-                            fontSize: 14,
-                            textColor: Colors.black,
+                            fontSize: 16,
+                            textColor: const Color(0xff444444),
+                            fontWeight: FontWeight.bold,
                           ),
                           const SizedBox(height: 8),
                           CustomText(
                             title: AppLocalizations.of(context)!
                                 .enteryourphonenumberexample,
-                            fontSize: 10,
-                            textColor: Colors.grey,
+                            fontSize: 14,
+                            textColor: const Color(0xffBFBFBF),
                           ),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 10),
                           MobileNumberField(
                             initialCountry:
                                 bloc.returnSelectedCountryFromDatabase(),
                             countryList: bloc.countriesList,
                             enableVerifyBtn: bloc.enableVerifyBtn,
                             selectedCountryCode: (selectedCode) {
-                              bloc.countryCode = selectedCode;
+                              bloc.countryId = selectedCode.id!;
+                              bloc.countryCode = selectedCode.dialCode!;
                             },
                             enteredPhoneNumber: (mobileNumber) {
                               bloc.mobileNumber = mobileNumber;
@@ -93,6 +95,8 @@ class _LoginSecoundStepScreenState extends State<LoginSecoundStepScreen> {
                                         await navigator.pushNamed(
                                             RoutesConstants.loginThirdStepRoute,
                                             arguments: {
+                                              AppConstant.countryId:
+                                                  bloc.countryId,
                                               AppConstant.countryCode:
                                                   bloc.countryCode,
                                               AppConstant.mobileNumber:

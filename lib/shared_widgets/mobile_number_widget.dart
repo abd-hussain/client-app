@@ -8,7 +8,7 @@ import 'package:client_app/models/https/countries_model.dart';
 class MobileNumberField extends StatefulWidget {
   final Country initialCountry;
   final List<Country> countryList;
-  final Function(String) selectedCountryCode;
+  final Function(Country) selectedCountryCode;
   final Function(String) enteredPhoneNumber;
 
   final ValueNotifier<bool> enableVerifyBtn;
@@ -32,7 +32,7 @@ class _MobileNumberFieldState extends State<MobileNumberField> {
   @override
   void initState() {
     selectedPhoneCountryNotifier.value = widget.initialCountry;
-    widget.selectedCountryCode(widget.initialCountry.dialCode!);
+    widget.selectedCountryCode(widget.initialCountry);
     controllerLisiner();
     super.initState();
   }
@@ -45,12 +45,10 @@ class _MobileNumberFieldState extends State<MobileNumberField> {
               selectedPhoneCountryNotifier.value.maxLength!) {
         widget.enableVerifyBtn.value = true;
         widget.enteredPhoneNumber(controller.text);
-        widget
-            .selectedCountryCode(selectedPhoneCountryNotifier.value.dialCode!);
+        widget.selectedCountryCode(selectedPhoneCountryNotifier.value);
       } else {
         widget.enableVerifyBtn.value = false;
         widget.enteredPhoneNumber("");
-        widget.selectedCountryCode("");
       }
     });
   }

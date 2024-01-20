@@ -41,6 +41,7 @@ class _AccountScreenState extends State<AccountScreen> {
               ? bloc.box.get(DatabaseFieldConstant.userFirstName)
               : AppLocalizations.of(context)!.anonymous,
         ),
+        const SizedBox(height: 8),
         ProfileSubHeader(isUserLoggedIn: bloc.checkIfUserIsLoggedIn()),
         const SizedBox(height: 8),
         Expanded(
@@ -50,22 +51,30 @@ class _AccountScreenState extends State<AccountScreen> {
               children: [
                 const AddMobBanner(),
                 bloc.checkIfUserIsLoggedIn()
-                    ? TitleView(title: AppLocalizations.of(context)!.accountsettings)
+                    ? TitleView(
+                        title: AppLocalizations.of(context)!.accountsettings)
                     : Container(),
                 bloc.checkIfUserIsLoggedIn()
-                    ? CollectionListOptionView(listOfOptions: bloc.listOfAccountOptions(context), containerHight: 200)
+                    ? CollectionListOptionView(
+                        listOfOptions: bloc.listOfAccountOptions(context),
+                        containerHight: 200)
                     : Container(),
                 TitleView(title: AppLocalizations.of(context)!.generalsettings),
                 ValueListenableBuilder<LoadingStatus>(
                     valueListenable: bloc.loadingStatus,
                     builder: (context, snapshot, child) {
                       return CollectionListOptionView(
-                          listOfOptions: bloc.listOfSettingsOptions(context), containerHight: 200);
+                          listOfOptions: bloc.listOfSettingsOptions(context),
+                          containerHight: 200);
                     }),
                 TitleView(title: AppLocalizations.of(context)!.reachouttous),
-                CollectionListOptionView(listOfOptions: bloc.listOfReachOutUsOptions(context), containerHight: 200),
+                CollectionListOptionView(
+                    listOfOptions: bloc.listOfReachOutUsOptions(context),
+                    containerHight: 200),
                 TitleView(title: AppLocalizations.of(context)!.support),
-                CollectionListOptionView(listOfOptions: bloc.listOfSupportOptions(context), containerHight: 125),
+                CollectionListOptionView(
+                    listOfOptions: bloc.listOfSupportOptions(context),
+                    containerHight: 125),
                 const SizedBox(height: 8),
                 const AddMobBanner(),
                 FooterView(

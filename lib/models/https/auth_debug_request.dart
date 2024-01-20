@@ -2,27 +2,19 @@ import 'package:client_app/utils/mixins.dart';
 
 class AuthDebugRequest implements Model {
   String mobileNumber;
-  String osType;
   int countryId;
-  String deviceTypeName;
-  String osVersion;
   String appVersion;
 
-  AuthDebugRequest(
-      {required this.mobileNumber,
-      required this.osType,
-      required this.deviceTypeName,
-      required this.osVersion,
-      required this.appVersion,
-      required this.countryId});
+  AuthDebugRequest({
+    required this.mobileNumber,
+    required this.appVersion,
+    required this.countryId,
+  });
 
   @override
   Map<String, dynamic> toJson() {
     Map<String, dynamic> data = {};
     data['mobile_number'] = mobileNumber;
-    data['os_type'] = osType;
-    data['device_type_name'] = deviceTypeName;
-    data['os_version'] = osVersion;
     data['app_version'] = appVersion;
     data['country_id'] = countryId;
     return data;

@@ -27,19 +27,23 @@ class LoginFirstStepScreen extends StatelessWidget {
             const SizedBox(height: 20),
             CustomText(
               title: AppLocalizations.of(context)!.login_first_step_title,
-              fontSize: 14,
+              fontSize: 16,
               textColor: const Color(0xff444444),
+              fontWeight: FontWeight.bold,
             ),
             CustomText(
               title: AppLocalizations.of(context)!.login_first_step_desc,
-              fontSize: 12,
+              fontSize: 14,
               textColor: const Color(0xffBFBFBF),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             CustomButton(
-              buttonTitle: AppLocalizations.of(context)!.login_first_step_button,
+              buttonTitle:
+                  AppLocalizations.of(context)!.login_first_step_button,
               enableButton: true,
-              onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.loginSecoundStepRoute),
+              onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(
+                RoutesConstants.loginSecoundStepRoute,
+              ),
             ),
             const SizedBox(height: 20),
             CustomText(
@@ -48,11 +52,14 @@ class LoginFirstStepScreen extends StatelessWidget {
               textColor: const Color(0xff444444),
             ),
             TextButton(
-              onPressed: () =>
-                  Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen, arguments: {
+              onPressed: () => Navigator.of(context, rootNavigator: true)
+                  .pushNamed(RoutesConstants.webViewScreen, arguments: {
                 AppConstant.webViewPageUrl:
-                    box.get(DatabaseFieldConstant.language) == "en" ? AppConstant.termsLink : AppConstant.termsLinkAR,
-                AppConstant.pageTitle: AppLocalizations.of(context)!.termsandconditions
+                    box.get(DatabaseFieldConstant.language) == "en"
+                        ? AppConstant.termsLink
+                        : AppConstant.termsLinkAR,
+                AppConstant.pageTitle:
+                    AppLocalizations.of(context)!.termsandconditions
               }),
               child: CustomText(
                 title: AppLocalizations.of(context)!.termsandconditions,
@@ -72,6 +79,7 @@ class LoginFirstStepScreen extends StatelessWidget {
                     title: AppLocalizations.of(context)!.skip,
                     fontSize: 15,
                     textColor: const Color(0xff4CB6EA),
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
