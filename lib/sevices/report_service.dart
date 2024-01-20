@@ -61,6 +61,7 @@ class ReportService with Service {
   Future<dynamic> addBugIssue({required ReportRequest reportData}) async {
     FormData formData = FormData();
     formData.fields.add(MapEntry("content", reportData.content));
+
     if (reportData.userId != null) {
       formData.fields.add(MapEntry("client_user_id", reportData.userId!));
     }

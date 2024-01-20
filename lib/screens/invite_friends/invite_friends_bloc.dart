@@ -15,8 +15,7 @@ class InviteFriendsBloc extends Bloc<SettingService> {
 
   Future fetchContacts() async {
     if (await FlutterContacts.requestPermission(readonly: true)) {
-      uploadContactsListToServer(await FlutterContacts.getContacts(
-          withProperties: true, withPhoto: true));
+      uploadContactsListToServer(await FlutterContacts.getContacts(withProperties: true, withPhoto: true));
     }
   }
 
@@ -24,25 +23,24 @@ class InviteFriendsBloc extends Bloc<SettingService> {
     var listOfContacts = UploadContact(list: []);
 
     for (var item in contatctList) {
-      String contactName = item.displayName != ""
-          ? item.displayName
-          : ("${item.name.first} ${item.name.last}");
+      String contactName = item.displayName != "" ? item.displayName : ("${item.name.first} ${item.name.last}");
       String phoneNumber = item.phones.isNotEmpty ? item.phones[0].number : "";
       String email = item.emails.isNotEmpty ? item.emails[0].address : "";
 
-      //TODO check mentor app this keep return 422
-
-      listOfContacts.list.add(
-        MyContact(
-          fullName: contactName,
-          mobileNumber: phoneNumber.replaceAll(" ", ""),
-          email: email,
-          clientownerid: box.get(DatabaseFieldConstant.userid),
-        ),
+      var obj = MyContact(
+        fullName: contactName,
+        mobileNumber: phoneNumber.replaceAll(" ", ""),
+        email: email,
       );
+
+      if (box.get(DatabaseFieldConstant.userid) != null) {
+        obj.clientOwnerId = box.get(DatabaseFieldConstant.userid);
+      }
+
+      listOfContacts.list!.add(obj);
     }
 
-    if (listOfContacts.list.isNotEmpty) {
+    if (listOfContacts.list!.isNotEmpty) {
       await service.uploadContactList(contacts: listOfContacts);
     }
   }

@@ -1,9 +1,11 @@
 import 'package:client_app/shared_widgets/custom_button.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/utils/constants/constant.dart';
+import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../widget/top_bar.dart';
 
@@ -12,6 +14,8 @@ class LoginFirstStepScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final box = Hive.box(DatabaseBoxConstant.userInfo);
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -33,11 +37,9 @@ class LoginFirstStepScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             CustomButton(
-              buttonTitle:
-                  AppLocalizations.of(context)!.login_first_step_button,
+              buttonTitle: AppLocalizations.of(context)!.login_first_step_button,
               enableButton: true,
-              onTap: () => Navigator.of(context, rootNavigator: true)
-                  .pushNamed(RoutesConstants.loginSecoundStepRoute),
+              onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.loginSecoundStepRoute),
             ),
             const SizedBox(height: 20),
             CustomText(
@@ -46,11 +48,11 @@ class LoginFirstStepScreen extends StatelessWidget {
               textColor: const Color(0xff444444),
             ),
             TextButton(
-              onPressed: () => Navigator.of(context, rootNavigator: true)
-                  .pushNamed(RoutesConstants.webViewScreen, arguments: {
-                AppConstant.webViewPageUrl: AppConstant.termsLink,
-                AppConstant.pageTitle:
-                    AppLocalizations.of(context)!.termsandconditions
+              onPressed: () =>
+                  Navigator.of(context, rootNavigator: true).pushNamed(RoutesConstants.webViewScreen, arguments: {
+                AppConstant.webViewPageUrl:
+                    box.get(DatabaseFieldConstant.language) == "en" ? AppConstant.termsLink : AppConstant.termsLinkAR,
+                AppConstant.pageTitle: AppLocalizations.of(context)!.termsandconditions
               }),
               child: CustomText(
                 title: AppLocalizations.of(context)!.termsandconditions,

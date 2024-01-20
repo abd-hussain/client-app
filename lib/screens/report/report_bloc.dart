@@ -16,8 +16,7 @@ class ReportBloc extends Bloc<ReportService> {
   TextEditingController textController = TextEditingController();
   ReportPageType? pageType;
   ValueNotifier<bool> enableSubmitBtn = ValueNotifier<bool>(false);
-  ValueNotifier<LoadingStatus> loadingStatus =
-      ValueNotifier<LoadingStatus>(LoadingStatus.idle);
+  ValueNotifier<LoadingStatus> loadingStatus = ValueNotifier<LoadingStatus>(LoadingStatus.idle);
   File? attach1;
   File? attach2;
   File? attach3;
@@ -40,11 +39,14 @@ class ReportBloc extends Bloc<ReportService> {
   Future<dynamic> callRequest(BuildContext context) async {
     final model = ReportRequest(
       content: textController.text,
-      userId: box.get(DatabaseFieldConstant.userid).toString(),
       image1: attach1,
       image2: attach2,
       image3: attach3,
     );
+
+    if (box.get(DatabaseFieldConstant.userid) != null) {
+      model.userId = box.get(DatabaseFieldConstant.userid).toString();
+    }
 
     if (pageType == ReportPageType.issue) {
       return await service.addBugIssue(reportData: model);
