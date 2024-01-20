@@ -11,7 +11,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:logger/logger.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 //TODO: handle Timing UTC
@@ -19,11 +18,9 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 //TODO: User should add majors and note before resrve call
 //TODO handle web
 //TODO fix ioS notifications
-//TODO check web pages // Joint as mentor
 
 void main() {
   runZonedGuarded(() async {
-    WidgetsFlutterBinding.ensureInitialized();
     logDebugMessage(message: 'Application Started ...');
     WidgetsFlutterBinding.ensureInitialized();
     await Hive.initFlutter();
@@ -49,11 +46,13 @@ void main() {
 
     runApp(const MyApp());
   }, (error, stackTrace) {
-    if (error is DioError) {
+    if (error is DioException) {
       final exception = error.error;
       if (exception is HttpException) {
-        Logger().wtf(exception.status);
-        Logger().wtf(exception.message);
+        debugPrint("MAIN");
+        debugPrint(exception.status.toString());
+        debugPrint(exception.message);
+        debugPrint(exception.requestId);
       }
     }
   });

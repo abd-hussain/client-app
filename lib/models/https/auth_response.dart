@@ -1,18 +1,17 @@
-class AuthDebugResponse {
-  AuthDebugResponseData? data;
+class AuthResponse {
+  AuthResponseData? data;
   String? message;
 
-  AuthDebugResponse({this.data, this.message});
+  AuthResponse({this.data, this.message});
 
-  AuthDebugResponse.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null
-        ? AuthDebugResponseData.fromJson(json['data'])
-        : null;
+  AuthResponse.fromJson(Map<String, dynamic> json) {
+    data =
+        json['data'] != null ? AuthResponseData.fromJson(json['data']) : null;
     message = json['message'];
   }
 }
 
-class AuthDebugResponseData {
+class AuthResponseData {
   int? id;
   String? apiKey;
   bool? blocked;
@@ -20,7 +19,7 @@ class AuthDebugResponseData {
   String? lastName;
   String? lastOtp;
 
-  AuthDebugResponseData({
+  AuthResponseData({
     this.id,
     this.apiKey,
     this.blocked,
@@ -29,7 +28,7 @@ class AuthDebugResponseData {
     this.lastOtp,
   });
 
-  AuthDebugResponseData.fromJson(Map<String, dynamic> json) {
+  AuthResponseData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     apiKey = json['api_key'];
     blocked = json['blocked'];

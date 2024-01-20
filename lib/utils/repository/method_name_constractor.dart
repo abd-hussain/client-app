@@ -10,7 +10,7 @@ class MethodNameConstant {
   static const String uploadContactList = "settings/leads";
   static const String reportIssue = "report/issue";
   static const String reportSuggestion = "report/suggestion";
-  static const String auth = "client-auth";
+  static const String auth = "client-auth/";
   static const String authVerify = "client-auth-verify";
 
   //TODO: Checked API's

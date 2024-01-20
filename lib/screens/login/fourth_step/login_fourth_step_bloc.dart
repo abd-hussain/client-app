@@ -48,6 +48,7 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
       userId = arguments[AppConstant.useridToPass];
     }
     _getListOfCountries();
+    getAccountInformation(context);
   }
 
   controllersHandler() {

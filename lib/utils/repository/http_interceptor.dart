@@ -32,12 +32,12 @@ class HttpInterceptor extends InterceptorsWrapper {
         return handler.next(response);
       }
     } catch (error) {
-      handler.reject(error as DioError);
+      handler.reject(error as DioException);
     }
   }
 
   @override
-  Future onError(DioError err, ErrorInterceptorHandler handler) async {
+  Future onError(DioException err, ErrorInterceptorHandler handler) async {
     return super.onError(err, handler);
   }
 
@@ -49,13 +49,28 @@ class HttpInterceptor extends InterceptorsWrapper {
         return true;
       case 201:
         return true;
-      default:
-        logger.wtf(
-            "request url => ${response.realUri} response.data ${response.data.toString()}");
-        throw DioError(
+      case 403:
+      case 404:
+        logErrorMessageCrashlytics(
+          error: response.statusCode,
+          message: "response.data ${response.data.toString()}",
+        );
+        throw DioException(
             error: HttpException(
                 status: response.statusCode!,
-                message: response.data["detail"]["message"]),
+                message: response.data["detail"] ?? response.data.toString(),
+                requestId: ""),
+            requestOptions: response.requestOptions);
+      default:
+        logErrorMessageCrashlytics(
+          error: response.statusCode,
+          message: "response.data ${response.data.toString()}",
+        );
+        throw DioException(
+            error: HttpException(
+                status: response.statusCode!,
+                message: response.data["detail"]["message"],
+                requestId: response.data["detail"]["request_id"]),
             requestOptions: response.requestOptions);
     }
   }

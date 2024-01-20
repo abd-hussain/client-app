@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:client_app/utils/constants/constant.dart';
 import 'package:client_app/utils/mixins.dart';
-import 'package:client_app/models/https/auth_debug_response.dart';
+import 'package:client_app/models/https/auth_response.dart';
 import 'package:client_app/sevices/auth_services.dart';
 import 'package:flutter/material.dart';
 
@@ -48,7 +48,7 @@ class LoginThirdStepBloc extends Bloc<AuthService> {
         userId: userId);
   }
 
-  Future<AuthDebugResponse> callRequestOfAuthAgain() async {
+  Future<AuthResponse> callRequestOfAuthAgain() async {
     return await service.auth(
       countryId: countryId,
       countryCode: countryCode,

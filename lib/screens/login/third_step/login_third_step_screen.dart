@@ -92,15 +92,17 @@ class _LoginThirdStepScreenState extends State<LoginThirdStepScreen> {
                 CustomText(
                   title: AppLocalizations.of(context)!.enteryourotpnumber,
                   fontSize: 16,
-                  textColor: Colors.black,
+                  textColor: const Color(0xff444444),
+                  fontWeight: FontWeight.bold,
                 ),
+                const SizedBox(height: 8),
                 CustomText(
                   title:
                       AppLocalizations.of(context)!.enteryourotpnumberexample,
-                  fontSize: 11,
-                  textColor: Colors.grey,
+                  fontSize: 14,
+                  textColor: const Color(0xffBFBFBF),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 PinField(pinController: bloc.pinController),
                 const SizedBox(height: 10),
                 ValueListenableBuilder<bool>(
@@ -114,7 +116,7 @@ class _LoginThirdStepScreenState extends State<LoginThirdStepScreen> {
                             )
                           : Container();
                     }),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 bloc.timerStartNumberMin == 0 && bloc.timerStartNumberSec == 0
                     ? CustomButton(
                         buttonTitle: "Resend Code",

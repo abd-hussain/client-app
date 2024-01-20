@@ -8,10 +8,13 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
 
+BuildContext? buildContext;
+
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   static MyAppState? of(BuildContext context) {
+    buildContext = context;
     return context.findAncestorStateOfType<MyAppState>();
   }
 
@@ -47,6 +50,10 @@ class MyAppState extends State<MyApp> {
         Locale('en', ''),
         Locale('ar', ''),
       ],
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
       onGenerateRoute: (settings) {
         return PageRouteBuilder(
             transitionsBuilder: (BuildContext context,

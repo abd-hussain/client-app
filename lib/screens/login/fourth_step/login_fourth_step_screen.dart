@@ -28,7 +28,6 @@ class _LoginFourthStepScreenState extends State<LoginFourthStepScreen> {
   @override
   void didChangeDependencies() {
     bloc.extractArguments(context);
-    bloc.getAccountInformation(context);
 
     bloc.controllersHandler();
     super.didChangeDependencies();

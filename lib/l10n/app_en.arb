@@ -220,6 +220,7 @@
     "joinnow" : "Join Now",
     "later" : "Later",
     "close" : "close",
+    "userblocked" : "Your account is Blocked and you can't use the application.",
     "mentorapp" : "Attorneys App",
     "clientapp" : "Client App",
     "metingendwihin" : "call will be end until",
