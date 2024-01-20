@@ -9,11 +9,13 @@ class CountryField extends StatelessWidget {
   final TextEditingController controller;
   final List<Country> listOfCountries;
   final Country? selectedCountry;
+  final Function(Country) selectedCountryCallBack;
   const CountryField(
       {super.key,
       required this.controller,
       required this.listOfCountries,
-      required this.selectedCountry});
+      required this.selectedCountry,
+      required this.selectedCountryCallBack});
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,7 @@ class CountryField extends StatelessWidget {
                   context, listOfCountries, (selectedCountry) {
                 controller.text = selectedCountry.name!;
                 selectedCountry = selectedCountry;
+                selectedCountryCallBack(selectedCountry);
               });
             },
             child: Padding(

@@ -61,7 +61,6 @@ class InviteFriendsBloc extends Bloc<SettingService> {
   void getProfileInformations() async {
     locator<AccountService>().getAccountInfo().then((value) {
       final data = value.data;
-      //TODO : Test Again
       if (data != null) {
         invitationCodeNotifier.value = data.invitationCode ?? "";
       }

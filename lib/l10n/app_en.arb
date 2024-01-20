@@ -220,6 +220,8 @@
     "joinnow" : "Join Now",
     "later" : "Later",
     "close" : "close",
+    "codevalid" : "Code is Valid",
+    "codenotvalid" : "Not Valid Code",
     "userblocked" : "Your account is Blocked and you can't use the application.",
     "mentorapp" : "Attorneys App",
     "clientapp" : "Client App",

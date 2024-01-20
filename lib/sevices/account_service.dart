@@ -15,6 +15,12 @@ class AccountService with Service {
   Future<AccountInfo> updateAccount(
       {required UpdateAccountRequest account}) async {
     FormData formData = FormData();
+    if (account.firstName != null) {
+      formData.fields.add(MapEntry("first_name", account.firstName!));
+    }
+    if (account.lastName != null) {
+      formData.fields.add(MapEntry("last_name", account.lastName!));
+    }
     if (account.gender != null) {
       formData.fields.add(MapEntry("gender", account.gender.toString()));
     }
@@ -22,13 +28,7 @@ class AccountService with Service {
       formData.fields.add(MapEntry("country_id", account.countryId.toString()));
     }
     if (account.referalCode != null) {
-      formData.fields.add(MapEntry("referal_code", account.referalCode!));
-    }
-    if (account.firstName != null) {
-      formData.fields.add(MapEntry("first_name", account.firstName!));
-    }
-    if (account.lastName != null) {
-      formData.fields.add(MapEntry("last_name", account.lastName!));
+      formData.fields.add(MapEntry("referral_code", account.referalCode!));
     }
     if (account.email != null) {
       formData.fields.add(MapEntry("email", account.email!));
@@ -40,7 +40,7 @@ class AccountService with Service {
     if (account.profileImage != null) {
       formData.files.add(
         MapEntry(
-          "profile_picture",
+          "profile_img",
           MultipartFile.fromFileSync(
             account.profileImage!.path,
             filename: account.profileImage!.path.split('/').last,

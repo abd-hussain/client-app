@@ -47,6 +47,11 @@ class _LoginFourthStepScreenState extends State<LoginFourthStepScreen> {
       body: GestureDetector(
         onTap: () {
           FocusManager.instance.primaryFocus?.unfocus();
+          if (bloc.referalCodeController.text.isEmpty) {
+            bloc.validateReferalCode.value = null;
+          } else {
+            bloc.validateReferal(bloc.referalCodeController.text);
+          }
           bloc.validateFields();
         },
         child: ValueListenableBuilder<LoadingStatus>(
@@ -67,19 +72,22 @@ class _LoginFourthStepScreenState extends State<LoginFourthStepScreen> {
                               : const EdgeInsets.only(left: 16),
                           child: Row(
                             children: [
-                              ImageHolder(
-                                  isFromNetwork: bloc.profileImageUrl != null,
+                              ImageHolderField(
+                                  hight: 140,
+                                  isFromNetwork: bloc.profileImageUrl != "",
                                   urlImage: bloc.profileImageUrl == ""
                                       ? null
                                       : bloc.profileImageUrl,
-                                  addImageCallBack: (file) {
+                                  onAddImage: (file) {
                                     bloc.profileImage = file;
                                     bloc.validateFields();
+                                    setState(() {});
                                   },
-                                  deleteImageCallBack: () {
+                                  onDeleteImage: () {
                                     bloc.profileImage = null;
-                                    bloc.profileImageUrl = null;
+                                    bloc.profileImageUrl = "";
                                     bloc.validateFields();
+                                    setState(() {});
                                   }),
                               Expanded(
                                 child: Column(
@@ -110,6 +118,9 @@ class _LoginFourthStepScreenState extends State<LoginFourthStepScreen> {
                                 controller: bloc.countryController,
                                 listOfCountries: bloc.listOfCountries,
                                 selectedCountry: bloc.selectedCountry,
+                                selectedCountryCallBack: (country) {
+                                  bloc.selectedCountry = country;
+                                },
                               ),
                               GenderField(controller: bloc.genderController),
                             ],
@@ -157,7 +168,39 @@ class _LoginFourthStepScreenState extends State<LoginFourthStepScreen> {
                                   LengthLimitingTextInputFormatter(6),
                                 ],
                                 onChange: (text) => {},
+                                onEditingComplete: () {
+                                  bloc.validateReferal(
+                                      bloc.referalCodeController.text);
+                                  FocusManager.instance.primaryFocus?.unfocus();
+                                },
                               );
+                            }),
+                        ValueListenableBuilder<bool?>(
+                            valueListenable: bloc.validateReferalCode,
+                            builder: (context, snapshot, child) {
+                              if (snapshot == null) {
+                                return Container();
+                              } else {
+                                return Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 20, right: 20),
+                                      child: CustomText(
+                                        title: snapshot
+                                            ? AppLocalizations.of(context)!
+                                                .codevalid
+                                            : AppLocalizations.of(context)!
+                                                .codenotvalid,
+                                        fontSize: 12,
+                                        textColor: snapshot
+                                            ? Colors.green
+                                            : Colors.red,
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }
                             }),
                         const SizedBox(height: 20),
                         ValueListenableBuilder<bool>(

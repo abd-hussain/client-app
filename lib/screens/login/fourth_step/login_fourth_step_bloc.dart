@@ -26,11 +26,12 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
       ValueNotifier<LoadingStatus>(LoadingStatus.idle);
 
   ValueNotifier<bool> enableReferalCode = ValueNotifier<bool>(true);
+  ValueNotifier<bool?> validateReferalCode = ValueNotifier<bool?>(null);
 
   String? selectedDate;
 
+  String profileImageUrl = "";
   File? profileImage;
-  String? profileImageUrl;
 
   ValueNotifier<bool> enableNextBtn = ValueNotifier<bool>(false);
 
@@ -48,7 +49,7 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
       userId = arguments[AppConstant.useridToPass];
     }
     _getListOfCountries();
-    getAccountInformation(context);
+    _getAccountInformation(context);
   }
 
   controllersHandler() {
@@ -60,6 +61,8 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
     if (firstNameController.text.isEmpty) {
       enableNextBtn.value = false;
     } else if (lastNameController.text.isEmpty) {
+      enableNextBtn.value = false;
+    } else if (validateReferalCode.value == false) {
       enableNextBtn.value = false;
     } else {
       enableNextBtn.value = true;
@@ -75,10 +78,10 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
     });
   }
 
-  void getAccountInformation(BuildContext context) {
+  void _getAccountInformation(BuildContext context) {
     box.put(DatabaseFieldConstant.token, argumentToken);
 
-    AccountService().getAccountInfo().then((value) {
+    service.getAccountInfo().then((value) {
       if (value.data != null) {
         firstNameController.text = value.data!.firstName ?? "";
         lastNameController.text = value.data!.lastName ?? "";
@@ -88,10 +91,10 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
         }
         emailController.text = value.data!.email ?? "";
 
-        if (value.data!.referalCode != null) {
-          enableReferalCode.value = false;
-          referalCodeController.text = value.data!.referalCode!;
-        }
+        // if (value.data!.referalCode != null) {
+        //   enableReferalCode.value = false;
+        //   referalCodeController.text = value.data!.referalCode!;
+        // }
 
         if (value.data!.countryId != null) {
           Iterable<Country> country = listOfCountries
@@ -105,7 +108,7 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
         }
 
         if (value.data!.profileImg != null) {
-          profileImageUrl = value.data!.profileImg;
+          profileImageUrl = value.data!.profileImg!;
         }
 
         loadingStatus.value = LoadingStatus.finish;
@@ -131,6 +134,12 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
         profileImage: profileImage,
       ),
     );
+  }
+
+  void validateReferal(String code) {
+    locator<FilterService>().validateReferalCode(code).then((value) {
+      validateReferalCode.value = value;
+    });
   }
 
   @override

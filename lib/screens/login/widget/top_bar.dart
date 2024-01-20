@@ -3,15 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TopBarWidget extends StatelessWidget {
-  final String? subtitle;
   final bool actionButton;
   final bool backButton;
 
   final Function()? actionButtonPressed;
 
   const TopBarWidget(
-      {this.subtitle,
-      this.backButton = true,
+      {this.backButton = true,
       this.actionButton = false,
       this.actionButtonPressed,
       super.key});
@@ -35,22 +33,9 @@ class TopBarWidget extends StatelessWidget {
           width: 14,
         ),
         Expanded(child: Container()),
-        Column(
-          children: [
-            Image.asset(
-              "assets/images/logo.png",
-              width: 150,
-              height: 100,
-            ),
-            subtitle != null
-                ? CustomText(
-                    title: subtitle!,
-                    fontSize: 10,
-                    textColor: const Color(0xff444444),
-                    fontWeight: FontWeight.bold,
-                  )
-                : Container(),
-          ],
+        Image.asset(
+          "assets/images/logo.png",
+          width: 100,
         ),
         Expanded(child: Container()),
         actionButton
@@ -58,7 +43,7 @@ class TopBarWidget extends StatelessWidget {
                 onPressed: () => actionButtonPressed!(),
                 child: CustomText(
                   title: AppLocalizations.of(context)!.submit,
-                  fontSize: 12,
+                  fontSize: 14,
                   fontWeight: FontWeight.bold,
                   textColor: const Color(0xff444444),
                 ),

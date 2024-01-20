@@ -1,15 +1,11 @@
-import 'package:client_app/locator.dart';
-import 'package:client_app/models/https/update_account_request.dart';
 import 'package:client_app/models/profile_options.dart';
 import 'package:client_app/my_app.dart';
 import 'package:client_app/screens/report/report_screen.dart';
 import 'package:client_app/screens/tutorials/tutorials_screen.dart';
 import 'package:client_app/sevices/account_service.dart';
-import 'package:client_app/sevices/filter_services.dart';
 import 'package:client_app/shared_widgets/bottom_sheet_util.dart';
 import 'package:client_app/utils/constants/constant.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
-import 'package:client_app/utils/enums/loading_status.dart';
 import 'package:client_app/utils/mixins.dart';
 import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +15,6 @@ import 'package:ionicons/ionicons.dart';
 
 class AccountBloc extends Bloc<AccountService> {
   final box = Hive.box(DatabaseBoxConstant.userInfo);
-  ValueNotifier<LoadingStatus> loadingStatus =
-      ValueNotifier<LoadingStatus>(LoadingStatus.idle);
 
   List<ProfileOptions> listOfAccountOptions(BuildContext context) {
     return [
@@ -66,24 +60,6 @@ class AccountBloc extends Bloc<AccountService> {
             : "العربية",
         onTap: () {
           _changeLanguage(context);
-        },
-      ),
-      ProfileOptions(
-        icon: Icons.flag,
-        name: AppLocalizations.of(context)!.countryprofile,
-        selectedItemImage: SizedBox(
-          width: 30,
-          height: 25,
-          child: FadeInImage(
-            placeholder:
-                const AssetImage("assets/images/flagPlaceHolderImg.png"),
-            image: NetworkImage(
-                box.get(DatabaseFieldConstant.selectedCountryFlag),
-                scale: 1),
-          ),
-        ),
-        onTap: () {
-          _getListOfCountries(context);
         },
       ),
     ];
@@ -180,47 +156,6 @@ class AccountBloc extends Bloc<AccountService> {
         });
   }
 
-  void _getListOfCountries(BuildContext context) {
-    loadingStatus.value = LoadingStatus.inprogress;
-
-    locator<FilterService>().countries().then((value) async {
-      var listOfCountries = value.data!..sort((a, b) => a.id!.compareTo(b.id!));
-      loadingStatus.value = LoadingStatus.finish;
-      await BottomSheetsUtil().countryBottomSheet(context, listOfCountries,
-          (item) async {
-        await BottomSheetsUtil().areYouShoureButtomSheet(
-            context: context,
-            message: AppLocalizations.of(context)!.changecountrymessage,
-            sure: () async {
-              loadingStatus.value = LoadingStatus.inprogress;
-
-              await box.put(
-                  DatabaseFieldConstant.selectedCountryId, item.id.toString());
-              await box.put(
-                  DatabaseFieldConstant.selectedCountryFlag, item.flagImage);
-              await box.put(
-                  DatabaseFieldConstant.selectedCountryName, item.name);
-              await box.put(
-                  DatabaseFieldConstant.selectedCountryDialCode, item.dialCode);
-              await box.put(
-                  DatabaseFieldConstant.selectedCountryCurrency, item.currency);
-              await box.put(DatabaseFieldConstant.selectedCountryMinLenght,
-                  item.minLength.toString());
-              await box
-                  .put(DatabaseFieldConstant.selectedCountryMaxLenght,
-                      item.maxLength.toString())
-                  .then((value) {
-                if (checkIfUserIsLoggedIn()) {
-                  updateProfileCountry(context, item.id!);
-                } else {
-                  loadingStatus.value = LoadingStatus.finish;
-                }
-              });
-            });
-      });
-    });
-  }
-
   void _refreshAppWithLanguageCode(BuildContext context) async {
     MyApp.of(context)!.rebuild();
   }
@@ -292,17 +227,6 @@ class AccountBloc extends Bloc<AccountService> {
         });
   }
 
-  void updateProfileCountry(BuildContext context, int countryID) async {
-    await service.updateAccount(
-      account: UpdateAccountRequest(
-        countryId: countryID,
-      ),
-    );
-    loadingStatus.value = LoadingStatus.finish;
-  }
-
   @override
-  onDispose() {
-    loadingStatus.dispose();
-  }
+  onDispose() {}
 }

@@ -29,10 +29,6 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
     super.didChangeDependencies();
   }
 
-  //TODO HERE:
-
-  // TODO Mentor 14 not open
-
   @override
   void dispose() {
     bloc.onDispose();

@@ -7,22 +7,22 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class ImageHolder extends StatelessWidget {
-  final Function(File image) addImageCallBack;
-  final Function() deleteImageCallBack;
+class ImageHolderField extends StatelessWidget {
+  final Function(File image) onAddImage;
+  final Function() onDeleteImage;
   final bool isFromNetwork;
   final String? urlImage;
   final double hight;
   final double width;
 
-  const ImageHolder({
+  const ImageHolderField({
     super.key,
-    required this.addImageCallBack,
-    required this.deleteImageCallBack,
-    required this.isFromNetwork,
+    required this.onAddImage,
+    required this.onDeleteImage,
+    this.isFromNetwork = false,
     this.urlImage,
-    this.hight = 116,
-    this.width = 100,
+    this.hight = 180,
+    this.width = 120,
   });
 
   Future<File> _pickImage(ImageSource source) async {
@@ -39,12 +39,14 @@ class ImageHolder extends StatelessWidget {
         BottomSheetsUtil().addImageBottomSheet(
           context,
           image?.path.isNotEmpty ?? false || urlImage != null,
-          "title1", //TODO
-          "title2", //TODO
+          AppLocalizations.of(context)!.profilephotosetting,
+          AppLocalizations.of(context)!.setprofilephoto,
           deleteCallBack: () {
-            deleteImageCallBack();
+            onDeleteImage();
             image = null;
+
             imageController.value = image;
+
             Navigator.pop(context);
           },
           cameraCallBack: () async {
@@ -55,18 +57,17 @@ class ImageHolder extends StatelessWidget {
             if (!isFromNetwork) {
               imageController.value = image;
             }
-            addImageCallBack(image!);
+            onAddImage(image!);
           },
           galleryCallBack: () async {
             image = await _pickImage(ImageSource.gallery);
-
             if (image?.path.isEmpty ?? true) {
               return;
             }
             if (!isFromNetwork) {
               imageController.value = image;
             }
-            addImageCallBack(image!);
+            onAddImage(image!);
           },
         );
       },

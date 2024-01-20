@@ -1,4 +1,5 @@
 import 'package:client_app/models/https/categories_model.dart';
+import 'package:client_app/models/https/referal_code_request.dart';
 import 'package:client_app/utils/mixins.dart';
 import 'package:client_app/models/https/countries_model.dart';
 import 'package:client_app/utils/repository/http_repository.dart';
@@ -19,5 +20,16 @@ class FilterService with Service {
       methodName: MethodNameConstant.categories,
     );
     return CategoriesModel.fromJson(response);
+  }
+
+  Future<bool> validateReferalCode(String code) async {
+    final response = await repository.callRequest(
+      requestType: RequestType.post,
+      methodName: MethodNameConstant.referalCode,
+      queryParam: {"code": code},
+      postBody: ReferalCodeRequest(code: code),
+    );
+
+    return response["data"];
   }
 }
