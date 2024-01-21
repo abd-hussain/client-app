@@ -8,7 +8,7 @@ class Archive {
 
   Archive.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = [];
+      data = <ArchiveData>[];
       json['data'].forEach((v) {
         data!.add(ArchiveData.fromJson(v));
       });
@@ -21,57 +21,90 @@ class ArchiveData with ModelChecker {
   int? id;
   int? clientId;
   int? mentorId;
-  int? appointmentType;
-  String? dateFrom;
-  String? dateTo;
-  double? priceBeforeDiscount;
-  double? priceAfterDiscount;
-  String? noteFromClient;
-  String? noteFromMentor;
+  int? appointmentId;
   String? attachment;
   String? profileImg;
   String? suffixeName;
   String? firstName;
   String? lastName;
-  int? categoryId;
+  int? gender;
+  String? countryName;
   String? categoryName;
+  int? appointmentType;
+  String? dateFrom;
+  String? dateTo;
+  int? state;
+  int? discountId;
+  bool? isFree;
+  double? price;
+  double? discountedPrice;
+  String? currency;
+  int? mentorHourRate;
+  String? noteFromClient;
+  String? noteFromMentor;
+  String? mentorJoinCall;
+  String? clientJoinCall;
+  String? mentorDateOfClose;
+  String? clientDateOfClose;
 
   ArchiveData(
       {this.id,
       this.clientId,
       this.mentorId,
-      this.appointmentType,
-      this.dateFrom,
-      this.dateTo,
-      this.priceBeforeDiscount,
-      this.priceAfterDiscount,
-      this.noteFromClient,
-      this.noteFromMentor,
+      this.appointmentId,
       this.attachment,
       this.profileImg,
       this.suffixeName,
       this.firstName,
       this.lastName,
-      this.categoryId,
-      this.categoryName});
+      this.gender,
+      this.countryName,
+      this.categoryName,
+      this.appointmentType,
+      this.dateFrom,
+      this.dateTo,
+      this.state,
+      this.discountId,
+      this.isFree,
+      this.price,
+      this.discountedPrice,
+      this.currency,
+      this.mentorHourRate,
+      this.noteFromClient,
+      this.noteFromMentor,
+      this.mentorJoinCall,
+      this.clientJoinCall,
+      this.mentorDateOfClose,
+      this.clientDateOfClose});
 
   ArchiveData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     clientId = json['client_id'];
     mentorId = json['mentor_id'];
-    appointmentType = json['appointment_type'];
-    dateFrom = json['date_from'];
-    dateTo = json['date_to'];
-    priceBeforeDiscount = convertToDouble(json['price_before_discount']);
-    priceAfterDiscount = convertToDouble(json['price_after_discount']);
-    noteFromClient = json['note_from_client'];
-    noteFromMentor = json['note_from_mentor'];
+    appointmentId = json['appointment_id'];
     attachment = json['attachment'];
     profileImg = json['profile_img'];
     suffixeName = json['suffixe_name'];
     firstName = json['first_name'];
     lastName = json['last_name'];
-    categoryId = json['category_id'];
+    gender = json['gender'];
+    countryName = json['countryName'];
     categoryName = json['categoryName'];
+    appointmentType = json['appointment_type'];
+    dateFrom = json['date_from'];
+    dateTo = json['date_to'];
+    state = json['state'];
+    discountId = json['discount_id'];
+    isFree = json['is_free'];
+    price = convertToDouble(json['price']);
+    discountedPrice = convertToDouble(json['discounted_price']);
+    currency = json['currency'];
+    mentorHourRate = json['mentor_hour_rate'];
+    noteFromClient = json['note_from_client'];
+    noteFromMentor = json['note_from_mentor'];
+    mentorJoinCall = json['mentor_join_call'];
+    clientJoinCall = json['client_join_call'];
+    mentorDateOfClose = json['mentor_date_of_close'];
+    clientDateOfClose = json['client_date_of_close'];
   }
 }

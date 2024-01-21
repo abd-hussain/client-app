@@ -4,7 +4,6 @@ import 'package:client_app/screens/archive/widgets/archive_tile_view.dart';
 import 'package:client_app/shared_widgets/custom_appbar.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/utils/logger.dart';
-import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lottie/lottie.dart';
@@ -22,9 +21,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
   @override
   void didChangeDependencies() {
     logDebugMessage(message: 'Archive init Called ...');
-    if (bloc.checkIfUserIsLoggedIn()) {
-      bloc.listOfArchives();
-    }
+    bloc.listOfArchives();
     super.didChangeDependencies();
   }
 
@@ -39,7 +36,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
             const SizedBox(height: 20),
             Lottie.asset('assets/lottie/76734-shield-icon.zip', height: 150),
             Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.only(left: 20, right: 20),
               child: CustomText(
                 title: AppLocalizations.of(context)!.archivepagetitle,
                 fontSize: 16,
@@ -56,18 +53,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                         ? ListView.builder(
                             itemCount: snapshot.length,
                             itemBuilder: (context, index) {
-                              return ArchiveTileView(
-                                data: snapshot[index],
-                                onTap: (p0) {
-                                  Navigator.of(context, rootNavigator: true)
-                                      .pushNamed(
-                                    RoutesConstants.archiveDetailsScreen,
-                                    arguments: {
-                                      "data": p0,
-                                    },
-                                  );
-                                },
-                              );
+                              return ArchiveTileView(data: snapshot[index]);
                             },
                           )
                         : Center(

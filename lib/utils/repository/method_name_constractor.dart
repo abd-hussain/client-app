@@ -15,6 +15,8 @@ class MethodNameConstant {
   static const String account = "client-account/";
   static const String updateAccount = "client-account/update";
   static const String referalCode = "referalcode";
+  static const String deleteAccount = "client-account/delete";
+  static const String archive = "archive/";
 
   //TODO: Checked API's
 
@@ -29,7 +31,4 @@ class MethodNameConstant {
   static const String exitCallAppointment = "client-appointment/end-call";
 
   static const String discount = "discount/";
-  static const String archive = "archive/";
-
-  static const String deleteAccount = "client-account/delete";
 }
