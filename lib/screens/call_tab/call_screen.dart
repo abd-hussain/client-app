@@ -132,12 +132,17 @@ class _CallScreenState extends State<CallScreen> {
   Widget noCallView() {
     return FutureBuilder(
         future: bloc.listOfCategories(),
-        builder: (context, snapshot2) {
-          return NoCallView(
-            isUserLoggedIn: bloc.checkIfUserIsLoggedIn(),
-            language: bloc.box.get(DatabaseFieldConstant.language),
-            listOfCategories: snapshot2.data ?? [],
-          );
+        builder: (context, categoriesSnapShot) {
+          return FutureBuilder(
+              future: bloc.listOfMajords(),
+              builder: (context, majorsSnapShot) {
+                return NoCallView(
+                  isUserLoggedIn: bloc.checkIfUserIsLoggedIn(),
+                  language: bloc.box.get(DatabaseFieldConstant.language),
+                  listOfCategories: categoriesSnapShot.data ?? [],
+                  listOfMajors: majorsSnapShot.data ?? [],
+                );
+              });
         });
   }
 }

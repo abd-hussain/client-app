@@ -26,8 +26,8 @@ class MentorService with Service {
     return MentorDetailsResponse.fromJson(response);
   }
 
-  Future<MentorInfoAvaliableResponse> getmentorAvaliable(
-      {required int categoryID}) async {
+  Future<MentorInfoAvaliableResponse> getMentorAvaliable(
+      {required int categoryID, required int majorID}) async {
     final response = await repository.callRequest(
       requestType: RequestType.get,
       methodName: MethodNameConstant.mentoravaliable,

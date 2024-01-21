@@ -23,11 +23,13 @@ class MethodNameConstant {
   static const String clientActiveAppointments = "client-appointment/active";
   static const String joinCallAppointment = "client-appointment/join-call";
   static const String exitCallAppointment = "client-appointment/end-call";
+  static const String majors = "majors";
+  static const String mentoravaliable = "mentors-details/mentor-available";
+
   //TODO: Checked API's
 
   static const String mentorAppointments =
       "client-appointment/mentor-appointment";
-  static const String mentoravaliable = "mentors-details/mentor-avaliable";
   static const String bookAppointment = "client-appointment/book";
   static const String discount = "discount/";
 }

@@ -12,7 +12,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:client_app/shared_widgets/booking/widgets/cell_of_booking.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
 
-enum BookingFaze { one, two, three }
+enum BookingFaze { one, two, three, four }
 
 class BookingBottomSheetsUtil {
   final BuildContext context;

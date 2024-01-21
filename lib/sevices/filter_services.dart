@@ -1,4 +1,5 @@
 import 'package:client_app/models/https/categories_model.dart';
+import 'package:client_app/models/https/majors_model.dart';
 import 'package:client_app/models/https/referal_code_request.dart';
 import 'package:client_app/utils/mixins.dart';
 import 'package:client_app/models/https/countries_model.dart';
@@ -20,6 +21,15 @@ class FilterService with Service {
       methodName: MethodNameConstant.categories,
     );
     return CategoriesModel.fromJson(response);
+  }
+
+  Future<List<MajorsData>?> getMajors() async {
+    final response = await repository.callRequest(
+      requestType: RequestType.get,
+      methodName: MethodNameConstant.majors,
+    );
+
+    return Majors.fromJson(response).data;
   }
 
   Future<bool> validateReferalCode(String code) async {

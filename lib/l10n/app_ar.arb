@@ -231,6 +231,8 @@
     "freeforall" : "مجانا للجميع",
     "yes" : "نعم",
     "no" : "لا",
+    "majors" : "التخصصات",
+    "major" : "الاختصاص",
     "meetingstatus" : "حالة الجلسة",
     "mentormisscall" : "المحامي اضاع المكالمة",
     "clientmisscall" : "العميل اضاع المكالمة",

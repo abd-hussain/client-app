@@ -1,15 +1,18 @@
 import 'package:client_app/models/model_checker.dart';
 
 class MentorInfoAvaliableResponse {
-  MentorInfoAvaliableResponseData? data;
+  List<MentorInfoAvaliableResponseData>? data;
   String? message;
 
   MentorInfoAvaliableResponse({this.data, this.message});
 
   MentorInfoAvaliableResponse.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null
-        ? MentorInfoAvaliableResponseData.fromJson(json['data'])
-        : null;
+    if (json['data'] != null) {
+      data = <MentorInfoAvaliableResponseData>[];
+      json['data'].forEach((v) {
+        data!.add(MentorInfoAvaliableResponseData.fromJson(v));
+      });
+    }
     message = json['message'];
   }
 }
@@ -22,26 +25,35 @@ class MentorInfoAvaliableResponseData with ModelChecker {
   int? gender;
   String? profileImg;
   double? hourRate;
-  String? bio;
-  String? date;
-  String? day;
+  List<int>? workingHours;
   double? rate;
+  String? date;
+  String? currency;
+  List<String>? languages;
+  String? countryName;
+  String? countryFlag;
+  int? numberOfReviewers;
+  String? day;
   int? hour;
 
-  MentorInfoAvaliableResponseData({
-    this.id,
-    this.suffixeName,
-    this.firstName,
-    this.lastName,
-    this.gender,
-    this.profileImg,
-    this.hourRate,
-    this.bio,
-    this.date,
-    this.day,
-    this.rate,
-    this.hour,
-  });
+  MentorInfoAvaliableResponseData(
+      {this.id,
+      this.suffixeName,
+      this.firstName,
+      this.lastName,
+      this.gender,
+      this.profileImg,
+      this.hourRate,
+      this.workingHours,
+      this.rate,
+      this.date,
+      this.currency,
+      this.languages,
+      this.countryName,
+      this.countryFlag,
+      this.numberOfReviewers,
+      this.day,
+      this.hour});
 
   MentorInfoAvaliableResponseData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -51,10 +63,15 @@ class MentorInfoAvaliableResponseData with ModelChecker {
     gender = json['gender'];
     profileImg = json['profile_img'];
     hourRate = convertToDouble(json['hour_rate']);
-    bio = json['bio'];
-    date = json['date'];
-    day = json['day'];
+    workingHours = json['working_hours'].cast<int>();
     rate = convertToDouble(json['rate']);
+    date = json['date'];
+    currency = json['currency'];
+    languages = json['languages'].cast<String>();
+    countryName = json['country_name'];
+    countryFlag = json['country_flag'];
+    numberOfReviewers = json['number_of_reviewers'];
+    day = json['day'];
     hour = json['hour'];
   }
 }

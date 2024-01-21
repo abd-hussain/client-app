@@ -1,4 +1,5 @@
 import 'package:client_app/models/https/categories_model.dart';
+import 'package:client_app/models/https/majors_model.dart';
 import 'package:client_app/shared_widgets/booking/booking_bottom_sheet.dart';
 import 'package:client_app/shared_widgets/booking/widgets/cell_of_booking.dart';
 import 'package:client_app/shared_widgets/booking/widgets/parser.dart';
@@ -10,29 +11,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class InstantBookingBottomSheetsUtil {
-  final BuildContext context;
-  final String language;
-  final List<Category> listOfCategories;
-
-  InstantBookingBottomSheetsUtil({
-    required this.listOfCategories,
-    required this.context,
-    this.language = "en",
-  });
-
-  ValueNotifier<String?> selectedCategories = ValueNotifier<String?>(null);
+  ValueNotifier<Category?> selectedCategory = ValueNotifier<Category?>(null);
+  ValueNotifier<MajorsData?> selectedMajor = ValueNotifier<MajorsData?>(null);
   ValueNotifier<Timing> selectedMeetingDuration =
       ValueNotifier<Timing>(Timing.halfHour);
-  int selectedCategoryID = 0;
+  ValueNotifier<BookingFaze> registrationFase =
+      ValueNotifier<BookingFaze>(BookingFaze.one);
 
   Future bookMeetingBottomSheet({
-    required BookingFaze faze,
-    required Function() openNext,
-    required Function(
-            {required int categoryID,
-            required String categoryName,
-            required String meetingduration})
-        doneSelection,
+    required BuildContext context,
+    required String language,
+    required List<Category> listOfCategories,
+    required List<MajorsData> listOfMajors,
+    required Function(Category selectedCategory, MajorsData selectedMajor,
+            Timing selectedMeetingDuration)
+        onEndSelection,
   }) async {
     return await showModalBottomSheet(
       isScrollControlled: true,
@@ -70,140 +63,231 @@ class InstantBookingBottomSheetsUtil {
                 ),
               ],
             ),
-            Center(
-              child: CustomText(
-                title: "${faze == BookingFaze.one ? 1 : 2} / 2",
-                textColor: const Color(0xff444444),
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            faze == BookingFaze.one
-                ? faze1View(
-                    context: context,
-                    listOfCategories: listOfCategories,
-                    openNext: () => openNext(),
-                  )
-                : faze2View(
-                    context: context,
-                    doneSelection: () => doneSelection(
-                        categoryID: selectedCategoryID,
-                        categoryName: selectedCategories.value!,
-                        meetingduration: ParserTimer()
-                            .getTime(selectedMeetingDuration.value)),
-                  ),
+            ValueListenableBuilder<BookingFaze>(
+                valueListenable: registrationFase,
+                builder: (context, snapshotFase, child) {
+                  return Column(
+                    children: [
+                      Center(
+                        child: CustomText(
+                          title: faseTitle(snapshotFase),
+                          textColor: const Color(0xff444444),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      showCorrectViewDependOnFase(
+                          fase: snapshotFase,
+                          context: context,
+                          listOfCategories: listOfCategories,
+                          listOfMajors: listOfMajors,
+                          onEndSelection: (categoty, major, time) {
+                            Navigator.pop(context);
+                            onEndSelection(categoty, major, time);
+                          })
+                    ],
+                  );
+                }),
           ]),
         );
       },
     );
   }
 
-  Widget faze1View(
-      {required BuildContext context,
-      required List<Category> listOfCategories,
-      required Function() openNext}) {
-    return Column(
-      children: [
-        const SizedBox(height: 10),
-        CustomText(
-          title: AppLocalizations.of(context)!.specialist,
-          textColor: const Color(0xff444444),
-          fontSize: 14,
-        ),
-        const SizedBox(height: 8),
-        SizedBox(
-          height: 190,
-          child: ValueListenableBuilder<String?>(
-              valueListenable: selectedCategories,
-              builder: (context, snapshot, child) {
-                return GridView.builder(
+  Widget faze1View({
+    required BuildContext context,
+    required List<Category> listOfCategories,
+  }) {
+    return ValueListenableBuilder<Category?>(
+        valueListenable: selectedCategory,
+        builder: (context, selectedCategoriesSnapshot, child) {
+          return Column(
+            children: [
+              const SizedBox(height: 10),
+              CustomText(
+                title: "-- ${AppLocalizations.of(context)!.specialist} --",
+                textColor: const Color(0xff444444),
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
+              const SizedBox(height: 8),
+              SizedBox(
+                height: 400,
+                child: GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3, mainAxisExtent: 50),
-                    shrinkWrap: true,
+                            crossAxisCount: 4,
+                            mainAxisSpacing: 0,
+                            crossAxisSpacing: 0,
+                            childAspectRatio: 1,
+                            mainAxisExtent: 100),
                     itemCount: listOfCategories.length,
                     itemBuilder: (context, index) {
                       return BookingCell(
                         title: listOfCategories[index].name!,
-                        isSelected: snapshot != null
-                            ? snapshot == listOfCategories[index].name!
+                        isSelected: selectedCategoriesSnapshot != null
+                            ? selectedCategoriesSnapshot ==
+                                listOfCategories[index]
                             : false,
                         onPress: () {
-                          selectedCategories.value =
-                              listOfCategories[index].name!;
-                          selectedCategoryID = listOfCategories[index].id!;
+                          selectedCategory.value = listOfCategories[index];
                         },
                       );
-                    });
-              }),
-        ),
-        const SizedBox(height: 8),
-        CustomText(
-          title: AppLocalizations.of(context)!.meetingduration,
-          textColor: const Color(0xff444444),
-          fontSize: 14,
-        ),
-        const SizedBox(height: 8),
-        ValueListenableBuilder<Timing?>(
-            valueListenable: selectedMeetingDuration,
-            builder: (context, snapshot, child) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  BookingCell(
-                    title: "15 ${AppLocalizations.of(context)!.min}",
-                    isSelected: (snapshot ?? Timing.hour) == Timing.quarterHour,
-                    onPress: () {
-                      selectedMeetingDuration.value = Timing.quarterHour;
-                    },
-                  ),
-                  BookingCell(
-                    title: "30 ${AppLocalizations.of(context)!.min}",
-                    isSelected: (snapshot ?? Timing.hour) == Timing.halfHour,
-                    onPress: () {
-                      selectedMeetingDuration.value = Timing.halfHour;
-                    },
-                  ),
-                  BookingCell(
-                    title: "45 ${AppLocalizations.of(context)!.min}",
-                    isSelected:
-                        (snapshot ?? Timing.hour) == Timing.threeQuarter,
-                    onPress: () {
-                      selectedMeetingDuration.value = Timing.threeQuarter;
-                    },
-                  ),
-                  BookingCell(
-                    title: "60 ${AppLocalizations.of(context)!.min}",
-                    isSelected: (snapshot ?? Timing.hour) == Timing.hour,
-                    onPress: () {
-                      selectedMeetingDuration.value = Timing.hour;
-                    },
-                  ),
-                  const SizedBox(height: 8),
-                  ValueListenableBuilder<String?>(
-                      valueListenable: selectedCategories,
-                      builder: (context, selectedCategoriesSnapshot, child) {
-                        return footerBottomSheet(
-                          context: context,
-                          selectedMeetingDuration: snapshot,
-                          isButtonEnable:
-                              selectedCategoriesSnapshot != null ? true : false,
-                          openNext: () {
-                            Navigator.pop(context);
-                            openNext();
-                          },
-                        );
-                      })
-                ],
-              );
-            }),
-      ],
-    );
+                    }),
+              ),
+              const SizedBox(height: 8),
+              footerBottomSheet(
+                context: context,
+                categoryName: selectedCategoriesSnapshot != null
+                    ? selectedCategoriesSnapshot.name!
+                    : "",
+                majorName: "",
+                duration: "",
+                isButtonEnable:
+                    selectedCategoriesSnapshot != null ? true : false,
+                openNext: () {
+                  registrationFase.value = BookingFaze.two;
+                },
+              ),
+            ],
+          );
+        });
   }
 
-  Widget faze2View(
-      {required BuildContext context, required Function() doneSelection}) {
+  Widget faze2View({
+    required BuildContext context,
+    required List<MajorsData> listOfMajors,
+  }) {
+    return ValueListenableBuilder<MajorsData?>(
+        valueListenable: selectedMajor,
+        builder: (context, selectedMajorSnapshot, child) {
+          return Column(
+            children: [
+              const SizedBox(height: 10),
+              CustomText(
+                title: "-- ${AppLocalizations.of(context)!.majors} --",
+                textColor: const Color(0xff444444),
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
+              const SizedBox(height: 8),
+              SizedBox(
+                height: 400,
+                child: GridView.builder(
+                    shrinkWrap: true,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 4,
+                            mainAxisSpacing: 0,
+                            crossAxisSpacing: 0,
+                            childAspectRatio: 1,
+                            mainAxisExtent: 100),
+                    itemCount: listOfMajors.length,
+                    itemBuilder: (context, index) {
+                      return BookingCell(
+                        title: listOfMajors[index].name!,
+                        isSelected: selectedMajorSnapshot != null
+                            ? selectedMajorSnapshot == listOfMajors[index]
+                            : false,
+                        onPress: () {
+                          selectedMajor.value = listOfMajors[index];
+                        },
+                      );
+                    }),
+              ),
+              const SizedBox(height: 8),
+              footerBottomSheet(
+                context: context,
+                categoryName: selectedCategory.value!.name!,
+                majorName: selectedMajorSnapshot != null
+                    ? selectedMajorSnapshot.name!
+                    : "",
+                duration: "",
+                isButtonEnable: selectedMajorSnapshot != null ? true : false,
+                openNext: () {
+                  registrationFase.value = BookingFaze.three;
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  Widget faze3View({
+    required BuildContext context,
+  }) {
+    return ValueListenableBuilder<Timing?>(
+        valueListenable: selectedMeetingDuration,
+        builder: (context, selectedDurationsSnapshot, child) {
+          return Column(
+            children: [
+              const SizedBox(height: 20),
+              CustomText(
+                title: "-- ${AppLocalizations.of(context)!.meetingduration} --",
+                textColor: const Color(0xff444444),
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
+              const SizedBox(height: 8),
+              BookingCell(
+                title: "15 ${AppLocalizations.of(context)!.min}",
+                isSelected: (selectedDurationsSnapshot ?? Timing.hour) ==
+                    Timing.quarterHour,
+                onPress: () {
+                  selectedMeetingDuration.value = Timing.quarterHour;
+                },
+              ),
+              BookingCell(
+                title: "30 ${AppLocalizations.of(context)!.min}",
+                isSelected: (selectedDurationsSnapshot ?? Timing.hour) ==
+                    Timing.halfHour,
+                onPress: () {
+                  selectedMeetingDuration.value = Timing.halfHour;
+                },
+              ),
+              BookingCell(
+                title: "45 ${AppLocalizations.of(context)!.min}",
+                isSelected: (selectedDurationsSnapshot ?? Timing.hour) ==
+                    Timing.threeQuarter,
+                onPress: () {
+                  selectedMeetingDuration.value = Timing.threeQuarter;
+                },
+              ),
+              BookingCell(
+                title: "60 ${AppLocalizations.of(context)!.min}",
+                isSelected:
+                    (selectedDurationsSnapshot ?? Timing.hour) == Timing.hour,
+                onPress: () {
+                  selectedMeetingDuration.value = Timing.hour;
+                },
+              ),
+              const SizedBox(height: 8),
+              footerBottomSheet(
+                context: context,
+                duration: selectedDurationsSnapshot != null
+                    ? "${ParserTimer().getTime(selectedDurationsSnapshot)} ${AppLocalizations.of(context)!.min}"
+                    : "",
+                isButtonEnable:
+                    selectedDurationsSnapshot != null ? true : false,
+                categoryName: selectedCategory.value!.name!,
+                majorName: selectedMajor.value!.name!,
+                openNext: () {
+                  registrationFase.value = BookingFaze.four;
+                },
+              )
+            ],
+          );
+        });
+  }
+
+  Widget faze4View(
+      {required BuildContext context,
+      required Function(Category selectedCategory, MajorsData selectedMajor,
+              Timing selectedMeetingDuration)
+          onEndSelection}) {
     return Column(
       children: [
         const SizedBox(height: 20),
@@ -216,7 +300,7 @@ class InstantBookingBottomSheetsUtil {
             child: const Icon(
               Icons.security,
               color: Color(0xff444444),
-              size: 100,
+              size: 75,
             ),
           ),
         ),
@@ -252,10 +336,13 @@ class InstantBookingBottomSheetsUtil {
         footerBottomSheet(
           context: context,
           isButtonEnable: true,
-          selectedMeetingDuration: selectedMeetingDuration.value,
+          duration:
+              "${ParserTimer().getTime(selectedMeetingDuration.value)} ${AppLocalizations.of(context)!.min}",
+          categoryName: selectedCategory.value!.name!,
+          majorName: selectedMajor.value!.name!,
           openNext: () {
-            Navigator.pop(context);
-            doneSelection();
+            onEndSelection(selectedCategory.value!, selectedMajor.value!,
+                selectedMeetingDuration.value);
           },
         )
       ],
@@ -265,7 +352,9 @@ class InstantBookingBottomSheetsUtil {
   Widget footerBottomSheet(
       {required BuildContext context,
       required bool isButtonEnable,
-      required Timing? selectedMeetingDuration,
+      required String categoryName,
+      required String majorName,
+      required String duration,
       required Function() openNext}) {
     return Column(
       children: [
@@ -273,33 +362,122 @@ class InstantBookingBottomSheetsUtil {
         Row(
           children: [
             Expanded(
-              flex: 1,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  CustomText(
-                    title: selectedMeetingDuration == null
-                        ? "00 ${AppLocalizations.of(context)!.min}"
-                        : "${ParserTimer().getTime(selectedMeetingDuration)} ${AppLocalizations.of(context)!.min}",
-                    textColor: const Color(0xff444444),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                  Row(
+                    children: [
+                      CustomText(
+                        title: "${AppLocalizations.of(context)!.category} :",
+                        fontSize: 14,
+                        maxLins: 2,
+                        textColor: const Color(0xff554d56),
+                      ),
+                      const SizedBox(width: 2),
+                      categoryName != ""
+                          ? CustomText(
+                              title: categoryName,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              textColor: const Color(0xff554d56),
+                            )
+                          : Container(),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      CustomText(
+                        title: "${AppLocalizations.of(context)!.major} :",
+                        fontSize: 14,
+                        textColor: const Color(0xff554d56),
+                      ),
+                      const SizedBox(width: 2),
+                      majorName != ""
+                          ? CustomText(
+                              title: majorName,
+                              fontSize: 14,
+                              maxLins: 2,
+                              fontWeight: FontWeight.bold,
+                              textColor: const Color(0xff554d56),
+                            )
+                          : Container(),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      CustomText(
+                        title:
+                            "${AppLocalizations.of(context)!.meetingduration} :",
+                        fontSize: 14,
+                        textColor: const Color(0xff554d56),
+                      ),
+                      const SizedBox(width: 2),
+                      duration != ""
+                          ? CustomText(
+                              title: duration,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              textColor: const Color(0xff554d56),
+                            )
+                          : Container(),
+                    ],
                   ),
                 ],
               ),
             ),
-            Expanded(
-              flex: 2,
+            const SizedBox(width: 4),
+            SizedBox(
+              height: 80,
+              width: MediaQuery.of(context).size.width / 4,
               child: CustomButton(
+                padding: const EdgeInsets.only(top: 8),
                 enableButton: isButtonEnable,
+                width: MediaQuery.of(context).size.width / 4,
                 buttonTitle: AppLocalizations.of(context)!.next,
-                onTap: () {
-                  openNext();
-                },
+                onTap: () => openNext(),
               ),
             ),
           ],
         )
       ],
     );
+  }
+
+  String faseTitle(BookingFaze fase) {
+    switch (fase) {
+      case BookingFaze.one:
+        return "1/4";
+      case BookingFaze.two:
+        return "2/4";
+      case BookingFaze.three:
+        return "3/4";
+      case BookingFaze.four:
+        return "4/4";
+    }
+  }
+
+  Widget showCorrectViewDependOnFase(
+      {required BookingFaze fase,
+      required BuildContext context,
+      required List<Category> listOfCategories,
+      required List<MajorsData> listOfMajors,
+      required Function(Category selectedCategory, MajorsData selectedMajor,
+              Timing selectedMeetingDuration)
+          onEndSelection}) {
+    switch (fase) {
+      case BookingFaze.one:
+        return faze1View(context: context, listOfCategories: listOfCategories);
+      case BookingFaze.two:
+        return faze2View(context: context, listOfMajors: listOfMajors);
+      case BookingFaze.three:
+        return faze3View(context: context);
+      case BookingFaze.four:
+        return faze4View(
+          context: context,
+          onEndSelection: (category, major, time) {
+            onEndSelection(category, major, time);
+          },
+        );
+    }
   }
 }

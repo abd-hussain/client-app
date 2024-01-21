@@ -18,39 +18,41 @@ class MentorProfileInfoView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Center(
-          child: CircleAvatar(
-            backgroundColor: const Color(0xff034061),
-            radius: 50,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(25),
-              child: profileImg != ""
-                  ? FadeInImage(
-                      placeholder:
-                          const AssetImage("assets/images/avatar.jpeg"),
-                      image: NetworkImage(
-                          AppConstant.imagesBaseURLForMentors + profileImg,
-                          scale: 1),
-                    )
-                  : Image.asset(
-                      'assets/images/avatar.jpeg',
-                      width: 110.0,
-                      height: 110.0,
-                      fit: BoxFit.fill,
-                    ),
+    return Expanded(
+      child: Column(
+        children: [
+          Center(
+            child: CircleAvatar(
+              backgroundColor: const Color(0xff034061),
+              radius: 50,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(25),
+                child: profileImg != ""
+                    ? FadeInImage(
+                        placeholder:
+                            const AssetImage("assets/images/avatar.jpeg"),
+                        image: NetworkImage(
+                            AppConstant.imagesBaseURLForMentors + profileImg,
+                            scale: 1),
+                      )
+                    : Image.asset(
+                        'assets/images/avatar.jpeg',
+                        width: 110.0,
+                        height: 110.0,
+                        fit: BoxFit.fill,
+                      ),
+              ),
             ),
           ),
-        ),
-        const SizedBox(height: 20),
-        CustomText(
-          title: "$suffixeName $firstName $lastName",
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          textColor: const Color(0xff554d56),
-        ),
-      ],
+          const SizedBox(height: 20),
+          CustomText(
+            title: "$suffixeName $firstName $lastName",
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            textColor: const Color(0xff554d56),
+          ),
+        ],
+      ),
     );
   }
 }

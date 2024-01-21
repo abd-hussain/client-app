@@ -1,6 +1,7 @@
 import 'package:client_app/locator.dart';
 import 'package:client_app/models/https/appointment.dart';
 import 'package:client_app/models/https/categories_model.dart';
+import 'package:client_app/models/https/majors_model.dart';
 
 import 'package:client_app/sevices/filter_services.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
@@ -53,6 +54,10 @@ class CallBloc extends Bloc<FilterService> {
       return api.data!..sort((a, b) => a.id!.compareTo(b.id!));
     }
     return null;
+  }
+
+  Future<List<MajorsData>?> listOfMajords() async {
+    return await service.getMajors();
   }
 
   Future<void> cancelAppointment({required int id}) {

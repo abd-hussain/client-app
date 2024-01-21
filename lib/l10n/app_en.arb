@@ -240,6 +240,8 @@
     "instant" : "Instant",
     "hasdiscount" : "Has Discount",
     "notes" : "Notes",
+    "majors" : "Majors",
+    "major" : "Major",
     "priceafter" : "Discount Price",
     "disable" : "Disable",
     "freeforall" : "Free for all",

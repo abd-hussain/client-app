@@ -1,8 +1,8 @@
 import 'package:client_app/locator.dart';
 import 'package:client_app/models/https/categories_model.dart';
+import 'package:client_app/models/https/majors_model.dart';
 import 'package:client_app/screens/booking_meeting/booking_bloc.dart';
 import 'package:client_app/screens/main_contaner/main_container_bloc.dart';
-import 'package:client_app/shared_widgets/booking/booking_bottom_sheet.dart';
 import 'package:client_app/shared_widgets/booking/instant_booking_bottom_sheet.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/utils/routes.dart';
@@ -14,11 +14,14 @@ class NoCallView extends StatelessWidget {
   final bool isUserLoggedIn;
   final String language;
   final List<Category> listOfCategories;
+  final List<MajorsData> listOfMajors;
+
   const NoCallView(
       {required this.isUserLoggedIn,
       required this.language,
       required this.listOfCategories,
-      super.key});
+      super.key,
+      required this.listOfMajors});
 
   @override
   Widget build(BuildContext context) {
@@ -71,40 +74,25 @@ class NoCallView extends StatelessWidget {
                 icon: Icons.timer,
                 onPress: () async {
                   if (isUserLoggedIn) {
-                    //TODO
-                    final bottomSheet = InstantBookingBottomSheetsUtil(
+                    await InstantBookingBottomSheetsUtil()
+                        .bookMeetingBottomSheet(
                       context: context,
                       language: language,
                       listOfCategories: listOfCategories,
-                    );
-                    await bottomSheet.bookMeetingBottomSheet(
-                      faze: BookingFaze.one,
-                      openNext: () async {
-                        await bottomSheet.bookMeetingBottomSheet(
-                          faze: BookingFaze.two,
-                          openNext: () => null,
-                          doneSelection: (
-                              {required categoryID,
-                              required categoryName,
-                              required meetingduration}) {
-                            Navigator.of(context, rootNavigator: true)
-                                .pushNamed(
-                              RoutesConstants.bookingScreen,
-                              arguments: {
-                                "bookingType": BookingType.instant,
-                                "categoryID": categoryID,
-                                "categoryName": categoryName,
-                                "meetingduration": meetingduration,
-                              },
-                            );
+                      listOfMajors: listOfMajors,
+                      onEndSelection: (category, major, time) {
+                        Navigator.of(context, rootNavigator: true).pushNamed(
+                          RoutesConstants.bookingScreen,
+                          arguments: {
+                            "bookingType": BookingType.instant,
+                            "categoryID": category.id,
+                            "categoryName": category.name,
+                            "majorID": major.id,
+                            "majorName": major.name,
+                            "meetingduration": time,
                           },
                         );
                       },
-                      doneSelection: (
-                              {required categoryID,
-                              required categoryName,
-                              required meetingduration}) =>
-                          null,
                     );
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
