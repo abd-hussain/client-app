@@ -5,8 +5,6 @@ import 'package:client_app/screens/mycalender_tab/utils/calender_bottom_sheet.da
 import 'package:client_app/screens/mycalender_tab/utils/meeting_datasource.dart';
 import 'package:client_app/shared_widgets/booking/cancel_booking_bottom_sheet.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
-// import 'package:client_app/screens/mycalender_tab/utils/calender_bottom_sheet.dart';
-// import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -88,8 +86,9 @@ class _MyCalenderScreenState extends State<MyCalenderScreen> {
                               bloc.box.get(DatabaseFieldConstant.language),
                         ).bookMeetingBottomSheet(
                           cancel: () {
-                            CancelBookingBottomSheetsUtil(context: context)
+                            CancelBookingBottomSheetsUtil()
                                 .bookMeetingBottomSheet(
+                              context: context,
                               confirm: () {
                                 bloc
                                     .cancelMeeting(item.id!)

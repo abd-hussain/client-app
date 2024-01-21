@@ -4,13 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CancelBookingBottomSheetsUtil {
-  final BuildContext context;
-
-  CancelBookingBottomSheetsUtil({
-    required this.context,
-  });
-
   Future bookMeetingBottomSheet({
+    required BuildContext context,
     required Function() confirm,
   }) async {
     return await showModalBottomSheet(

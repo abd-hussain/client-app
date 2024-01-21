@@ -10,7 +10,7 @@ class VideoView extends StatefulWidget {
   State<VideoView> createState() => _VideoViewState();
 }
 
-//TODO: TEST on IOS
+//TODO: Video not working on IOS
 class _VideoViewState extends State<VideoView> {
   late VideoPlayerController videoPlayerController;
 

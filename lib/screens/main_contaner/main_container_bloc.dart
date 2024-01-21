@@ -58,57 +58,8 @@ class MainContainerBloc {
     }
   }
 
-  // Future<void> _getClientAppointments() async {
-  //   List<CalenderMeetings> list = [];
-
-  //   await locator<AppointmentsService>().getClientAppointments().then((value) {
-  //     if (value.data != null) {
-  //       for (AppointmentData item in value.data!) {
-  //         final newItem = CalenderMeetings(
-  //           meetingId: item.id,
-  //           clientId: item.clientId,
-  //           mentorId: item.mentorId,
-  //           appointmentType: item.appointmentType,
-  //           priceBeforeDiscount: item.priceBeforeDiscount,
-  //           priceAfterDiscount: item.priceAfterDiscount,
-  //           state: handleMeetingState(item.state!),
-  //           noteFromClient: item.noteFromClient,
-  //           noteFromMentor: item.noteFromMentor,
-  //           profileImg: item.profileImg,
-  //           mentorPrefix: item.mentorPrefix,
-  //           mentorFirstName: item.mentorFirstName,
-  //           mentorLastName: item.mentorLastName,
-  //           categoryId: item.categoryId,
-  //           categoryName: item.categoryName,
-  //           fromTime: DateTime.parse(item.dateFrom!),
-  //           toTime: DateTime.parse(item.dateTo!),
-  //           channelId: item.channelId,
-  //         );
-  //         list.add(newItem);
-  //       }
-  //     }
-  //   });
-  //   meetingsListNotifier.value = list;
-  // }
-
-  // AppointmentsState handleMeetingState(int index) {
-  //   if (index == 1) {
-  //     return AppointmentsState.active;
-  //   } else if (index == 2) {
-  //     return AppointmentsState.mentorCancel;
-  //   } else if (index == 3) {
-  //     return AppointmentsState.clientCancel;
-  //   } else if (index == 4) {
-  //     return AppointmentsState.clientMiss;
-  //   } else if (index == 5) {
-  //     return AppointmentsState.mentorMiss;
-  //   } else {
-  //     return AppointmentsState.completed;
-  //   }
-  // }
-
   Future<void> callRegisterTokenRequest() async {
-    if (checkIfUserIsLoggedIn()) {
+    if (_checkIfUserIsLoggedIn()) {
       final token = box.get(DatabaseFieldConstant.pushNotificationToken);
       if (token != null && token != "") {
         await locator<NotificationsService>().registerToken(token);
@@ -116,7 +67,7 @@ class MainContainerBloc {
     }
   }
 
-  bool checkIfUserIsLoggedIn() {
+  bool _checkIfUserIsLoggedIn() {
     bool isItLoggedIn = false;
 
     if (box.get(DatabaseFieldConstant.isUserLoggedIn) != null) {

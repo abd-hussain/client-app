@@ -32,7 +32,7 @@ class MentorDetailsResponseData with ModelChecker {
   String? categoryName;
   String? country;
   String? countryFlag;
-  List<String>? major;
+  List<Major>? majors;
   List<int>? workingHoursSaturday;
   List<int>? workingHoursSunday;
   List<int>? workingHoursMonday;
@@ -60,7 +60,7 @@ class MentorDetailsResponseData with ModelChecker {
       this.categoryName,
       this.country,
       this.countryFlag,
-      this.major,
+      this.majors,
       this.workingHoursSaturday,
       this.workingHoursSunday,
       this.workingHoursMonday,
@@ -88,7 +88,12 @@ class MentorDetailsResponseData with ModelChecker {
     categoryName = convertToString(json['category_name']);
     country = convertToString(json['country']);
     countryFlag = convertToString(json['country_flag']);
-    major = json['major'].cast<String>();
+    if (json['major'] != null) {
+      majors = <Major>[];
+      json['major'].forEach((v) {
+        majors!.add(Major.fromJson(v));
+      });
+    }
     workingHoursSaturday = json['working_hours_saturday'].cast<int>();
     workingHoursSunday = json['working_hours_sunday'].cast<int>();
     workingHoursMonday = json['working_hours_monday'].cast<int>();
@@ -100,6 +105,18 @@ class MentorDetailsResponseData with ModelChecker {
     json['reviews'].forEach((v) {
       reviews!.add(Reviews.fromJson(v));
     });
+  }
+}
+
+class Major {
+  int? id;
+  String? name;
+
+  Major({this.id, this.name});
+
+  Major.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
   }
 }
 

@@ -1,24 +1,28 @@
-import 'package:client_app/models/https/appointment.dart';
+import 'package:client_app/models/https/mentor_appoitments.dart';
+import 'package:client_app/models/https/mentor_details_model.dart';
 import 'package:client_app/screens/booking_meeting/booking_bloc.dart';
-import 'package:client_app/shared_widgets/booking/booking_bottom_sheet.dart';
+import 'package:client_app/shared_widgets/booking/schadual_booking_bottom_sheet.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
-import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/currency.dart';
 import 'package:client_app/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 class MentorProfileFooterView extends StatelessWidget {
   final bool isUserLoggedin;
   final int mentorId;
+  final String currency;
   final double hourRate;
   final String suffixeName;
   final String firstName;
   final String lastName;
+  final String gender;
+  final String countryName;
+  final String countryFlag;
   final String profileImageUrl;
   final String categoryName;
+  final List<Major> listOfMajors;
   final List<int>? workingHoursSaturday;
   final List<int>? workingHoursSunday;
   final List<int>? workingHoursMonday;
@@ -26,16 +30,21 @@ class MentorProfileFooterView extends StatelessWidget {
   final List<int>? workingHoursWednesday;
   final List<int>? workingHoursThursday;
   final List<int>? workingHoursFriday;
-  final List<AppointmentData> listOfAppointments;
+  final List<MentorAppointmentsResponseData> listOfAppointments;
 
   const MentorProfileFooterView({
     required this.isUserLoggedin,
     required this.mentorId,
+    required this.currency,
     required this.hourRate,
     super.key,
     required this.suffixeName,
     required this.firstName,
     required this.lastName,
+    required this.countryName,
+    required this.countryFlag,
+    required this.gender,
+    required this.listOfMajors,
     required this.categoryName,
     required this.profileImageUrl,
     required this.workingHoursSaturday,
@@ -50,8 +59,6 @@ class MentorProfileFooterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final box = Hive.box(DatabaseBoxConstant.userInfo);
-
     return Container(
       color: const Color(0xffE4E9EF),
       height: 100,
@@ -87,59 +94,50 @@ class MentorProfileFooterView extends StatelessWidget {
               buttonTitle: AppLocalizations.of(context)!.booknow,
               onTap: () async {
                 if (isUserLoggedin) {
-                  final bottomSheet = BookingBottomSheetsUtil(
+                  await SchaduleBookingBottomSheetsUtil()
+                      .bookMeetingBottomSheet(
                     context: context,
                     hourRate: hourRate,
-                    language: box.get(DatabaseFieldConstant.language),
+                    currency: currency,
+                    listOfMajors: listOfMajors,
                     workingHoursSaturday: workingHoursSaturday,
                     workingHoursSunday: workingHoursSunday,
-                    workingHoursFriday: workingHoursFriday,
-                    workingHoursThursday: workingHoursThursday,
                     workingHoursMonday: workingHoursMonday,
                     workingHoursTuesday: workingHoursTuesday,
                     workingHoursWednesday: workingHoursWednesday,
+                    workingHoursThursday: workingHoursThursday,
+                    workingHoursFriday: workingHoursFriday,
                     listOfAppointments: listOfAppointments,
-                  );
-                  await bottomSheet.bookMeetingBottomSheet(
-                    faze: BookingFaze.one,
-                    openNext: () async {
-                      await bottomSheet.bookMeetingBottomSheet(
-                        faze: BookingFaze.two,
-                        openNext: () async {
-                          await bottomSheet.bookMeetingBottomSheet(
-                            faze: BookingFaze.three,
-                            openNext: () => null,
-                            doneSelection: (meetingduration, meetingtime,
-                                meetingdate, meetingday, meetingcost) {
-                              Navigator.of(context, rootNavigator: true)
-                                  .pushNamed(
-                                RoutesConstants.bookingScreen,
-                                arguments: {
-                                  "bookingType": BookingType.schudule,
-                                  "profileImageUrl": profileImageUrl,
-                                  "suffixeName": suffixeName,
-                                  "firstName": firstName,
-                                  "lastName": lastName,
-                                  "mentor_id": mentorId,
-                                  "categoryName": categoryName,
-                                  "meetingduration": meetingduration,
-                                  "meetingtime": meetingtime,
-                                  "meetingdate": meetingdate,
-                                  "meetingday": meetingday,
-                                  "meetingcost": meetingcost
-                                },
-                              );
-                            },
-                          );
+                    onEndSelection: (
+                      selectedMajor,
+                      selectedMeetingDuration,
+                      selectedMeetingDate,
+                      selectedMeetingTime,
+                    ) {
+                      //TODO: Handle Free Call
+
+                      Navigator.of(context, rootNavigator: true).pushNamed(
+                        RoutesConstants.bookingScreen,
+                        arguments: {
+                          "bookingType": BookingType.schudule,
+                          "mentor_id": mentorId,
+                          "profileImageUrl": profileImageUrl,
+                          "suffixeName": suffixeName,
+                          "firstName": firstName,
+                          "lastName": lastName,
+                          "hourRate": hourRate,
+                          "currency": currency,
+                          "gender": gender,
+                          "categoryName": categoryName,
+                          "countryName": countryName,
+                          "countryFlag": countryFlag,
+                          "selectedMajor": selectedMajor,
+                          "selectedMeetingDuration": selectedMeetingDuration,
+                          "selectedMeetingDate": selectedMeetingDate,
+                          "selectedMeetingTime": selectedMeetingTime
                         },
-                        doneSelection: (meetingdate, meetingduration,
-                                meetingtime, meetingday, meetingcost) =>
-                            null,
                       );
                     },
-                    doneSelection: (meetingdate, meetingduration, meetingtime,
-                            meetingday, meetingcost) =>
-                        null,
                   );
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(

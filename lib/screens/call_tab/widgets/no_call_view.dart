@@ -77,7 +77,6 @@ class NoCallView extends StatelessWidget {
                     await InstantBookingBottomSheetsUtil()
                         .bookMeetingBottomSheet(
                       context: context,
-                      language: language,
                       listOfCategories: listOfCategories,
                       listOfMajors: listOfMajors,
                       onEndSelection: (category, major, time) {

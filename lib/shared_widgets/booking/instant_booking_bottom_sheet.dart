@@ -1,6 +1,5 @@
 import 'package:client_app/models/https/categories_model.dart';
 import 'package:client_app/models/https/majors_model.dart';
-import 'package:client_app/shared_widgets/booking/booking_bottom_sheet.dart';
 import 'package:client_app/shared_widgets/booking/widgets/cell_of_booking.dart';
 import 'package:client_app/shared_widgets/booking/widgets/parser.dart';
 import 'package:client_app/shared_widgets/booking/widgets/points_in_last_view.dart';
@@ -10,17 +9,18 @@ import 'package:client_app/utils/currency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+enum InstanceBookingFaze { one, two, three, four }
+
 class InstantBookingBottomSheetsUtil {
   ValueNotifier<Category?> selectedCategory = ValueNotifier<Category?>(null);
   ValueNotifier<MajorsData?> selectedMajor = ValueNotifier<MajorsData?>(null);
   ValueNotifier<Timing> selectedMeetingDuration =
       ValueNotifier<Timing>(Timing.halfHour);
-  ValueNotifier<BookingFaze> registrationFase =
-      ValueNotifier<BookingFaze>(BookingFaze.one);
+  ValueNotifier<InstanceBookingFaze> registrationFase =
+      ValueNotifier<InstanceBookingFaze>(InstanceBookingFaze.one);
 
   Future bookMeetingBottomSheet({
     required BuildContext context,
-    required String language,
     required List<Category> listOfCategories,
     required List<MajorsData> listOfMajors,
     required Function(Category selectedCategory, MajorsData selectedMajor,
@@ -63,7 +63,7 @@ class InstantBookingBottomSheetsUtil {
                 ),
               ],
             ),
-            ValueListenableBuilder<BookingFaze>(
+            ValueListenableBuilder<InstanceBookingFaze>(
                 valueListenable: registrationFase,
                 builder: (context, snapshotFase, child) {
                   return Column(
@@ -149,7 +149,7 @@ class InstantBookingBottomSheetsUtil {
                 isButtonEnable:
                     selectedCategoriesSnapshot != null ? true : false,
                 openNext: () {
-                  registrationFase.value = BookingFaze.two;
+                  registrationFase.value = InstanceBookingFaze.two;
                 },
               ),
             ],
@@ -208,7 +208,7 @@ class InstantBookingBottomSheetsUtil {
                 duration: "",
                 isButtonEnable: selectedMajorSnapshot != null ? true : false,
                 openNext: () {
-                  registrationFase.value = BookingFaze.three;
+                  registrationFase.value = InstanceBookingFaze.three;
                 },
               ),
             ],
@@ -275,7 +275,7 @@ class InstantBookingBottomSheetsUtil {
                 categoryName: selectedCategory.value!.name!,
                 majorName: selectedMajor.value!.name!,
                 openNext: () {
-                  registrationFase.value = BookingFaze.four;
+                  registrationFase.value = InstanceBookingFaze.four;
                 },
               )
             ],
@@ -443,21 +443,21 @@ class InstantBookingBottomSheetsUtil {
     );
   }
 
-  String faseTitle(BookingFaze fase) {
+  String faseTitle(InstanceBookingFaze fase) {
     switch (fase) {
-      case BookingFaze.one:
+      case InstanceBookingFaze.one:
         return "1/4";
-      case BookingFaze.two:
+      case InstanceBookingFaze.two:
         return "2/4";
-      case BookingFaze.three:
+      case InstanceBookingFaze.three:
         return "3/4";
-      case BookingFaze.four:
+      case InstanceBookingFaze.four:
         return "4/4";
     }
   }
 
   Widget showCorrectViewDependOnFase(
-      {required BookingFaze fase,
+      {required InstanceBookingFaze fase,
       required BuildContext context,
       required List<Category> listOfCategories,
       required List<MajorsData> listOfMajors,
@@ -465,13 +465,13 @@ class InstantBookingBottomSheetsUtil {
               Timing selectedMeetingDuration)
           onEndSelection}) {
     switch (fase) {
-      case BookingFaze.one:
+      case InstanceBookingFaze.one:
         return faze1View(context: context, listOfCategories: listOfCategories);
-      case BookingFaze.two:
+      case InstanceBookingFaze.two:
         return faze2View(context: context, listOfMajors: listOfMajors);
-      case BookingFaze.three:
+      case InstanceBookingFaze.three:
         return faze3View(context: context);
-      case BookingFaze.four:
+      case InstanceBookingFaze.four:
         return faze4View(
           context: context,
           onEndSelection: (category, major, time) {

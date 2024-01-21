@@ -13,7 +13,6 @@ import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-//TODO: handle Timing UTC
 //TODO: Rate Mentor when you finish call
 //TODO: User should add majors and note before resrve call
 //TODO handle web

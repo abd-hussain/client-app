@@ -1,4 +1,4 @@
-import 'package:client_app/models/https/appointment.dart';
+import 'package:client_app/models/https/mentor_appoitments.dart';
 import 'package:client_app/shared_widgets/booking/widgets/cell_of_booking.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/utils/day_time.dart';
@@ -10,7 +10,7 @@ class MeetingTimeView extends StatelessWidget {
 
   final ValueNotifier<int?> selectedMeetingTime;
   final DateTime selectedMeetingDate;
-  final List<AppointmentData> listOfAppointments;
+  final List<MentorAppointmentsResponseData> listOfAppointments;
   const MeetingTimeView({
     super.key,
     required this.workingHours,

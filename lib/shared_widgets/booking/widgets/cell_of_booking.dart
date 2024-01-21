@@ -25,7 +25,7 @@ class BookingCell extends StatelessWidget {
                 color: isSelected
                     ? const Color(0xff034061)
                     : const Color(0xffE4E9EF),
-                width: 5),
+                width: 3),
             color: const Color(0xffE4E9EF),
           ),
           child: Padding(
