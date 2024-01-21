@@ -1,4 +1,3 @@
-import 'package:chewie/chewie.dart';
 import 'package:client_app/utils/constants/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
@@ -13,8 +12,6 @@ class VideoView extends StatefulWidget {
 
 class _VideoViewState extends State<VideoView> {
   late VideoPlayerController videoPlayerController;
-  final ValueNotifier<ChewieController?> chewieControllerNotifier =
-      ValueNotifier<ChewieController?>(null);
 
   @override
   void initState() {
@@ -23,48 +20,56 @@ class _VideoViewState extends State<VideoView> {
   }
 
   void _initPlayer() async {
-    videoPlayerController = VideoPlayerController.network(
-        AppConstant.imagesBaseURLForAttachmentArchive + widget.videoUrl);
-    await videoPlayerController.initialize().whenComplete(() {
-      chewieControllerNotifier.value = ChewieController(
-        videoPlayerController: videoPlayerController,
-      );
-    });
+    videoPlayerController = VideoPlayerController.networkUrl(
+      Uri.parse(
+          AppConstant.imagesBaseURLForAttachmentArchive + widget.videoUrl),
+    )..initialize().then((_) {
+        setState(() {});
+      });
   }
 
   @override
   void dispose() {
     super.dispose();
     videoPlayerController.dispose();
-    chewieControllerNotifier.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ValueListenableBuilder<ChewieController?>(
-          valueListenable: chewieControllerNotifier,
-          builder: (context, snapshot, child) {
-            if (snapshot != null) {
-              return SizedBox(
-                height: 300,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: Chewie(
-                    controller: snapshot,
-                  ),
-                ),
-              );
-            } else {
-              return const SizedBox(
-                height: 300,
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            }
-          }),
+      padding: const EdgeInsets.all(16),
+      child: Stack(
+        children: [
+          videoPlayerController.value.isInitialized
+              ? AspectRatio(
+                  aspectRatio: videoPlayerController.value.aspectRatio,
+                  child: VideoPlayer(videoPlayerController),
+                )
+              : Container(),
+          Positioned(
+            right: 0,
+            left: 0,
+            top: 0,
+            bottom: 0,
+            child: IconButton(
+              icon: Icon(
+                videoPlayerController.value.isPlaying
+                    ? Icons.pause_circle
+                    : Icons.play_circle,
+                color: const Color(0xff034061),
+                size: 75,
+              ),
+              onPressed: () {
+                setState(() {
+                  videoPlayerController.value.isPlaying
+                      ? videoPlayerController.pause()
+                      : videoPlayerController.play();
+                });
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

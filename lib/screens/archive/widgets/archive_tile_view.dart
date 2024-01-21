@@ -124,9 +124,9 @@ class ArchiveTileView extends StatelessWidget {
               ),
               meetingNotesView(context, data),
               const SizedBox(height: 10),
-              //TODO: Handle Video
-              VideoView(videoUrl: data.attachment!),
-              IconButton(onPressed: () {}, icon: const Icon(Icons.play_circle))
+              data.attachment != null
+                  ? VideoView(videoUrl: data.attachment!)
+                  : Container(),
             ],
           ),
         ),
