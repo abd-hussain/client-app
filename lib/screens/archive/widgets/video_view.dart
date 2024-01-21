@@ -10,6 +10,7 @@ class VideoView extends StatefulWidget {
   State<VideoView> createState() => _VideoViewState();
 }
 
+//TODO: TEST on IOS
 class _VideoViewState extends State<VideoView> {
   late VideoPlayerController videoPlayerController;
 
@@ -40,12 +41,15 @@ class _VideoViewState extends State<VideoView> {
       padding: const EdgeInsets.all(16),
       child: Stack(
         children: [
-          videoPlayerController.value.isInitialized
-              ? AspectRatio(
-                  aspectRatio: videoPlayerController.value.aspectRatio,
-                  child: VideoPlayer(videoPlayerController),
-                )
-              : Container(),
+          SizedBox(
+            height: 200,
+            child: videoPlayerController.value.isInitialized
+                ? AspectRatio(
+                    aspectRatio: videoPlayerController.value.aspectRatio,
+                    child: VideoPlayer(videoPlayerController),
+                  )
+                : Container(),
+          ),
           Positioned(
             right: 0,
             left: 0,
