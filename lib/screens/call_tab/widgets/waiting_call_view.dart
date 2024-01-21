@@ -1,10 +1,9 @@
 import 'package:client_app/models/https/appointment.dart';
-import 'package:client_app/models/https/calender_model.dart';
-import 'package:client_app/screens/booking_meeting/widgets/appointment_details_view.dart';
+import 'package:client_app/screens/mycalender_tab/utils/mentor_info_view.dart';
 import 'package:client_app/shared_widgets/booking/cancel_booking_bottom_sheet.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
-import 'package:client_app/utils/constants/constant.dart';
+import 'package:client_app/utils/gender_format.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -17,7 +16,7 @@ class WaitingCallView extends StatefulWidget {
   final String meetingduration;
   final String meetingtime;
   final String meetingday;
-  final CalenderMeetings metingDetails;
+  final AppointmentData metingDetails;
   final Function() cancelMeetingTapped;
   final Function() timesup;
 
@@ -99,130 +98,52 @@ class _WaitingCallViewState extends State<WaitingCallView> {
             textColor: const Color(0xff554d56),
           ),
         ),
-        AppointmentDetailsView(
-          title: AppLocalizations.of(context)!.meetingday,
-          desc: widget.meetingday,
-          forceView: true,
+        meetingTimingView(),
+        CustomText(
+          title: "-- ${AppLocalizations.of(context)!.payments} --",
+          fontSize: 16,
+          textColor: const Color(0xff554d56),
         ),
-        AppointmentDetailsView(
-          title: AppLocalizations.of(context)!.meetingtime,
-          desc: widget.meetingtime,
-          forceView: true,
+        meetingPricingView(),
+        CustomText(
+          title: "-- ${AppLocalizations.of(context)!.notes} --",
+          fontSize: 16,
+          textColor: const Color(0xff554d56),
         ),
-        AppointmentDetailsView(
-          title: AppLocalizations.of(context)!.meetingduration,
-          desc:
-              "${widget.meetingduration} ${AppLocalizations.of(context)!.min}",
-          forceView: true,
-        ),
-        AppointmentDetailsView(
-          title: AppLocalizations.of(context)!.clientnote,
-          desc: widget.metingDetails.noteFromClient ?? "",
-          forceView: true,
-        ),
-        AppointmentDetailsView(
-          title: AppLocalizations.of(context)!.mentornote,
-          desc: widget.metingDetails.noteFromMentor ?? "",
-          forceView: true,
-        ),
-        mentorBoxView(metingDetails: widget.metingDetails),
-        CustomButton(
-            enableButton:
-                DateTime.now().isBefore(widget.metingDetails.fromTime) &&
-                    widget.metingDetails.state == AppointmentsState.active,
-            padding: const EdgeInsets.all(8.0),
-            buttonTitle: AppLocalizations.of(context)!.cancelappointment,
-            width: MediaQuery.of(context).size.width / 2,
-            buttonColor: const Color(0xffda1100),
-            onTap: () {
-              CancelBookingBottomSheetsUtil(context: context)
-                  .bookMeetingBottomSheet(
-                confirm: () {
-                  widget.cancelMeetingTapped();
-                },
-              );
-            }),
-        const SizedBox(height: 20),
-      ],
-    );
-  }
-
-  Widget mentorBoxView({required CalenderMeetings metingDetails}) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 8),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.grey[100],
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.3),
-              spreadRadius: 2,
-              blurRadius: 1,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        height: 75,
-        width: MediaQuery.of(context).size.width,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: [
-              SizedBox(
-                width: 75,
-                height: 75,
-                child: (metingDetails.profileImg != null &&
-                        metingDetails.profileImg != "")
-                    ? FadeInImage(
-                        placeholder:
-                            const AssetImage("assets/images/avatar.jpeg"),
-                        image: NetworkImage(
-                            AppConstant.imagesBaseURLForMentors +
-                                metingDetails.profileImg!,
-                            scale: 1),
-                      )
-                    : Image.asset(
-                        'assets/images/avatar.jpeg',
-                        fit: BoxFit.fill,
-                      ),
-              ),
-              const SizedBox(width: 8),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CustomText(
-                    title:
-                        "${metingDetails.mentorPrefix} ${metingDetails.mentorFirstName} ${metingDetails.mentorLastName}",
-                    fontSize: 14,
-                    textAlign: TextAlign.center,
-                    fontWeight: FontWeight.bold,
-                    maxLins: 3,
-                    textColor: const Color(0xff554d56),
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomText(
-                        title: "${AppLocalizations.of(context)!.category} :",
-                        fontSize: 12,
-                        textColor: const Color(0xff554d56),
-                      ),
-                      const SizedBox(width: 8),
-                      CustomText(
-                        title: metingDetails.categoryName ?? "",
-                        fontSize: 12,
-                        textColor: const Color(0xff554d56),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
+        meetingNotesView(),
+        Padding(
+          padding: const EdgeInsets.only(left: 8, right: 8),
+          child: MentorInfoView(
+            profileImg: widget.metingDetails.profileImg,
+            flagImage: widget.metingDetails.flagImage,
+            suffixName: widget.metingDetails.suffixeName,
+            firstName: widget.metingDetails.firstName,
+            lastName: widget.metingDetails.lastName,
+            gender: GenderFormat()
+                .convertIndexToString(context, widget.metingDetails.gender!),
+            category: widget.metingDetails.categoryName,
           ),
         ),
-      ),
+        CustomButton(
+          enableButton: DateTime.now()
+                  .isBefore(DateTime.parse(widget.metingDetails.dateFrom!)) &&
+              widget.metingDetails.state == 1,
+          padding: const EdgeInsets.all(8.0),
+          width: MediaQuery.of(context).size.width / 2,
+          buttonColor: const Color(0xffda1100),
+          buttonTitle: AppLocalizations.of(context)!.cancelappointment,
+          buttonTitleColor: Colors.white,
+          onTap: () {
+            CancelBookingBottomSheetsUtil(context: context)
+                .bookMeetingBottomSheet(
+              confirm: () {
+                widget.cancelMeetingTapped();
+              },
+            );
+          },
+        ),
+        const SizedBox(height: 25),
+      ],
     );
   }
 
@@ -259,5 +180,145 @@ class _WaitingCallViewState extends State<WaitingCallView> {
     return timerStartNumberHour == 0 &&
         timerStartNumberMin == 0 &&
         timerStartNumberSec == 0;
+  }
+
+  Widget meetingTimingView() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8, left: 16, right: 16),
+      child: GridView(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: 0,
+          crossAxisSpacing: 8,
+          childAspectRatio: 3.2,
+        ),
+        children: [
+          itemInGrid(
+              title: AppLocalizations.of(context)!.eventday,
+              value: widget.meetingday),
+          itemInGrid(
+              title: AppLocalizations.of(context)!.meetingtime,
+              value: widget.meetingtime),
+          itemInGrid(
+              title: AppLocalizations.of(context)!.meetingduration,
+              value:
+                  "${widget.meetingduration} ${AppLocalizations.of(context)!.min}"),
+          itemInGrid(
+              title: AppLocalizations.of(context)!.appointmenttype,
+              value: widget.metingDetails.appointmentType == 1
+                  ? AppLocalizations.of(context)!.schudule
+                  : AppLocalizations.of(context)!.instant),
+        ],
+      ),
+    );
+  }
+
+  Widget meetingPricingView() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 8),
+      child: GridView(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: 0,
+          crossAxisSpacing: 8,
+          childAspectRatio: 3.2,
+        ),
+        children: [
+          itemInGrid(
+            title: AppLocalizations.of(context)!.free,
+            value: widget.metingDetails.isFree!
+                ? AppLocalizations.of(context)!.yes
+                : AppLocalizations.of(context)!.no,
+          ),
+          itemInGrid(
+            title: AppLocalizations.of(context)!.hasdiscount,
+            value: widget.metingDetails.discountId != null
+                ? AppLocalizations.of(context)!.yes
+                : AppLocalizations.of(context)!.no,
+          ),
+          itemInGrid(
+              title: AppLocalizations.of(context)!.price,
+              value:
+                  "${widget.metingDetails.price!} ${widget.metingDetails.currency!}"),
+          itemInGrid(
+              title: AppLocalizations.of(context)!.priceafter,
+              value:
+                  "${widget.metingDetails.discountedPrice!} ${widget.metingDetails.currency!}"),
+        ],
+      ),
+    );
+  }
+
+  Widget meetingNotesView() {
+    return SizedBox(
+      height: 125,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
+        child: GridView(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 0,
+            crossAxisSpacing: 8,
+            childAspectRatio: 1,
+          ),
+          children: [
+            itemInGrid(
+                title: AppLocalizations.of(context)!.clientnote,
+                value: checkNote(widget.metingDetails.noteFromClient),
+                valueHight: 90),
+            itemInGrid(
+                title: AppLocalizations.of(context)!.mentornote,
+                value: checkNote(widget.metingDetails.noteFromMentor),
+                valueHight: 90),
+          ],
+        ),
+      ),
+    );
+  }
+
+  String checkNote(String? note) {
+    if (note == null) {
+      return "-";
+    } else if (note == "") {
+      return "-";
+    } else {
+      return note;
+    }
+  }
+
+  Widget itemInGrid(
+      {required String title, required String value, double valueHight = 25}) {
+    return Column(
+      children: [
+        Container(
+          height: 25,
+          color: Colors.grey[300],
+          child: Center(
+            child: CustomText(
+              title: title,
+              fontSize: 16,
+              textColor: Colors.black,
+            ),
+          ),
+        ),
+        Container(
+          height: valueHight,
+          color: Colors.grey[400],
+          child: Center(
+            child: CustomText(
+              title: value,
+              fontSize: 16,
+              textColor: Colors.black,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

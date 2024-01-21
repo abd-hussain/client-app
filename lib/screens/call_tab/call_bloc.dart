@@ -1,17 +1,51 @@
 import 'package:client_app/locator.dart';
 import 'package:client_app/models/https/appointment.dart';
-import 'package:client_app/models/https/calender_model.dart';
 import 'package:client_app/models/https/categories_model.dart';
 
 import 'package:client_app/sevices/filter_services.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/mixins.dart';
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../sevices/appointments_service.dart';
 
 class CallBloc extends Bloc<FilterService> {
   final box = Hive.box(DatabaseBoxConstant.userInfo);
+  final ValueNotifier<List<AppointmentData>>
+      activeClientAppointmentsListNotifier =
+      ValueNotifier<List<AppointmentData>>([]);
+
+  void getActiveClientAppointments(BuildContext context) async {
+    await locator<AppointmentsService>()
+        .getClientActiveAppointments()
+        .then((value) {
+      if (value.data != null) {
+        activeClientAppointmentsListNotifier.value =
+            handleTimingFromUTC(value.data!);
+      }
+    });
+  }
+
+  List<AppointmentData> handleTimingFromUTC(List<AppointmentData> data) {
+    int offset = DateTime.now().timeZoneOffset.inHours;
+
+    for (var appoint in data) {
+      appoint.dateFrom = _adjustDate(appoint.dateFrom, offset);
+      appoint.dateTo = _adjustDate(appoint.dateTo, offset);
+    }
+
+    return data;
+  }
+
+  String _adjustDate(String? dateString, int offset) {
+    if (dateString == null) return '';
+
+    final DateTime date = DateTime.parse(dateString);
+    final DateTime adjustedDate = date.add(Duration(hours: offset));
+
+    return adjustedDate.toString();
+  }
 
   Future<List<Category>?> listOfCategories() async {
     final api = await service.categories();
@@ -25,21 +59,25 @@ class CallBloc extends Bloc<FilterService> {
     return locator<AppointmentsService>().cancelAppointment(id: id);
   }
 
-  CalenderMeetings? getNearestMeetingToday(List<CalenderMeetings> meetings) {
+  AppointmentData? getNearestMeetingToday(
+      List<AppointmentData> activeMeetings) {
     final now = DateTime.now();
 
-    var activeMeetings = meetings
-        .where((meeting) => meeting.state == AppointmentsState.active)
+    var removeOldMeetingFromTheList = activeMeetings
+        .where((meeting) => DateTime.parse(meeting.dateTo!).isAfter(now))
         .toList();
-    var removeOldMeetingFromTheList =
-        activeMeetings.where((meeting) => meeting.toTime.isAfter(now)).toList();
+
     var filtermeetingavaliablewithing24Hour = removeOldMeetingFromTheList
-        .where((meeting) =>
-            meeting.fromTime.isBefore(now.add(const Duration(hours: 24))))
+        .where((meeting) => DateTime.parse(meeting.dateFrom!)
+            .isBefore(now.add(const Duration(hours: 24))))
         .toList();
+
     return filtermeetingavaliablewithing24Hour.isNotEmpty
         ? filtermeetingavaliablewithing24Hour.reduce((closest, current) =>
-            current.fromTime.isBefore(closest.fromTime) ? current : closest)
+            DateTime.parse(current.dateFrom!)
+                    .isBefore(DateTime.parse(closest.dateFrom!))
+                ? current
+                : closest)
         : null;
   }
 

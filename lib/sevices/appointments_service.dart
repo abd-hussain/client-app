@@ -58,7 +58,7 @@ class AppointmentsService with Service {
     final response = await repository.callRequest(
       requestType: RequestType.put,
       methodName: MethodNameConstant.joinCallAppointment,
-      queryParam: {"id": id, "channelName": channelName},
+      queryParam: {"id": id, "channel_name": channelName},
     );
 
     return response;
