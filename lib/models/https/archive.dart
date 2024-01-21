@@ -39,7 +39,7 @@ class ArchiveData with ModelChecker {
   double? price;
   double? discountedPrice;
   String? currency;
-  int? mentorHourRate;
+  double? mentorHourRate;
   String? noteFromClient;
   String? noteFromMentor;
   String? mentorJoinCall;
@@ -99,7 +99,7 @@ class ArchiveData with ModelChecker {
     price = convertToDouble(json['price']);
     discountedPrice = convertToDouble(json['discounted_price']);
     currency = json['currency'];
-    mentorHourRate = json['mentor_hour_rate'];
+    mentorHourRate = convertToDouble(json['mentor_hour_rate']);
     noteFromClient = json['note_from_client'];
     noteFromMentor = json['note_from_mentor'];
     mentorJoinCall = json['mentor_join_call'];

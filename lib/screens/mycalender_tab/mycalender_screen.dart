@@ -1,10 +1,12 @@
-import 'package:client_app/locator.dart';
-import 'package:client_app/models/https/calender_model.dart';
-import 'package:client_app/screens/main_contaner/main_container_bloc.dart';
+import 'package:client_app/models/https/appointment.dart';
+import 'package:client_app/screens/home_tab/widgets/header.dart';
 import 'package:client_app/screens/mycalender_tab/mycalender_bloc.dart';
 import 'package:client_app/screens/mycalender_tab/utils/calender_bottom_sheet.dart';
 import 'package:client_app/screens/mycalender_tab/utils/meeting_datasource.dart';
+import 'package:client_app/shared_widgets/booking/cancel_booking_bottom_sheet.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
+// import 'package:client_app/screens/mycalender_tab/utils/calender_bottom_sheet.dart';
+// import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -22,6 +24,9 @@ class _MyCalenderScreenState extends State<MyCalenderScreen> {
   @override
   void didChangeDependencies() {
     logDebugMessage(message: 'Calender init Called ...');
+    if (bloc.checkIfUserIsLoggedIn()) {
+      bloc.getClientAppointments(context);
+    }
     super.didChangeDependencies();
   }
 
@@ -35,11 +40,17 @@ class _MyCalenderScreenState extends State<MyCalenderScreen> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        HeaderHomePage(
+          refreshCallBack: () {
+            if (bloc.checkIfUserIsLoggedIn()) {
+              bloc.getClientAppointments(context);
+            }
+          },
+        ),
         const SizedBox(height: 8),
         Expanded(
-          child: ValueListenableBuilder<List<CalenderMeetings>>(
-              valueListenable:
-                  locator<MainContainerBloc>().meetingsListNotifier,
+          child: ValueListenableBuilder<List<AppointmentData>>(
+              valueListenable: bloc.meetingsListNotifier,
               builder: (context, snapshot, child) {
                 return SfCalendar(
                     view: CalendarView.month,
@@ -69,34 +80,49 @@ class _MyCalenderScreenState extends State<MyCalenderScreen> {
                           calendarTapDetails.targetElement ==
                               CalendarElement.appointment) {
                         final item = calendarTapDetails.appointments![0]
-                            as CalenderMeetings;
-                        final soso = CalenderBottomSheetsUtil(
+                            as AppointmentData;
+                        CalenderBottomSheetsUtil(
                           context: context,
                           metingDetails: item,
                           language:
                               bloc.box.get(DatabaseFieldConstant.language),
-                        );
-
-                        soso.bookMeetingBottomSheet(
+                        ).bookMeetingBottomSheet(
                           cancel: () {
-                            bloc
-                                .cancelMeeting(item.meetingId!)
-                                .whenComplete(() async {
-                              locator<MainContainerBloc>().getAppointments();
-
-                              setState(() {});
-                            });
+                            CancelBookingBottomSheetsUtil(context: context)
+                                .bookMeetingBottomSheet(
+                              confirm: () {
+                                bloc
+                                    .cancelMeeting(item.id!)
+                                    .whenComplete(() async {
+                                  bloc
+                                      .getClientAppointments(context)
+                                      .then((value) {
+                                    setState(() {});
+                                  });
+                                });
+                              },
+                            );
                           },
                           editNote: () {
-                            soso.addNoteMeetingBottomSheet(confirm: (value) {
-                              bloc
-                                  .editNoteMeeting(
-                                      meetingId: item.meetingId!, note: value)
-                                  .whenComplete(() async {
-                                locator<MainContainerBloc>().getAppointments();
-                                setState(() {});
-                              });
-                            });
+                            CalenderBottomSheetsUtil(
+                              context: context,
+                              metingDetails: item,
+                              language:
+                                  bloc.box.get(DatabaseFieldConstant.language),
+                            ).showAddEditNoteDialog(
+                                note: item.noteFromClient ?? "",
+                                confirm: (note) {
+                                  bloc
+                                      .editNoteMeeting(
+                                          meetingId: item.id!, note: note)
+                                      .whenComplete(() async {
+                                    bloc
+                                        .getClientAppointments(context)
+                                        .then((value) {
+                                      setState(() {});
+                                    });
+                                  });
+                                });
                           },
                         );
                       }

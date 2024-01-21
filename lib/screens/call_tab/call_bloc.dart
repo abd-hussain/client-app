@@ -1,4 +1,5 @@
 import 'package:client_app/locator.dart';
+import 'package:client_app/models/https/appointment.dart';
 import 'package:client_app/models/https/calender_model.dart';
 import 'package:client_app/models/https/categories_model.dart';
 

@@ -3,6 +3,7 @@ import 'package:client_app/models/https/mentors_model.dart';
 import 'package:client_app/screens/categories_tab/categories_bloc.dart';
 import 'package:client_app/screens/categories_tab/widgets/list_categories_widget.dart';
 import 'package:client_app/screens/categories_tab/widgets/main_view_widget.dart';
+import 'package:client_app/screens/home_tab/widgets/header.dart';
 import 'package:client_app/utils/logger.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +36,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Column(
         children: [
-          const SizedBox(height: 8),
+          HeaderHomePage(
+            refreshCallBack: () {
+              _bloc.listOfCategories();
+            },
+          ),
           Expanded(
             child: Row(
               children: [

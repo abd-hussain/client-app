@@ -1,3 +1,4 @@
+import 'package:client_app/models/https/appointment.dart';
 import 'package:client_app/models/https/calender_model.dart';
 import 'package:client_app/screens/booking_meeting/widgets/appointment_details_view.dart';
 import 'package:client_app/shared_widgets/booking/cancel_booking_bottom_sheet.dart';

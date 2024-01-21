@@ -1,11 +1,8 @@
 import 'package:client_app/locator.dart';
 import 'package:client_app/main_context.dart';
 import 'package:client_app/screens/main_contaner/main_container_bloc.dart';
-import 'package:client_app/screens/main_contaner/widgets/main_appbar.dart';
-import 'package:client_app/screens/main_contaner/widgets/account_appbar.dart';
 import 'package:client_app/utils/push_notifications/firebase_cloud_messaging_util.dart';
 import 'package:client_app/utils/push_notifications/notification_manager.dart';
-
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -27,7 +24,6 @@ class _MainContainerState extends State<MainContainer> {
         FirebaseCloudMessagingUtil.initConfigure(context);
       });
     });
-    _bloc.getAppointments();
     NotificationManager.init(context: context);
     _bloc.callRegisterTokenRequest();
 
@@ -42,12 +38,11 @@ class _MainContainerState extends State<MainContainer> {
           return Scaffold(
             backgroundColor: const Color(0xffF5F6F7),
             resizeToAvoidBottomInset: false,
-            appBar: data == SelectedTab.account
-                ? accountAppBar(context: context)
-                : mainAppBar(
-                    context: context,
-                    isUserLoggedIn: _bloc.checkIfUserIsLoggedIn(),
-                    isItCalenderTab: data == SelectedTab.calender),
+            appBar: AppBar(
+              toolbarHeight: 0,
+              elevation: 0,
+              backgroundColor: const Color(0xff034061),
+            ),
             body: SafeArea(
               child: IndexedStack(
                 index: _bloc.getSelectedIndexDependOnTab(data),

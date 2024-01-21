@@ -24,6 +24,14 @@ class AppointmentsService with Service {
     return Appointment.fromJson(response);
   }
 
+  Future<Appointment> getClientActiveAppointments() async {
+    final response = await repository.callRequest(
+      requestType: RequestType.get,
+      methodName: MethodNameConstant.clientActiveAppointments,
+    );
+    return Appointment.fromJson(response);
+  }
+
   Future<dynamic> bookNewAppointments(
       {required AppointmentRequest appointment}) async {
     final response = await repository.callRequest(

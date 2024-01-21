@@ -265,31 +265,31 @@ class _BookingScreenState extends State<BookingScreen> {
                                   ? null
                                   : bloc.noteController.text,
                             );
-
-                            bloc
-                                .bookMeetingRequest(appointment: appointment)
-                                .then((value) {
-                              Navigator.of(context).pop();
-                              Navigator.of(context).pop();
-                              locator<MainContainerBloc>().getAppointments();
-                              locator<MainContainerBloc>()
-                                  .appBarKey
-                                  .currentState!
-                                  .animateTo(2);
-                              locator<MainContainerBloc>()
-                                  .currentTabIndexNotifier
-                                  .value = SelectedTab.call;
-                            }).catchError((error) {
-                              if (error is DioError) {
-                                final exception = error.error;
-                                if (exception is HttpException) {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    content: Text(exception.message),
-                                  ));
-                                }
-                              }
-                            });
+                            //TODO
+                            // bloc
+                            //     .bookMeetingRequest(appointment: appointment)
+                            //     .then((value) {
+                            //   Navigator.of(context).pop();
+                            //   Navigator.of(context).pop();
+                            //   locator<MainContainerBloc>().getAppointments();
+                            //   locator<MainContainerBloc>()
+                            //       .appBarKey
+                            //       .currentState!
+                            //       .animateTo(2);
+                            //   locator<MainContainerBloc>()
+                            //       .currentTabIndexNotifier
+                            //       .value = SelectedTab.call;
+                            // }).catchError((error) {
+                            //   if (error is DioError) {
+                            //     final exception = error.error;
+                            //     if (exception is HttpException) {
+                            //       ScaffoldMessenger.of(context)
+                            //           .showSnackBar(SnackBar(
+                            //         content: Text(exception.message),
+                            //       ));
+                            //     }
+                            //   }
+                            // });
                           } else {
                             final appointment = AppointmentRequest(
                               mentorId: bloc.mentorId!,
@@ -324,13 +324,11 @@ class _BookingScreenState extends State<BookingScreen> {
                                   ? null
                                   : bloc.noteController.text,
                             );
-
-                            bloc
-                                .bookMeetingRequest(appointment: appointment)
-                                .then((value) {
-                              locator<MainContainerBloc>().getAppointments();
-                              Navigator.of(context).pop();
-                            });
+                            //TODO
+                            // bloc.bookMeetingRequest(appointment: appointment).then((value) {
+                            //   locator<MainContainerBloc>().getAppointments();
+                            //   Navigator.of(context).pop();
+                            // });
                           }
                         });
                   },

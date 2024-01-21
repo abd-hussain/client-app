@@ -1,11 +1,6 @@
-enum AppointmentsState {
-  active,
-  mentorCancel,
-  clientCancel,
-  clientMiss,
-  mentorMiss,
-  completed
-}
+//TODO :TO BE DELETED
+
+import 'package:client_app/models/https/appointment.dart';
 
 class CalenderMeetings {
   final int? meetingId;
