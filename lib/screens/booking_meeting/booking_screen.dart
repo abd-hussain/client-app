@@ -33,68 +33,55 @@ class _BookingScreenState extends State<BookingScreen> {
     super.dispose();
   }
 
+  //TODO: Handle This Page
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffFAFAFA),
-      appBar: customAppBar(title: AppLocalizations.of(context)!.payments),
+      appBar: customAppBar(title: AppLocalizations.of(context)!.booknow),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: SafeArea(
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CustomText(
+                    title:
+                        "-- ${AppLocalizations.of(context)!.selectmentor} --",
+                    fontSize: 16,
+                    textColor: const Color(0xff554d56),
+                  ),
+                ),
                 ValueListenableBuilder<List<MentorInfoAvaliableResponseData>?>(
                     valueListenable: bloc.avaliableMentors,
                     builder: (context, snapshot, child) {
                       if (snapshot == null) {
                         return const SearchForMentorView();
                       } else {
-                        return SizedBox(
-                          height: 300,
-                          child: ListView.builder(
-                              itemCount: snapshot.length,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (ctx, index) {
-                                return SizedBox(
-                                  width: 300,
-                                  height: 300,
-                                  child: MentorProfileInfoView(
-                                    suffixeName: snapshot[index].suffixeName!,
-                                    firstName: snapshot[index].firstName!,
-                                    lastName: snapshot[index].lastName!,
-                                    profileImg: snapshot[index].profileImg!,
-                                  ),
-                                );
-                              }),
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(
+                            height: 190,
+                            child: ListView.builder(
+                                itemCount: snapshot.length,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (ctx, index) {
+                                  return SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width - 100,
+                                    child: FoundedMentorInfoView(
+                                      data: snapshot[index],
+                                      onPress: () {},
+                                    ),
+                                  );
+                                }),
+                          ),
                         );
                       }
-                      // return bloc.bookingType == BookingType.schudule || snapshot == AvaliableMentorStatus.found
-                      //     ? MentorProfileInfoView(
-                      //         suffixeName: bloc.mentorSuffixName!,
-                      //         firstName: bloc.mentorFirstName!,
-                      //         lastName: bloc.mentorLastName!,
-                      //         profileImg: bloc.mentorProfileImageUrl!,
-                      //       )
-                      //     : const SearchForMentorView();
                     }),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CustomText(
-                      title: "${AppLocalizations.of(context)!.category} :",
-                      fontSize: 12,
-                      textColor: const Color(0xff554d56),
-                    ),
-                    const SizedBox(width: 8),
-                    CustomText(
-                      title: bloc.categoryName!,
-                      fontSize: 12,
-                      textColor: const Color(0xff554d56),
-                    ),
-                  ],
-                ),
+
                 const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.all(8.0),

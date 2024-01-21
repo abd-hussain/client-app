@@ -1,6 +1,6 @@
 import 'package:client_app/models/https/appointment.dart';
 import 'package:client_app/screens/booking_meeting/widgets/appointment_details_view.dart';
-import 'package:client_app/screens/mycalender_tab/utils/mentor_info_view.dart';
+import 'package:client_app/shared_widgets/mentor_info_view.dart';
 import 'package:client_app/screens/mycalender_tab/utils/price_view.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';

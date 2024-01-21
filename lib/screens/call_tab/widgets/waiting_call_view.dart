@@ -1,5 +1,5 @@
 import 'package:client_app/models/https/appointment.dart';
-import 'package:client_app/screens/mycalender_tab/utils/mentor_info_view.dart';
+import 'package:client_app/shared_widgets/mentor_info_view.dart';
 import 'package:client_app/shared_widgets/booking/cancel_booking_bottom_sheet.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
