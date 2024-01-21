@@ -62,25 +62,42 @@ class InsideCallBloc {
   void _addAgoraEventHandlers() {
     engineNotifier.value!.registerEventHandler(
       RtcEngineEventHandler(
+        onError: (code, error) {
+          final info = 'onError: code: $code error: $error';
+          infoStrings.add(info);
+          debugPrint("+++==+++ onError $code $error");
+        },
         onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
-          debugPrint("local user ${connection.localUid} joined");
+          final info =
+              'onJoinChannel: ${connection.channelId}, uid: ${connection.localUid}';
+          infoStrings.add(info);
+          debugPrint(
+              "+++==+++ onJoinChannel: ${connection.channelId}, uid: ${connection.localUid}");
         },
         onLeaveChannel: (connection, stats) {
-          debugPrint("local user ${connection.localUid} Leave");
-          debugPrint("Status $stats");
+          infoStrings.add("onLeaveChannel ${connection.localUid} Leave");
+          debugPrint("+++==+++ onLeaveChannel ${connection.localUid} Leave");
+          remoteUidStatus.value = null;
         },
         onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
-          debugPrint("remote user $remoteUid joined");
+          final info = 'userJoined: $remoteUid';
+          infoStrings.add(info);
+          debugPrint("+++==+++ remote user $remoteUid joined");
           remoteUidStatus.value = remoteUid;
         },
         onUserOffline: (RtcConnection connection, int remoteUid,
             UserOfflineReasonType reason) {
-          debugPrint("remote user $remoteUid left channel");
+          final info = 'userOffline: $remoteUid';
+          infoStrings.add(info);
           remoteUidStatus.value = null;
+          debugPrint("+++==+++ remote user $remoteUid left channel");
         },
         onTokenPrivilegeWillExpire: (RtcConnection connection, String token) {
+          final info =
+              '[onTokenPrivilegeWillExpire] connection: ${connection.toJson()}, token: $token';
+          infoStrings.add(info);
           debugPrint(
-              '[onTokenPrivilegeWillExpire] connection: ${connection.toJson()}, token: $token');
+              '+++==+++ [onTokenPrivilegeWillExpire] connection: ${connection.toJson()}, token: $token');
         },
       ),
     );
@@ -90,10 +107,10 @@ class InsideCallBloc {
       {required int id, required String channelName}) async {
     locator<AppointmentsService>()
         .joinCall(id: id, channelName: channelName)
-        .then((value) {
+        .then((value) async {
       generatedCallToken = value["data"];
 
-      initializeCall();
+      await initializeCall();
     });
   }
 
