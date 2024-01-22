@@ -134,8 +134,8 @@ class _WaitingCallViewState extends State<WaitingCallView> {
           buttonTitle: AppLocalizations.of(context)!.cancelappointment,
           buttonTitleColor: Colors.white,
           onTap: () {
-            CancelBookingBottomSheetsUtil(context: context)
-                .bookMeetingBottomSheet(
+            CancelBookingBottomSheetsUtil().bookMeetingBottomSheet(
+              context: context,
               confirm: () {
                 widget.cancelMeetingTapped();
               },
