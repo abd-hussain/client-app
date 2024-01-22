@@ -1,4 +1,7 @@
 import 'package:client_app/models/https/appointment.dart';
+import 'package:client_app/screens/booking_meeting/booking_bloc.dart';
+import 'package:client_app/shared_widgets/grid_view/item_in_gred.dart';
+import 'package:client_app/shared_widgets/grid_view/meeting_timing_view.dart';
 import 'package:client_app/shared_widgets/mentor_info_view.dart';
 import 'package:client_app/shared_widgets/booking/cancel_booking_bottom_sheet.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
@@ -98,7 +101,14 @@ class _WaitingCallViewState extends State<WaitingCallView> {
             textColor: const Color(0xff554d56),
           ),
         ),
-        meetingTimingView(),
+        MeetingTimingView(
+          date: widget.meetingday,
+          time: widget.meetingtime,
+          duration: widget.meetingduration,
+          type: widget.metingDetails.appointmentType == 1
+              ? BookingType.schudule
+              : BookingType.instant,
+        ),
         CustomText(
           title: "-- ${AppLocalizations.of(context)!.payments} --",
           fontSize: 16,
@@ -182,39 +192,6 @@ class _WaitingCallViewState extends State<WaitingCallView> {
         timerStartNumberSec == 0;
   }
 
-  Widget meetingTimingView() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8, left: 16, right: 16),
-      child: GridView(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisSpacing: 0,
-          crossAxisSpacing: 8,
-          childAspectRatio: 3.2,
-        ),
-        children: [
-          itemInGrid(
-              title: AppLocalizations.of(context)!.eventday,
-              value: widget.meetingday),
-          itemInGrid(
-              title: AppLocalizations.of(context)!.meetingtime,
-              value: widget.meetingtime),
-          itemInGrid(
-              title: AppLocalizations.of(context)!.meetingduration,
-              value:
-                  "${widget.meetingduration} ${AppLocalizations.of(context)!.min}"),
-          itemInGrid(
-              title: AppLocalizations.of(context)!.appointmenttype,
-              value: widget.metingDetails.appointmentType == 1
-                  ? AppLocalizations.of(context)!.schudule
-                  : AppLocalizations.of(context)!.instant),
-        ],
-      ),
-    );
-  }
-
   Widget meetingPricingView() {
     return Padding(
       padding: const EdgeInsets.only(left: 16, right: 16, top: 8),
@@ -228,23 +205,23 @@ class _WaitingCallViewState extends State<WaitingCallView> {
           childAspectRatio: 3.2,
         ),
         children: [
-          itemInGrid(
+          ItemInGrid(
             title: AppLocalizations.of(context)!.free,
             value: widget.metingDetails.isFree!
                 ? AppLocalizations.of(context)!.yes
                 : AppLocalizations.of(context)!.no,
           ),
-          itemInGrid(
+          ItemInGrid(
             title: AppLocalizations.of(context)!.hasdiscount,
             value: widget.metingDetails.discountId != null
                 ? AppLocalizations.of(context)!.yes
                 : AppLocalizations.of(context)!.no,
           ),
-          itemInGrid(
+          ItemInGrid(
               title: AppLocalizations.of(context)!.price,
               value:
                   "${widget.metingDetails.price!} ${widget.metingDetails.currency!}"),
-          itemInGrid(
+          ItemInGrid(
               title: AppLocalizations.of(context)!.priceafter,
               value:
                   "${widget.metingDetails.discountedPrice!} ${widget.metingDetails.currency!}"),
@@ -268,11 +245,11 @@ class _WaitingCallViewState extends State<WaitingCallView> {
             childAspectRatio: 1,
           ),
           children: [
-            itemInGrid(
+            ItemInGrid(
                 title: AppLocalizations.of(context)!.clientnote,
                 value: checkNote(widget.metingDetails.noteFromClient),
                 valueHight: 90),
-            itemInGrid(
+            ItemInGrid(
                 title: AppLocalizations.of(context)!.mentornote,
                 value: checkNote(widget.metingDetails.noteFromMentor),
                 valueHight: 90),
@@ -290,35 +267,5 @@ class _WaitingCallViewState extends State<WaitingCallView> {
     } else {
       return note;
     }
-  }
-
-  Widget itemInGrid(
-      {required String title, required String value, double valueHight = 25}) {
-    return Column(
-      children: [
-        Container(
-          height: 25,
-          color: Colors.grey[300],
-          child: Center(
-            child: CustomText(
-              title: title,
-              fontSize: 16,
-              textColor: Colors.black,
-            ),
-          ),
-        ),
-        Container(
-          height: valueHight,
-          color: Colors.grey[400],
-          child: Center(
-            child: CustomText(
-              title: value,
-              fontSize: 16,
-              textColor: Colors.black,
-            ),
-          ),
-        ),
-      ],
-    );
   }
 }

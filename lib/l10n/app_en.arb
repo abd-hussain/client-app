@@ -246,6 +246,8 @@
     "priceafter" : "Discount Price",
     "disable" : "Disable",
     "freeforall" : "Free for all",
+    "writenoteformentor" : "Write any note you need the mentor to take it in consideration",
+    "writenoteformentorsmallMessage" : "You can also edit this later from the calendar screen",
     "metingendwihin" : "call will be end until",
     "pleasewaitformentor" :"Please wait for Mentor to join the call",
     "pleasewaitformentordesc" : "Don't close the call, if the mentor not join until the time is finish then the call will be closed automaticlly and you will recive your payment, if you close the call from the red button bellow then it will appear like you miss the call",

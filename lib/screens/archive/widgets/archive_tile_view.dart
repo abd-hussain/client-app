@@ -1,5 +1,8 @@
 import 'package:client_app/models/https/archive.dart';
 import 'package:client_app/screens/archive/widgets/video_view.dart';
+import 'package:client_app/screens/booking_meeting/booking_bloc.dart';
+import 'package:client_app/shared_widgets/grid_view/item_in_gred.dart';
+import 'package:client_app/shared_widgets/grid_view/meeting_timing_view.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:client_app/utils/constants/constant.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
@@ -107,10 +110,20 @@ class ArchiveTileView extends StatelessWidget {
                 fontSize: 16,
                 textColor: const Color(0xff554d56),
               ),
-              itemInGrid(
+              ItemInGrid(
                   title: AppLocalizations.of(context)!.meetingdate,
                   value: formattedFromDate),
-              meetingDetailsView(context, data),
+              MeetingTimingView(
+                date: meetingDate(dateFrom: data.dateFrom!),
+                time: DateFormat('hh:mm a')
+                    .format(DateTime.parse(data.dateFrom!)),
+                duration: meetingDuration(
+                    dateFrom: data.dateFrom!, dateTo: data.dateTo!),
+                type: data.appointmentType == 1
+                    ? BookingType.schudule
+                    : BookingType.instant,
+                padding: const EdgeInsets.only(top: 8),
+              ),
               CustomText(
                 title: "-- ${AppLocalizations.of(context)!.payments} --",
                 fontSize: 16,
@@ -134,56 +147,25 @@ class ArchiveTileView extends StatelessWidget {
     );
   }
 
-  Widget meetingDetailsView(BuildContext context, ArchiveData data) {
+  String meetingDate({required String dateFrom}) {
     final box = Hive.box(DatabaseBoxConstant.userInfo);
     DateTime now = DateTime.now();
-    DateTime timeDifference = DateTime.parse(data.dateFrom!).isAfter(now)
-        ? DateTime.parse(data.dateFrom!).subtract(Duration(
+    DateTime timeDifference = DateTime.parse(dateFrom).isAfter(now)
+        ? DateTime.parse(dateFrom).subtract(Duration(
             hours: now.hour,
             minutes: now.minute,
             seconds: now.second,
           ))
         : DateTime(now.year, now.month, now.day);
 
-    String meetingday = box.get(DatabaseFieldConstant.language) == "en"
+    return box.get(DatabaseFieldConstant.language) == "en"
         ? DateFormat('EEEE').format(timeDifference)
         : DayTime()
             .convertDayToArabic(DateFormat('EEEE').format(timeDifference));
+  }
 
-    String meetingtime =
-        DateFormat('hh:mm a').format(DateTime.parse(data.dateFrom!));
-
-    String meetingduration =
-        "${DateTime.parse(data.dateTo!).difference(DateTime.parse(data.dateFrom!)).inMinutes}";
-
-    return Padding(
-      padding: const EdgeInsets.only(top: 8),
-      child: GridView(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisSpacing: 0,
-          crossAxisSpacing: 8,
-          childAspectRatio: 3.2,
-        ),
-        children: [
-          itemInGrid(
-              title: AppLocalizations.of(context)!.eventday, value: meetingday),
-          itemInGrid(
-              title: AppLocalizations.of(context)!.meetingtime,
-              value: meetingtime),
-          itemInGrid(
-              title: AppLocalizations.of(context)!.meetingduration,
-              value: "$meetingduration ${AppLocalizations.of(context)!.min}"),
-          itemInGrid(
-              title: AppLocalizations.of(context)!.appointmenttype,
-              value: data.appointmentType == 1
-                  ? AppLocalizations.of(context)!.schudule
-                  : AppLocalizations.of(context)!.instant),
-        ],
-      ),
-    );
+  String meetingDuration({required String dateFrom, required String dateTo}) {
+    return "${DateTime.parse(dateTo).difference(DateTime.parse(dateFrom)).inMinutes}";
   }
 
   Widget meetingPricingView(BuildContext context, ArchiveData data) {
@@ -199,22 +181,22 @@ class ArchiveTileView extends StatelessWidget {
           childAspectRatio: 3.2,
         ),
         children: [
-          itemInGrid(
+          ItemInGrid(
             title: AppLocalizations.of(context)!.free,
             value: data.isFree!
                 ? AppLocalizations.of(context)!.yes
                 : AppLocalizations.of(context)!.no,
           ),
-          itemInGrid(
+          ItemInGrid(
             title: AppLocalizations.of(context)!.hasdiscount,
             value: data.discountId != null
                 ? AppLocalizations.of(context)!.yes
                 : AppLocalizations.of(context)!.no,
           ),
-          itemInGrid(
+          ItemInGrid(
               title: AppLocalizations.of(context)!.price,
               value: "${data.price!} ${data.currency!}"),
-          itemInGrid(
+          ItemInGrid(
               title: AppLocalizations.of(context)!.priceafter,
               value: "${data.discountedPrice!} ${data.currency!}"),
         ],
@@ -237,47 +219,17 @@ class ArchiveTileView extends StatelessWidget {
             childAspectRatio: 1,
           ),
           children: [
-            itemInGrid(
+            ItemInGrid(
                 title: AppLocalizations.of(context)!.clientnote,
                 value: checkNote(data.noteFromClient),
                 valueHight: 90),
-            itemInGrid(
+            ItemInGrid(
                 title: AppLocalizations.of(context)!.mentornote,
                 value: checkNote(data.noteFromMentor),
                 valueHight: 90),
           ],
         ),
       ),
-    );
-  }
-
-  Widget itemInGrid(
-      {required String title, required String value, double valueHight = 25}) {
-    return Column(
-      children: [
-        Container(
-          height: 25,
-          color: Colors.grey[300],
-          child: Center(
-            child: CustomText(
-              title: title,
-              fontSize: 16,
-              textColor: Colors.black,
-            ),
-          ),
-        ),
-        Container(
-          height: valueHight,
-          color: Colors.grey[400],
-          child: Center(
-            child: CustomText(
-              title: value,
-              fontSize: 16,
-              textColor: Colors.black,
-            ),
-          ),
-        ),
-      ],
     );
   }
 

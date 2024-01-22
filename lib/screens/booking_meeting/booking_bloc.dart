@@ -14,28 +14,32 @@ enum BookingType {
 }
 
 class BookingBloc extends Bloc<DiscountService> {
+  TextEditingController noteController = TextEditingController();
+  TextEditingController discountController = TextEditingController();
+  ValueNotifier<String> discountErrorMessage = ValueNotifier<String>("");
   ValueNotifier<bool> applyDiscountButton = ValueNotifier<bool>(false);
-  // int? mentorId;
-  // String? mentorSuffixName;
-  // String? mentorFirstName;
-  // String? mentorLastName;
-  // String? mentorProfileImageUrl;
-
+  BookingType bookingType = BookingType.schudule;
+  String? meetingdate;
+  String? meetingtime;
+  String? meetingday;
+  Timing? meetingduration;
+  String currency = "\$";
+  int? mentorId;
+  String? mentorSuffixName;
+  String? mentorFirstName;
+  String? mentorLastName;
+  String? mentorProfileImageUrl;
   String? categoryName;
   String? majorName;
-  Timing? meetingduration;
-  // String? meetingtime;
-  // String? meetingdate;
-  // String? meetingday;
-  // String? meetingcost;
-  // TextEditingController noteController = TextEditingController();
-  // TextEditingController discountController = TextEditingController();
-  // ValueNotifier<String?> discountErrorMessage = ValueNotifier<String?>(null);
-  BookingType bookingType = BookingType.schudule;
+  String? _meetingcost;
+
   final box = Hive.box(DatabaseBoxConstant.userInfo);
 
   ValueNotifier<List<MentorInfoAvaliableResponseData>?> avaliableMentors =
       ValueNotifier<List<MentorInfoAvaliableResponseData>?>(null);
+
+  ValueNotifier<MentorInfoAvaliableResponseData?> selectedMentors =
+      ValueNotifier<MentorInfoAvaliableResponseData?>(null);
 
   void handleReadingArguments(BuildContext context,
       {required Object? arguments}) {
@@ -50,7 +54,7 @@ class BookingBloc extends Bloc<DiscountService> {
         meetingduration = newArguments["meetingduration"] as Timing?;
         _checkingAvaliableMentors(categoryID!, majorID!);
       } else {
-        // mentorProfileImageUrl = newArguments["profileImageUrl"] as String?;
+        mentorProfileImageUrl = newArguments["profileImageUrl"] as String?;
         // mentorSuffixName = newArguments["suffixeName"] as String?;
         // mentorFirstName = newArguments["firstName"] as String?;
         // mentorLastName = newArguments["lastName"] as String?;
@@ -92,6 +96,17 @@ class BookingBloc extends Bloc<DiscountService> {
   //     }
   //   });
   // }
+
+  double calculateMeetingCost() {
+    return 0.0;
+  }
+
+  double calculateTotalAmount() {
+    // double.parse(Currency().getHourRateWithoutCurrency(bloc.meetingcost!)),
+    //                           snapshot == null || snapshot == "error" ? 0 : double.parse(snapshot))
+
+    return 0.0;
+  }
 
   // double calculateTotalAmountWithoutCurrency(double amount, double discount) {
   //   final priceDiscount = amount * discount / 100;
@@ -146,6 +161,19 @@ class BookingBloc extends Bloc<DiscountService> {
   // Future<dynamic> bookMeetingRequest({required AppointmentRequest appointment}) async {
   //   return await locator<AppointmentsService>().bookNewAppointments(appointment: appointment);
   // }
+
+  String meetingDurationParser(Timing duration) {
+    switch (duration) {
+      case Timing.quarterHour:
+        return "15";
+      case Timing.halfHour:
+        return "30";
+      case Timing.threeQuarter:
+        return "45";
+      case Timing.hour:
+        return "60";
+    }
+  }
 
   @override
   onDispose() {

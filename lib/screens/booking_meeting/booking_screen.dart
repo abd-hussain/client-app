@@ -1,15 +1,20 @@
 import 'package:client_app/models/https/mentor_info_avaliable_model.dart';
 import 'package:client_app/screens/booking_meeting/booking_bloc.dart';
-import 'package:client_app/screens/booking_meeting/widgets/mentor_profile_info.dart';
-import 'package:client_app/screens/booking_meeting/widgets/serching_for_mentor.dart';
+import 'package:client_app/screens/booking_meeting/widgets/Instance_booking_view.dart';
+import 'package:client_app/screens/booking_meeting/widgets/bill_details_view.dart';
+import 'package:client_app/screens/booking_meeting/widgets/discount_view.dart';
+import 'package:client_app/shared_widgets/grid_view/item_in_gred.dart';
+import 'package:client_app/shared_widgets/grid_view/meeting_timing_view.dart';
+import 'package:client_app/screens/booking_meeting/widgets/note_view.dart';
+import 'package:client_app/screens/booking_meeting/widgets/schedule_booking_view.dart';
 import 'package:client_app/shared_widgets/custom_appbar.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
-
+import 'package:client_app/utils/constants/database_constant.dart';
+import 'package:client_app/utils/day_time.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-//TODO: handle Timing UTC
 class BookingScreen extends StatefulWidget {
   const BookingScreen({super.key});
 
@@ -34,7 +39,6 @@ class _BookingScreenState extends State<BookingScreen> {
     super.dispose();
   }
 
-  //TODO: Handle This Page
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,149 +49,107 @@ class _BookingScreenState extends State<BookingScreen> {
         child: SafeArea(
           child: SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const InstanceBookingView(),
+                const ScheduleBookingView(),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.only(
+                      top: 16, right: 16, left: 16, bottom: 8),
                   child: CustomText(
-                    title:
-                        "-- ${AppLocalizations.of(context)!.selectmentor} --",
-                    fontSize: 16,
+                    title: AppLocalizations.of(context)!.appointmentdetails,
+                    fontSize: 12,
                     textColor: const Color(0xff554d56),
                   ),
                 ),
-                ValueListenableBuilder<List<MentorInfoAvaliableResponseData>?>(
-                    valueListenable: bloc.avaliableMentors,
+                ValueListenableBuilder<MentorInfoAvaliableResponseData?>(
+                    valueListenable: bloc.selectedMentors,
                     builder: (context, snapshot, child) {
-                      if (snapshot == null) {
-                        return const SearchForMentorView();
-                      } else {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SizedBox(
-                            height: 190,
-                            child: ListView.builder(
-                                itemCount: snapshot.length,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (ctx, index) {
-                                  return SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width - 100,
-                                    child: FoundedMentorInfoView(
-                                      data: snapshot[index],
-                                      onPress: () {},
-                                    ),
-                                  );
-                                }),
-                          ),
-                        );
-                      }
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 16, right: 16),
+                        child: ItemInGrid(
+                          title: AppLocalizations.of(context)!.meetingdate,
+                          value: bloc.meetingdate,
+                        ),
+                      );
                     }),
-
-                const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CustomText(
-                    title:
-                        "-- ${AppLocalizations.of(context)!.appointmentdetails} --",
-                    fontSize: 16,
-                    textColor: const Color(0xff554d56),
-                  ),
-                ),
-                // ValueListenableBuilder<AvaliableMentorStatus>(
-                //     valueListenable: bloc.checkingAvaliableMentors,
-                //     builder: (context, snapshot, child) {
-                //       return AppointmentDetailsView(
-                //         title: AppLocalizations.of(context)!.meetingdate,
-                //         desc: bloc.bookingType == BookingType.schudule || snapshot == AvaliableMentorStatus.found
-                //             ? bloc.meetingdate!
-                //             : "-----",
-                //       );
-                //     }),
-                // ValueListenableBuilder<AvaliableMentorStatus>(
-                //     valueListenable: bloc.checkingAvaliableMentors,
-                //     builder: (context, snapshot, child) {
-                //       return AppointmentDetailsView(
-                //         title: AppLocalizations.of(context)!.meetingday,
-                //         desc: bloc.bookingType == BookingType.schudule || snapshot == AvaliableMentorStatus.found
-                //             ? bloc.box.get(DatabaseFieldConstant.language) == "en"
-                //                 ? bloc.meetingday!
-                //                 : DayTime().convertDayToArabic(bloc.meetingday!)
-                //             : "-----",
-                //       );
-                //     }),
-                // ValueListenableBuilder<AvaliableMentorStatus>(
-                //     valueListenable: bloc.checkingAvaliableMentors,
-                //     builder: (context, snapshot, child) {
-                //       return AppointmentDetailsView(
-                //         title: AppLocalizations.of(context)!.meetingtime,
-                //         desc: bloc.bookingType == BookingType.schudule || snapshot == AvaliableMentorStatus.found
-                //             ? bloc.meetingtime!
-                //             : "-----",
-                //       );
-                //     }),
-                // AppointmentDetailsView(
-                //   title: AppLocalizations.of(context)!.meetingduration,
-                //   desc: "${bloc.meetingduration!} ${AppLocalizations.of(context)!.min}",
-                // ),
-                // Padding(
-                //   padding: const EdgeInsets.only(right: 16, left: 16),
-                //   child: Container(height: 0.5, color: const Color(0xff444444)),
-                // ),
-                // NoteView(bloc: bloc),
-                // Padding(
-                //   padding: const EdgeInsets.only(right: 16, left: 16),
-                //   child: Container(height: 0.5, color: const Color(0xff444444)),
-                // ),
-                // DiscountView(bloc: bloc),
+                ValueListenableBuilder<MentorInfoAvaliableResponseData?>(
+                    valueListenable: bloc.selectedMentors,
+                    builder: (context, snapshot, child) {
+                      return MeetingTimingView(
+                        date: bloc.meetingday != null
+                            ? bloc.box.get(DatabaseFieldConstant.language) ==
+                                    "en"
+                                ? bloc.meetingday!
+                                : DayTime().convertDayToArabic(bloc.meetingday!)
+                            : null,
+                        time: bloc.meetingtime,
+                        duration: bloc.meetingduration != null
+                            ? bloc.meetingDurationParser(bloc.meetingduration!)
+                            : null,
+                        type: bloc.bookingType,
+                      );
+                    }),
                 Padding(
                   padding: const EdgeInsets.only(right: 16, left: 16),
                   child: Container(height: 0.5, color: const Color(0xff444444)),
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.all(8),
-                //   child: CustomText(
-                //     title: "-- ${AppLocalizations.of(context)!.billdetails} --",
-                //     fontSize: 16,
-                //     textColor: const Color(0xff554d56),
-                //   ),
-                // ),
-                // ValueListenableBuilder<AvaliableMentorStatus>(
-                //     valueListenable: bloc.checkingAvaliableMentors,
-                //     builder: (context, snapshot, child) {
-                //       return AppointmentDetailsView(
-                //         title: AppLocalizations.of(context)!.meetingcost,
-                //         desc: bloc.meetingcost!,
-                //       );
-                //     }),
-                // ValueListenableBuilder<AvaliableMentorStatus>(
-                //     valueListenable: bloc.checkingAvaliableMentors,
-                //     builder: (context, snapshot, child) {
-                //       return AppointmentDetailsView(
-                //         title: AppLocalizations.of(context)!.servicefee,
-                //         desc: "\$0.0",
-                //       );
-                //     }),
-                // ValueListenableBuilder<String?>(
-                //     valueListenable: bloc.discountErrorMessage,
-                //     builder: (context, snapshot, child) {
-                //       return AppointmentDetailsView(
-                //         title: AppLocalizations.of(context)!.discount,
-                //         desc: snapshot == null || snapshot == "error" ? "0 %" : "$snapshot %",
-                //       );
-                //     }),
-                // ValueListenableBuilder<String?>(
-                //     valueListenable: bloc.discountErrorMessage,
-                //     builder: (context, snapshot, child) {
-                //       return AppointmentDetailsView(
-                //           title: AppLocalizations.of(context)!.totalamount,
-                //           desc: bloc.calculateTotalAmount(
-                //               double.parse(Currency().getHourRateWithoutCurrency(bloc.meetingcost!)),
-                //               snapshot == null || snapshot == "error" ? 0 : double.parse(snapshot)));
-                //     }),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 16, right: 16, left: 16, bottom: 8),
+                  child: CustomText(
+                    title: AppLocalizations.of(context)!.writenoteformentor,
+                    fontSize: 12,
+                    textColor: const Color(0xff554d56),
+                  ),
+                ),
+                NoteView(controller: bloc.noteController),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+                  child: CustomText(
+                    title: AppLocalizations.of(context)!
+                        .writenoteformentorsmallMessage,
+                    fontSize: 12,
+                    textColor: const Color(0xff554d56),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 16, left: 16),
+                  child: Container(height: 0.5, color: const Color(0xff444444)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 16, right: 16, left: 16, bottom: 8),
+                  child: CustomText(
+                    title: AppLocalizations.of(context)!.billdetails,
+                    fontSize: 12,
+                    textColor: const Color(0xff554d56),
+                  ),
+                ),
+                BillDetailsView(
+                  currency: bloc.currency,
+                  meetingCostAmount: bloc.calculateMeetingCost(),
+                  totalAmount: bloc.calculateTotalAmount(),
+                ),
+                DiscountView(
+                  controller: bloc.discountController,
+                  discountErrorMessage: bloc.discountErrorMessage,
+                  applyDiscountButton: bloc.applyDiscountButton,
+                  applyDiscountButtonCallBack: () {
+                    //TODO
+                    // bloc.verifyCode();
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 16, left: 16),
+                  child: Container(height: 0.5, color: const Color(0xff444444)),
+                ),
                 CustomButton(
                   enableButton: true,
                   buttonTitle: AppLocalizations.of(context)!.pay,
                   onTap: () async {
+                    //TODO: handle Timing UTC
                     // final bottomSheet = PaymentBottomSheetsUtil(
                     //     context: context,
                     //     language: bloc.box.get(DatabaseFieldConstant.language),
