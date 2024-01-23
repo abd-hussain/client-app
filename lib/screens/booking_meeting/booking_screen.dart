@@ -10,8 +10,7 @@ import 'package:client_app/screens/booking_meeting/widgets/schedule_booking_view
 import 'package:client_app/shared_widgets/custom_appbar.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
-import 'package:client_app/utils/constants/database_constant.dart';
-import 'package:client_app/utils/day_time.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -27,8 +26,7 @@ class _BookingScreenState extends State<BookingScreen> {
 
   @override
   void didChangeDependencies() {
-    bloc.handleReadingArguments(context,
-        arguments: ModalRoute.of(context)!.settings.arguments);
+    bloc.handleReadingArguments(context, arguments: ModalRoute.of(context)!.settings.arguments);
     bloc.handleLisinnerOfDiscountController();
     super.didChangeDependencies();
   }
@@ -51,12 +49,25 @@ class _BookingScreenState extends State<BookingScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                //TODO: Handle this Two View
-                const InstanceBookingView(),
-                const ScheduleBookingView(),
+                ValueListenableBuilder<BookingType>(
+                    valueListenable: bloc.bookingType,
+                    builder: (context, snapshot, child) {
+                      if (snapshot == BookingType.schudule) {
+                        return ScheduleBookingView(
+                          profileImg: bloc.scheduleMentorProfileImageUrl,
+                          flagImage: bloc.scheduleMentorCountryFlag,
+                          gender: bloc.scheduleMentorGender,
+                          firstName: bloc.scheduleMentorFirstName,
+                          lastName: bloc.scheduleMentorLastName,
+                          suffixName: bloc.scheduleMentorSuffixName,
+                          categoryName: bloc.categoryName,
+                        );
+                      } else {
+                        return const InstanceBookingView();
+                      }
+                    }),
                 Padding(
-                  padding: const EdgeInsets.only(
-                      top: 16, right: 16, left: 16, bottom: 8),
+                  padding: const EdgeInsets.only(right: 16, left: 16, bottom: 8),
                   child: CustomText(
                     title: AppLocalizations.of(context)!.appointmentdetails,
                     fontSize: 12,
@@ -78,17 +89,11 @@ class _BookingScreenState extends State<BookingScreen> {
                     valueListenable: bloc.selectedMentors,
                     builder: (context, snapshot, child) {
                       return MeetingTimingView(
-                        date: bloc.meetingday != null
-                            ? bloc.box.get(DatabaseFieldConstant.language) ==
-                                    "en"
-                                ? bloc.meetingday!
-                                : DayTime().convertDayToArabic(bloc.meetingday!)
-                            : null,
+                        date: bloc.meetingDay(),
                         time: bloc.meetingtime,
-                        duration: bloc.meetingduration != null
-                            ? bloc.meetingDurationParser(bloc.meetingduration!)
-                            : null,
-                        type: bloc.bookingType,
+                        duration:
+                            bloc.meetingduration != null ? bloc.meetingDurationParser(bloc.meetingduration!) : null,
+                        type: bloc.bookingType.value,
                       );
                     }),
                 Padding(
@@ -96,8 +101,7 @@ class _BookingScreenState extends State<BookingScreen> {
                   child: Container(height: 0.5, color: const Color(0xff444444)),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(
-                      top: 16, right: 16, left: 16, bottom: 8),
+                  padding: const EdgeInsets.only(top: 16, right: 16, left: 16, bottom: 8),
                   child: CustomText(
                     title: AppLocalizations.of(context)!.writenoteformentor,
                     fontSize: 12,
@@ -106,11 +110,9 @@ class _BookingScreenState extends State<BookingScreen> {
                 ),
                 NoteView(controller: bloc.noteController),
                 Padding(
-                  padding:
-                      const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+                  padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
                   child: CustomText(
-                    title: AppLocalizations.of(context)!
-                        .writenoteformentorsmallMessage,
+                    title: AppLocalizations.of(context)!.writenoteformentorsmallMessage,
                     fontSize: 12,
                     textColor: const Color(0xff554d56),
                   ),
@@ -120,8 +122,7 @@ class _BookingScreenState extends State<BookingScreen> {
                   child: Container(height: 0.5, color: const Color(0xff444444)),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(
-                      top: 16, right: 16, left: 16, bottom: 8),
+                  padding: const EdgeInsets.only(top: 16, right: 16, left: 16, bottom: 8),
                   child: CustomText(
                     title: AppLocalizations.of(context)!.billdetails,
                     fontSize: 12,
@@ -132,11 +133,10 @@ class _BookingScreenState extends State<BookingScreen> {
                     valueListenable: bloc.discountErrorMessage,
                     builder: (context, discountErrorsnapshot, child) {
                       return BillDetailsView(
-                        currency: bloc.currency,
+                        currency: bloc.getCurrency(),
                         meetingCostAmount: bloc.calculateMeetingCost(),
                         totalAmount: bloc.calculateTotalAmount(),
-                        discountPercent: bloc
-                            .calculateDiscountPercent(discountErrorsnapshot),
+                        discountPercent: bloc.calculateDiscountPercent(discountErrorsnapshot),
                       );
                     }),
                 const SizedBox(height: 8),

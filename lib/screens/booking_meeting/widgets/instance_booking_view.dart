@@ -1,11 +1,12 @@
+import 'package:client_app/screens/booking_meeting/widgets/serching_for_mentor.dart';
 import 'package:flutter/material.dart';
 
 class InstanceBookingView extends StatelessWidget {
   const InstanceBookingView({super.key});
-
+  //TODO: Handle this Two View
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const SearchForMentorView();
   }
 }
 

@@ -33,14 +33,11 @@ class _TutorialsScreenState extends State<TutorialsScreen> {
   }
 
   void extractArguments(BuildContext context) {
-    final arguments =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
+    final arguments = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
     if (arguments != null) {
       openFrom = arguments["openFrom"] as TutorialOpenFrom;
     }
   }
-
-  //TODO: put proper images and description
 
   @override
   Widget build(BuildContext context) {
@@ -52,19 +49,23 @@ class _TutorialsScreenState extends State<TutorialsScreen> {
             children: [
               TutView(
                 title: AppLocalizations.of(context)!.tutorial1,
-                image: "assets/images/login_4.png",
+                image: "assets/images/tutorials/1.png",
               ),
               TutView(
                 title: AppLocalizations.of(context)!.tutorial2,
-                image: "assets/images/login_4.png",
+                image: "assets/images/tutorials/2.png",
               ),
               TutView(
                 title: AppLocalizations.of(context)!.tutorial3,
-                image: "assets/images/login_4.png",
+                image: "assets/images/tutorials/3.png",
               ),
               TutView(
                 title: AppLocalizations.of(context)!.tutorial4,
-                image: "assets/images/login_4.png",
+                image: "assets/images/tutorials/4.png",
+              ),
+              TutView(
+                title: AppLocalizations.of(context)!.tutorial5,
+                image: "assets/images/tutorials/5.png",
               ),
             ],
           ),
@@ -89,9 +90,7 @@ class _TutorialsScreenState extends State<TutorialsScreen> {
                   skipPressed: () {
                     if (openFrom == TutorialOpenFrom.firstInstall) {
                       Navigator.of(context, rootNavigator: true)
-                          .pushNamedAndRemoveUntil(
-                              RoutesConstants.mainContainer,
-                              (Route<dynamic> route) => false);
+                          .pushNamedAndRemoveUntil(RoutesConstants.mainContainer, (Route<dynamic> route) => false);
                     } else {
                       Navigator.pop(context);
                     }

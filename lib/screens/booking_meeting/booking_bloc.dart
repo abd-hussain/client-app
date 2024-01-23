@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:client_app/locator.dart';
 import 'package:client_app/models/https/mentor_info_avaliable_model.dart';
 import 'package:client_app/sevices/discount_service.dart';
@@ -18,20 +20,28 @@ class BookingBloc extends Bloc<DiscountService> {
   TextEditingController discountController = TextEditingController();
   ValueNotifier<String> discountErrorMessage = ValueNotifier<String>("");
   ValueNotifier<bool> applyDiscountButton = ValueNotifier<bool>(false);
-  BookingType bookingType = BookingType.schudule;
+
+  String? scheduleMentorProfileImageUrl;
+  String? scheduleMentorSuffixName;
+  String? scheduleMentorFirstName;
+  String? scheduleMentorLastName;
+  int? scheduleMentorId;
+  Double? scheduleMentorHourRate;
+  String? scheduleMentorCurrency;
+  String? scheduleMentorGender;
+  String? scheduleMentorCountryName;
+  String? scheduleMentorCountryFlag;
+  DateTime? scheduleMentorMeetingdate;
+  int? scheduleMentorMeetingtime;
+
+  int? categoryID;
+  String? categoryName;
+  int? majorID;
+  String? majorName;
+  Timing? meetingduration;
+
   String? meetingdate;
   String? meetingtime;
-  String? meetingday;
-  Timing? meetingduration;
-  String currency = "\$";
-  int? mentorId;
-  String? mentorSuffixName;
-  String? mentorFirstName;
-  String? mentorLastName;
-  String? mentorProfileImageUrl;
-  String? categoryName;
-  String? majorName;
-  String? _meetingcost;
 
   final box = Hive.box(DatabaseBoxConstant.userInfo);
 
@@ -41,30 +51,34 @@ class BookingBloc extends Bloc<DiscountService> {
   ValueNotifier<MentorInfoAvaliableResponseData?> selectedMentors =
       ValueNotifier<MentorInfoAvaliableResponseData?>(null);
 
-  void handleReadingArguments(BuildContext context,
-      {required Object? arguments}) {
+  ValueNotifier<BookingType> bookingType = ValueNotifier<BookingType>(BookingType.schudule);
+
+  void handleReadingArguments(BuildContext context, {required Object? arguments}) {
     if (arguments != null) {
       final newArguments = arguments as Map<String, dynamic>;
-      bookingType = newArguments["bookingType"] as BookingType;
-      if (bookingType == BookingType.instant) {
-        int? categoryID = newArguments["categoryID"] as int?;
-        categoryName = newArguments["categoryName"] as String?;
-        int? majorID = newArguments["majorID"] as int?;
-        majorName = newArguments["majorName"] as String?;
-        meetingduration = newArguments["meetingduration"] as Timing?;
+      bookingType.value = newArguments["bookingType"] as BookingType;
+      categoryID = newArguments["categoryID"] as int?;
+      categoryName = newArguments["categoryName"] as String?;
+      meetingduration = newArguments["meetingduration"] as Timing?;
+      majorName = newArguments["majorName"] as String?;
+      majorID = newArguments["majorID"] as int?;
+
+      if (bookingType.value == BookingType.instant) {
         _checkingAvaliableMentors(categoryID!, majorID!);
       } else {
-        mentorProfileImageUrl = newArguments["profileImageUrl"] as String?;
-        // mentorSuffixName = newArguments["suffixeName"] as String?;
-        // mentorFirstName = newArguments["firstName"] as String?;
-        // mentorLastName = newArguments["lastName"] as String?;
-        // mentorId = newArguments["mentor_id"] as int?;
-        // categoryName = newArguments["categoryName"] as String?;
+        scheduleMentorId = newArguments["mentor_id"] as int?;
+        scheduleMentorProfileImageUrl = newArguments["profileImageUrl"] as String? ?? "";
+        scheduleMentorSuffixName = newArguments["suffixeName"] as String?;
+        scheduleMentorFirstName = newArguments["firstName"] as String?;
+        scheduleMentorLastName = newArguments["lastName"] as String?;
+        scheduleMentorHourRate = newArguments["hourRate"] as Double?;
+        scheduleMentorCurrency = newArguments["currency"] as String?;
+        scheduleMentorGender = newArguments["gender"] as String?;
+        scheduleMentorCountryName = newArguments["countryName"] as String?;
+        scheduleMentorCountryFlag = newArguments["countryFlag"] as String?;
+        scheduleMentorMeetingdate = newArguments["meetingDate"] as DateTime?;
+        scheduleMentorMeetingtime = newArguments["meetingTime"] as int?;
 
-        // meetingtime = newArguments["meetingtime"] as String?;
-        // meetingdate = newArguments["meetingdate"] as String?;
-        // meetingday = newArguments["meetingday"] as String?;
-        // meetingcost = newArguments["meetingcost"] as String?;
         // meetingcost ??= Currency().calculateHourRate(
         //     50,
         //     meetingduration == "60"
@@ -88,6 +102,24 @@ class BookingBloc extends Bloc<DiscountService> {
     return 0.0;
   }
 
+  String? meetingDay() {
+    // return meetingday != null
+    //     ? box.get(DatabaseFieldConstant.language) == "en"
+    //         ? meetingday!
+    //         : DayTime().convertDayToArabic(meetingday!)
+    //     : null;
+    return null;
+  }
+
+  String getCurrency() {
+    // return meetingday != null
+    //     ? box.get(DatabaseFieldConstant.language) == "en"
+    //         ? meetingday!
+    //         : DayTime().convertDayToArabic(meetingday!)
+    //     : null;
+    return "\$";
+  }
+
   // double calculateTotalAmountWithoutCurrency(double amount, double discount) {
   //   final priceDiscount = amount * discount / 100;
   //   return amount - priceDiscount;
@@ -104,9 +136,7 @@ class BookingBloc extends Bloc<DiscountService> {
   // }
 
   _checkingAvaliableMentors(int catID, int majorID) {
-    locator<MentorService>()
-        .getMentorAvaliable(categoryID: catID, majorID: majorID)
-        .then((value) {
+    locator<MentorService>().getMentorAvaliable(categoryID: catID, majorID: majorID).then((value) {
       if (value.data != null) {
         avaliableMentors.value = value.data;
         // mentorProfileImageUrl = value.data!.profileImg;
@@ -189,4 +219,6 @@ class BookingBloc extends Bloc<DiscountService> {
   onDispose() {
     applyDiscountButton.dispose();
   }
+
+  getMeetingDay() {}
 }

@@ -67,8 +67,7 @@ class MentorProfileFooterView extends StatelessWidget {
         child: Row(
           children: [
             CustomText(
-              title:
-                  Currency().calculateHourRate(hourRate, Timing.halfHour, "JD"),
+              title: Currency().calculateHourRate(hourRate, Timing.halfHour, "JD"),
               fontSize: 18,
               fontWeight: FontWeight.bold,
               textColor: const Color(0xff034061),
@@ -94,8 +93,7 @@ class MentorProfileFooterView extends StatelessWidget {
               buttonTitle: AppLocalizations.of(context)!.booknow,
               onTap: () async {
                 if (isUserLoggedin) {
-                  await SchaduleBookingBottomSheetsUtil()
-                      .bookMeetingBottomSheet(
+                  await SchaduleBookingBottomSheetsUtil().bookMeetingBottomSheet(
                     context: context,
                     hourRate: hourRate,
                     currency: currency,
@@ -128,13 +126,16 @@ class MentorProfileFooterView extends StatelessWidget {
                           "hourRate": hourRate,
                           "currency": currency,
                           "gender": gender,
+                          "categoryID": 0, //TODO
                           "categoryName": categoryName,
+                          "meetingduration": selectedMeetingDuration,
+                          "majorID": selectedMajor.id,
+                          "majorName": selectedMajor.name,
+
                           "countryName": countryName,
                           "countryFlag": countryFlag,
-                          "selectedMajor": selectedMajor,
-                          "selectedMeetingDuration": selectedMeetingDuration,
-                          "selectedMeetingDate": selectedMeetingDate,
-                          "selectedMeetingTime": selectedMeetingTime
+                          "meetingDate": selectedMeetingDate,
+                          "meetingTime": selectedMeetingTime
                         },
                       );
                     },
@@ -142,8 +143,7 @@ class MentorProfileFooterView extends StatelessWidget {
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(AppLocalizations.of(context)!
-                          .youhavetobeloggedintodothat),
+                      content: Text(AppLocalizations.of(context)!.youhavetobeloggedintodothat),
                     ),
                   );
                 }

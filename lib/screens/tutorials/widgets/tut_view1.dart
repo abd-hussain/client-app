@@ -18,8 +18,7 @@ class TutView extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(
-                  top: 50, bottom: 50, left: 16, right: 16),
+              padding: const EdgeInsets.only(top: 50, bottom: 50, left: 16, right: 16),
               child: CustomText(
                 title: title,
                 fontSize: 24,
@@ -29,12 +28,14 @@ class TutView extends StatelessWidget {
                 textColor: const Color(0xff444444),
               ),
             ),
+            Expanded(child: Container()),
             Center(
               child: SizedBox(
-                height: MediaQuery.of(context).size.height - 300,
+                height: 400,
                 child: Image.asset(image),
               ),
             ),
+            const SizedBox(height: 100)
           ],
         ),
       ),
