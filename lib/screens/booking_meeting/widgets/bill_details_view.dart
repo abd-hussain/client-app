@@ -6,38 +6,40 @@ class BillDetailsView extends StatelessWidget {
   final String currency;
   final double meetingCostAmount;
   final double totalAmount;
+  final double discountPercent;
 
   const BillDetailsView(
       {super.key,
       required this.currency,
       required this.meetingCostAmount,
-      required this.totalAmount});
+      required this.totalAmount,
+      required this.discountPercent});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 16, right: 16),
-      child: Column(
+      child: GridView(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: 0,
+          crossAxisSpacing: 8,
+          childAspectRatio: 3.2,
+        ),
         children: [
-          GridView(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 0,
-              crossAxisSpacing: 8,
-              childAspectRatio: 3.2,
-            ),
-            children: [
-              ItemInGrid(
-                title: AppLocalizations.of(context)!.meetingcost,
-                value: "$meetingCostAmount $currency",
-              ),
-              ItemInGrid(
-                title: AppLocalizations.of(context)!.servicefee,
-                value: "0.0 $currency",
-              ),
-            ],
+          ItemInGrid(
+            title: AppLocalizations.of(context)!.meetingcost,
+            value: "$meetingCostAmount $currency",
+          ),
+          ItemInGrid(
+            title: AppLocalizations.of(context)!.discount,
+            value: "$discountPercent %",
+          ),
+          ItemInGrid(
+            title: AppLocalizations.of(context)!.servicefee,
+            value: "0.0 $currency",
           ),
           ItemInGrid(
             title: AppLocalizations.of(context)!.totalamount,

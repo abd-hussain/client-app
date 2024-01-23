@@ -137,6 +137,7 @@
     "apply" : "تطبيق",
     "discountcode" : "كود الخصم",
     "notvaliddiscountcode" : "كود الخصم غير صحيح",
+    "validdiscountcode" : "كود الخصم صحيح",
     "noavaliabletime" : "لا يوجد اوقات متاحة",
     "nocalltoday" : "لا يوجد لديك جلسة اليوم",
     "checkcallfromcalender" : "تحقق من مكالمتك القادمة من شاشة التقويم ، أو احجز مكالمتك الأولى الآن",

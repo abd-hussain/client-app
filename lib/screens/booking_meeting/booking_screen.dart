@@ -1,6 +1,6 @@
 import 'package:client_app/models/https/mentor_info_avaliable_model.dart';
 import 'package:client_app/screens/booking_meeting/booking_bloc.dart';
-import 'package:client_app/screens/booking_meeting/widgets/Instance_booking_view.dart';
+import 'package:client_app/screens/booking_meeting/widgets/instance_booking_view.dart';
 import 'package:client_app/screens/booking_meeting/widgets/bill_details_view.dart';
 import 'package:client_app/screens/booking_meeting/widgets/discount_view.dart';
 import 'package:client_app/shared_widgets/grid_view/item_in_gred.dart';
@@ -29,7 +29,7 @@ class _BookingScreenState extends State<BookingScreen> {
   void didChangeDependencies() {
     bloc.handleReadingArguments(context,
         arguments: ModalRoute.of(context)!.settings.arguments);
-    // bloc.handleLisinnerOfDiscountController();
+    bloc.handleLisinnerOfDiscountController();
     super.didChangeDependencies();
   }
 
@@ -51,6 +51,7 @@ class _BookingScreenState extends State<BookingScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                //TODO: Handle this Two View
                 const InstanceBookingView(),
                 const ScheduleBookingView(),
                 Padding(
@@ -127,28 +128,36 @@ class _BookingScreenState extends State<BookingScreen> {
                     textColor: const Color(0xff554d56),
                   ),
                 ),
-                BillDetailsView(
-                  currency: bloc.currency,
-                  meetingCostAmount: bloc.calculateMeetingCost(),
-                  totalAmount: bloc.calculateTotalAmount(),
-                ),
+                ValueListenableBuilder<String>(
+                    valueListenable: bloc.discountErrorMessage,
+                    builder: (context, discountErrorsnapshot, child) {
+                      return BillDetailsView(
+                        currency: bloc.currency,
+                        meetingCostAmount: bloc.calculateMeetingCost(),
+                        totalAmount: bloc.calculateTotalAmount(),
+                        discountPercent: bloc
+                            .calculateDiscountPercent(discountErrorsnapshot),
+                      );
+                    }),
+                const SizedBox(height: 8),
                 DiscountView(
                   controller: bloc.discountController,
                   discountErrorMessage: bloc.discountErrorMessage,
                   applyDiscountButton: bloc.applyDiscountButton,
                   applyDiscountButtonCallBack: () {
-                    //TODO
-                    // bloc.verifyCode();
+                    bloc.verifyCode();
+                    bloc.applyDiscountButton.value = false;
                   },
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(right: 16, left: 16),
+                  padding: const EdgeInsets.only(right: 16, left: 16, top: 8),
                   child: Container(height: 0.5, color: const Color(0xff444444)),
                 ),
                 CustomButton(
                   enableButton: true,
                   buttonTitle: AppLocalizations.of(context)!.pay,
                   onTap: () async {
+                    //TODO: Handle this Button
                     //TODO: handle Timing UTC
                     // final bottomSheet = PaymentBottomSheetsUtil(
                     //     context: context,

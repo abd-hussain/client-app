@@ -77,26 +77,6 @@ class BookingBloc extends Bloc<DiscountService> {
     }
   }
 
-  // handleLisinnerOfDiscountController() {
-  //   discountController.addListener(() {
-  //     applyDiscountButton.value = false;
-  //     discountErrorMessage.value = null;
-  //     if (discountController.text.length == 6) {
-  //       applyDiscountButton.value = true;
-  //     }
-  //   });
-  // }
-
-  // void verifyCode() {
-  //   service.discount(discountController.text).then((value) {
-  //     if (value.data == null) {
-  //       discountErrorMessage.value = "error";
-  //     } else {
-  //       discountErrorMessage.value = value.data.toString();
-  //     }
-  //   });
-  // }
-
   double calculateMeetingCost() {
     return 0.0;
   }
@@ -161,6 +141,36 @@ class BookingBloc extends Bloc<DiscountService> {
   // Future<dynamic> bookMeetingRequest({required AppointmentRequest appointment}) async {
   //   return await locator<AppointmentsService>().bookNewAppointments(appointment: appointment);
   // }
+
+  handleLisinnerOfDiscountController() {
+    discountController.addListener(() {
+      applyDiscountButton.value = false;
+      discountErrorMessage.value = "";
+      if (discountController.text.length == 6) {
+        applyDiscountButton.value = true;
+      }
+    });
+  }
+
+  void verifyCode() {
+    service.discount(discountController.text).then((value) {
+      if (value.data == null) {
+        discountErrorMessage.value = "error";
+      } else {
+        discountErrorMessage.value = value.data!.percentValue!.toString();
+      }
+    });
+  }
+
+  double calculateDiscountPercent(String snapshot) {
+    if (snapshot == "") {
+      return 0.0;
+    } else if (snapshot == "error") {
+      return 0.0;
+    } else {
+      return double.tryParse(snapshot) ?? 0.0;
+    }
+  }
 
   String meetingDurationParser(Timing duration) {
     switch (duration) {

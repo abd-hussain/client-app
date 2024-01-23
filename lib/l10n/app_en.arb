@@ -137,6 +137,7 @@
     "apply" : "Apply",
     "discountcode" : "Diccount Code",
     "notvaliddiscountcode" : "Code is not valid",
+    "validdiscountcode" : "Code is valid",
     "noavaliabletime" : "No Avaliable Times",
     "nocalltoday" : "You Dont' Have Any Session Today",
     "checkcallfromcalender" : "Check Your upcoming call from the calendar tab, or reserve your first one now",

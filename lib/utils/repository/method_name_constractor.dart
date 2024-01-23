@@ -27,9 +27,9 @@ class MethodNameConstant {
   static const String mentoravaliable = "mentors-details/mentor-available";
   static const String mentorAppointments =
       "client-appointment/specific-mentor-appointments";
+  static const String discount = "discount/";
 
   //TODO: Checked API's
 
   static const String bookAppointment = "client-appointment/book";
-  static const String discount = "discount/";
 }

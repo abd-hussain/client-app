@@ -44,6 +44,9 @@ class DiscountView extends StatelessWidget {
                     controller.text = "";
                   },
                 ),
+                onEditingComplete: () {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
               ),
             ),
             ValueListenableBuilder<String>(
@@ -57,9 +60,11 @@ class DiscountView extends StatelessWidget {
                             title: snapshot == "error"
                                 ? AppLocalizations.of(context)!
                                     .notvaliddiscountcode
-                                : "",
+                                : AppLocalizations.of(context)!
+                                    .validdiscountcode,
                             fontSize: 14,
-                            textColor: Colors.red,
+                            textColor:
+                                snapshot == "error" ? Colors.red : Colors.green,
                           ),
                         )
                       : const SizedBox();
