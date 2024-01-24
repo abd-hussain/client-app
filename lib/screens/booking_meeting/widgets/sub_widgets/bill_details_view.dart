@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BillDetailsView extends StatelessWidget {
-  final String currency;
-  final double meetingCostAmount;
-  final double totalAmount;
-  final double discountPercent;
+  final String? currency;
+  final double? meetingCostAmount;
+  final double? totalAmount;
+  final double? discountPercent;
 
   const BillDetailsView(
       {super.key,
@@ -31,7 +31,7 @@ class BillDetailsView extends StatelessWidget {
         children: [
           ItemInGrid(
             title: AppLocalizations.of(context)!.meetingcost,
-            value: "$meetingCostAmount $currency",
+            value: currency != null ? "$meetingCostAmount $currency" : null,
           ),
           ItemInGrid(
             title: AppLocalizations.of(context)!.discount,
@@ -39,11 +39,11 @@ class BillDetailsView extends StatelessWidget {
           ),
           ItemInGrid(
             title: AppLocalizations.of(context)!.servicefee,
-            value: "0.0 $currency",
+            value: currency != null ? "0.0 $currency" : null,
           ),
           ItemInGrid(
             title: AppLocalizations.of(context)!.totalamount,
-            value: "$totalAmount $currency",
+            value: currency != null ? "$totalAmount $currency" : null,
           ),
         ],
       ),

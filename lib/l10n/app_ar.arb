@@ -171,6 +171,8 @@
     "eventdate" : "التاريخ",
     "eventday" : "اليوم",
     "eventhour" : "الساعة",
+    "within" : "خلال",
+    "hour" : "ساعه",
     "eventDuration" : "المدة",
     "price" : "المبلغ",
     "eventdesc" : "التفاصيل",

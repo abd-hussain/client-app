@@ -14,6 +14,7 @@ import 'package:client_app/utils/enums/loading_status.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 
 class BookingScreen extends StatefulWidget {
   const BookingScreen({super.key});
@@ -27,8 +28,7 @@ class _BookingScreenState extends State<BookingScreen> {
 
   @override
   void didChangeDependencies() {
-    bloc.handleReadingArguments(context,
-        arguments: ModalRoute.of(context)!.settings.arguments);
+    bloc.handleReadingArguments(context, arguments: ModalRoute.of(context)!.settings.arguments);
     bloc.handleLisinnerOfDiscountController();
     super.didChangeDependencies();
   }
@@ -58,7 +58,7 @@ class _BookingScreenState extends State<BookingScreen> {
                         bloc.bookingType == BookingType.schudule
                             ? ScheduleBookingView(
                                 profileImg: bloc.scheduleMentorProfileImageUrl,
-                                flagImage: bloc.scheduleMentorCountryFlag,
+                                flagImage: bloc.mentorCountryFlag,
                                 gender: bloc.scheduleMentorGender,
                                 firstName: bloc.scheduleMentorFirstName,
                                 lastName: bloc.scheduleMentorLastName,
@@ -68,14 +68,24 @@ class _BookingScreenState extends State<BookingScreen> {
                             : InstanceBookingView(
                                 avaliableMentors: bloc.avaliableMentors,
                                 categoryName: bloc.categoryName,
+                                onSelectMentor: (mentorDate) {
+                                  bloc.loadingStatus.value = LoadingStatus.inprogress;
+                                  bloc.mentorId = mentorDate.id;
+                                  bloc.mentorHourRate = mentorDate.hourRate;
+                                  bloc.mentorCurrency = mentorDate.currency;
+                                  bloc.mentorMeetingdate = DateFormat("yyyy-MM-dd").parse(mentorDate.date!);
+                                  bloc.meetingDay = bloc.meetingDayNamed(bloc.mentorMeetingdate);
+                                  bloc.mentorMeetingtime = mentorDate.hour!;
+                                  bloc.meetingFreeCall = false;
+                                  bloc.enablePayButton = true;
+                                  bloc.loadingStatus.value = LoadingStatus.finish;
+                                },
                               ),
                         CallAboutView(majorName: bloc.majorName),
                         Padding(
-                          padding: const EdgeInsets.only(
-                              right: 16, left: 16, bottom: 8),
+                          padding: const EdgeInsets.only(right: 16, left: 16, bottom: 8),
                           child: CustomText(
-                            title: AppLocalizations.of(context)!
-                                .appointmentdetails,
+                            title: AppLocalizations.of(context)!.appointmentdetails,
                             fontSize: 12,
                             textColor: const Color(0xff554d56),
                           ),
@@ -84,54 +94,45 @@ class _BookingScreenState extends State<BookingScreen> {
                           padding: const EdgeInsets.only(left: 16, right: 16),
                           child: ItemInGrid(
                             title: AppLocalizations.of(context)!.meetingdate,
-                            value: bloc
-                                .meetingDate(bloc.scheduleMentorMeetingdate),
+                            value: bloc.meetingDate(bloc.mentorMeetingdate),
                           ),
                         ),
                         MeetingTimingView(
-                          date: bloc.scheduleMeetingDay,
-                          time:
-                              bloc.meetingTime(bloc.scheduleMentorMeetingtime),
-                          duration: bloc.meetingduration != null
-                              ? bloc
-                                  .meetingDurationParser(bloc.meetingduration!)
-                              : null,
+                          date: bloc.meetingDay,
+                          time: bloc.bookingType == BookingType.schudule
+                              ? bloc.meetingTime(bloc.mentorMeetingtime)
+                              : "${AppLocalizations.of(context)!.within} ${bloc.mentorMeetingtime! + 1} ${AppLocalizations.of(context)!.hour}",
+                          duration:
+                              bloc.meetingduration != null ? bloc.meetingDurationParser(bloc.meetingduration!) : null,
                           type: bloc.bookingType,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(right: 16, left: 16),
-                          child: Container(
-                              height: 0.5, color: const Color(0xff444444)),
+                          child: Container(height: 0.5, color: const Color(0xff444444)),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(
-                              top: 16, right: 16, left: 16, bottom: 8),
+                          padding: const EdgeInsets.only(top: 16, right: 16, left: 16, bottom: 8),
                           child: CustomText(
-                            title: AppLocalizations.of(context)!
-                                .writenoteformentor,
+                            title: AppLocalizations.of(context)!.writenoteformentor,
                             fontSize: 12,
                             textColor: const Color(0xff554d56),
                           ),
                         ),
                         NoteView(controller: bloc.noteController),
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 16, right: 16, bottom: 8),
+                          padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
                           child: CustomText(
-                            title: AppLocalizations.of(context)!
-                                .writenoteformentorsmallMessage,
+                            title: AppLocalizations.of(context)!.writenoteformentorsmallMessage,
                             fontSize: 12,
                             textColor: const Color(0xff554d56),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(right: 16, left: 16),
-                          child: Container(
-                              height: 0.5, color: const Color(0xff444444)),
+                          child: Container(height: 0.5, color: const Color(0xff444444)),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(
-                              top: 16, right: 16, left: 16, bottom: 8),
+                          padding: const EdgeInsets.only(top: 16, right: 16, left: 16, bottom: 8),
                           child: CustomText(
                             title: AppLocalizations.of(context)!.billdetails,
                             fontSize: 12,
@@ -142,18 +143,17 @@ class _BookingScreenState extends State<BookingScreen> {
                             valueListenable: bloc.discountErrorMessage,
                             builder: (context, discountErrorsnapshot, child) {
                               return BillDetailsView(
-                                currency: bloc.scheduleMentorCurrency!,
+                                currency: bloc.mentorCurrency,
                                 meetingCostAmount: bloc.calculateMeetingCost(
-                                    hourRate: bloc.scheduleMentorHourRate,
+                                    hourRate: bloc.mentorHourRate,
                                     duration: bloc.meetingduration,
-                                    freeCall: bloc.scheduleMeetingFreeCall),
+                                    freeCall: bloc.meetingFreeCall),
                                 totalAmount: bloc.calculateTotalAmount(
-                                    hourRate: bloc.scheduleMentorHourRate,
+                                    hourRate: bloc.mentorHourRate,
                                     duration: bloc.meetingduration,
                                     discount: discountErrorsnapshot,
-                                    freeCall: bloc.scheduleMeetingFreeCall),
-                                discountPercent: bloc.calculateDiscountPercent(
-                                    discountErrorsnapshot),
+                                    freeCall: bloc.meetingFreeCall),
+                                discountPercent: bloc.calculateDiscountPercent(discountErrorsnapshot),
                               );
                             }),
                         const SizedBox(height: 8),
@@ -167,13 +167,11 @@ class _BookingScreenState extends State<BookingScreen> {
                           },
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(
-                              right: 16, left: 16, top: 8),
-                          child: Container(
-                              height: 0.5, color: const Color(0xff444444)),
+                          padding: const EdgeInsets.only(right: 16, left: 16, top: 8),
+                          child: Container(height: 0.5, color: const Color(0xff444444)),
                         ),
                         CustomButton(
-                          enableButton: true,
+                          enableButton: bloc.enablePayButton,
                           buttonTitle: AppLocalizations.of(context)!.pay,
                           onTap: () async {
                             //TODO: Handle this Button

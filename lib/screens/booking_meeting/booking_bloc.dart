@@ -28,16 +28,16 @@ class BookingBloc extends Bloc<DiscountService> {
   String? scheduleMentorSuffixName;
   String? scheduleMentorFirstName;
   String? scheduleMentorLastName;
-  int? scheduleMentorId;
-  double? scheduleMentorHourRate;
-  String? scheduleMentorCurrency;
+  int? mentorId;
+  double? mentorHourRate;
+  String? mentorCurrency;
   String? scheduleMentorGender;
-  String? scheduleMentorCountryName;
-  String? scheduleMentorCountryFlag;
-  DateTime? scheduleMentorMeetingdate;
-  int? scheduleMentorMeetingtime;
-  String? scheduleMeetingDay;
-  bool scheduleMeetingFreeCall = false;
+  String? mentorCountryName;
+  String? mentorCountryFlag;
+  DateTime? mentorMeetingdate;
+  int? mentorMeetingtime;
+  String? meetingDay;
+  bool meetingFreeCall = false;
 
   int? categoryID;
   String? categoryName;
@@ -47,14 +47,14 @@ class BookingBloc extends Bloc<DiscountService> {
   BookingType? bookingType;
   final box = Hive.box(DatabaseBoxConstant.userInfo);
 
+  bool enablePayButton = false;
+
   ValueNotifier<List<MentorInfoAvaliableResponseData>?> avaliableMentors =
       ValueNotifier<List<MentorInfoAvaliableResponseData>?>(null);
 
-  ValueNotifier<LoadingStatus> loadingStatus =
-      ValueNotifier<LoadingStatus>(LoadingStatus.idle);
+  ValueNotifier<LoadingStatus> loadingStatus = ValueNotifier<LoadingStatus>(LoadingStatus.idle);
 
-  void handleReadingArguments(BuildContext context,
-      {required Object? arguments}) {
+  void handleReadingArguments(BuildContext context, {required Object? arguments}) {
     loadingStatus.value = LoadingStatus.inprogress;
     if (arguments != null) {
       final newArguments = arguments as Map<String, dynamic>;
@@ -68,32 +68,30 @@ class BookingBloc extends Bloc<DiscountService> {
       if (bookingType == BookingType.instant) {
         _checkingAvaliableMentors(categoryID!, majorID!);
       } else {
-        scheduleMentorId = newArguments["mentor_id"] as int?;
-        scheduleMentorProfileImageUrl =
-            newArguments["profileImageUrl"] as String? ?? "";
+        mentorId = newArguments["mentor_id"] as int?;
+        scheduleMentorProfileImageUrl = newArguments["profileImageUrl"] as String? ?? "";
         scheduleMentorSuffixName = newArguments["suffixeName"] as String?;
         scheduleMentorFirstName = newArguments["firstName"] as String?;
         scheduleMentorLastName = newArguments["lastName"] as String?;
-        scheduleMentorHourRate = newArguments["hourRate"] as double?;
-        scheduleMentorCurrency = newArguments["currency"] as String?;
+        mentorHourRate = newArguments["hourRate"] as double?;
+        mentorCurrency = newArguments["currency"] as String?;
         scheduleMentorGender = newArguments["gender"] as String?;
-        scheduleMentorCountryName = newArguments["countryName"] as String?;
-        scheduleMentorCountryFlag = newArguments["countryFlag"] as String?;
-        scheduleMentorMeetingdate = newArguments["meetingDate"] as DateTime?;
-        scheduleMentorMeetingtime = newArguments["meetingTime"] as int?;
-        scheduleMeetingFreeCall = newArguments["freeCall"] as bool;
-        scheduleMeetingDay = _meetingDay(scheduleMentorMeetingdate);
+        mentorCountryName = newArguments["countryName"] as String?;
+        mentorCountryFlag = newArguments["countryFlag"] as String?;
+        mentorMeetingdate = newArguments["meetingDate"] as DateTime?;
+        mentorMeetingtime = newArguments["meetingTime"] as int?;
+        meetingFreeCall = newArguments["freeCall"] as bool;
+        meetingDay = meetingDayNamed(mentorMeetingdate);
+        enablePayButton = true;
         loadingStatus.value = LoadingStatus.finish;
       }
     }
   }
 
-  String? _meetingDay(DateTime? date) {
+  String? meetingDayNamed(DateTime? date) {
     if (date != null) {
       var dayName = DateFormat('EEEE').format(date);
-      return box.get(DatabaseFieldConstant.language) == "en"
-          ? dayName
-          : DayTime().convertDayToArabic(dayName);
+      return box.get(DatabaseFieldConstant.language) == "en" ? dayName : DayTime().convertDayToArabic(dayName);
     }
     return null;
   }
@@ -113,10 +111,7 @@ class BookingBloc extends Bloc<DiscountService> {
     return null;
   }
 
-  double calculateMeetingCost(
-      {required double? hourRate,
-      required Timing? duration,
-      required bool freeCall}) {
+  double? calculateMeetingCost({required double? hourRate, required Timing? duration, required bool freeCall}) {
     if (hourRate == null || duration == null) {
       return 0.0;
     } else {
@@ -139,10 +134,7 @@ class BookingBloc extends Bloc<DiscountService> {
   }
 
   double calculateTotalAmount(
-      {required double? hourRate,
-      required Timing? duration,
-      required String discount,
-      required bool freeCall}) {
+      {required double? hourRate, required Timing? duration, required String discount, required bool freeCall}) {
     if (hourRate == null || duration == null) {
       return 0.0;
     } else {
@@ -172,8 +164,7 @@ class BookingBloc extends Bloc<DiscountService> {
 
         case Timing.threeQuarter:
           if (newDiscount > 0) {
-            return (hourRate - (hourRate / 4)) -
-                ((hourRate - (hourRate / 4)) * (newDiscount / 100));
+            return (hourRate - (hourRate / 4)) - ((hourRate - (hourRate / 4)) * (newDiscount / 100));
           } else {
             return (hourRate - (hourRate / 4));
           }
@@ -189,45 +180,25 @@ class BookingBloc extends Bloc<DiscountService> {
   }
 
   _checkingAvaliableMentors(int catID, int majorID) {
-    locator<MentorService>()
-        .getMentorAvaliable(categoryID: catID, majorID: majorID)
-        .then((value) {
+    locator<MentorService>().getMentorAvaliable(categoryID: catID, majorID: majorID).then((value) {
       if (value.data != null) {
         avaliableMentors.value = value.data;
-        // mentorProfileImageUrl = value.data!.profileImg;
-        // mentorSuffixName = value.data!.suffixeName!;
-        // mentorFirstName = value.data!.firstName!;
-        // mentorLastName = value.data!.lastName!;
-        // mentorId = value.data!.id!;
+        mentorId = value.data![0].id;
+        mentorHourRate = value.data![0].hourRate;
+        mentorCurrency = value.data![0].currency;
+        mentorMeetingdate = DateFormat("yyyy-MM-dd").parse(value.data![0].date!);
+        meetingDay = meetingDayNamed(mentorMeetingdate);
+        mentorMeetingtime = value.data![0].hour!;
+        meetingFreeCall = false;
+        enablePayButton = true;
 
-        // meetingcost = Currency().calculateHourRate(
-        //     value.data!.hourRate!,
-        //     meetingduration == "60"
-        //         ? Timing.hour
-        //         : meetingduration == "45"
-        //             ? Timing.threeQuarter
-        //             : meetingduration == "30"
-        //                 ? Timing.halfHour
-        //                 : Timing.quarterHour,
-        //     "JD");
-
-        // meetingtime = DayTime().convertingTimingToRealTime(value.data!.hour!);
-        // meetingdate = value.data!.date!;
-        // meetingday = value.data!.day!;
-
-        // checkingAvaliableMentors.value = AvaliableMentorStatus.found;
-        // final backup = discountErrorMessage.value;
-        // discountErrorMessage.value = "update";
-        // discountErrorMessage.value = backup;
         loadingStatus.value = LoadingStatus.finish;
       }
     });
   }
 
-  Future<dynamic> bookMeetingRequest(
-      {required AppointmentRequest appointment}) async {
-    return await locator<AppointmentsService>()
-        .bookNewAppointments(appointment: appointment);
+  Future<dynamic> bookMeetingRequest({required AppointmentRequest appointment}) async {
+    return await locator<AppointmentsService>().bookNewAppointments(appointment: appointment);
   }
 
   handleLisinnerOfDiscountController() {

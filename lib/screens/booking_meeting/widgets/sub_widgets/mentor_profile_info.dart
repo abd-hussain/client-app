@@ -9,12 +9,13 @@ import 'package:ionicons/ionicons.dart';
 
 class FoundedMentorInfoView extends StatelessWidget {
   final MentorInfoAvaliableResponseData data;
-
+  final bool selected;
   final Function() onPress;
 
   const FoundedMentorInfoView({
     super.key,
     required this.data,
+    required this.selected,
     required this.onPress,
   });
 
@@ -28,6 +29,10 @@ class FoundedMentorInfoView extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.grey[100],
               borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: selected ? const Color(0xff034061) : const Color(0xffE8E8E8),
+                width: 3,
+              ),
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.3),
@@ -51,13 +56,10 @@ class FoundedMentorInfoView extends StatelessWidget {
                         width: 75,
                         height: 100,
                         child: Center(
-                          child: data.profileImg != null
+                          child: data.profileImg != ""
                               ? FadeInImage(
-                                  placeholder: const AssetImage(
-                                      "assets/images/avatar.jpeg"),
-                                  image: NetworkImage(
-                                      AppConstant.imagesBaseURLForMentors +
-                                          data.profileImg!),
+                                  placeholder: const AssetImage("assets/images/avatar.jpeg"),
+                                  image: NetworkImage(AppConstant.imagesBaseURLForMentors + data.profileImg!),
                                   fit: BoxFit.fill,
                                 )
                               : Image.asset(
@@ -96,11 +98,8 @@ class FoundedMentorInfoView extends StatelessWidget {
                                     width: 20,
                                     height: 20,
                                     fit: BoxFit.cover,
-                                    placeholder: const AssetImage(
-                                        "assets/images/flagPlaceHolderImg.png"),
-                                    image: NetworkImage(
-                                        AppConstant.imagesBaseURLForCountries +
-                                            data.countryFlag!,
+                                    placeholder: const AssetImage("assets/images/flagPlaceHolderImg.png"),
+                                    image: NetworkImage(AppConstant.imagesBaseURLForCountries + data.countryFlag!,
                                         scale: 1)),
                               ),
                               const SizedBox(width: 8),
@@ -139,19 +138,16 @@ class FoundedMentorInfoView extends StatelessWidget {
                                           height: 20,
                                           decoration: BoxDecoration(
                                             color: Colors.grey[200],
-                                            borderRadius:
-                                                BorderRadius.circular(8),
+                                            borderRadius: BorderRadius.circular(8),
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.all(2),
                                             child: Center(
                                               child: CustomText(
-                                                title: data.languages![
-                                                    index], //== "English" ? "E" : "ع",
+                                                title: data.languages![index], //== "English" ? "E" : "ع",
                                                 fontSize: 10,
                                                 fontWeight: FontWeight.w600,
-                                                textColor:
-                                                    const Color(0xff444444),
+                                                textColor: const Color(0xff444444),
                                               ),
                                             ),
                                           ),
@@ -204,18 +200,14 @@ class FoundedMentorInfoView extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CustomText(
-                                  title: Currency().calculateHourRate(
-                                      data.hourRate!,
-                                      Timing.halfHour,
-                                      data.currency!,
-                                      false),
+                                  title: Currency()
+                                      .calculateHourRate(data.hourRate!, Timing.halfHour, data.currency!, false),
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                   textColor: const Color(0xff034061),
                                 ),
                                 CustomText(
-                                  title:
-                                      "30 ${AppLocalizations.of(context)!.min}",
+                                  title: "30 ${AppLocalizations.of(context)!.min}",
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                   textColor: const Color(0xff034061),
