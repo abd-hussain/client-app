@@ -1,8 +1,11 @@
+import 'package:client_app/models/https/mentor_info_avaliable_model.dart';
 import 'package:client_app/screens/booking_meeting/widgets/serching_for_mentor.dart';
 import 'package:flutter/material.dart';
 
 class InstanceBookingView extends StatelessWidget {
-  const InstanceBookingView({super.key});
+  final String? categoryName;
+  final ValueNotifier<List<MentorInfoAvaliableResponseData>?> avaliableMentors;
+  const InstanceBookingView({super.key, required this.avaliableMentors, required this.categoryName});
   //TODO: Handle this Two View
   @override
   Widget build(BuildContext context) {

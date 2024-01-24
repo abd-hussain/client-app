@@ -1,14 +1,16 @@
-import 'dart:ffi';
-
 import 'package:client_app/locator.dart';
+import 'package:client_app/models/https/appointment_request.dart';
 import 'package:client_app/models/https/mentor_info_avaliable_model.dart';
 import 'package:client_app/sevices/discount_service.dart';
 import 'package:client_app/sevices/mentor_service.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/currency.dart';
+import 'package:client_app/utils/day_time.dart';
+import 'package:client_app/utils/enums/loading_status.dart';
 import 'package:client_app/utils/mixins.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
 
 enum BookingType {
   schudule,
@@ -26,44 +28,40 @@ class BookingBloc extends Bloc<DiscountService> {
   String? scheduleMentorFirstName;
   String? scheduleMentorLastName;
   int? scheduleMentorId;
-  Double? scheduleMentorHourRate;
+  double? scheduleMentorHourRate;
   String? scheduleMentorCurrency;
   String? scheduleMentorGender;
   String? scheduleMentorCountryName;
   String? scheduleMentorCountryFlag;
   DateTime? scheduleMentorMeetingdate;
   int? scheduleMentorMeetingtime;
+  String? scheduleMeetingDay;
 
   int? categoryID;
   String? categoryName;
   int? majorID;
   String? majorName;
   Timing? meetingduration;
-
-  String? meetingdate;
-  String? meetingtime;
-
+  BookingType? bookingType;
   final box = Hive.box(DatabaseBoxConstant.userInfo);
 
   ValueNotifier<List<MentorInfoAvaliableResponseData>?> avaliableMentors =
       ValueNotifier<List<MentorInfoAvaliableResponseData>?>(null);
 
-  ValueNotifier<MentorInfoAvaliableResponseData?> selectedMentors =
-      ValueNotifier<MentorInfoAvaliableResponseData?>(null);
-
-  ValueNotifier<BookingType> bookingType = ValueNotifier<BookingType>(BookingType.schudule);
+  ValueNotifier<LoadingStatus> loadingStatus = ValueNotifier<LoadingStatus>(LoadingStatus.idle);
 
   void handleReadingArguments(BuildContext context, {required Object? arguments}) {
+    loadingStatus.value = LoadingStatus.inprogress;
     if (arguments != null) {
       final newArguments = arguments as Map<String, dynamic>;
-      bookingType.value = newArguments["bookingType"] as BookingType;
+      bookingType = newArguments["bookingType"] as BookingType;
       categoryID = newArguments["categoryID"] as int?;
       categoryName = newArguments["categoryName"] as String?;
       meetingduration = newArguments["meetingduration"] as Timing?;
       majorName = newArguments["majorName"] as String?;
       majorID = newArguments["majorID"] as int?;
 
-      if (bookingType.value == BookingType.instant) {
+      if (bookingType == BookingType.instant) {
         _checkingAvaliableMentors(categoryID!, majorID!);
       } else {
         scheduleMentorId = newArguments["mentor_id"] as int?;
@@ -71,13 +69,15 @@ class BookingBloc extends Bloc<DiscountService> {
         scheduleMentorSuffixName = newArguments["suffixeName"] as String?;
         scheduleMentorFirstName = newArguments["firstName"] as String?;
         scheduleMentorLastName = newArguments["lastName"] as String?;
-        scheduleMentorHourRate = newArguments["hourRate"] as Double?;
+        scheduleMentorHourRate = newArguments["hourRate"] as double?;
         scheduleMentorCurrency = newArguments["currency"] as String?;
         scheduleMentorGender = newArguments["gender"] as String?;
         scheduleMentorCountryName = newArguments["countryName"] as String?;
         scheduleMentorCountryFlag = newArguments["countryFlag"] as String?;
         scheduleMentorMeetingdate = newArguments["meetingDate"] as DateTime?;
         scheduleMentorMeetingtime = newArguments["meetingTime"] as int?;
+        scheduleMeetingDay = _meetingDay(scheduleMentorMeetingdate);
+        loadingStatus.value = LoadingStatus.finish;
 
         // meetingcost ??= Currency().calculateHourRate(
         //     50,
@@ -91,49 +91,88 @@ class BookingBloc extends Bloc<DiscountService> {
     }
   }
 
-  double calculateMeetingCost() {
-    return 0.0;
-  }
-
-  double calculateTotalAmount() {
-    // double.parse(Currency().getHourRateWithoutCurrency(bloc.meetingcost!)),
-    //                           snapshot == null || snapshot == "error" ? 0 : double.parse(snapshot))
-
-    return 0.0;
-  }
-
-  String? meetingDay() {
-    // return meetingday != null
-    //     ? box.get(DatabaseFieldConstant.language) == "en"
-    //         ? meetingday!
-    //         : DayTime().convertDayToArabic(meetingday!)
-    //     : null;
+  String? _meetingDay(DateTime? date) {
+    if (date != null) {
+      var dayName = DateFormat('EEEE').format(date);
+      return box.get(DatabaseFieldConstant.language) == "en" ? dayName : DayTime().convertDayToArabic(dayName);
+    }
     return null;
   }
 
-  String getCurrency() {
-    // return meetingday != null
-    //     ? box.get(DatabaseFieldConstant.language) == "en"
-    //         ? meetingday!
-    //         : DayTime().convertDayToArabic(meetingday!)
-    //     : null;
-    return "\$";
+  String? meetingDate(DateTime? date) {
+    if (date != null) {
+      final format = DateFormat('yyyy/MM/dd');
+      return format.format(date);
+    }
+    return null;
   }
 
-  // double calculateTotalAmountWithoutCurrency(double amount, double discount) {
-  //   final priceDiscount = amount * discount / 100;
-  //   return amount - priceDiscount;
-  // }
+  String? meetingTime(int? time) {
+    if (time != null) {
+      return DayTime().convertingTimingWithMinToRealTime(time, 0);
+    }
+    return null;
+  }
 
-  // String calculateTotalAmount(double amount, double discount) {
-  //   return Currency().calculateHourRate(calculateTotalAmountDouble(amount, discount), Timing.hour, "JD");
-  // }
+  double calculateMeetingCost({required double? hourRate, required Timing? duration}) {
+    if (hourRate == null || duration == null) {
+      return 0.0;
+    } else {
+      switch (duration) {
+        case Timing.quarterHour:
+          return (hourRate / 4);
+        case Timing.halfHour:
+          return (hourRate / 2);
+        case Timing.threeQuarter:
+          return (hourRate - (hourRate / 4));
+        case Timing.hour:
+          return hourRate;
+      }
+    }
+  }
 
-  // double calculateTotalAmountDouble(double amount, double discount) {
-  //   final priceDiscount = amount * discount / 100;
-  //   final newAmount = amount - priceDiscount;
-  //   return newAmount;
-  // }
+  double calculateTotalAmount({required double? hourRate, required Timing? duration, required String discount}) {
+    if (hourRate == null || duration == null) {
+      return 0.0;
+    } else {
+      double newDiscount = 0;
+
+      if (discount != "" && discount != "error") {
+        newDiscount = double.parse(discount);
+      }
+
+      print("newDiscount $newDiscount");
+
+      switch (duration) {
+        case Timing.quarterHour:
+          if (newDiscount > 0) {
+            return (hourRate / 4) - ((hourRate / 4) * (newDiscount / 100));
+          } else {
+            return (hourRate / 4);
+          }
+        case Timing.halfHour:
+          if (newDiscount > 0) {
+            return (hourRate / 2) - ((hourRate / 2) * (newDiscount / 100));
+          } else {
+            return (hourRate / 2);
+          }
+
+        case Timing.threeQuarter:
+          if (newDiscount > 0) {
+            return (hourRate - (hourRate / 4)) - ((hourRate - (hourRate / 4)) * (newDiscount / 100));
+          } else {
+            return (hourRate - (hourRate / 4));
+          }
+
+        case Timing.hour:
+          if (newDiscount > 0) {
+            return hourRate - (hourRate * (newDiscount / 100));
+          } else {
+            return hourRate;
+          }
+      }
+    }
+  }
 
   _checkingAvaliableMentors(int catID, int majorID) {
     locator<MentorService>().getMentorAvaliable(categoryID: catID, majorID: majorID).then((value) {
@@ -168,9 +207,10 @@ class BookingBloc extends Bloc<DiscountService> {
     });
   }
 
-  // Future<dynamic> bookMeetingRequest({required AppointmentRequest appointment}) async {
-  //   return await locator<AppointmentsService>().bookNewAppointments(appointment: appointment);
-  // }
+  Future<dynamic> bookMeetingRequest({required AppointmentRequest appointment}) async {
+    //TODO
+    //   return await locator<AppointmentsService>().bookNewAppointments(appointment: appointment);
+  }
 
   handleLisinnerOfDiscountController() {
     discountController.addListener(() {
