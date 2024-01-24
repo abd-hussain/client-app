@@ -4,27 +4,12 @@ import 'package:client_app/shared_widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-enum PaymentFaze {
-  welcoming,
-  apple,
-  google,
-  credit,
-}
+enum PaymentType { apple, google, paypal }
 
-//TODO handle Payment
 class PaymentBottomSheetsUtil {
-  final String totalAmount;
-  final BuildContext context;
-  final String language;
-  const PaymentBottomSheetsUtil({
-    required this.language,
-    required this.totalAmount,
-    required this.context,
-  });
-
   Future paymentBottomSheet({
-    required PaymentFaze faze,
-    required Function() openNext,
+    required BuildContext context,
+    required Function(PaymentType) onSelectionDone,
   }) {
     return showModalBottomSheet(
         isScrollControlled: true,
@@ -36,7 +21,7 @@ class PaymentBottomSheetsUtil {
         enableDrag: true,
         useRootNavigator: true,
         backgroundColor: Colors.white,
-        context: context, //TODO : Payment View
+        context: context,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         builder: (context) {
           return Padding(
@@ -66,10 +51,11 @@ class PaymentBottomSheetsUtil {
                   ],
                 ),
                 const SizedBox(height: 16),
-                faze1View(
-                  openNext: () {
+                mainiew(
+                  context: context,
+                  openNext: (type) {
                     Navigator.pop(context);
-                    openNext();
+                    onSelectionDone(type);
                   },
                 ),
               ],
@@ -78,10 +64,11 @@ class PaymentBottomSheetsUtil {
         });
   }
 
-  Widget faze1View({required Function() openNext}) {
+  Widget mainiew(
+      {required BuildContext context,
+      required Function(PaymentType) openNext}) {
     return Column(
       children: [
-        const SizedBox(height: 8),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
@@ -102,7 +89,7 @@ class PaymentBottomSheetsUtil {
                           desc:
                               "${AppLocalizations.of(context)!.paymentuse} ${AppLocalizations.of(context)!.googlepay}",
                           icon: Icons.payment,
-                          onPress: () => openNext(),
+                          onPress: () => openNext(PaymentType.google),
                         )
                       : rowItem(
                           context: context,
@@ -111,7 +98,7 @@ class PaymentBottomSheetsUtil {
                           desc:
                               "${AppLocalizations.of(context)!.paymentuse} ${AppLocalizations.of(context)!.applypay}",
                           icon: Icons.apple,
-                          onPress: () => openNext(),
+                          onPress: () => openNext(PaymentType.apple),
                         ),
                   const SizedBox(height: 8),
                   Container(height: 1, color: const Color(0xffE8E8E8)),
@@ -123,7 +110,7 @@ class PaymentBottomSheetsUtil {
                     desc:
                         "${AppLocalizations.of(context)!.paymentuse} ${AppLocalizations.of(context)!.paypal}",
                     icon: Icons.paypal,
-                    onPress: () => openNext(),
+                    onPress: () => openNext(PaymentType.paypal),
                   ),
                 ],
               ),
@@ -179,9 +166,7 @@ class PaymentBottomSheetsUtil {
             ],
           ),
           const Expanded(child: SizedBox()),
-          language == "en"
-              ? const Icon(Icons.arrow_left_outlined)
-              : const Icon(Icons.arrow_right_outlined)
+          const Icon(Icons.arrow_right_outlined)
         ],
       ),
     );

@@ -61,65 +61,67 @@ class SchaduleBookingBottomSheetsUtil {
         return Padding(
           padding:
               const EdgeInsets.only(top: 20, left: 16, right: 16, bottom: 20),
-          child: Wrap(children: [
-            Row(
-              children: [
-                const SizedBox(width: 50),
-                const Expanded(child: SizedBox()),
-                CustomText(
-                  title: AppLocalizations.of(context)!.booknow,
-                  textColor: const Color(0xff444444),
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-                const Expanded(child: SizedBox()),
-                IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(Icons.close),
-                ),
-              ],
-            ),
-            ValueListenableBuilder<SchaduleBookingFaze>(
-              valueListenable: registrationFase,
-              builder: (context, snapshotFase, child) {
-                return Column(
-                  children: [
-                    Center(
-                      child: CustomText(
-                        title: faseTitle(snapshotFase),
-                        textColor: const Color(0xff444444),
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+          child: Wrap(
+            children: [
+              Row(
+                children: [
+                  const SizedBox(width: 50),
+                  const Expanded(child: SizedBox()),
+                  CustomText(
+                    title: AppLocalizations.of(context)!.booknow,
+                    textColor: const Color(0xff444444),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  const Expanded(child: SizedBox()),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.close),
+                  ),
+                ],
+              ),
+              ValueListenableBuilder<SchaduleBookingFaze>(
+                valueListenable: registrationFase,
+                builder: (context, snapshotFase, child) {
+                  return Column(
+                    children: [
+                      Center(
+                        child: CustomText(
+                          title: faseTitle(snapshotFase),
+                          textColor: const Color(0xff444444),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    showCorrectViewDependOnFase(
-                      fase: snapshotFase,
-                      context: context,
-                      hourRate: hourRate,
-                      freeCall: freeCall,
-                      listOfMajors: listOfMajors,
-                      currency: currency,
-                      workingHoursSaturday: workingHoursSaturday,
-                      workingHoursSunday: workingHoursSunday,
-                      workingHoursMonday: workingHoursMonday,
-                      workingHoursTuesday: workingHoursTuesday,
-                      workingHoursWednesday: workingHoursWednesday,
-                      workingHoursThursday: workingHoursThursday,
-                      workingHoursFriday: workingHoursFriday,
-                      listOfAppointments: listOfAppointments,
-                      onEndSelection: (major, duration, date, time) {
-                        Navigator.pop(context);
-                        onEndSelection(major, duration, date, time);
-                      },
-                    )
-                  ],
-                );
-              },
-            ),
-          ]),
+                      const SizedBox(height: 8),
+                      showCorrectViewDependOnFase(
+                        fase: snapshotFase,
+                        context: context,
+                        hourRate: hourRate,
+                        freeCall: freeCall,
+                        listOfMajors: listOfMajors,
+                        currency: currency,
+                        workingHoursSaturday: workingHoursSaturday,
+                        workingHoursSunday: workingHoursSunday,
+                        workingHoursMonday: workingHoursMonday,
+                        workingHoursTuesday: workingHoursTuesday,
+                        workingHoursWednesday: workingHoursWednesday,
+                        workingHoursThursday: workingHoursThursday,
+                        workingHoursFriday: workingHoursFriday,
+                        listOfAppointments: listOfAppointments,
+                        onEndSelection: (major, duration, date, time) {
+                          Navigator.pop(context);
+                          onEndSelection(major, duration, date, time);
+                        },
+                      )
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
         );
       },
     );

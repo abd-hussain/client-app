@@ -4,6 +4,7 @@ import 'package:client_app/screens/booking_meeting/widgets/sub_widgets/bill_deta
 import 'package:client_app/screens/booking_meeting/widgets/sub_widgets/call_about_view.dart';
 import 'package:client_app/screens/booking_meeting/widgets/sub_widgets/discount_view.dart';
 import 'package:client_app/screens/booking_meeting/widgets/sub_widgets/note_view.dart';
+import 'package:client_app/shared_widgets/booking/payment_bottom_sheet.dart';
 import 'package:client_app/shared_widgets/grid_view/item_in_gred.dart';
 import 'package:client_app/shared_widgets/grid_view/meeting_timing_view.dart';
 import 'package:client_app/screens/booking_meeting/widgets/schedule_booking_view.dart';
@@ -28,7 +29,8 @@ class _BookingScreenState extends State<BookingScreen> {
 
   @override
   void didChangeDependencies() {
-    bloc.handleReadingArguments(context, arguments: ModalRoute.of(context)!.settings.arguments);
+    bloc.handleReadingArguments(context,
+        arguments: ModalRoute.of(context)!.settings.arguments);
     bloc.handleLisinnerOfDiscountController();
     super.didChangeDependencies();
   }
@@ -69,23 +71,30 @@ class _BookingScreenState extends State<BookingScreen> {
                                 avaliableMentors: bloc.avaliableMentors,
                                 categoryName: bloc.categoryName,
                                 onSelectMentor: (mentorDate) {
-                                  bloc.loadingStatus.value = LoadingStatus.inprogress;
+                                  bloc.loadingStatus.value =
+                                      LoadingStatus.inprogress;
                                   bloc.mentorId = mentorDate.id;
                                   bloc.mentorHourRate = mentorDate.hourRate;
                                   bloc.mentorCurrency = mentorDate.currency;
-                                  bloc.mentorMeetingdate = DateFormat("yyyy-MM-dd").parse(mentorDate.date!);
-                                  bloc.meetingDay = bloc.meetingDayNamed(bloc.mentorMeetingdate);
+                                  bloc.mentorMeetingdate =
+                                      DateFormat("yyyy-MM-dd")
+                                          .parse(mentorDate.date!);
+                                  bloc.meetingDay = bloc
+                                      .meetingDayNamed(bloc.mentorMeetingdate);
                                   bloc.mentorMeetingtime = mentorDate.hour!;
                                   bloc.meetingFreeCall = false;
                                   bloc.enablePayButton = true;
-                                  bloc.loadingStatus.value = LoadingStatus.finish;
+                                  bloc.loadingStatus.value =
+                                      LoadingStatus.finish;
                                 },
                               ),
                         CallAboutView(majorName: bloc.majorName),
                         Padding(
-                          padding: const EdgeInsets.only(right: 16, left: 16, bottom: 8),
+                          padding: const EdgeInsets.only(
+                              right: 16, left: 16, bottom: 8),
                           child: CustomText(
-                            title: AppLocalizations.of(context)!.appointmentdetails,
+                            title: AppLocalizations.of(context)!
+                                .appointmentdetails,
                             fontSize: 12,
                             textColor: const Color(0xff554d56),
                           ),
@@ -102,37 +111,46 @@ class _BookingScreenState extends State<BookingScreen> {
                           time: bloc.bookingType == BookingType.schudule
                               ? bloc.meetingTime(bloc.mentorMeetingtime)
                               : "${AppLocalizations.of(context)!.within} ${bloc.mentorMeetingtime! + 1} ${AppLocalizations.of(context)!.hour}",
-                          duration:
-                              bloc.meetingduration != null ? bloc.meetingDurationParser(bloc.meetingduration!) : null,
+                          duration: bloc.meetingduration != null
+                              ? bloc
+                                  .meetingDurationParser(bloc.meetingduration!)
+                              : null,
                           type: bloc.bookingType,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(right: 16, left: 16),
-                          child: Container(height: 0.5, color: const Color(0xff444444)),
+                          child: Container(
+                              height: 0.5, color: const Color(0xff444444)),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 16, right: 16, left: 16, bottom: 8),
+                          padding: const EdgeInsets.only(
+                              top: 16, right: 16, left: 16, bottom: 8),
                           child: CustomText(
-                            title: AppLocalizations.of(context)!.writenoteformentor,
+                            title: AppLocalizations.of(context)!
+                                .writenoteformentor,
                             fontSize: 12,
                             textColor: const Color(0xff554d56),
                           ),
                         ),
                         NoteView(controller: bloc.noteController),
                         Padding(
-                          padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+                          padding: const EdgeInsets.only(
+                              left: 16, right: 16, bottom: 8),
                           child: CustomText(
-                            title: AppLocalizations.of(context)!.writenoteformentorsmallMessage,
+                            title: AppLocalizations.of(context)!
+                                .writenoteformentorsmallMessage,
                             fontSize: 12,
                             textColor: const Color(0xff554d56),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(right: 16, left: 16),
-                          child: Container(height: 0.5, color: const Color(0xff444444)),
+                          child: Container(
+                              height: 0.5, color: const Color(0xff444444)),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 16, right: 16, left: 16, bottom: 8),
+                          padding: const EdgeInsets.only(
+                              top: 16, right: 16, left: 16, bottom: 8),
                           child: CustomText(
                             title: AppLocalizations.of(context)!.billdetails,
                             fontSize: 12,
@@ -153,7 +171,8 @@ class _BookingScreenState extends State<BookingScreen> {
                                     duration: bloc.meetingduration,
                                     discount: discountErrorsnapshot,
                                     freeCall: bloc.meetingFreeCall),
-                                discountPercent: bloc.calculateDiscountPercent(discountErrorsnapshot),
+                                discountPercent: bloc.calculateDiscountPercent(
+                                    discountErrorsnapshot),
                               );
                             }),
                         const SizedBox(height: 8),
@@ -167,36 +186,34 @@ class _BookingScreenState extends State<BookingScreen> {
                           },
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(right: 16, left: 16, top: 8),
-                          child: Container(height: 0.5, color: const Color(0xff444444)),
+                          padding: const EdgeInsets.only(
+                              right: 16, left: 16, top: 8),
+                          child: Container(
+                              height: 0.5, color: const Color(0xff444444)),
                         ),
                         CustomButton(
                           enableButton: bloc.enablePayButton,
                           buttonTitle: AppLocalizations.of(context)!.pay,
                           onTap: () async {
-                            //TODO: Handle this Button
-                            //TODO: handle Timing UTC
-                            // final bottomSheet = PaymentBottomSheetsUtil(
-                            //     context: context,
-                            //     language: bloc.box.get(DatabaseFieldConstant.language),
-                            //     totalAmount: bloc.calculateTotalAmount(
-                            //         double.parse(Currency().getHourRateWithoutCurrency(bloc.meetingcost!)),
-                            //         bloc.discountErrorMessage.value == null || bloc.discountErrorMessage.value == "error"
-                            //             ? 0
-                            //             : double.parse(bloc.discountErrorMessage.value!)));
-                            // await bottomSheet.paymentBottomSheet(
-                            //     faze: PaymentFaze.welcoming,
-                            //     openNext: () async {
-                            // final parsedFromDate = DateTime.parse(bloc.meetingdate!);
-
-                            // var fromDateTime = DateTime(
-                            //     parsedFromDate.year,
-                            //     parsedFromDate.month,
-                            //     parsedFromDate.day,
-                            //     DayTime().getHourFromTimeString(bloc.meetingtime!),
-                            //     DayTime().getMinFromTimeString(bloc.meetingtime!));
-
-                            // var toDateTime = fromDateTime.add(Duration(minutes: int.parse(bloc.meetingduration!)));
+                            if (bloc.calculateTotalAmountVariable > 0) {
+                              final bottomSheet = PaymentBottomSheetsUtil();
+                              await bottomSheet.paymentBottomSheet(
+                                context: context,
+                                onSelectionDone: (paymentType) {
+                                  switch (paymentType) {
+                                    case PaymentType.apple: //TODO
+                                      break;
+                                    case PaymentType.google: //TODO
+                                      break;
+                                    case PaymentType.paypal: //TODO
+                                      break;
+                                  }
+                                },
+                              );
+                            } else {
+                              //TODO: handle booking request
+                              //TODO: handle Timing UTC
+                            }
 
                             // if (bloc.bookingType == BookingType.schudule) {
                             //   final appointment = AppointmentRequest(
@@ -223,7 +240,7 @@ class _BookingScreenState extends State<BookingScreen> {
                             //         min: toDateTime.minute),
                             //     note: bloc.noteController.text.isEmpty ? null : bloc.noteController.text,
                             //   );
-                            //TODO
+
                             // bloc
                             //     .bookMeetingRequest(appointment: appointment)
                             //     .then((value) {
@@ -273,7 +290,7 @@ class _BookingScreenState extends State<BookingScreen> {
                             //         min: toDateTime.minute),
                             //     note: bloc.noteController.text.isEmpty ? null : bloc.noteController.text,
                             //   );
-                            //TODO
+
                             // bloc.bookMeetingRequest(appointment: appointment).then((value) {
                             //   locator<MainContainerBloc>().getAppointments();
                             //   Navigator.of(context).pop();
