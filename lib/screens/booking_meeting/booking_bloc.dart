@@ -1,6 +1,7 @@
 import 'package:client_app/locator.dart';
 import 'package:client_app/models/https/appointment_request.dart';
 import 'package:client_app/models/https/mentor_info_avaliable_model.dart';
+import 'package:client_app/sevices/appointments_service.dart';
 import 'package:client_app/sevices/discount_service.dart';
 import 'package:client_app/sevices/mentor_service.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
@@ -36,6 +37,7 @@ class BookingBloc extends Bloc<DiscountService> {
   DateTime? scheduleMentorMeetingdate;
   int? scheduleMentorMeetingtime;
   String? scheduleMeetingDay;
+  bool scheduleMeetingFreeCall = false;
 
   int? categoryID;
   String? categoryName;
@@ -79,17 +81,9 @@ class BookingBloc extends Bloc<DiscountService> {
         scheduleMentorCountryFlag = newArguments["countryFlag"] as String?;
         scheduleMentorMeetingdate = newArguments["meetingDate"] as DateTime?;
         scheduleMentorMeetingtime = newArguments["meetingTime"] as int?;
+        scheduleMeetingFreeCall = newArguments["freeCall"] as bool;
         scheduleMeetingDay = _meetingDay(scheduleMentorMeetingdate);
         loadingStatus.value = LoadingStatus.finish;
-
-        // meetingcost ??= Currency().calculateHourRate(
-        //     50,
-        //     meetingduration == "60"
-        //         ? Timing.hour
-        //         : meetingduration == "30"
-        //             ? Timing.halfHour
-        //             : Timing.quarterHour,
-        //     "JD");
       }
     }
   }
@@ -120,13 +114,20 @@ class BookingBloc extends Bloc<DiscountService> {
   }
 
   double calculateMeetingCost(
-      {required double? hourRate, required Timing? duration}) {
+      {required double? hourRate,
+      required Timing? duration,
+      required bool freeCall}) {
     if (hourRate == null || duration == null) {
       return 0.0;
     } else {
       switch (duration) {
         case Timing.quarterHour:
-          return (hourRate / 4);
+          if (freeCall) {
+            return 0.0;
+          } else {
+            return (hourRate / 4);
+          }
+
         case Timing.halfHour:
           return (hourRate / 2);
         case Timing.threeQuarter:
@@ -140,7 +141,8 @@ class BookingBloc extends Bloc<DiscountService> {
   double calculateTotalAmount(
       {required double? hourRate,
       required Timing? duration,
-      required String discount}) {
+      required String discount,
+      required bool freeCall}) {
     if (hourRate == null || duration == null) {
       return 0.0;
     } else {
@@ -150,14 +152,16 @@ class BookingBloc extends Bloc<DiscountService> {
         newDiscount = double.parse(discount);
       }
 
-      print("newDiscount $newDiscount");
-
       switch (duration) {
         case Timing.quarterHour:
-          if (newDiscount > 0) {
-            return (hourRate / 4) - ((hourRate / 4) * (newDiscount / 100));
+          if (freeCall) {
+            return 0.0;
           } else {
-            return (hourRate / 4);
+            if (newDiscount > 0) {
+              return (hourRate / 4) - ((hourRate / 4) * (newDiscount / 100));
+            } else {
+              return (hourRate / 4);
+            }
           }
         case Timing.halfHour:
           if (newDiscount > 0) {
@@ -215,14 +219,15 @@ class BookingBloc extends Bloc<DiscountService> {
         // final backup = discountErrorMessage.value;
         // discountErrorMessage.value = "update";
         // discountErrorMessage.value = backup;
+        loadingStatus.value = LoadingStatus.finish;
       }
     });
   }
 
   Future<dynamic> bookMeetingRequest(
       {required AppointmentRequest appointment}) async {
-    //TODO
-    //   return await locator<AppointmentsService>().bookNewAppointments(appointment: appointment);
+    return await locator<AppointmentsService>()
+        .bookNewAppointments(appointment: appointment);
   }
 
   handleLisinnerOfDiscountController() {

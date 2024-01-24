@@ -24,6 +24,8 @@ class MentorProfileBloc extends Bloc<MentorService> {
   String? bio;
   int? mentorId;
   String? categoryName;
+  int? categoryID;
+
   double? hourRate;
   String? speakingLanguage;
   String? gender;
@@ -98,6 +100,7 @@ class MentorProfileBloc extends Bloc<MentorService> {
         lastName = value.data!.lastName!;
         suffixeName = value.data!.suffixeName!;
         categoryName = value.data!.categoryName;
+        categoryID = value.data!.categoryID;
         totalRate = value.data!.totalRate!;
         hourRate = value.data!.hourRate!;
         bio = value.data!.bio;

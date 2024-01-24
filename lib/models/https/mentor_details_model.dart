@@ -30,6 +30,7 @@ class MentorDetailsResponseData with ModelChecker {
   String? dateOfBirth;
   String? experienceSince;
   String? categoryName;
+  int? categoryID;
   String? country;
   String? countryFlag;
   List<Major>? majors;
@@ -58,6 +59,7 @@ class MentorDetailsResponseData with ModelChecker {
       this.dateOfBirth,
       this.experienceSince,
       this.categoryName,
+      this.categoryID,
       this.country,
       this.countryFlag,
       this.majors,
@@ -86,6 +88,7 @@ class MentorDetailsResponseData with ModelChecker {
     dateOfBirth = convertToString(json['date_of_birth']);
     experienceSince = convertToString(json['experience_since']);
     categoryName = convertToString(json['category_name']);
+    categoryID = json['category_id'];
     country = convertToString(json['country']);
     countryFlag = convertToString(json['country_flag']);
     if (json['major'] != null) {

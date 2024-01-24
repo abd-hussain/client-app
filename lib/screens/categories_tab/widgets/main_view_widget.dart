@@ -368,7 +368,8 @@ class _CategoryMainViewState extends State<CategoryMainView> {
                               title: Currency().calculateHourRate(
                                   data.hourRate!,
                                   Timing.halfHour,
-                                  data.currency!),
+                                  data.currency!,
+                                  false),
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                               textColor: const Color(0xff034061),

@@ -1,5 +1,5 @@
 import 'package:client_app/models/https/mentor_info_avaliable_model.dart';
-import 'package:client_app/screens/booking_meeting/widgets/serching_for_mentor.dart';
+import 'package:client_app/screens/booking_meeting/widgets/sub_widgets/serching_for_mentor.dart';
 import 'package:flutter/material.dart';
 
 class InstanceBookingView extends StatelessWidget {

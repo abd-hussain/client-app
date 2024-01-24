@@ -1,10 +1,11 @@
 import 'package:client_app/screens/booking_meeting/booking_bloc.dart';
 import 'package:client_app/screens/booking_meeting/widgets/instance_booking_view.dart';
-import 'package:client_app/screens/booking_meeting/widgets/bill_details_view.dart';
-import 'package:client_app/screens/booking_meeting/widgets/discount_view.dart';
+import 'package:client_app/screens/booking_meeting/widgets/sub_widgets/bill_details_view.dart';
+import 'package:client_app/screens/booking_meeting/widgets/sub_widgets/call_about_view.dart';
+import 'package:client_app/screens/booking_meeting/widgets/sub_widgets/discount_view.dart';
+import 'package:client_app/screens/booking_meeting/widgets/sub_widgets/note_view.dart';
 import 'package:client_app/shared_widgets/grid_view/item_in_gred.dart';
 import 'package:client_app/shared_widgets/grid_view/meeting_timing_view.dart';
-import 'package:client_app/screens/booking_meeting/widgets/note_view.dart';
 import 'package:client_app/screens/booking_meeting/widgets/schedule_booking_view.dart';
 import 'package:client_app/shared_widgets/custom_appbar.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
@@ -68,6 +69,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                 avaliableMentors: bloc.avaliableMentors,
                                 categoryName: bloc.categoryName,
                               ),
+                        CallAboutView(majorName: bloc.majorName),
                         Padding(
                           padding: const EdgeInsets.only(
                               right: 16, left: 16, bottom: 8),
@@ -143,11 +145,13 @@ class _BookingScreenState extends State<BookingScreen> {
                                 currency: bloc.scheduleMentorCurrency!,
                                 meetingCostAmount: bloc.calculateMeetingCost(
                                     hourRate: bloc.scheduleMentorHourRate,
-                                    duration: bloc.meetingduration),
+                                    duration: bloc.meetingduration,
+                                    freeCall: bloc.scheduleMeetingFreeCall),
                                 totalAmount: bloc.calculateTotalAmount(
                                     hourRate: bloc.scheduleMentorHourRate,
                                     duration: bloc.meetingduration,
-                                    discount: discountErrorsnapshot),
+                                    discount: discountErrorsnapshot,
+                                    freeCall: bloc.scheduleMeetingFreeCall),
                                 discountPercent: bloc.calculateDiscountPercent(
                                     discountErrorsnapshot),
                               );

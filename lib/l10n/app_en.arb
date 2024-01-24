@@ -152,6 +152,7 @@
     "googlepay" : "Google Pay",
     "applypay" : "Apple Pay",
     "creditcard" : "Credit Card",
+    "callabout" : "Call About",
     "meetingwith" : "Meeting with",
     "withword" : "with",
     "remanintime" : "Remaining Time for the Meeting",

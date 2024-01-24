@@ -28,6 +28,7 @@ class SchaduleBookingBottomSheetsUtil {
     required BuildContext context,
     required double hourRate,
     required String currency,
+    required bool freeCall,
     required List<Major> listOfMajors,
     required List<int>? workingHoursSaturday,
     required List<int>? workingHoursSunday,
@@ -98,6 +99,7 @@ class SchaduleBookingBottomSheetsUtil {
                       fase: snapshotFase,
                       context: context,
                       hourRate: hourRate,
+                      freeCall: freeCall,
                       listOfMajors: listOfMajors,
                       currency: currency,
                       workingHoursSaturday: workingHoursSaturday,
@@ -128,6 +130,7 @@ class SchaduleBookingBottomSheetsUtil {
     required List<Major> listOfMajors,
     required double hourRate,
     required String currency,
+    required bool freeCall,
   }) {
     return ValueListenableBuilder<Major?>(
         valueListenable: selectedMajor,
@@ -174,6 +177,7 @@ class SchaduleBookingBottomSheetsUtil {
                     : "",
                 selectedMeetingDuration: null,
                 currency: currency,
+                freeCall: freeCall,
                 hourRate: hourRate,
                 isButtonEnable: selectedMajorSnapshot != null ? true : false,
                 openNext: () {
@@ -189,6 +193,7 @@ class SchaduleBookingBottomSheetsUtil {
     required BuildContext context,
     required double hourRate,
     required String currency,
+    required bool freeCall,
   }) {
     return ValueListenableBuilder<Timing?>(
         valueListenable: selectedMeetingDuration,
@@ -203,7 +208,8 @@ class SchaduleBookingBottomSheetsUtil {
               ),
               const SizedBox(height: 8),
               BookingCell(
-                title: "15 ${AppLocalizations.of(context)!.min}",
+                title:
+                    "15 ${AppLocalizations.of(context)!.min} ${freeCall ? "(${AppLocalizations.of(context)!.free})" : ""}",
                 isSelected: (selectedDurationsSnapshot ?? Timing.hour) ==
                     Timing.quarterHour,
                 onPress: () {
@@ -240,6 +246,7 @@ class SchaduleBookingBottomSheetsUtil {
                 majorName: selectedMajor.value!.name!,
                 selectedMeetingDuration: selectedDurationsSnapshot,
                 hourRate: hourRate,
+                freeCall: freeCall,
                 currency: currency,
                 isButtonEnable:
                     selectedDurationsSnapshot != null ? true : false,
@@ -256,6 +263,7 @@ class SchaduleBookingBottomSheetsUtil {
       {required BuildContext context,
       required double hourRate,
       required String currency,
+      required bool freeCall,
       required List<int>? workingHoursSaturday,
       required List<int>? workingHoursSunday,
       required List<int>? workingHoursMonday,
@@ -323,6 +331,7 @@ class SchaduleBookingBottomSheetsUtil {
                           context: context,
                           hourRate: hourRate,
                           currency: currency,
+                          freeCall: freeCall,
                           isButtonEnable: snapshot2 != null,
                           selectedMeetingDuration:
                               selectedMeetingDuration.value,
@@ -343,6 +352,7 @@ class SchaduleBookingBottomSheetsUtil {
       {required BuildContext context,
       required double hourRate,
       required String currency,
+      required bool freeCall,
       required Function(
         Major selectedMajor,
         Timing selectedMeetingDuration,
@@ -393,6 +403,7 @@ class SchaduleBookingBottomSheetsUtil {
           context: context,
           hourRate: hourRate,
           currency: currency,
+          freeCall: freeCall,
           isButtonEnable: true,
           selectedMeetingDuration: selectedMeetingDuration.value,
           majorName: selectedMajor.value!.name!,
@@ -413,6 +424,7 @@ class SchaduleBookingBottomSheetsUtil {
       {required BuildContext context,
       required bool isButtonEnable,
       required String majorName,
+      required bool freeCall,
       required Timing? selectedMeetingDuration,
       required double hourRate,
       required String currency,
@@ -435,8 +447,8 @@ class SchaduleBookingBottomSheetsUtil {
                   CustomText(
                     title: selectedMeetingDuration == null
                         ? "00 $currency"
-                        : Currency().calculateHourRate(
-                            hourRate, selectedMeetingDuration, currency),
+                        : Currency().calculateHourRate(hourRate,
+                            selectedMeetingDuration, currency, freeCall),
                     textColor: const Color(0xff444444),
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
@@ -519,6 +531,7 @@ class SchaduleBookingBottomSheetsUtil {
       required BuildContext context,
       required double hourRate,
       required String currency,
+      required bool freeCall,
       required List<Major> listOfMajors,
       required List<int>? workingHoursSaturday,
       required List<int>? workingHoursSunday,
@@ -540,15 +553,20 @@ class SchaduleBookingBottomSheetsUtil {
             context: context,
             listOfMajors: listOfMajors,
             hourRate: hourRate,
-            currency: currency);
+            currency: currency,
+            freeCall: freeCall);
       case SchaduleBookingFaze.two:
         return faze2View(
-            context: context, hourRate: hourRate, currency: currency);
+            context: context,
+            hourRate: hourRate,
+            currency: currency,
+            freeCall: freeCall);
       case SchaduleBookingFaze.three:
         return faze3View(
           context: context,
           hourRate: hourRate,
           currency: currency,
+          freeCall: freeCall,
           workingHoursSaturday: workingHoursSaturday,
           workingHoursSunday: workingHoursSunday,
           workingHoursMonday: workingHoursMonday,
@@ -563,6 +581,7 @@ class SchaduleBookingBottomSheetsUtil {
           context: context,
           hourRate: hourRate,
           currency: currency,
+          freeCall: freeCall,
           onEndSelection: (major, duration, date, time) {
             onEndSelection(major, duration, date, time);
           },

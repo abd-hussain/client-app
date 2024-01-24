@@ -18,6 +18,8 @@ class MentorProfileFooterView extends StatelessWidget {
   final String firstName;
   final String lastName;
   final String gender;
+  final bool freeCall;
+  final int categoryID;
   final String countryName;
   final String countryFlag;
   final String profileImageUrl;
@@ -44,6 +46,7 @@ class MentorProfileFooterView extends StatelessWidget {
     required this.countryName,
     required this.countryFlag,
     required this.gender,
+    required this.freeCall,
     required this.listOfMajors,
     required this.categoryName,
     required this.profileImageUrl,
@@ -55,6 +58,7 @@ class MentorProfileFooterView extends StatelessWidget {
     required this.workingHoursThursday,
     required this.workingHoursFriday,
     required this.listOfAppointments,
+    required this.categoryID,
   });
 
   @override
@@ -67,8 +71,8 @@ class MentorProfileFooterView extends StatelessWidget {
         child: Row(
           children: [
             CustomText(
-              title:
-                  Currency().calculateHourRate(hourRate, Timing.halfHour, "JD"),
+              title: Currency().calculateHourRate(
+                  hourRate, Timing.halfHour, currency, false),
               fontSize: 18,
               fontWeight: FontWeight.bold,
               textColor: const Color(0xff034061),
@@ -98,6 +102,7 @@ class MentorProfileFooterView extends StatelessWidget {
                       .bookMeetingBottomSheet(
                     context: context,
                     hourRate: hourRate,
+                    freeCall: freeCall,
                     currency: currency,
                     listOfMajors: listOfMajors,
                     workingHoursSaturday: workingHoursSaturday,
@@ -114,8 +119,6 @@ class MentorProfileFooterView extends StatelessWidget {
                       selectedMeetingDate,
                       selectedMeetingTime,
                     ) {
-                      //TODO: Handle Free Call
-
                       Navigator.of(context, rootNavigator: true).pushNamed(
                         RoutesConstants.bookingScreen,
                         arguments: {
@@ -128,12 +131,12 @@ class MentorProfileFooterView extends StatelessWidget {
                           "hourRate": hourRate,
                           "currency": currency,
                           "gender": gender,
-                          "categoryID": 0, //TODO
+                          "freeCall": freeCall,
+                          "categoryID": categoryID,
                           "categoryName": categoryName,
                           "meetingduration": selectedMeetingDuration,
                           "majorID": selectedMajor.id,
                           "majorName": selectedMajor.name,
-
                           "countryName": countryName,
                           "countryFlag": countryFlag,
                           "meetingDate": selectedMeetingDate,
