@@ -48,9 +48,11 @@ class BookingBloc extends Bloc<DiscountService> {
   ValueNotifier<List<MentorInfoAvaliableResponseData>?> avaliableMentors =
       ValueNotifier<List<MentorInfoAvaliableResponseData>?>(null);
 
-  ValueNotifier<LoadingStatus> loadingStatus = ValueNotifier<LoadingStatus>(LoadingStatus.idle);
+  ValueNotifier<LoadingStatus> loadingStatus =
+      ValueNotifier<LoadingStatus>(LoadingStatus.idle);
 
-  void handleReadingArguments(BuildContext context, {required Object? arguments}) {
+  void handleReadingArguments(BuildContext context,
+      {required Object? arguments}) {
     loadingStatus.value = LoadingStatus.inprogress;
     if (arguments != null) {
       final newArguments = arguments as Map<String, dynamic>;
@@ -65,7 +67,8 @@ class BookingBloc extends Bloc<DiscountService> {
         _checkingAvaliableMentors(categoryID!, majorID!);
       } else {
         scheduleMentorId = newArguments["mentor_id"] as int?;
-        scheduleMentorProfileImageUrl = newArguments["profileImageUrl"] as String? ?? "";
+        scheduleMentorProfileImageUrl =
+            newArguments["profileImageUrl"] as String? ?? "";
         scheduleMentorSuffixName = newArguments["suffixeName"] as String?;
         scheduleMentorFirstName = newArguments["firstName"] as String?;
         scheduleMentorLastName = newArguments["lastName"] as String?;
@@ -94,7 +97,9 @@ class BookingBloc extends Bloc<DiscountService> {
   String? _meetingDay(DateTime? date) {
     if (date != null) {
       var dayName = DateFormat('EEEE').format(date);
-      return box.get(DatabaseFieldConstant.language) == "en" ? dayName : DayTime().convertDayToArabic(dayName);
+      return box.get(DatabaseFieldConstant.language) == "en"
+          ? dayName
+          : DayTime().convertDayToArabic(dayName);
     }
     return null;
   }
@@ -114,7 +119,8 @@ class BookingBloc extends Bloc<DiscountService> {
     return null;
   }
 
-  double calculateMeetingCost({required double? hourRate, required Timing? duration}) {
+  double calculateMeetingCost(
+      {required double? hourRate, required Timing? duration}) {
     if (hourRate == null || duration == null) {
       return 0.0;
     } else {
@@ -131,7 +137,10 @@ class BookingBloc extends Bloc<DiscountService> {
     }
   }
 
-  double calculateTotalAmount({required double? hourRate, required Timing? duration, required String discount}) {
+  double calculateTotalAmount(
+      {required double? hourRate,
+      required Timing? duration,
+      required String discount}) {
     if (hourRate == null || duration == null) {
       return 0.0;
     } else {
@@ -159,7 +168,8 @@ class BookingBloc extends Bloc<DiscountService> {
 
         case Timing.threeQuarter:
           if (newDiscount > 0) {
-            return (hourRate - (hourRate / 4)) - ((hourRate - (hourRate / 4)) * (newDiscount / 100));
+            return (hourRate - (hourRate / 4)) -
+                ((hourRate - (hourRate / 4)) * (newDiscount / 100));
           } else {
             return (hourRate - (hourRate / 4));
           }
@@ -175,7 +185,9 @@ class BookingBloc extends Bloc<DiscountService> {
   }
 
   _checkingAvaliableMentors(int catID, int majorID) {
-    locator<MentorService>().getMentorAvaliable(categoryID: catID, majorID: majorID).then((value) {
+    locator<MentorService>()
+        .getMentorAvaliable(categoryID: catID, majorID: majorID)
+        .then((value) {
       if (value.data != null) {
         avaliableMentors.value = value.data;
         // mentorProfileImageUrl = value.data!.profileImg;
@@ -207,7 +219,8 @@ class BookingBloc extends Bloc<DiscountService> {
     });
   }
 
-  Future<dynamic> bookMeetingRequest({required AppointmentRequest appointment}) async {
+  Future<dynamic> bookMeetingRequest(
+      {required AppointmentRequest appointment}) async {
     //TODO
     //   return await locator<AppointmentsService>().bookNewAppointments(appointment: appointment);
   }

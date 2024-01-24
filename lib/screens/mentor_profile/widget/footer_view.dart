@@ -67,7 +67,8 @@ class MentorProfileFooterView extends StatelessWidget {
         child: Row(
           children: [
             CustomText(
-              title: Currency().calculateHourRate(hourRate, Timing.halfHour, "JD"),
+              title:
+                  Currency().calculateHourRate(hourRate, Timing.halfHour, "JD"),
               fontSize: 18,
               fontWeight: FontWeight.bold,
               textColor: const Color(0xff034061),
@@ -93,7 +94,8 @@ class MentorProfileFooterView extends StatelessWidget {
               buttonTitle: AppLocalizations.of(context)!.booknow,
               onTap: () async {
                 if (isUserLoggedin) {
-                  await SchaduleBookingBottomSheetsUtil().bookMeetingBottomSheet(
+                  await SchaduleBookingBottomSheetsUtil()
+                      .bookMeetingBottomSheet(
                     context: context,
                     hourRate: hourRate,
                     currency: currency,
@@ -143,7 +145,8 @@ class MentorProfileFooterView extends StatelessWidget {
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(AppLocalizations.of(context)!.youhavetobeloggedintodothat),
+                      content: Text(AppLocalizations.of(context)!
+                          .youhavetobeloggedintodothat),
                     ),
                   );
                 }

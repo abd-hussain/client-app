@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 class InstanceBookingView extends StatelessWidget {
   final String? categoryName;
   final ValueNotifier<List<MentorInfoAvaliableResponseData>?> avaliableMentors;
-  const InstanceBookingView({super.key, required this.avaliableMentors, required this.categoryName});
+  const InstanceBookingView(
+      {super.key, required this.avaliableMentors, required this.categoryName});
   //TODO: Handle this Two View
   @override
   Widget build(BuildContext context) {

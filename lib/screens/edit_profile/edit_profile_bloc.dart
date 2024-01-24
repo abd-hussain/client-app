@@ -29,7 +29,8 @@ class EditProfileBloc extends Bloc<AccountService> {
   TextEditingController countryController = TextEditingController();
   TextEditingController referalCodeController = TextEditingController();
 
-  ValueNotifier<LoadingStatus> loadingStatus = ValueNotifier<LoadingStatus>(LoadingStatus.idle);
+  ValueNotifier<LoadingStatus> loadingStatus =
+      ValueNotifier<LoadingStatus>(LoadingStatus.idle);
 
   final box = Hive.box(DatabaseBoxConstant.userInfo);
   List<Country> listOfCountries = [];
@@ -49,11 +50,13 @@ class EditProfileBloc extends Bloc<AccountService> {
         referalCodeController.text = value.data!.invitationCode ?? "";
 
         if (value.data!.gender != null) {
-          genderController.text = GenderFormat().convertIndexToString(context, value.data!.gender!);
+          genderController.text =
+              GenderFormat().convertIndexToString(context, value.data!.gender!);
         }
 
         if (value.data!.countryId != null) {
-          Iterable<Country> country = listOfCountries.where((element) => element.id! == value.data!.countryId!);
+          Iterable<Country> country = listOfCountries
+              .where((element) => element.id! == value.data!.countryId!);
           countryController.text = country.first.name!;
           selectedCountry = country.first;
         }
@@ -79,8 +82,12 @@ class EditProfileBloc extends Bloc<AccountService> {
             Icons.male,
             color: Color(0xff444444),
           )),
-      Gender(name: AppLocalizations.of(context)!.genderfemale, icon: const Icon(Icons.female)),
-      Gender(name: AppLocalizations.of(context)!.genderother, icon: const Icon(Icons.align_horizontal_center))
+      Gender(
+          name: AppLocalizations.of(context)!.genderfemale,
+          icon: const Icon(Icons.female)),
+      Gender(
+          name: AppLocalizations.of(context)!.genderother,
+          icon: const Icon(Icons.align_horizontal_center))
     ];
   }
 
@@ -108,7 +115,8 @@ class EditProfileBloc extends Bloc<AccountService> {
         firstName: firstNameController.text,
         lastName: lastNameController.text,
         email: emailController.text,
-        gender: GenderFormat().convertStringToIndex(context, genderController.text),
+        gender:
+            GenderFormat().convertStringToIndex(context, genderController.text),
         countryId: selectedCountry != null
             ? selectedCountry!.id!
             : int.parse(box.get(DatabaseFieldConstant.selectedCountryId)),
