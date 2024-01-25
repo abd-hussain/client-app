@@ -8,7 +8,9 @@ import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/currency.dart';
 import 'package:client_app/utils/day_time.dart';
 import 'package:client_app/utils/enums/loading_status.dart';
+import 'package:client_app/utils/errors/exceptions.dart';
 import 'package:client_app/utils/mixins.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
@@ -54,6 +56,7 @@ class BookingBloc extends Bloc<DiscountService> {
 
   ValueNotifier<LoadingStatus> loadingStatus =
       ValueNotifier<LoadingStatus>(LoadingStatus.idle);
+  ValueNotifier<String> errorFoundingMentors = ValueNotifier<String>("");
 
   void handleReadingArguments(BuildContext context,
       {required Object? arguments}) {
@@ -205,25 +208,32 @@ class BookingBloc extends Bloc<DiscountService> {
     }
   }
 
-  _checkingAvaliableMentors(int catID, int majorID) {
-    locator<MentorService>()
-        .getMentorAvaliable(categoryID: catID, majorID: majorID)
-        .then((value) {
-      if (value.data != null) {
-        avaliableMentors.value = value.data;
-        mentorId = value.data![0].id;
-        mentorHourRate = value.data![0].hourRate;
-        mentorCurrency = value.data![0].currency;
+  _checkingAvaliableMentors(int catID, int majorID) async {
+    try {
+      var mentors = await locator<MentorService>()
+          .getMentorAvaliable(categoryID: catID, majorID: majorID);
+      if (mentors.data != null) {
+        avaliableMentors.value = mentors.data;
+        mentorId = mentors.data![0].id;
+        mentorHourRate = mentors.data![0].hourRate;
+        mentorCurrency = mentors.data![0].currency;
         mentorMeetingdate =
-            DateFormat("yyyy-MM-dd").parse(value.data![0].date!);
+            DateFormat("yyyy-MM-dd").parse(mentors.data![0].date!);
         meetingDay = meetingDayNamed(mentorMeetingdate);
-        mentorMeetingtime = value.data![0].hour!;
+        mentorMeetingtime = mentors.data![0].hour!;
         meetingFreeCall = false;
         enablePayButton = true;
-
+        errorFoundingMentors.value = "";
         loadingStatus.value = LoadingStatus.finish;
       }
-    });
+    } on DioException catch (e) {
+      final error = e.error as HttpException;
+      errorFoundingMentors.value = error.message.toString();
+      loadingStatus.value = LoadingStatus.finish;
+      // scaffoldMessenger.showSnackBar(
+      //   SnackBar(content: Text(error.message.toString())),
+      // );
+    }
   }
 
   Future<dynamic> bookMeetingRequest(

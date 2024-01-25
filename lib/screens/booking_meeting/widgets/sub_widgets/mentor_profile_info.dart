@@ -153,8 +153,7 @@ class FoundedMentorInfoView extends StatelessWidget {
                                             padding: const EdgeInsets.all(2),
                                             child: Center(
                                               child: CustomText(
-                                                title: data.languages![
-                                                    index], //== "English" ? "E" : "ع",
+                                                title: data.languages![index],
                                                 fontSize: 10,
                                                 fontWeight: FontWeight.w600,
                                                 textColor:

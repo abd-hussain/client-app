@@ -129,6 +129,8 @@
     "payments" : "Payments",
     "within" : "Within",
     "hour" : "Hour",
+    "nothingfoundunderthiscategoryandmajor" : "Sorry, Nothing Found Under this Category and Major",
+    "backtothepreviosscreen" : "Back To the Previous Page",
     "appointmentdetails" : "Appointment Details",
     "billdetails" : "Bill Details",
     "meetingcost" : "Session Cost",

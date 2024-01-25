@@ -31,7 +31,7 @@ class MentorService with Service {
     final response = await repository.callRequest(
       requestType: RequestType.get,
       methodName: MethodNameConstant.mentoravaliable,
-      queryParam: {"catId": categoryID},
+      queryParam: {"catId": categoryID, "majorId": majorID},
     );
 
     return MentorInfoAvaliableResponse.fromJson(response);

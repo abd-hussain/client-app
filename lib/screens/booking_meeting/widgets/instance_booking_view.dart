@@ -49,10 +49,6 @@ class _InstanceBookingViewState extends State<InstanceBookingView> {
                 if (snapshot == null) {
                   return const SearchForMentorView();
                 } else {
-                  // Future.delayed(const Duration(milliseconds: 100), () {
-                  //   widget.onSelectMentor(snapshot[0]);
-                  // });
-
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: SizedBox(

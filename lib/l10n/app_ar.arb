@@ -176,6 +176,8 @@
     "eventDuration" : "المدة",
     "price" : "المبلغ",
     "eventdesc" : "التفاصيل",
+    "nothingfoundunderthiscategoryandmajor" : "عذرًا، لم يتم العثور على أي شيء ضمن هذا التصنيف والاختصاص",
+    "backtothepreviosscreen" : "العودة إلى الصفحة السابقة",
     "eventhowattend" : "كيف احضر",
     "eventhowattenddetails" : "بعد التسجيل بنجاح ، ستتم إضافة هذا الحدث إلى التقويم الخاص بك وستتلقى إشعارًا في يوم الحدث وقبل ساعة واحدة من بدء الحدث",
     "tutorial1" : "احصل على إجابات سريعة من محامين حقيقيين، بسهولة",
