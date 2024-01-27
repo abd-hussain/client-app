@@ -31,7 +31,9 @@ class BillDetailsView extends StatelessWidget {
         children: [
           ItemInGrid(
             title: AppLocalizations.of(context)!.meetingcost,
-            value: currency != null ? "$meetingCostAmount $currency" : null,
+            value: currency != null
+                ? "${meetingCostAmount!.toStringAsFixed(2)} $currency"
+                : null,
           ),
           ItemInGrid(
             title: AppLocalizations.of(context)!.discount,
@@ -39,11 +41,13 @@ class BillDetailsView extends StatelessWidget {
           ),
           ItemInGrid(
             title: AppLocalizations.of(context)!.servicefee,
-            value: currency != null ? "0.0 $currency" : null,
+            value: currency != null ? "0.00 $currency" : null,
           ),
           ItemInGrid(
             title: AppLocalizations.of(context)!.totalamount,
-            value: currency != null ? "$totalAmount $currency" : null,
+            value: currency != null
+                ? "${totalAmount!.toStringAsFixed(2)} $currency"
+                : null,
           ),
         ],
       ),

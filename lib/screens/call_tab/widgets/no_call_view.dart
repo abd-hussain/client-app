@@ -15,13 +15,15 @@ class NoCallView extends StatelessWidget {
   final String language;
   final List<Category> listOfCategories;
   final List<MajorsData> listOfMajors;
+  final Function() refreshThePage;
 
   const NoCallView(
       {required this.isUserLoggedIn,
       required this.language,
       required this.listOfCategories,
       super.key,
-      required this.listOfMajors});
+      required this.listOfMajors,
+      required this.refreshThePage});
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +92,9 @@ class NoCallView extends StatelessWidget {
                             "majorName": major.name,
                             "meetingduration": time,
                           },
-                        );
+                        ).then((value) {
+                          refreshThePage();
+                        });
                       },
                     );
                   } else {

@@ -141,6 +141,11 @@ class _CallScreenState extends State<CallScreen> {
                   language: bloc.box.get(DatabaseFieldConstant.language),
                   listOfCategories: categoriesSnapShot.data ?? [],
                   listOfMajors: majorsSnapShot.data ?? [],
+                  refreshThePage: () {
+                    if (bloc.checkIfUserIsLoggedIn()) {
+                      bloc.getActiveClientAppointments(context);
+                    }
+                  },
                 );
               });
         });

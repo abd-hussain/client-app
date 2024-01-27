@@ -4,20 +4,22 @@ class AppointmentRequest implements Model {
   int mentorId;
   int type;
   bool isFree;
-  String currency;
-  double price;
-  double totalPrice;
-  double mentorHourRate;
-  int discountId;
+  int payment;
   CustomDate dateFrom;
   CustomDate dateTo;
   String? note;
+  int? discountId;
+  int? currencyId;
+  double mentorHourRate;
+  double price;
+  double totalPrice;
 
   AppointmentRequest({
     required this.mentorId,
     required this.type,
     required this.isFree,
-    required this.currency,
+    required this.payment,
+    required this.currencyId,
     required this.price,
     required this.totalPrice,
     required this.mentorHourRate,
@@ -32,14 +34,16 @@ class AppointmentRequest implements Model {
     final Map<String, dynamic> data = {};
     data['mentorId'] = mentorId;
     data['type'] = type;
-    data['isFree'] = isFree;
-    data['currency'] = currency;
-    data['price'] = price;
-    data['totalPrice'] = totalPrice;
-    data['discountId'] = discountId;
+    data['is_free'] = isFree;
+    data['payment'] = payment;
     data['dateFrom'] = dateFrom.toJson();
     data['dateTo'] = dateTo.toJson();
     data['note'] = note;
+    data['discount_id'] = discountId;
+    data['currency_id'] = currencyId;
+    data['mentor_hour_rate'] = mentorHourRate;
+    data['price'] = price;
+    data['total_price'] = totalPrice;
     return data;
   }
 }

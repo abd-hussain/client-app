@@ -20,6 +20,8 @@ enum BookingType {
   instant,
 }
 
+enum PaymentTypeMethod { apple, google, paypal, freeCall }
+
 class BookingBloc extends Bloc<DiscountService> {
   TextEditingController noteController = TextEditingController();
   TextEditingController discountController = TextEditingController();
@@ -119,27 +121,34 @@ class BookingBloc extends Bloc<DiscountService> {
     return null;
   }
 
+  double calculateMeetingCostAmountVariable = 0.0;
   double? calculateMeetingCost(
       {required double? hourRate,
       required Timing? duration,
       required bool freeCall}) {
     if (hourRate == null || duration == null) {
-      return 0.0;
+      calculateMeetingCostAmountVariable = 0.0;
+      return calculateMeetingCostAmountVariable;
     } else {
       switch (duration) {
         case Timing.quarterHour:
           if (freeCall) {
-            return 0.0;
+            calculateMeetingCostAmountVariable = 0.0;
+            return calculateMeetingCostAmountVariable;
           } else {
-            return (hourRate / 4);
+            calculateMeetingCostAmountVariable = (hourRate / 4);
+            return calculateMeetingCostAmountVariable;
           }
 
         case Timing.halfHour:
-          return (hourRate / 2);
+          calculateMeetingCostAmountVariable = (hourRate / 2);
+          return calculateMeetingCostAmountVariable;
         case Timing.threeQuarter:
-          return (hourRate - (hourRate / 4));
+          calculateMeetingCostAmountVariable = (hourRate - (hourRate / 4));
+          return calculateMeetingCostAmountVariable;
         case Timing.hour:
-          return hourRate;
+          calculateMeetingCostAmountVariable = hourRate;
+          return calculateMeetingCostAmountVariable;
       }
     }
   }
@@ -230,14 +239,87 @@ class BookingBloc extends Bloc<DiscountService> {
       final error = e.error as HttpException;
       errorFoundingMentors.value = error.message.toString();
       loadingStatus.value = LoadingStatus.finish;
-      // scaffoldMessenger.showSnackBar(
-      //   SnackBar(content: Text(error.message.toString())),
-      // );
     }
   }
 
-  Future<dynamic> bookMeetingRequest(
-      {required AppointmentRequest appointment}) async {
+  DateTime _calculateDateFromToUTC({required BookingType bookingType}) {
+    switch (bookingType) {
+      case BookingType.instant:
+        return DateTime(
+                DateTime.now().year,
+                DateTime.now().month,
+                DateTime.now().day,
+                DateTime.now().hour + mentorMeetingtime! + 1,
+                0)
+            .toUtc();
+      case BookingType.schudule:
+        return DateTime(mentorMeetingdate!.year, mentorMeetingdate!.month,
+                mentorMeetingdate!.day, mentorMeetingtime!)
+            .toUtc();
+    }
+  }
+
+  DateTime _calculateDateToToUTC(
+      {required DateTime dateFrom, required Timing duration}) {
+    switch (duration) {
+      case Timing.quarterHour:
+        return dateFrom.add(const Duration(minutes: 15));
+      case Timing.halfHour:
+        return dateFrom.add(const Duration(minutes: 30));
+      case Timing.threeQuarter:
+        return dateFrom.add(const Duration(minutes: 45));
+      case Timing.hour:
+        return dateFrom.add(const Duration(minutes: 60));
+    }
+  }
+
+  Future<dynamic> bookMeetingRequest(PaymentTypeMethod payment) async {
+    DateTime fromDateTime = _calculateDateFromToUTC(bookingType: bookingType!);
+    DateTime toDateTime = _calculateDateToToUTC(
+        dateFrom: fromDateTime, duration: meetingduration!);
+
+    int paymentMethod = 0;
+    switch (payment) {
+      case PaymentTypeMethod.apple:
+        paymentMethod = 1;
+        break;
+      case PaymentTypeMethod.google:
+        paymentMethod = 2;
+        break;
+      case PaymentTypeMethod.paypal:
+        paymentMethod = 3;
+        break;
+      case PaymentTypeMethod.freeCall:
+        paymentMethod = 4;
+        break;
+    }
+
+    //TODO: handle booking request
+    final appointment = AppointmentRequest(
+      mentorId: mentorId!,
+      isFree: meetingFreeCall,
+      type: bookingType == BookingType.schudule ? 1 : 2,
+      mentorHourRate: mentorHourRate!,
+      discountId: selectedDiscountId,
+      payment: paymentMethod,
+      currencyId: categoryID,
+      price: calculateMeetingCostAmountVariable,
+      totalPrice: calculateTotalAmountVariable,
+      dateFrom: CustomDate(
+          year: fromDateTime.year,
+          month: fromDateTime.month,
+          day: fromDateTime.day,
+          hour: fromDateTime.hour,
+          min: fromDateTime.minute),
+      dateTo: CustomDate(
+          year: toDateTime.year,
+          month: toDateTime.month,
+          day: toDateTime.day,
+          hour: toDateTime.hour,
+          min: toDateTime.minute),
+      note: noteController.text.isEmpty ? null : noteController.text,
+    );
+
     return await locator<AppointmentsService>()
         .bookNewAppointments(appointment: appointment);
   }
@@ -252,11 +334,14 @@ class BookingBloc extends Bloc<DiscountService> {
     });
   }
 
+  int? selectedDiscountId;
   void verifyCode() {
     service.discount(discountController.text).then((value) {
       if (value.data == null) {
+        selectedDiscountId = null;
         discountErrorMessage.value = "error";
       } else {
+        selectedDiscountId = value.data!.id;
         discountErrorMessage.value = value.data!.percentValue!.toString();
       }
     });
