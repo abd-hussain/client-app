@@ -294,7 +294,6 @@ class BookingBloc extends Bloc<DiscountService> {
         break;
     }
 
-    //TODO: handle booking request
     final appointment = AppointmentRequest(
       mentorId: mentorId!,
       isFree: meetingFreeCall,
