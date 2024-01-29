@@ -262,6 +262,8 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
                 suffixeName: bloc.suffixeName!,
                 firstName: bloc.firstName!,
                 gender: bloc.gender!,
+                countryCode: bloc.countryCode!,
+                currencyCode: bloc.currencyCode!,
                 lastName: bloc.lastName!,
                 countryName: bloc.countryName!,
                 countryFlag: bloc.countryFlag!,

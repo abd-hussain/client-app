@@ -14,6 +14,7 @@ import 'package:client_app/screens/booking_meeting/widgets/schedule_booking_view
 import 'package:client_app/shared_widgets/custom_appbar.dart';
 import 'package:client_app/shared_widgets/custom_button.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
+import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/enums/loading_status.dart';
 import 'package:client_app/utils/errors/exceptions.dart';
 import 'package:dio/dio.dart';
@@ -253,11 +254,13 @@ class _BookingScreenState extends State<BookingScreen> {
                                             0) {
                                           //TODO: Handle Currency Conversion: to allow the customer reserve call with someone from defrent country
 
-                                          // print("Mentor Currency");
-                                          // print(bloc.mentorCurrency);
+                                          print("Mentor Currency");
+                                          print(bloc.currencyCode);
 
-                                          // print("Client Currency");
-                                          // print(bloc.box.get(DatabaseFieldConstant.selectedCountryCurrency));
+                                          print("Client Currency");
+                                          print(bloc.box.get(
+                                              DatabaseFieldConstant
+                                                  .selectedCurrencyCode));
 
                                           // // if (bloc.mentorCurrency !=
                                           // //     bloc.box.get(DatabaseFieldConstant.selectedCountryCurrency)) {

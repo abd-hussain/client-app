@@ -53,6 +53,9 @@ class BookingBloc extends Bloc<DiscountService> {
 
   bool enablePayButton = false;
 
+  String? countryCode;
+  String? currencyCode;
+
   ValueNotifier<List<MentorInfoAvaliableResponseData>?> avaliableMentors =
       ValueNotifier<List<MentorInfoAvaliableResponseData>?>(null);
 
@@ -83,6 +86,8 @@ class BookingBloc extends Bloc<DiscountService> {
         scheduleMentorLastName = newArguments["lastName"] as String?;
         mentorHourRate = newArguments["hourRate"] as double?;
         mentorCurrency = newArguments["currency"] as String?;
+        countryCode = newArguments["countryCode"] as String?;
+        currencyCode = newArguments["currencyCode"] as String?;
         scheduleMentorGender = newArguments["gender"] as String?;
         mentorCountryName = newArguments["countryName"] as String?;
         mentorCountryFlag = newArguments["countryFlag"] as String?;
@@ -226,6 +231,8 @@ class BookingBloc extends Bloc<DiscountService> {
         mentorId = mentors.data![0].id;
         mentorHourRate = mentors.data![0].hourRate;
         mentorCurrency = mentors.data![0].currency;
+        countryCode = mentors.data![0].countryCode;
+        currencyCode = mentors.data![0].currencyCode;
         mentorMeetingdate =
             DateFormat("yyyy-MM-dd").parse(mentors.data![0].date!);
         meetingDay = meetingDayNamed(mentorMeetingdate);

@@ -35,6 +35,8 @@ class MentorProfileBloc extends Bloc<MentorService> {
   String? dateOfBirth;
   String? experienceSince;
   String? currency;
+  String? countryCode;
+  String? currencyCode;
   bool freeCall = false;
 
   List<MultiSelectCard<String>> majors = [];
@@ -105,6 +107,8 @@ class MentorProfileBloc extends Bloc<MentorService> {
         hourRate = value.data!.hourRate!;
         bio = value.data!.bio;
         mentorId = id;
+        countryCode = value.data!.countryCode;
+        currencyCode = value.data!.currencyCode;
         freeCall = handleFreeCallType(value.data!.freeCall);
         currency = value.data!.currency!;
         speakingLanguage = value.data!.speakingLanguage.toString();

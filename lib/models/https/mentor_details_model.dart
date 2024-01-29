@@ -24,6 +24,8 @@ class MentorDetailsResponseData with ModelChecker {
   double? hourRate;
   int? freeCall;
   String? currency;
+  String? currencyCode;
+  String? countryCode;
   double? totalRate;
   int? gender;
   String? profileImg;
@@ -53,6 +55,8 @@ class MentorDetailsResponseData with ModelChecker {
       this.hourRate,
       this.freeCall,
       this.currency,
+      this.currencyCode,
+      this.countryCode,
       this.totalRate,
       this.gender,
       this.profileImg,
@@ -82,6 +86,8 @@ class MentorDetailsResponseData with ModelChecker {
     hourRate = convertToDouble(json['hour_rate']);
     freeCall = json['free_call'];
     currency = convertToString(json['currency']);
+    countryCode = convertToString(json['country_code']);
+    currencyCode = convertToString(json['currency_code']);
     totalRate = convertToDouble(json['total_rate']);
     gender = json['gender'];
     profileImg = convertToString(json['profile_img']);

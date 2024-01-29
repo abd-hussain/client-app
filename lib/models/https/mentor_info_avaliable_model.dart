@@ -29,6 +29,8 @@ class MentorInfoAvaliableResponseData with ModelChecker {
   double? rate;
   String? date;
   String? currency;
+  String? currencyCode;
+  String? countryCode;
   List<String>? languages;
   String? countryName;
   String? countryFlag;
@@ -48,6 +50,8 @@ class MentorInfoAvaliableResponseData with ModelChecker {
       this.rate,
       this.date,
       this.currency,
+      this.countryCode,
+      this.currencyCode,
       this.languages,
       this.countryName,
       this.countryFlag,
@@ -67,6 +71,8 @@ class MentorInfoAvaliableResponseData with ModelChecker {
     rate = convertToDouble(json['rate']);
     date = json['date'];
     currency = json['currency'];
+    currencyCode = json['currency_code'];
+    countryCode = json['country_code'];
     languages = json['languages'].cast<String>();
     countryName = json['country_name'];
     countryFlag = json['country_flag'];

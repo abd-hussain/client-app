@@ -13,6 +13,8 @@ class MentorProfileFooterView extends StatelessWidget {
   final bool isUserLoggedin;
   final int mentorId;
   final String currency;
+  final String countryCode;
+  final String currencyCode;
   final double hourRate;
   final String suffixeName;
   final String firstName;
@@ -38,6 +40,8 @@ class MentorProfileFooterView extends StatelessWidget {
     required this.isUserLoggedin,
     required this.mentorId,
     required this.currency,
+    required this.countryCode,
+    required this.currencyCode,
     required this.hourRate,
     super.key,
     required this.suffixeName,
@@ -130,6 +134,8 @@ class MentorProfileFooterView extends StatelessWidget {
                           "lastName": lastName,
                           "hourRate": hourRate,
                           "currency": currency,
+                          "countryCode": countryCode,
+                          "currencyCode": currencyCode,
                           "gender": gender,
                           "freeCall": freeCall,
                           "categoryID": categoryID,
