@@ -85,6 +85,8 @@ class LoginSecoundStepBloc extends Bloc<AuthService> {
         name: box.get(DatabaseFieldConstant.selectedCountryName),
         currency: box.get(DatabaseFieldConstant.selectedCountryCurrency),
         dialCode: box.get(DatabaseFieldConstant.selectedCountryDialCode),
+        countryCode: box.get(DatabaseFieldConstant.selectedCountryCode),
+        currencyCode: box.get(DatabaseFieldConstant.selectedCurrencyCode),
         maxLength:
             int.parse(box.get(DatabaseFieldConstant.selectedCountryMaxLenght)),
         minLength:

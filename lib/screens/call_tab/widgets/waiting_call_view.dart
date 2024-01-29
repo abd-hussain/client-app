@@ -224,7 +224,7 @@ class _WaitingCallViewState extends State<WaitingCallView> {
           ItemInGrid(
               title: AppLocalizations.of(context)!.priceafter,
               value:
-                  "${widget.metingDetails.discountedPrice!} ${widget.metingDetails.currency!}"),
+                  "${widget.metingDetails.totalPrice!} ${widget.metingDetails.currency!}"),
         ],
       ),
     );

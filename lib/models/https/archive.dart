@@ -37,7 +37,7 @@ class ArchiveData with ModelChecker {
   int? discountId;
   bool? isFree;
   double? price;
-  double? discountedPrice;
+  double? totalPrice;
   String? currency;
   double? mentorHourRate;
   String? noteFromClient;
@@ -67,7 +67,7 @@ class ArchiveData with ModelChecker {
       this.discountId,
       this.isFree,
       this.price,
-      this.discountedPrice,
+      this.totalPrice,
       this.currency,
       this.mentorHourRate,
       this.noteFromClient,
@@ -97,7 +97,7 @@ class ArchiveData with ModelChecker {
     discountId = json['discount_id'];
     isFree = json['is_free'];
     price = convertToDouble(json['price']);
-    discountedPrice = convertToDouble(json['discounted_price']);
+    totalPrice = convertToDouble(json['total_price']);
     currency = json['currency'];
     mentorHourRate = convertToDouble(json['mentor_hour_rate']);
     noteFromClient = json['note_from_client'];

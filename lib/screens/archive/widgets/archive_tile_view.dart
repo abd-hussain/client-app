@@ -198,7 +198,7 @@ class ArchiveTileView extends StatelessWidget {
               value: "${data.price!} ${data.currency!}"),
           ItemInGrid(
               title: AppLocalizations.of(context)!.priceafter,
-              value: "${data.discountedPrice!} ${data.currency!}"),
+              value: "${data.totalPrice!} ${data.currency!}"),
         ],
       ),
     );

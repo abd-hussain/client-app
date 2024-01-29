@@ -301,9 +301,9 @@ class BookingBloc extends Bloc<DiscountService> {
       mentorHourRate: mentorHourRate!,
       discountId: selectedDiscountId,
       payment: paymentMethod,
-      currencyId: categoryID,
       price: calculateMeetingCostAmountVariable,
       totalPrice: calculateTotalAmountVariable,
+      countryId: int.parse(box.get(DatabaseFieldConstant.selectedCountryId)),
       dateFrom: CustomDate(
           year: fromDateTime.year,
           month: fromDateTime.month,

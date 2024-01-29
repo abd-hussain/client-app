@@ -23,6 +23,8 @@ class Country {
   String? name;
   String? currency;
   String? dialCode;
+  String? countryCode;
+  String? currencyCode;
   int? minLength;
   int? maxLength;
 
@@ -31,6 +33,8 @@ class Country {
     this.flagImage,
     this.name,
     this.currency,
+    this.countryCode,
+    this.currencyCode,
     this.dialCode,
     this.maxLength,
     this.minLength,
@@ -41,6 +45,8 @@ class Country {
     flagImage = AppConstant.imagesBaseURLForCountries + json['flag_image'];
     name = json['name'];
     currency = json['currency'];
+    countryCode = json['country_code'];
+    currencyCode = json['currency_code'];
     dialCode = json['dialCode'];
     minLength = json['minLength'];
     maxLength = json['maxLength'];

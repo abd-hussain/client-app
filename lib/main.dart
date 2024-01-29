@@ -14,8 +14,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 //TODO: Rate Mentor when you finish call
-//TODO handle web
-//TODO fix ioS notifications
+//TODO: handle web
+//TODO: fix ioS notifications
 //TODO: Check Internet problem
 
 void main() {

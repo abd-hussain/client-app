@@ -46,6 +46,10 @@ class ListOfCountriesWidget extends StatelessWidget {
               DatabaseFieldConstant.selectedCountryDialCode, item.dialCode);
           await box.put(
               DatabaseFieldConstant.selectedCountryCurrency, item.currency);
+          await box.put(
+              DatabaseFieldConstant.selectedCountryCode, item.countryCode);
+          await box.put(
+              DatabaseFieldConstant.selectedCurrencyCode, item.currencyCode);
           await box.put(DatabaseFieldConstant.selectedCountryMinLenght,
               item.minLength.toString());
           await box.put(DatabaseFieldConstant.selectedCountryMaxLenght,

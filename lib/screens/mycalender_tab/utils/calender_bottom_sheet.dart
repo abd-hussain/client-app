@@ -221,7 +221,7 @@ class CalenderBottomSheetsUtil {
         ),
         PriceView(
           priceBeforeDiscount: metingDetails.price!,
-          priceAfterDiscount: metingDetails.discountedPrice!,
+          priceAfterDiscount: metingDetails.totalPrice!,
           currency: metingDetails.currency!,
         ),
         AppointmentDetailsView(

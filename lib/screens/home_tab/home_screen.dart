@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   const EdgeInsets.only(left: 16, right: 16),
                               child: SizedBox(
                                 height:
-                                    MediaQuery.of(context).size.height - 550,
+                                    MediaQuery.of(context).size.height - 600,
                                 child: Container(
                                   decoration: BoxDecoration(
                                     color: Colors.grey[200],
@@ -116,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           }
                         })
                     : SizedBox(
-                        height: 300,
+                        height: MediaQuery.of(context).size.height - 600,
                         child: Center(
                           child: CustomText(
                             title: AppLocalizations.of(context)!.noitem,

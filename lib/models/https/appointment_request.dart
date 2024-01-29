@@ -9,7 +9,7 @@ class AppointmentRequest implements Model {
   CustomDate dateTo;
   String? note;
   int? discountId;
-  int? currencyId;
+  int? countryId;
   double mentorHourRate;
   double price;
   double totalPrice;
@@ -19,28 +19,28 @@ class AppointmentRequest implements Model {
     required this.type,
     required this.isFree,
     required this.payment,
-    required this.currencyId,
-    required this.price,
-    required this.totalPrice,
-    required this.mentorHourRate,
-    required this.discountId,
     required this.dateFrom,
     required this.dateTo,
     required this.note,
+    required this.discountId,
+    required this.countryId,
+    required this.mentorHourRate,
+    required this.price,
+    required this.totalPrice,
   });
 
   @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
-    data['mentorId'] = mentorId;
+    data['mentor_id'] = mentorId;
     data['type'] = type;
-    data['is_free'] = isFree;
     data['payment'] = payment;
-    data['dateFrom'] = dateFrom.toJson();
-    data['dateTo'] = dateTo.toJson();
+    data['is_free'] = isFree;
+    data['date_from'] = dateFrom.toJson();
+    data['date_to'] = dateTo.toJson();
     data['note'] = note;
     data['discount_id'] = discountId;
-    data['currency_id'] = currencyId;
+    data['country_id'] = countryId;
     data['mentor_hour_rate'] = mentorHourRate;
     data['price'] = price;
     data['total_price'] = totalPrice;

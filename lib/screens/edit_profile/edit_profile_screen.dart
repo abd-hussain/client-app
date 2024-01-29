@@ -60,6 +60,47 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   await bloc.box.put(
                                       DatabaseFieldConstant.userFirstName,
                                       bloc.firstNameController.text);
+
+                                  if (bloc.selectedCountry != null) {
+                                    await bloc.box.put(
+                                        DatabaseFieldConstant.selectedCountryId,
+                                        bloc.selectedCountry!.id.toString());
+                                    await bloc.box.put(
+                                        DatabaseFieldConstant
+                                            .selectedCountryFlag,
+                                        bloc.selectedCountry!.flagImage);
+                                    await bloc.box.put(
+                                        DatabaseFieldConstant
+                                            .selectedCountryName,
+                                        bloc.selectedCountry!.name);
+                                    await bloc.box.put(
+                                        DatabaseFieldConstant
+                                            .selectedCountryDialCode,
+                                        bloc.selectedCountry!.dialCode);
+                                    await bloc.box.put(
+                                        DatabaseFieldConstant
+                                            .selectedCountryCurrency,
+                                        bloc.selectedCountry!.currency);
+                                    await bloc.box.put(
+                                        DatabaseFieldConstant
+                                            .selectedCountryCode,
+                                        bloc.selectedCountry!.countryCode);
+                                    await bloc.box.put(
+                                        DatabaseFieldConstant
+                                            .selectedCurrencyCode,
+                                        bloc.selectedCountry!.currencyCode);
+                                    await bloc.box.put(
+                                        DatabaseFieldConstant
+                                            .selectedCountryMinLenght,
+                                        bloc.selectedCountry!.minLength
+                                            .toString());
+                                    await bloc.box.put(
+                                        DatabaseFieldConstant
+                                            .selectedCountryMaxLenght,
+                                        bloc.selectedCountry!.maxLength
+                                            .toString());
+                                  }
+
                                   navigator.pop();
                                 }
                               });

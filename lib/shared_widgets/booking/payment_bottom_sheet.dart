@@ -1,14 +1,17 @@
 import 'dart:io';
-
+import 'package:client_app/shared_widgets/booking/payment_config.dart';
 import 'package:client_app/shared_widgets/custom_text.dart';
+import 'package:client_app/utils/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:pay/pay.dart';
 
 enum PaymentType { apple, google, paypal }
 
 class PaymentBottomSheetsUtil {
   Future paymentBottomSheet({
     required BuildContext context,
+    required double totalAmount,
     required Function(PaymentType) onSelectionDone,
   }) {
     return showModalBottomSheet(
@@ -53,6 +56,7 @@ class PaymentBottomSheetsUtil {
                 const SizedBox(height: 16),
                 mainiew(
                   context: context,
+                  totalAmount: totalAmount,
                   openNext: (type) {
                     Navigator.pop(context);
                     onSelectionDone(type);
@@ -66,7 +70,16 @@ class PaymentBottomSheetsUtil {
 
   Widget mainiew(
       {required BuildContext context,
+      required double totalAmount,
       required Function(PaymentType) openNext}) {
+    String amount = totalAmount.toStringAsFixed(2);
+    var paymentItems = [
+      PaymentItem(
+        label: 'Total',
+        amount: amount,
+        status: PaymentItemStatus.final_price,
+      )
+    ];
     return Column(
       children: [
         Padding(
@@ -82,23 +95,44 @@ class PaymentBottomSheetsUtil {
               child: Column(
                 children: [
                   Platform.isAndroid
-                      ? rowItem(
-                          context: context,
-                          containerColor: const Color(0xffE74C4C),
-                          title: AppLocalizations.of(context)!.googlepay,
-                          desc:
-                              "${AppLocalizations.of(context)!.paymentuse} ${AppLocalizations.of(context)!.googlepay}",
-                          icon: Icons.payment,
-                          onPress: () => openNext(PaymentType.google),
+                      ? Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GooglePayButton(
+                            paymentConfiguration:
+                                PaymentConfiguration.fromJsonString(
+                                    defaultGooglePay),
+                            onError: (error) {
+                              logDebugMessage(message: error.toString());
+                            },
+                            paymentItems: paymentItems,
+                            type: GooglePayButtonType.pay,
+                            onPaymentResult: (map) {
+                              openNext(PaymentType.google);
+                            },
+                            loadingIndicator: const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          ),
                         )
-                      : rowItem(
-                          context: context,
-                          containerColor: const Color(0xffE8E8E8),
-                          title: AppLocalizations.of(context)!.applypay,
-                          desc:
-                              "${AppLocalizations.of(context)!.paymentuse} ${AppLocalizations.of(context)!.applypay}",
-                          icon: Icons.apple,
-                          onPress: () => openNext(PaymentType.apple),
+                      : Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ApplePayButton(
+                            paymentConfiguration:
+                                PaymentConfiguration.fromJsonString(
+                                    defaultApplePay),
+                            onError: (error) {
+                              logDebugMessage(message: error.toString());
+                            },
+                            paymentItems: paymentItems,
+                            style: ApplePayButtonStyle.black,
+                            type: ApplePayButtonType.buy,
+                            onPaymentResult: (map) {
+                              openNext(PaymentType.apple);
+                            },
+                            loadingIndicator: const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          ),
                         ),
                   const SizedBox(height: 8),
                   Container(height: 1, color: const Color(0xffE8E8E8)),

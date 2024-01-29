@@ -251,26 +251,41 @@ class _BookingScreenState extends State<BookingScreen> {
 
                                         if (bloc.calculateTotalAmountVariable >
                                             0) {
+                                          //TODO: Handle Currency Conversion: to allow the customer reserve call with someone from defrent country
+
+                                          // print("Mentor Currency");
+                                          // print(bloc.mentorCurrency);
+
+                                          // print("Client Currency");
+                                          // print(bloc.box.get(DatabaseFieldConstant.selectedCountryCurrency));
+
+                                          // // if (bloc.mentorCurrency !=
+                                          // //     bloc.box.get(DatabaseFieldConstant.selectedCountryCurrency)) {
+                                          // //   await currencyBottomSheet.bottomSheet(context: context, onDone: (val) {});
+                                          // // }
+
                                           final bottomSheet =
                                               PaymentBottomSheetsUtil();
                                           await bottomSheet.paymentBottomSheet(
                                             context: context,
+                                            totalAmount: bloc
+                                                .calculateTotalAmountVariable,
                                             onSelectionDone:
                                                 (paymentType) async {
                                               switch (paymentType) {
-                                                case PaymentType.apple: //TODO
+                                                case PaymentType.apple:
                                                   await callRequest(
                                                     PaymentTypeMethod.apple,
                                                     scaffoldMessenger,
                                                   );
                                                   break;
-                                                case PaymentType.google: //TODO
+                                                case PaymentType.google: //TODO:
                                                   await callRequest(
                                                     PaymentTypeMethod.google,
                                                     scaffoldMessenger,
                                                   );
                                                   break;
-                                                case PaymentType.paypal: //TODO
+                                                case PaymentType.paypal: //TODO:
                                                   await callRequest(
                                                     PaymentTypeMethod.paypal,
                                                     scaffoldMessenger,
