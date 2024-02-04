@@ -42,4 +42,14 @@ class FilterService with Service {
 
     return response["data"];
   }
+
+  Future<double> currencyConverter(String currency) async {
+    final response = await repository.callRequest(
+      requestType: RequestType.post,
+      methodName: MethodNameConstant.currencyConverter,
+      queryParam: {"currency": currency},
+    );
+
+    return response["data"];
+  }
 }

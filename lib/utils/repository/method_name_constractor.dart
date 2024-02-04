@@ -15,6 +15,7 @@ class MethodNameConstant {
   static const String account = "client-account/";
   static const String updateAccount = "client-account/update";
   static const String referalCode = "referalcode";
+  static const String currencyConverter = "currency-converter";
   static const String deleteAccount = "client-account/delete";
   static const String archive = "archive/";
   static const String clientAppointments = "client-appointment/";

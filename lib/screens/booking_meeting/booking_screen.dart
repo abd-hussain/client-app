@@ -247,61 +247,51 @@ class _BookingScreenState extends State<BookingScreen> {
                                       buttonTitle:
                                           AppLocalizations.of(context)!.pay,
                                       onTap: () async {
-                                        final scaffoldMessenger =
-                                            ScaffoldMessenger.of(context);
-
                                         if (bloc.calculateTotalAmountVariable >
                                             0) {
-                                          //TODO: Handle Currency Conversion: to allow the customer reserve call with someone from defrent country
-
-                                          print("Mentor Currency");
-                                          print(bloc.currencyCode);
-
-                                          print("Client Currency");
-                                          print(bloc.box.get(
-                                              DatabaseFieldConstant
-                                                  .selectedCurrencyCode));
-
-                                          // // if (bloc.mentorCurrency !=
-                                          // //     bloc.box.get(DatabaseFieldConstant.selectedCountryCurrency)) {
-                                          // //   await currencyBottomSheet.bottomSheet(context: context, onDone: (val) {});
-                                          // // }
-
                                           final bottomSheet =
                                               PaymentBottomSheetsUtil();
-                                          await bottomSheet.paymentBottomSheet(
-                                            context: context,
-                                            totalAmount: bloc
-                                                .calculateTotalAmountVariable,
-                                            onSelectionDone:
-                                                (paymentType) async {
-                                              switch (paymentType) {
-                                                case PaymentType.apple:
-                                                  await callRequest(
-                                                    PaymentTypeMethod.apple,
-                                                    scaffoldMessenger,
-                                                  );
-                                                  break;
-                                                case PaymentType.google: //TODO:
-                                                  await callRequest(
-                                                    PaymentTypeMethod.google,
-                                                    scaffoldMessenger,
-                                                  );
-                                                  break;
-                                                case PaymentType.paypal: //TODO:
-                                                  await callRequest(
-                                                    PaymentTypeMethod.paypal,
-                                                    scaffoldMessenger,
-                                                  );
-                                                  break;
-                                              }
-                                            },
-                                          );
+
+                                          if (bloc.currencyCode !=
+                                              bloc.box.get(DatabaseFieldConstant
+                                                  .selectedCurrencyCode)) {
+                                            double dollerEquavilant =
+                                                await bloc.currencyConversion(
+                                                    bloc.currencyCode!);
+                                            if (context.mounted) {
+                                              await bottomSheet
+                                                  .moneyConversionBottomSheet(
+                                                context: context,
+                                                mentorCurrency:
+                                                    bloc.currencyCode!,
+                                                dollerEquvilant:
+                                                    dollerEquavilant,
+                                                totalAmount: bloc
+                                                    .calculateTotalAmountVariable,
+                                                onSelectionDone:
+                                                    (newValue) async {
+                                                  await callPaymentBottomSheet(
+                                                      totalAmount: newValue,
+                                                      currency: "USD",
+                                                      countryCode: "US");
+                                                },
+                                              );
+                                            }
+                                          } else {
+                                            await callPaymentBottomSheet(
+                                              totalAmount: bloc
+                                                  .calculateTotalAmountVariable,
+                                              currency: bloc.box.get(
+                                                  DatabaseFieldConstant
+                                                      .selectedCurrencyCode),
+                                              countryCode: bloc.box.get(
+                                                  DatabaseFieldConstant
+                                                      .selectedCountryCode),
+                                            );
+                                          }
                                         } else {
                                           await callRequest(
-                                            PaymentTypeMethod.freeCall,
-                                            scaffoldMessenger,
-                                          );
+                                              PaymentTypeMethod.freeCall);
                                         }
                                       },
                                     ),
@@ -325,8 +315,33 @@ class _BookingScreenState extends State<BookingScreen> {
     );
   }
 
-  Future<void> callRequest(
-      PaymentTypeMethod type, ScaffoldMessengerState scaffoldMessenger) async {
+  Future<dynamic> callPaymentBottomSheet(
+      {required double totalAmount,
+      required String currency,
+      required String countryCode}) async {
+    final bottomSheet = PaymentBottomSheetsUtil();
+
+    await bottomSheet.paymentBottomSheet(
+      context: context,
+      totalAmount: totalAmount,
+      countryCode: countryCode,
+      currency: currency,
+      onSelectionDone: (paymentType) async {
+        switch (paymentType) {
+          case PaymentType.apple:
+            await callRequest(PaymentTypeMethod.apple);
+            break;
+          case PaymentType.google:
+            await callRequest(PaymentTypeMethod.google);
+            break;
+        }
+      },
+    );
+  }
+
+  Future<void> callRequest(PaymentTypeMethod type) async {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+
     try {
       await bloc.bookMeetingRequest(type);
       backAfterRequest();

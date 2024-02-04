@@ -3,6 +3,7 @@ import 'package:client_app/models/https/appointment_request.dart';
 import 'package:client_app/models/https/mentor_info_avaliable_model.dart';
 import 'package:client_app/sevices/appointments_service.dart';
 import 'package:client_app/sevices/discount_service.dart';
+import 'package:client_app/sevices/filter_services.dart';
 import 'package:client_app/sevices/mentor_service.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
 import 'package:client_app/utils/currency.dart';
@@ -376,10 +377,12 @@ class BookingBloc extends Bloc<DiscountService> {
     }
   }
 
+  Future<double> currencyConversion(String currency) async {
+    return locator<FilterService>().currencyConverter(currency);
+  }
+
   @override
   onDispose() {
     applyDiscountButton.dispose();
   }
-
-  getMeetingDay() {}
 }
