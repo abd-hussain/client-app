@@ -34,47 +34,48 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: padding,
-        child: TextField(
-            enabled: enabled,
-            readOnly: readOnly,
-            inputFormatters: inputFormatters,
-            enableSuggestions: false,
-            keyboardType: keyboardType,
-            autocorrect: false,
-            maxLines: maxLine,
-            controller: controller,
-            style: CustomTextStyle().regular(
-                color:
-                    enabled ? const Color(0xff191C1F) : const Color(0xffA2A3A4),
-                size: fontSize),
-            cursorColor: const Color(0xff100C31),
-            decoration: InputDecoration(
-              suffix: suffixWidget,
-              labelText: hintText,
-              labelStyle: CustomTextStyle()
-                  .regular(color: const Color(0xff384048), size: 14),
-              enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xffE8E8E8)),
-              ),
-              focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xffE8E8E8)),
-              ),
-              border: const OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xffE8E8E8)),
-              ),
-              filled: true,
-              fillColor: const Color(0xffFFFFFF),
-            ),
-            onChanged: (text) {
-              if (onChange != null) {
-                onChange!(text);
-              }
-            },
-            onEditingComplete: () {
-              if (onEditingComplete != null) {
-                onEditingComplete!();
-              }
-            }));
+      padding: padding,
+      child: TextField(
+        enabled: enabled,
+        readOnly: readOnly,
+        inputFormatters: inputFormatters,
+        enableSuggestions: false,
+        keyboardType: keyboardType,
+        autocorrect: false,
+        maxLines: maxLine,
+        controller: controller,
+        style: CustomTextStyle().regular(
+            color: enabled ? const Color(0xff191C1F) : const Color(0xffA2A3A4),
+            size: fontSize),
+        cursorColor: const Color(0xff100C31),
+        decoration: InputDecoration(
+          suffix: suffixWidget,
+          labelText: hintText,
+          labelStyle: CustomTextStyle()
+              .regular(color: const Color(0xff384048), size: 14),
+          enabledBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: Color(0xffE8E8E8)),
+          ),
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: Color(0xffE8E8E8)),
+          ),
+          border: const OutlineInputBorder(
+            borderSide: BorderSide(color: Color(0xffE8E8E8)),
+          ),
+          filled: true,
+          fillColor: const Color(0xffFFFFFF),
+        ),
+        onChanged: (text) {
+          if (onChange != null) {
+            onChange!(text);
+          }
+        },
+        onEditingComplete: () {
+          if (onEditingComplete != null) {
+            onEditingComplete!();
+          }
+        },
+      ),
+    );
   }
 }

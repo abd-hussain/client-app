@@ -99,13 +99,13 @@ class EditProfileBloc extends Bloc<AccountService> {
 
   Future<AccountInfo?> callRequest(BuildContext context) async {
     if (firstNameController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("First Name is Required"),
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(AppLocalizations.of(context)!.firstnamerequired),
       ));
       return null;
     } else if (lastNameController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("Last Name is Required"),
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(AppLocalizations.of(context)!.lastnamerequired),
       ));
       return null;
     } else {

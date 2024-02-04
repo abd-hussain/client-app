@@ -91,11 +91,6 @@ class LoginFourthStepBloc extends Bloc<AccountService> {
         }
         emailController.text = value.data!.email ?? "";
 
-        // if (value.data!.referalCode != null) {
-        //   enableReferalCode.value = false;
-        //   referalCodeController.text = value.data!.referalCode!;
-        // }
-
         if (value.data!.countryId != null) {
           Iterable<Country> country = listOfCountries
               .where((element) => element.id! == value.data!.countryId!);

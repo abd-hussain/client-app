@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PinField extends StatelessWidget {
   final TextEditingController pinController;
@@ -21,13 +22,13 @@ class PinField extends StatelessWidget {
         keyboardType: TextInputType.number,
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         controller: pinController,
-        decoration: const InputDecoration(
-          contentPadding: EdgeInsets.only(bottom: 0),
+        decoration: InputDecoration(
+          contentPadding: const EdgeInsets.only(bottom: 0),
           border: InputBorder.none,
           counterText: "",
           floatingLabelAlignment: FloatingLabelAlignment.center,
-          hintStyle: TextStyle(color: Colors.black54),
-          hintText: "Your OTP Code",
+          hintStyle: const TextStyle(color: Colors.black54),
+          hintText: AppLocalizations.of(context)!.otpcode,
         ),
       ),
     );

@@ -1,7 +1,7 @@
 import 'package:client_app/locator.dart';
 import 'package:client_app/sevices/general/network_info_service.dart';
 import 'package:client_app/utils/constants/constant.dart';
-import 'package:client_app/utils/exceptions.dart';
+import 'package:client_app/utils/errors/exceptions.dart';
 import 'package:client_app/utils/mixins.dart';
 import 'package:client_app/utils/repository/http_interceptor.dart';
 import 'package:dio/dio.dart';

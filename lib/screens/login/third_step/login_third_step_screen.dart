@@ -109,8 +109,8 @@ class _LoginThirdStepScreenState extends State<LoginThirdStepScreen> {
                     valueListenable: bloc.otpNotValid,
                     builder: (context, snapshot, child) {
                       return snapshot
-                          ? const CustomText(
-                              title: "OTP Is Not Valid",
+                          ? CustomText(
+                              title: AppLocalizations.of(context)!.otpnotvalid,
                               fontSize: 20,
                               textColor: Colors.red,
                             )
@@ -119,7 +119,7 @@ class _LoginThirdStepScreenState extends State<LoginThirdStepScreen> {
                 const SizedBox(height: 10),
                 bloc.timerStartNumberMin == 0 && bloc.timerStartNumberSec == 0
                     ? CustomButton(
-                        buttonTitle: "Resend Code",
+                        buttonTitle: AppLocalizations.of(context)!.resendcode,
                         enableButton: true,
                         onTap: () async {
                           await bloc.callRequestOfAuthAgain().then((value) {

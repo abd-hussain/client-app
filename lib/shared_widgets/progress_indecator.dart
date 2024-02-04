@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
 class ProgressIndecator extends StatelessWidget {
-  final Color progressColor;
+  final Color? progressColor;
 
-  // ignore: use_key_in_widget_constructors
-  const ProgressIndecator({this.progressColor = Colors.red});
+  const ProgressIndecator({super.key, this.progressColor});
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: CircularProgressIndicator(color: progressColor),
+      child: CircularProgressIndicator(color: progressColor ?? Colors.red),
     );
   }
 }

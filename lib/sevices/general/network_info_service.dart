@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:client_app/utils/exceptions.dart';
+import 'package:client_app/utils/errors/exceptions.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 class NetworkInfoService {
