@@ -15,6 +15,7 @@ import 'package:client_app/screens/login/third_step/login_third_step_screen.dart
 import 'package:client_app/screens/main_contaner/main_container.dart';
 import 'package:client_app/screens/mentor_profile/mentor_profile_screen.dart';
 import 'package:client_app/screens/mycalender_tab/mycalender_screen.dart';
+import 'package:client_app/screens/no_internet_screen/no_internet_screen.dart';
 import 'package:client_app/screens/report/report_screen.dart';
 import 'package:client_app/screens/setup_screen/setup_screen.dart';
 import 'package:client_app/screens/tutorials/tutorials_screen.dart';
@@ -43,6 +44,7 @@ class RoutesConstants {
   static const String insideCallScreen = 'InsideCallScreen';
   static const String mentorProfileScreen = 'mentorProfileScreen';
   static const String bookingScreen = 'bookingScreen';
+  static const String noInternetScreen = 'noInternetScreen';
 }
 
 final Map<String, Widget> routes = {
@@ -65,5 +67,6 @@ final Map<String, Widget> routes = {
   RoutesConstants.callScreen: const CallScreen(),
   RoutesConstants.mentorProfileScreen: const MentorProfileScreen(),
   RoutesConstants.bookingScreen: const BookingScreen(),
-  RoutesConstants.insideCallScreen: const InsideCallScreen()
+  RoutesConstants.insideCallScreen: const InsideCallScreen(),
+  RoutesConstants.noInternetScreen: const NoInternetScreen(),
 };

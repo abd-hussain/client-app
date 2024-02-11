@@ -20,7 +20,7 @@ class HttpRepository {
 
     const baseUrl = AppConstant.applicationMainURL;
 
-    if (await locator<NetworkInfoService>().isConnected()) {
+    if (await locator<NetworkInfoService>().isInternetConnected()) {
       final dioClient = locator<Dio>()
         ..options = BaseOptions(
           baseUrl: baseUrl,

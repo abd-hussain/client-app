@@ -23,7 +23,7 @@ GetIt locator = GetIt.instance;
 Future<void> setupLocator() async {
   locator.registerLazySingleton(() => MainContext());
 
-  locator.registerSingleton<NetworkInfoService>(NetworkInfoService());
+  locator.registerLazySingleton(() => NetworkInfoService());
 
   locator.registerFactory<FilterService>(() => FilterService());
   locator.registerFactory<AccountService>(() => AccountService());

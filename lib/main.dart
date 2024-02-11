@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:client_app/locator.dart';
+import 'package:client_app/main_context.dart';
 import 'package:client_app/my_app.dart';
 import 'package:client_app/sevices/general/network_info_service.dart';
 import 'package:client_app/utils/constants/database_constant.dart';
@@ -12,11 +13,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 //TODO: Rate Mentor when you finish call
 //TODO: handle web
 //TODO: fix ioS notifications
-//TODO: Check Internet problem
 
 void main() {
   runZonedGuarded(() async {
@@ -24,16 +25,17 @@ void main() {
     WidgetsFlutterBinding.ensureInitialized();
     await Hive.initFlutter();
     await Hive.openBox(DatabaseBoxConstant.userInfo);
-
+    bool hasConnectivity = await _initInternetConnection();
     await setupLocator();
 
     if (!kIsWeb) {
+      await _setupFirebase(hasConnectivity);
+
       await MobileAds.instance.initialize();
       await MobileAds.instance.updateRequestConfiguration(
         RequestConfiguration(
             testDeviceIds: ['FA1E4A4C91519CDE5813ABB70A84651E']),
       );
-      await _setupFirebase();
     }
 
     await SystemChrome.setPreferredOrientations(
@@ -43,7 +45,9 @@ void main() {
       ],
     );
 
-    runApp(const MyApp());
+    runApp(
+      MyApp(isConnected: hasConnectivity),
+    );
   }, (error, stackTrace) {
     if (error is DioException) {
       final exception = error.error;
@@ -53,26 +57,26 @@ void main() {
         debugPrint(exception.message);
         debugPrint(exception.requestId);
       }
+    } else if (error is ConnectionException) {
+      ScaffoldMessenger.of(locator<MainContext>().mainContext!).showSnackBar(
+        SnackBar(
+          content: Text(
+              AppLocalizations.of(locator<MainContext>().mainContext!)!
+                  .nointernetconnection),
+        ),
+      );
     }
   });
 }
 
-Future<bool> _setupFirebase() async {
+Future<bool> _initInternetConnection() async {
   NetworkInfoService networkInfoService = NetworkInfoService();
-  bool hasConnectivity;
-  hasConnectivity = await networkInfoService.checkConnectivityonLunching();
+  networkInfoService.initNetworkConnectionCheck();
+  return await networkInfoService.checkConnectivityonLunching();
+}
 
+_setupFirebase(bool hasConnectivity) async {
   if (hasConnectivity) {
     await Firebase.initializeApp();
-  } else {
-    networkInfoService.firebaseInitNetworkStateStreamControler.stream
-        .listen((event) async {
-      if (event && Firebase.apps.isEmpty) {
-        await Firebase.initializeApp();
-      }
-    });
   }
-  networkInfoService.initNetworkConnectionCheck();
-
-  return hasConnectivity;
 }

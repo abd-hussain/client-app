@@ -11,7 +11,12 @@ import 'package:client_app/utils/constants/database_constant.dart';
 BuildContext? buildContext;
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  final bool isConnected;
+
+  const MyApp({
+    super.key,
+    required this.isConnected,
+  });
 
   static MyAppState? of(BuildContext context) {
     buildContext = context;
@@ -24,6 +29,7 @@ class MyApp extends StatefulWidget {
 
 class MyAppState extends State<MyApp> {
   late Box myBox = Hive.box(DatabaseBoxConstant.userInfo);
+  bool firstInitialization = true;
 
   void rebuild() {
     setState(() {});
@@ -72,9 +78,11 @@ class MyAppState extends State<MyApp> {
             transitionDuration: const Duration(milliseconds: 100),
             pageBuilder: (_, __, ___) => routes[settings.name]!);
       },
-      initialRoute: myBox.get(DatabaseFieldConstant.selectedCountryId) != null
-          ? RoutesConstants.mainContainer
-          : RoutesConstants.initialRoute,
+      initialRoute: widget.isConnected
+          ? myBox.get(DatabaseFieldConstant.selectedCountryId) != null
+              ? RoutesConstants.mainContainer
+              : RoutesConstants.initialRoute
+          : RoutesConstants.noInternetScreen,
     );
   }
 }

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:client_app/utils/errors/exceptions.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 class NetworkInfoService {
@@ -10,14 +9,14 @@ class NetworkInfoService {
       StreamController.broadcast();
   Connectivity connectivity = Connectivity();
 
-  Future<bool> isConnected() async {
+  Future<bool> isInternetConnected() async {
     ConnectivityResult result = await connectivity.checkConnectivity();
     switch (result) {
       case ConnectivityResult.wifi:
       case ConnectivityResult.mobile:
         return true;
       default:
-        throw ConnectionException(message: 'No Internet Connection');
+        return false;
     }
   }
 
@@ -39,13 +38,13 @@ class NetworkInfoService {
     switch (result) {
       case ConnectivityResult.wifi:
       case ConnectivityResult.mobile:
-        return await internetLookupCheck();
+        return await _internetLookupCheck();
       default:
         return false;
     }
   }
 
-  Future<bool> internetLookupCheck() async {
+  Future<bool> _internetLookupCheck() async {
     try {
       final value = await lookup('google.com');
 
