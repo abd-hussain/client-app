@@ -77,3 +77,38 @@ jobs:
           env:
               MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
               MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.GIT_BASIC_AUTHORIZATION }}
+
+
+  web:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.16.0'
+          # channel: 'stable'
+          cache: true
+
+      - name: Enable Flutter Web
+        run: flutter config --enable-web
+
+      - name: Download Dependencies
+        run: flutter pub get
+
+      - name: Build
+        run: flutter build web
+
+      # - name: Deploy
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{secrets.PROD_HOST}}
+      #     username: ${{secrets.PROD_USERNAME}}
+      #     password: ${{secrets.PROD_PASSWORD}}
+      #     script: |
+      #       cd app/src
+      #       git pull
+      #       echo ${{secrets.PROD_PASSWORD}} | sudo -S systemctl restart api
