@@ -102,13 +102,14 @@ jobs:
       - name: Build
         run: flutter build web
 
-      # - name: Deploy
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{secrets.PROD_HOST}}
-      #     username: ${{secrets.PROD_USERNAME}}
-      #     password: ${{secrets.PROD_PASSWORD}}
-      #     script: |
-      #       cd app/src
-      #       git pull
-      #       echo ${{secrets.PROD_PASSWORD}} | sudo -S systemctl restart api
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{secrets.PROD_HOST}}
+          username: ${{secrets.PROD_USERNAME}}
+          password: ${{secrets.PROD_PASSWORD}}
+          script: |
+            cd app/src/application
+            git pull
+            cd ..
+            echo ${{secrets.PROD_PASSWORD}} | sudo -S systemctl restart api
