@@ -56,7 +56,8 @@ jobs:
         - name: Setup Flutter
           uses: subosito/flutter-action@v2
           with:
-            channel: stable
+            flutter-version: '3.16.0'
+            # channel: stable
             cache: true
 
         - name: Set up App Store Connect
