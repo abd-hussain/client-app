@@ -49,17 +49,26 @@ class _AccountScreenState extends State<AccountScreen> {
                 ProfileSubHeader(isUserLoggedIn: bloc.checkIfUserIsLoggedIn()),
                 const AddMobBanner(),
                 bloc.checkIfUserIsLoggedIn()
-                    ? TitleView(title: AppLocalizations.of(context)!.accountsettings)
+                    ? TitleView(
+                        title: AppLocalizations.of(context)!.accountsettings)
                     : Container(),
                 bloc.checkIfUserIsLoggedIn()
-                    ? CollectionListOptionView(listOfOptions: bloc.listOfAccountOptions(context), containerHight: 200)
+                    ? CollectionListOptionView(
+                        listOfOptions: bloc.listOfAccountOptions(context),
+                        containerHight: 200)
                     : Container(),
                 TitleView(title: AppLocalizations.of(context)!.generalsettings),
-                CollectionListOptionView(listOfOptions: bloc.listOfSettingsOptions(context), containerHight: 125),
+                CollectionListOptionView(
+                    listOfOptions: bloc.listOfSettingsOptions(context),
+                    containerHight: 125),
                 TitleView(title: AppLocalizations.of(context)!.reachouttous),
-                CollectionListOptionView(listOfOptions: bloc.listOfReachOutUsOptions(context), containerHight: 200),
+                CollectionListOptionView(
+                    listOfOptions: bloc.listOfReachOutUsOptions(context),
+                    containerHight: 200),
                 TitleView(title: AppLocalizations.of(context)!.support),
-                CollectionListOptionView(listOfOptions: bloc.listOfSupportOptions(context), containerHight: 125),
+                CollectionListOptionView(
+                    listOfOptions: bloc.listOfSupportOptions(context),
+                    containerHight: 125),
                 const SizedBox(height: 8),
                 const AddMobBanner(),
                 FooterView(

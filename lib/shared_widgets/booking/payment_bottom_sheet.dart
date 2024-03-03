@@ -249,7 +249,7 @@ class PaymentBottomSheetsUtil {
           ),
           CustomButton(
               enableButton: true,
-              buttonTitle: "Confirm",
+              buttonTitle: AppLocalizations.of(context)!.confirm,
               onTap: () {
                 openNext(calculateNewAmount(
                     totalAmount: totalAmount,
@@ -274,7 +274,7 @@ class PaymentBottomSheetsUtil {
     String amount = totalAmount.toStringAsFixed(2);
     var paymentItems = [
       PaymentItem(
-        label: 'Total',
+        label: AppLocalizations.of(context)!.total,
         amount: amount,
         status: PaymentItemStatus.final_price,
       )
